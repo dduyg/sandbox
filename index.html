@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animated Text Blur</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -11,8 +12,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #ffffff;
-            font-family: 'Courier New', monospace;
+            background: #fff;
+            font-family: "Roboto Mono", monospace;
             overflow: hidden;
         }
 
@@ -26,12 +27,12 @@
 
         .item {
             position: absolute;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             color: #C28959;
             white-space: nowrap;
             opacity: 0;
             filter: blur(8px);
-            width: 100%;
+            width: 150px;
         }
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .item:nth-child(1) {animation-delay: 0s;}
