@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liminal🦕Loop</title>
+    <link href="https://fonts.googleapis.com/css2?family=SUSE+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent;}
+        body {
+            min-height: 100vh;
+            font-family: "SUSE Mono", monospace;
+            background: #0B0B0B;
+            color: #A8EDDB;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }   
+        
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #C9C9BF;
+            z-index: 1000;
+        }
+        .links {
+            display: flex;
+            gap: 15px;
+        }
+        .links a {
+            color: inherit;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0.9;
+            overflow: hidden;
+        }
+
+        .links a::before {
+            content: "⇴";
+            font-size: 14px;
+            margin-right: 4px;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .links a:hover {
+            opacity: 1;
+            transform: translateX(6px);
+        }
+
+        .links a:hover::before {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .badge {font-size: 20px;}
+
+        .cta {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            text-align: center;
+            margin-top: 20vh;
+        }
+        .arrow {
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #3BFFCF;
+            color: #002C1C;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+        button:hover { 
+            background-color: #0B0B0B;
+            color: #C9C9BF;
+        }
+
+        .dropdown-panel {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: #C9C9BF;
+            color: #0B0B0B;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 99;
+            display: none;
+        }
+        .dropdown-panel.visible {
+            display: block;
+        }
+        .dropdown-panel h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .dropdown-panel ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0.6rem;
+        }
+        .dropdown-panel li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .dropdown-panel li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+       <div class="links">
+          <a href="#">C_021</a>
+          <a href="#">C_003</a>
+          <a href="#">C_014</a>
+       </div>
+       <div class="badge">⁂</div>
+    </nav>
+    
+    <div class="cta">RETURN C_011 <span class="arrow">[↗]</span></div>
+    
+    <div id="dropdownPanel" class="dropdown-panel">
+        <h3>Nothing here but static and memories.</h3>
+        <ul>
+            <li>The city forgot it.</li>
+            <li>The net erased it.</li>
+            <li>Now it's just another ghost signal.</li>
+        </ul>
+    </div>
+
+    <footer><button id="dropdownToggle">D8W4VƎ</button></footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('dropdownToggle');
+            const dropdownPanel = document.getElementById('dropdownPanel');
+
+            toggleButton.addEventListener('click', () => {
+                dropdownPanel.classList.toggle('visible');
+            });
+            
+            document.addEventListener('click', (event) => {
+                const isClickInsideButton = toggleButton.contains(event.target);
+                const isClickInsidePanel = dropdownPanel.contains(event.target);
+
+                if (!isClickInsideButton && !isClickInsidePanel && dropdownPanel.classList.contains('visible')) {
+                    dropdownPanel.classList.remove('visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
