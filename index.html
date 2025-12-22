@@ -26,13 +26,11 @@
 
         .item {
             position: absolute;
-            font-size: 3rem;
-            font-weight: bold;
+            font-size: 1.4rem;
             color: #C28959;
             white-space: nowrap;
             opacity: 0;
-            filter: blur(12px);
-            text-align: center;
+            filter: blur(8px);
             width: 100%;
         }
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
@@ -51,12 +49,8 @@
             100% { filter: blur(12px); opacity: 0; }
         }
 
-        @media (max-width: 900px) {
-            .container {width: 90vw;}
-            .item {font-size: 2rem;}
-        }
         @media (max-width: 600px) {
-            .item {font-size: 1.5rem;}
+            .container {width: 90vw;}
         }
     </style>
 </head>
