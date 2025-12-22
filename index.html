@@ -5,112 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Animated Text Blur</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ffffff;
             font-family: 'Courier New', monospace;
             overflow: hidden;
         }
 
-        .text-container {
+        .container {
             position: relative;
-            height: 100px;
+            width: 800px; height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .text-item {
+        .item {
             position: absolute;
             font-size: 3rem;
             font-weight: bold;
-            color: #ffffff;
+            color: #C28959;
             white-space: nowrap;
             opacity: 0;
             filter: blur(12px);
+            text-align: center;
+            width: 100%;
         }
-
-        .text-item.active {
-            animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;
-        }
-
-        .text-item:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .text-item:nth-child(2) {
-            animation-delay: 3s;
-        }
-
-        .text-item:nth-child(3) {
-            animation-delay: 6s;
-        }
-
-        .text-item:nth-child(4) {
-            animation-delay: 9s;
-        }
-
-        .text-item:nth-child(5) {
-            animation-delay: 12s;
-        }
-
-        .text-item:nth-child(6) {
-            animation-delay: 15s;
-        }
+        .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
+        .item:nth-child(1) {animation-delay: 0s;}
+        .item:nth-child(2) {animation-delay: 3s;}
+        .item:nth-child(3) {animation-delay: 6s;}
+        .item:nth-child(4) {animation-delay: 9s;}
+        .item:nth-child(5) {animation-delay: 12s;}
+        .item:nth-child(6) {animation-delay: 15s;}
 
         @keyframes text-blur-cycle {
-            0% {
-                filter: blur(12px);
-                opacity: 0;
-            }
-            5% {
-                filter: blur(0px);
-                opacity: 1;
-            }
-            11.11% {
-                filter: blur(0px);
-                opacity: 1;
-            }
-            16.66% {
-                filter: blur(12px);
-                opacity: 0;
-            }
-            100% {
-                filter: blur(12px);
-                opacity: 0;
-            }
+            0% { filter: blur(12px); opacity: 0; }
+            5% { filter: blur(0px); opacity: 1; }
+            11.11% { filter: blur(0px); opacity: 1; }
+            16.66% { filter: blur(12px); opacity: 0; }
+            100% { filter: blur(12px); opacity: 0; }
         }
 
-        @media (max-width: 768px) {
-            .text-item {
-                font-size: 2rem;
-            }
+        @media (max-width: 900px) {
+            .container {width: 90vw;}
+            .item {font-size: 2rem;}
         }
-
-        @media (max-width: 480px) {
-            .text-item {
-                font-size: 1.5rem;
-            }
+        @media (max-width: 600px) {
+            .item {font-size: 1.5rem;}
         }
     </style>
 </head>
 <body>
-    <div class="text-container">
-        <div class="text-item active">pattern-obsessed</div>
-        <div class="text-item active">ensemble-everything</div>
-        <div class="text-item active">hyperparameter-tortured</div>
-        <div class="text-item active">latent-space-wandering</div>
-        <div class="text-item active">architecturally adventurous</div>
-        <div class="text-item active">efficiency-obsessed</div>
+    <div class="container">
+        <div class="item active">pattern-obsessed</div>
+        <div class="item active">ensemble-everything</div>
+        <div class="item active">hyperparameter-tortured</div>
+        <div class="item active">latent-space-wandering</div>
+        <div class="item active">architecturally adventurous</div>
+        <div class="item active">efficiency-obsessed</div>
     </div>
 </body>
 </html>
