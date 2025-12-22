@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liminal Loop</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }    
+        header {
+            max-width: 1200px; /* Limit the header width */
+            margin: 0 auto;
+            padding: 1.25em;
+        }
+        
+        .breadcrumb {
+            display: flex; /* Use flexbox for alignment */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            padding: 0;
+            margin: 1rem 0 0 0;
+        }
+        .breadcrumb-item {
+            font-size: 0.85rem;
+            letter-spacing: 0.125rem;
+            text-transform: uppercase;
+            color: #888;
+            text-decoration: none;
+            transition: all 0.2s ease;
+         }
+         .breadcrumb-item:hover {
+            color: #333;
+         }
+        .breadcrumb-item::after {
+            content: "/";
+            display: inline-block;
+            padding: 0 0.5rem;
+            color: #d5d5d5;
+        }
+        .current-page {
+            font-size: 2.5em;
+            font-weight: bold;
+            padding: 0;
+            margin: 10px 0 0 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="breadcrumb">
+            <a href="#" class="breadcrumb-item">Home</a>
+            <a href="#" class="breadcrumb-item">Posts</a>
+        </div>
+        <div class="current-page">Current Page</div>
+    </header>
+</body>
+</html>

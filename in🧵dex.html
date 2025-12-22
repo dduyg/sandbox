@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liminal🧵Loop</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Geneva, sans-serif;
+            background: #C5D0CD;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.4rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .code {
+            font-size: 4rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #c92a2a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #2d3748;
+            text-align: center;
+        }
+        .message {
+            color: #718096;
+            line-height: 1.6;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        .btn-secondary:hover { background: #cbd5e0; }
+
+        .error-400 .code { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .divider {
+            width: 60px; height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 10px auto 20px;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {grid-template-columns: 1fr;}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>memory gateways</h1>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="icon">🪜</div>
+                <div class="code">403</div>
+                <div class="divider"></div>
+                <h2 class="title">Access Forbidden</h2>
+                <p class="message">You don't have permission to access this resource. If you believe this is a mistake, please contact support.</p>
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="window.history.back()">Go Back</button>
+                    <button class="btn btn-secondary">Support</button>
+                </div>
+            </div>
+
+            <div class="card error-400">
+                <div class="icon">🧵</div>
+                <div class="code">400</div>
+                <div class="divider"></div>
+                <h2 class="title">Bad Request</h2>
+                <p class="message">The request couldn't be processed. Please check your input and try again.</p>
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="window.history.back()">Go Back</button>
+                    <button class="btn btn-secondary" onclick="location.reload()">Retry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
