@@ -1,6 +1,4 @@
-# 🗝 Getting Gemini API Key
-
-## Step-by-Step:
+<details><summary><code>🗝 Getting Gemini API Key</code></summary><br>
 
 1. **Go to Google AI Studio:**
  https://aistudio.google.com/app/apikey
@@ -34,3 +32,5 @@ https://makersuite.google.com/app/apikey
 ```bash
 export GEMINI_API_KEY="your-key-here"
 ```
+
+</details>
