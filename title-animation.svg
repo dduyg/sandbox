@@ -1,0 +1,35 @@
+<svg width="450" height="40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&amp;display=swap');
+    </style>
+  </defs>
+  
+  <style>
+    .adjective { 
+      font-family: 'Roboto Mono', monospace;
+      font-size: 24px;
+      font-weight: 600;
+      fill: #CF9E77;
+    }
+    
+    .adj1 { animation: fade 18s infinite; }
+    .adj2 { animation: fade 18s infinite 3s; }
+    .adj3 { animation: fade 18s infinite 6s; }
+    .adj4 { animation: fade 18s infinite 9s; }
+    .adj5 { animation: fade 18s infinite 12s; }
+    .adj6 { animation: fade 18s infinite 15s; }
+    
+    @keyframes fade {
+      0%, 16.67% { opacity: 1; }
+      16.68%, 100% { opacity: 0; }
+    }
+  </style>
+  
+  <text x="10" y="28" class="adjective adj1">a pattern-obsessed</text>
+  <text x="10" y="28" class="adjective adj2">an ensemble-everything</text>
+  <text x="10" y="28" class="adjective adj3">a hyperparameter-tortured</text>
+  <text x="10" y="28" class="adjective adj4">a latent-space-wandering</text>
+  <text x="10" y="28" class="adjective adj5">an architecturally-adventurous</text>
+  <text x="10" y="28" class="adjective adj6">an efficiency-obsessed</text>
+</svg>
