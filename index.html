@@ -14,12 +14,12 @@
             align-items: center;
             background: #fff;
             font-family: "Roboto Mono", monospace;
+            overflow: hidden;
         }
 
         .container {
             position: relative;
-            width: 100px;
-            max-width: 80vw;
+            width: 800px; 
             height: 100px;
             display: flex;
             align-items: center;
@@ -34,9 +34,8 @@
             opacity: 0;
             filter: blur(8px);
             width: 100%;
+            text-align: center;
             left: 0;
-            text-align: justify;
-            text-align-last: justify;
         }
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .item:nth-child(1) {animation-delay: 0s;}
@@ -52,6 +51,10 @@
             11.11% { filter: blur(0px); opacity: 1; }
             16.66% { filter: blur(12px); opacity: 0; }
             100% { filter: blur(12px); opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .container {width: 90vw;}
         }
     </style>
 </head>
