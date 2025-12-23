@@ -1,7 +1,7 @@
 <svg width="450" height="40" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@600&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&amp;display=swap');
     </style>
     <filter id="blur">
       <feGaussianBlur in="SourceGraphic" stdDeviation="0" />
@@ -10,10 +10,10 @@
   
   <style>
     .adjective { 
-      font-family: "IBM Plex Mono", monospace;
+      font-family: "Google Sans Code", monospace;
       font-size: 24px;
-      font-weight: 600;
-      fill: #CF9E77;
+      font-weight: 700;
+      fill: #6B2F38;
       filter: url(#blur);
     }
     
