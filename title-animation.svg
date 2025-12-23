@@ -1,7 +1,7 @@
 <svg width="450" height="40" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&amp;display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&amp;display=swap');
     </style>
   </defs>
   
@@ -9,7 +9,7 @@
     .adjective { 
       font-family: 'Roboto Mono', monospace;
       font-size: 24px;
-      font-weight: 600;
+      font-weight: 700;
       fill: #CF9E77;
     }
     
