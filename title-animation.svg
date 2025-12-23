@@ -11,6 +11,7 @@
       font-size: 24px;
       font-weight: 700;
       fill: #CF9E77;
+      opacity: 0;
     }
     
     .adj1 { animation: fade 18s infinite; }
