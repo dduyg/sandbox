@@ -13,9 +13,3 @@ This pipeline transforms simple PNG images into richly annotated visual data ass
 
 ## 💠
 Each glyph is analyzed for 15+ features and cataloged with a unique identifier, timestamped filename, and CDN url.
-
-
-## ⚠️ Note
-**Colors seem off** → Ensure PNGs have transparent backgrounds; opaque backgrounds skew color detection
-
-**Image format:** PNG with transparency (alpha channel required for accurate masking)
