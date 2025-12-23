@@ -24,11 +24,11 @@
             max-width: 800px;
         }
 
-        .animated-wrapper {
+        .animated-container {
             display: inline-block;
             position: relative;
-            width: 280px;
-            height: 1.6em;
+            width: 350px;
+            height: 1.5em;
             vertical-align: bottom;
         }
 
@@ -40,19 +40,7 @@
             filter: blur(8px);
             left: 0;
             top: 0;
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transform-origin: left center;
         }
-
-        /* Dynamic font sizing for each item to fit within the fixed space */
-        .item:nth-child(1) { font-size: 1.2rem; } /* a pattern-obsessed */
-        .item:nth-child(2) { font-size: 1.05rem; } /* an ensemble-everything */
-        .item:nth-child(3) { font-size: 0.95rem; } /* a hyperparameter-tortured */
-        .item:nth-child(4) { font-size: 0.9rem; } /* a latent-space-wandering */
-        .item:nth-child(5) { font-size: 0.85rem; } /* an architecturally adventurous */
-        .item:nth-child(6) { font-size: 1.0rem; } /* an efficiency-obsessed */
         
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .item:nth-child(1) {animation-delay: 0s;}
@@ -71,20 +59,18 @@
         }
 
         @media (max-width: 600px) {
-            p { font-size: 1rem; }
-            .animated-wrapper { width: 220px; }
-            .item:nth-child(1) { font-size: 1rem; }
-            .item:nth-child(2) { font-size: 0.9rem; }
-            .item:nth-child(3) { font-size: 0.8rem; }
-            .item:nth-child(4) { font-size: 0.75rem; }
-            .item:nth-child(5) { font-size: 0.7rem; }
-            .item:nth-child(6) { font-size: 0.85rem; }
+            .animated-container {
+                width: 280px;
+            }
+            p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <p>
-        <span class="animated-wrapper">
+        <span class="animated-container">
             <span class="item active">a pattern-obsessed</span>
             <span class="item active">an ensemble-everything</span>
             <span class="item active">a hyperparameter-tortured</span>
