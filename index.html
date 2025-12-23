@@ -14,29 +14,34 @@
             align-items: center;
             background: #fff;
             font-family: "Roboto Mono", monospace;
-            overflow: hidden;
+            padding: 20px;
         }
 
-        .container {
+        p {
+            font-size: 1.2rem;
+            color: #333;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+
+        .animated-wrapper {
+            display: inline-block;
             position: relative;
-            width: 800px; 
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            min-width: 350px;
+            height: 1.6em;
+            vertical-align: bottom;
         }
 
         .item {
             position: absolute;
-            font-size: 1.2rem;
             color: #CF9E77;
             white-space: nowrap;
             opacity: 0;
             filter: blur(8px);
-            width: 100%;
-            text-align: center;
             left: 0;
+            top: 0;
         }
+        
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .item:nth-child(1) {animation-delay: 0s;}
         .item:nth-child(2) {animation-delay: 3s;}
@@ -54,18 +59,22 @@
         }
 
         @media (max-width: 600px) {
-            .container {width: 90vw;}
+            p { font-size: 1rem; }
+            .animated-wrapper { min-width: 280px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="item active">a pattern-obsessed</div>
-        <div class="item active">an ensemble-everything</div>
-        <div class="item active">a hyperparameter-tortured</div>
-        <div class="item active">a latent-space-wandering</div>
-        <div class="item active">an architecturally adventurous</div>
-        <div class="item active">an efficiency-obsessed</div>
-    </div>
+    <p>
+        <span class="animated-wrapper">
+            <span class="item active">a pattern-obsessed</span>
+            <span class="item active">an ensemble-everything</span>
+            <span class="item active">a hyperparameter-tortured</span>
+            <span class="item active">a latent-space-wandering</span>
+            <span class="item active">an architecturally adventurous</span>
+            <span class="item active">an efficiency-obsessed</span>
+        </span>
+        ML Engineer, building production ML pipelines & explainable AI systems.
+    </p>
 </body>
 </html>
