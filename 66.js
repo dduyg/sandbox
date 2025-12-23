@@ -18,7 +18,7 @@ from @shelf/06/BLOBs/blob-05.png to @shelf
      @shelf/06/detail-4.jpg to @shelf/0-6/backscapes/detail-4.jpg
      @shelf/06/glidingIntegers.gif to @shelf/0-6/blobs/glidingIntegers.gif
      @shelf/06/grayscale-wave.png to @shelf/0-6/backscapes/grayscale-wave.png
-     @shelf/06/helloWorld.gif to @shelf
+     @shelf/06/helloWorld.gif to @shelf/0-6/blobs/helloWorld.gif
      @shelf/06/inwave1759.png to @shelf/0-6/backscapes/inwave1759.png
      @shelf/06/inwave1761.png to @shelf/0-6/backscapes/inwave1761.png
      @shelf/06/inwave1779.png to @shelf/0-6/backscapes/inwave1779.png
@@ -33,11 +33,11 @@ from @shelf/06/BLOBs/blob-05.png to @shelf
      @shelf/06/signoftheTimes.png to @shelf/0-6/blobs/signoftheTimes.png
      @shelf/06/spendthrift.gif to @shelf/0-6/loops/spendthrift.gif
      @shelf/06/splashthick-pink-fluid.png to @shelf/0-6/blobs/splashthick-pink-fluid.png
-     @main/06/favicons/slate.ico to @shelf
-     @shelf/06/favicons/RGB-cinnamonSatin.ico to @shelf
-     @shelf/06/favicons/RGB-electricredBlush.ico to @shelf
-     @shelf/06/favicons/RGB-greenPeriwinkle.ico to @shelf
-     @shelf/06/favicons/RGB-redPiink.ico to @shelf
-     @shelf/06/favicons/sixArrows.ico to @shelf
+     @main/06/favicons/slate.ico to @shelf/0-6/favicons/slate.ico
+     @shelf/06/favicons/RGB-cinnamonSatin.ico to @shelf/0-6/favicons/RGB-cinnamonSatin.ico
+     @shelf/06/favicons/RGB-electricredBlush.ico to @shelf/0-6/favicons/RGB-electricredBlush.ico
+     @shelf/06/favicons/RGB-greenPeriwinkle.ico to @shelf/0-6/favicons/RGB-greenPeriwinkle.ico
+     @shelf/06/favicons/RGB-redPiink.ico to @shelf/0-6/favicons/RGB-redPiink.ico
+     @shelf/06/favicons/sixArrows.ico to @shelf/0-6/favicons/sixArrows.ico
      06/WaterCity.gif to 0-6/loops/WaterCity.gif
      06/kemalizm.mp4 to 0-6/stream/kemalizm.mp4
