@@ -10,10 +10,10 @@
   
   <style>
     .adjective { 
-      font-family: "Roboto Mono", monospace;
+      font-family: "Google Sans Code", monospace;
       font-size: 24px;
       font-weight: 700;
-      fill: #CF9E77;
+      fill: #6B2F38;
       filter: url(#blur);
       opacity: 0;
     }
