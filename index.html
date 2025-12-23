@@ -29,7 +29,7 @@
             position: relative;
             width: 350px;
             height: 1.2em;
-            vertical-align: baseline;
+            vertical-align: middle;
         }
 
         .item {
@@ -38,8 +38,9 @@
             white-space: nowrap;
             opacity: 0;
             filter: blur(8px);
-            left: 0; top: 0;
-            line-height: 1.2em;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
         }
         
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
@@ -59,8 +60,12 @@
         }
 
         @media (max-width: 600px) {
-            .animated-container {width: 280px;}
-            p {font-size: 1rem;}
+            .animated-container {
+                width: 280px;
+            }
+            p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
