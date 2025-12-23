@@ -16,34 +16,30 @@ from @shelf/06/BLOBs/blob-05.png to @shelf
      @shelf/06/detail-13.gif to @shelf
      @shelf/06/detail-18.png to @shelf
      @shelf/06/detail-4.jpg to @shelf
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/glidingIntegers.gif",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/grayscale-wave.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/helloWorld.gif",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/inwave1759.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/inwave1761.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/inwave1779.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/kemalist-devrim.jpg",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/morphology.jpg",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/partOfYou1.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/partOfYou2.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/popeye.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/register-4.jpg",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/satisfyingSetting.mp4",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/sharkTeeth.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/signoftheTimes.png",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/spendthrift.gif",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/splashthick-pink-fluid.png"
-    ],
-    "favicons": [
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/06/favicons/slate.ico",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/favicons/RGB-cinnamonSatin.ico",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/favicons/RGB-electricredBlush.ico",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/favicons/RGB-greenPeriwinkle.ico",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/favicons/RGB-redPiink.ico",
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/favicons/sixArrows.ico"
-    ]
-    "github_raw": [
-      "https://raw.githubusercontent.com/dduyg/LiminalLoop/shelf/06/WaterCity.gif",
-      "https://raw.githubusercontent.com/dduyg/LiminalLoop/shelf/06/kemalizm.mp4"
-      "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/06/satisfyingSetting.mp4"
-    ]
+     @shelf/06/glidingIntegers.gif to @shelf
+     @shelf/06/grayscale-wave.png to @shelf
+     @shelf/06/helloWorld.gif to @shelf
+     @shelf/06/inwave1759.png to @shelf
+     @shelf/06/inwave1761.png to @shelf
+     @shelf/06/inwave1779.png to @shelf
+     @shelf/06/kemalist-devrim.jpg to @shelf
+     @shelf/06/morphology.jpg to @shelf
+     @shelf/06/partOfYou1.png to @shelf
+     @shelf/06/partOfYou2.png to @shelf
+     @shelf/06/popeye.png to @shelf
+     @shelf/06/register-4.jpg to @shelf
+     @shelf/06/satisfyingSetting.mp4 to @shelf
+     @shelf/06/sharkTeeth.png to @shelf
+     @shelf/06/signoftheTimes.png to @shelf
+     @shelf/06/spendthrift.gif to @shelf
+     @shelf/06/splashthick-pink-fluid.png to @shelf
+     @main/06/favicons/slate.ico to @shelf
+     @shelf/06/favicons/RGB-cinnamonSatin.ico to @shelf
+     @shelf/06/favicons/RGB-electricredBlush.ico to @shelf
+     @shelf/06/favicons/RGB-greenPeriwinkle.ico to @shelf
+     @shelf/06/favicons/RGB-redPiink.ico to @shelf
+     @shelf/06/favicons/sixArrows.ico to @shelf
+     06/WaterCity.gif to 
+     06/kemalizm.mp4 to 
+     @shelf/06/satisfyingSetting.mp4 to @shelf
+
