@@ -27,7 +27,7 @@
         .animated-wrapper {
             display: inline-block;
             position: relative;
-            min-width: 350px;
+            width: 300px;
             height: 1.6em;
             vertical-align: bottom;
         }
@@ -40,7 +40,11 @@
             filter: blur(8px);
             left: 0;
             top: 0;
+            font-size: 1.2rem;
+            transform-origin: left center;
         }
+
+        .item:nth-child(5) { transform: scaleX(0.85); } /* an architecturally adventurous - longest */
         
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .item:nth-child(1) {animation-delay: 0s;}
@@ -60,7 +64,7 @@
 
         @media (max-width: 600px) {
             p { font-size: 1rem; }
-            .animated-wrapper { min-width: 280px; }
+            .animated-wrapper { width: 240px; }
         }
     </style>
 </head>
