@@ -1,25 +1,12 @@
 ## [🚪](https://dduyg.github.io/sandbox)
 
-
 ```
-I want to put in my README.md github profile, is it possible to do:
-
-A [pattern-obsessed] ML Engineer, building production ML pipelines & explainable AI systems
-
-And than adjective changes swifts with animation:
-A [ensemble-everything] ML Engineer...
-A [hyperparameter-tortured] ML Engineer...
-A [latent-space-wandering] ML Engineer...
-A [architecturally adventurous] ML Engineer...
-A [efficiency-obsessed] ML Engineer...
-```
-
-```
-pattern-obsessed
-hyperparameter-tortured
-latent-space-wandering
-ensemble-everything
-architecturally adventurous
+[pattern-obsessed] 
+[ensemble-everything]
+[hyperparameter-tortured]
+[latent-space-wandering]
+[architecturally adventurous]
+[efficiency-obsessed]
 ```
 
 ---
