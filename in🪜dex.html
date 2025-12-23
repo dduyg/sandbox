@@ -20,7 +20,8 @@
 
         #animation {
             position: relative;
-            width: 500px; height: 60px;
+            width: 600px; height: 100px;
+            max-width: 90vw:
             display: flex;
             align-items: center;
             justify-content: center;
@@ -28,11 +29,14 @@
 
         .item {
             position: absolute;
-            font-size: 1.2rem;
+            font-size: 16px;
             color: #CF9E77;
             white-space: nowrap;
             opacity: 0;
             filter: blur(8px);
+            width: 100%;
+            text-align: center;
+            left: 0;
         }
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .item:nth-child(1) {animation-delay: 0s;}
@@ -71,12 +75,10 @@
             font-family: "Roboto Mono", monospace;
             font-size: 14px;
         }
-
         button:hover {
             color: #b88860;
             background: #ccc;
         }
-
         #status {
             font-size: 14px;
             color: #666;
