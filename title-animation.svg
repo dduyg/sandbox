@@ -1,16 +1,16 @@
-<svg width="800" height="40" xmlns="http://www.w3.org/2000/svg">
+<svg width="450" height="40" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&amp;display=swap');
+    </style>
+  </defs>
+  
   <style>
     .adjective { 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Roboto Mono', monospace;
       font-size: 24px;
       font-weight: 600;
-      fill: #58a6ff;
-    }
-    .static-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 24px;
-      font-weight: 400;
-      fill: #c9d1d9;
+      fill: #CF9E77;
     }
     
     .adj1 { animation: fade 18s infinite; }
@@ -26,14 +26,10 @@
     }
   </style>
   
-  <text x="10" y="28" class="static-text">I'm</text>
-  
-  <text x="60" y="28" class="adjective adj1">a pattern-obsessed</text>
-  <text x="60" y="28" class="adjective adj2">an ensemble-everything</text>
-  <text x="60" y="28" class="adjective adj3">a hyperparameter-tortured</text>
-  <text x="60" y="28" class="adjective adj4">a latent-space-wandering</text>
-  <text x="60" y="28" class="adjective adj5">an architecturally-adventurous</text>
-  <text x="60" y="28" class="adjective adj6">an efficiency-obsessed</text>
-  
-  <text x="450" y="28" class="static-text">ML Engineer</text>
+  <text x="10" y="28" class="adjective adj1">a pattern-obsessed</text>
+  <text x="10" y="28" class="adjective adj2">an ensemble-everything</text>
+  <text x="10" y="28" class="adjective adj3">a hyperparameter-tortured</text>
+  <text x="10" y="28" class="adjective adj4">a latent-space-wandering</text>
+  <text x="10" y="28" class="adjective adj5">an architecturally-adventurous</text>
+  <text x="10" y="28" class="adjective adj6">an efficiency-obsessed</text>
 </svg>
