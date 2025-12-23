@@ -3,11 +3,8 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&amp;display=swap');
     </style>
-    <filter id="blur-0">
+    <filter id="blur">
       <feGaussianBlur in="SourceGraphic" stdDeviation="0" />
-    </filter>
-    <filter id="blur-12">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="12" />
     </filter>
   </defs>
   
@@ -17,8 +14,7 @@
       font-size: 24px;
       font-weight: 600;
       fill: #CF9E77;
-      filter: url(#blur-12);
-      opacity: 0;
+      filter: url(#blur);
     }
     
     .adj1 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 0s; }
@@ -29,11 +25,11 @@
     .adj6 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 15s; }
     
     @keyframes text-blur-cycle {
-      0% { filter: url(#blur-12); opacity: 0; }
-      5% { filter: url(#blur-0); opacity: 1; }
-      11.11% { filter: url(#blur-0); opacity: 1; }
-      16.66% { filter: url(#blur-12); opacity: 0; }
-      100% { filter: url(#blur-12); opacity: 0; }
+      0% { opacity: 0; }
+      5% { opacity: 1; }
+      11.11% { opacity: 1; }
+      16.66% { opacity: 0; }
+      100% { opacity: 0; }
     }
   </style>
   
