@@ -3,6 +3,12 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&amp;display=swap');
     </style>
+    <filter id="blur-0">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0" />
+    </filter>
+    <filter id="blur-12">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12" />
+    </filter>
   </defs>
   
   <style>
@@ -11,18 +17,23 @@
       font-size: 24px;
       font-weight: 600;
       fill: #CF9E77;
+      filter: url(#blur-12);
+      opacity: 0;
     }
     
-    .adj1 { animation: fade 18s infinite; }
-    .adj2 { animation: fade 18s infinite 3s; }
-    .adj3 { animation: fade 18s infinite 6s; }
-    .adj4 { animation: fade 18s infinite 9s; }
-    .adj5 { animation: fade 18s infinite 12s; }
-    .adj6 { animation: fade 18s infinite 15s; }
+    .adj1 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 0s; }
+    .adj2 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 3s; }
+    .adj3 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 6s; }
+    .adj4 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 9s; }
+    .adj5 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 12s; }
+    .adj6 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 15s; }
     
-    @keyframes fade {
-      0%, 16.67% { opacity: 1; }
-      16.68%, 100% { opacity: 0; }
+    @keyframes text-blur-cycle {
+      0% { filter: url(#blur-12); opacity: 0; }
+      5% { filter: url(#blur-0); opacity: 1; }
+      11.11% { filter: url(#blur-0); opacity: 1; }
+      16.66% { filter: url(#blur-12); opacity: 0; }
+      100% { filter: url(#blur-12); opacity: 0; }
     }
   </style>
   
