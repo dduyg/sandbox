@@ -17,35 +17,22 @@ Each glyph is analyzed for 15+ features and cataloged with a unique identifier, 
 ---
 ---
 
-## Pipeline Run - Example workflow
+## 🪢 Example workflow
 ```
-Destination: myusername/visual-glyphs
+Destination: myusername/myrepo
 Branch: main
 Token: ghp_xxxxxxxxxxxx
-Input: Select 150 PNG glyphs from desktop
+Input: Select 150 PNG glyphs from local computer
 
 → Pipeline processes all images in parallel
-→ Commits to myusername/visual-glyphs:
+→ Commits to myusername/myrepo:
    - glyphs/ff5733_20251220_143022_a8f3e1b9.png
    - glyphs/3498db_20251220_143023_c2d4e5f6.png
    - data/glyphs.catalog.json
    - data/glyphs.catalog.csv
 ```
 
-## 🎭 Example Queries
-
-### Process Local Images
-```python
-# Run the script
-python glyph_feature_pipeline.py
-
-# When prompted:
-# 1. Enter destination repo: yourusername/glyph-library
-# 2. Enter branch: main
-# 3. Paste your GitHub token
-# 4. Choose input method: 1 (local upload)
-# 5. Select images from your computer
-```
+### 🎭 Example Queries
 
 ### Fetch from another repository
 ```python
