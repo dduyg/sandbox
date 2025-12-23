@@ -28,8 +28,8 @@
             display: inline-block;
             position: relative;
             width: 350px;
-            height: 1.5em;
-            vertical-align: bottom;
+            height: 1.2em;
+            vertical-align: baseline;
         }
 
         .item {
@@ -38,8 +38,8 @@
             white-space: nowrap;
             opacity: 0;
             filter: blur(8px);
-            left: 0;
-            top: 0;
+            left: 0; top: 0;
+            line-height: 1.2em;
         }
         
         .item.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
@@ -59,12 +59,8 @@
         }
 
         @media (max-width: 600px) {
-            .animated-container {
-                width: 280px;
-            }
-            p {
-                font-size: 1rem;
-            }
+            .animated-container {width: 280px;}
+            p {font-size: 1rem;}
         }
     </style>
 </head>
@@ -78,7 +74,7 @@
             <span class="item active">an architecturally adventurous</span>
             <span class="item active">an efficiency-obsessed</span>
         </span>
-        ML Engineer, building production ML pipelines & explainable AI systems.
+        ml engineer, building production pipelines & explainable systems.
     </p>
 </body>
 </html>
