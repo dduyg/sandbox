@@ -3,43 +3,41 @@ from @shelf/06/BLOBs/blob-05.png to @shelf
      @shelf/06/BLOBs/blob-07.png to @shelf
      @shelf/06/BLOBs/blob-08.png to @shelf
      @shelf/06/BLOBs/blob-10.png to @shelf
-     @shelf/06/BLOBs/blob-16.gif to @shelf
+     @shelf/06/BLOBs/blob-16.gif to @shelf/0-6/blobs/blob-16.gif
      @shelf/06/BLOBs/blob-35.png to @shelf
-     @shelf/06/DolphinDatabase.png to @shelf
-     @shelf/06/GeometricAir.jpg to @shelf
-     @shelf/06/MountFujiLoading.png to @shelf
-     @shelf/06/NET-NEUTRALITY.gif to @shelf
-     @shelf/06/VHScloud.png to @shelf
-     @shelf/06/audacity.gif to @shelf
-     @shelf/06/backed.jpg to @shelf
-     @shelf/06/detail-12.png to @shelf
-     @shelf/06/detail-13.gif to @shelf
-     @shelf/06/detail-18.png to @shelf
-     @shelf/06/detail-4.jpg to @shelf
-     @shelf/06/glidingIntegers.gif to @shelf
-     @shelf/06/grayscale-wave.png to @shelf
+     @shelf/06/DolphinDatabase.png to @shelf/0-6/blobs/DolphinDatabase.png
+     @shelf/06/GeometricAir.jpg to @shelf/0-6/backscapes/GeometricAir.jpg
+     @shelf/06/MountFujiLoading.png to @shelf/0-6/backscapes/MountFujiLoading.png
+     @shelf/06/NET-NEUTRALITY.gif to @shelf/0-6/loops/NET-NEUTRALITY.gif
+     @shelf/06/VHScloud.png to @shelf/0-6/blobs/VHScloud.png
+     @shelf/06/audacity.gif to @shelf/0-6/loops/audacity.gif
+     @shelf/06/backed.jpg to @shelf/0-6/backscapes/backed.jpg
+     @shelf/06/detail-12.png to @shelf/0-6/backscapes/detail-12.png
+     @shelf/06/detail-13.gif to @shelf/0-6/loops/detail-13.gif
+     @shelf/06/detail-18.png to @shelf/0-6/backscapes/detail-18.png
+     @shelf/06/detail-4.jpg to @shelf/0-6/backscapes/detail-4.jpg
+     @shelf/06/glidingIntegers.gif to @shelf/0-6/blobs/glidingIntegers.gif
+     @shelf/06/grayscale-wave.png to @shelf/0-6/backscapes/grayscale-wave.png
      @shelf/06/helloWorld.gif to @shelf
-     @shelf/06/inwave1759.png to @shelf
-     @shelf/06/inwave1761.png to @shelf
-     @shelf/06/inwave1779.png to @shelf
-     @shelf/06/kemalist-devrim.jpg to @shelf
-     @shelf/06/morphology.jpg to @shelf
-     @shelf/06/partOfYou1.png to @shelf
-     @shelf/06/partOfYou2.png to @shelf
-     @shelf/06/popeye.png to @shelf
-     @shelf/06/register-4.jpg to @shelf
-     @shelf/06/satisfyingSetting.mp4 to @shelf
-     @shelf/06/sharkTeeth.png to @shelf
-     @shelf/06/signoftheTimes.png to @shelf
-     @shelf/06/spendthrift.gif to @shelf
-     @shelf/06/splashthick-pink-fluid.png to @shelf
+     @shelf/06/inwave1759.png to @shelf/0-6/backscapes/inwave1759.png
+     @shelf/06/inwave1761.png to @shelf/0-6/backscapes/inwave1761.png
+     @shelf/06/inwave1779.png to @shelf/0-6/backscapes/inwave1779.png
+     @shelf/06/kemalist-devrim.jpg to @shelf/0-6/pixels/kemalist-devrim.jpg
+     @shelf/06/morphology.jpg to @shelf/0-6/backscapes/morphology.jpg
+     @shelf/06/partOfYou1.png to @shelf/0-6/backscapes/partOfYou1.png
+     @shelf/06/partOfYou2.png to @shelf/0-6/backscapes/partOfYou2.png
+     @shelf/06/popeye.png to @shelf/0-6/blobs/popeye.png
+     @shelf/06/register-4.jpg to @shelf/0-6/backscapes/register-4.jpg
+     @shelf/06/satisfyingSetting.mp4 to @shelf/0-6/stream/satisfyingSetting.mp4
+     @shelf/06/sharkTeeth.png to @shelf/0-6/blobs/sharkTeeth.png
+     @shelf/06/signoftheTimes.png to @shelf/0-6/blobs/signoftheTimes.png
+     @shelf/06/spendthrift.gif to @shelf/0-6/loops/spendthrift.gif
+     @shelf/06/splashthick-pink-fluid.png to @shelf/0-6/blobs/splashthick-pink-fluid.png
      @main/06/favicons/slate.ico to @shelf
      @shelf/06/favicons/RGB-cinnamonSatin.ico to @shelf
      @shelf/06/favicons/RGB-electricredBlush.ico to @shelf
      @shelf/06/favicons/RGB-greenPeriwinkle.ico to @shelf
      @shelf/06/favicons/RGB-redPiink.ico to @shelf
      @shelf/06/favicons/sixArrows.ico to @shelf
-     06/WaterCity.gif to 
-     06/kemalizm.mp4 to 
-     @shelf/06/satisfyingSetting.mp4 to @shelf
-
+     06/WaterCity.gif to 0-6/loops/WaterCity.gif
+     06/kemalizm.mp4 to 0-6/stream/kemalizm.mp4
