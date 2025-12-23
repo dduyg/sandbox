@@ -1,16 +1,5 @@
 ## [🚪](https://dduyg.github.io/sandbox)
 
-```
-[pattern-obsessed] 
-[ensemble-everything]
-[hyperparameter-tortured]
-[latent-space-wandering]
-[architecturally adventurous]
-[efficiency-obsessed]
-```
-
----
-
 <pre>
 
 ┌──┤ ABOUT ├─────────▰▰▰
@@ -35,13 +24,18 @@
 
 
 > [!WARNING]
-> To show private statistics on the stats card, you should deploy using GitHub API token.
+> system.log: { status: "abandoned server" }
 
 > [!NOTE]
 > Made by Duygu who appreciate smooth animations
 
 > [!IMPORTANT]
-> system.log: { status: "abandoned server" }
+> - [pattern-obsessed]
+> - [ensemble-everything
+> - [hyperparameter-tortured]
+> - [latent-space-wandering]
+> - [architecturally adventurous]
+> - [efficiency-obsessed]
 
 ---
 
