@@ -1,3 +1,6 @@
+
+
+```svg
 <svg width="450" height="40" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
@@ -15,6 +18,7 @@
       font-weight: 700;
       fill: #6B2F38;
       filter: url(#blur);
+      opacity: 0;
     }
     
     .adj1 { animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite 0s; }
