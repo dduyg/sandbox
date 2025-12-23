@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sticky Ghost</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700" rel="stylesheet" />
+    <style>
+      body {  
+        font-family: 'IBM Plex Mono', monospace;
+        color: black;
+        background-color: #BF98AD;
+        margin: 0; padding: 0;  
+      }
+      .sticky-header {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%;
+        background-color: #BF98AD;
+        color: black;
+        padding: 10px 0;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .sticky-header nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 10px;
+        display: flex;
+      }
+      .sticky-header nav ul li {
+        margin-right: 20px;
+      }
+      .sticky-title {
+        font-size: large;
+        letter-spacing: 2px;
+      }
+      main {
+        margin-top: 100px; /* Add margin to prevent content from being hidden behind the header */
+        padding: 2em;
+        max-width: 600px;
+      }
+      h1 { color: #6EF8BA; }
+      p { line-height: 1.5; }
+      a {
+        color: inherit;
+        font-style: italic;
+        text-decoration: none;
+        border-bottom: 3px solid #6EF8BA;
+      }
+      footer {
+        margin-top: 40px;
+        border-top: 3px solid #6EF8BA;
+      }
+      .ghost {
+        display: inline-block;
+        vertical-align: middle;
+        width: 1em;
+        height: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="sticky-header">
+      <nav>
+        <ul>
+          <li class="sticky-title">Sticky Ghost <b>}}</b></li>
+          <li>#<a href="#sixth">06</a></li>
+          <li>#<a href="#twenty">20</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>I can't sleep alone <img src="spooky.gif" class="ghost"></h1>
+      <p>
+        Pellentes <strong>habitant</strong> morbi tristique senectus
+        et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam,
+        feugiat <samp>vitae</samp>, ultricies eget, tempor sit amet, ante. Donec eu libero
+        sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris
+        placerat eleifend <a href="#within">leo</a>. Quisque sit amet est et
+        <b>sapien</b> ullamcorper pharetra. Vestibulum erat wisi, condimentum sed,
+        commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget
+        tincidunt <em>condimentum</em>, eros ipsum rutrum orci, sagittis tempus lacus
+        enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis.
+        Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue,
+        eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi,
+        tincidunt quis, accumsan porttitor, facilisis luctus, metus
+      </p>
+      <p id="sixth">
+        Pellentesque habitant <sup>morbi</sup> tristique senectus et netus et malesuada
+        fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
+        <sub>ultricies</sub> eget, tempor sit amet, ante. Donec eu libero sit amet quam
+        egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
+        leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum
+        erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean
+        fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci,
+        sagittis <strong id="within">tempus</strong> lacus enim ac dui. Donec
+        non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque
+        id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros
+        eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan
+        porttitor, facilisis luctus, metus
+      </p>
+      <p id="twenty">
+        Pellentesque habitant morbi tristique senectus et netus et malesuada
+        fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
+        ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
+        egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend
+        leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum
+        erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean
+        fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci,
+        sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar
+        facilisis.
+      </p>
+
+      <footer>
+        <p>crafted with a 👻 and 👾 by <a href="#">duygu</a>. see the <a href="#">code</a>.</p>
+      </footer>
+    </main>
+
+    <script>
+      // JavaScript is used to add a class when the user scrolls down, making the header sticky
+      const header = document.querySelector('.sticky-header');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 0) {
+          header.classList.add('sticky');
+        } else {
+          header.classList.remove('sticky');
+        }
+      });
+    </script>
+  </body>
+</html>
