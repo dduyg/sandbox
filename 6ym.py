@@ -1,7 +1,21 @@
+▸▸▸ access.token: ").strip()
+▸▸▸ source.repo [username/repo-name]:
 
-print("\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
-print("█ ⟪⟪⟪ GITHUB LINK PROTOCOL ⟫⟫⟫                                            █")
-print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+
+dest_input = input("  >> DEST.REPO (username/repo-name): ").strip()
+branch = input("  >> DEST.BRANCH [main]: ").strip() or "main"
+token = getpass("  >> AUTH.TOKEN: ").strip()
+source_input = input("  >> SOURCE.REPO (username/repo-name): ").strip()
+
+
+▸▸▸ DEST_REPO [username/repo-name]:
+▸▸▸ ACCESS_TOKEN:
+
+▸▸▸ SOURCE_PATH [e.g. raw_glyphs]:
+▸▸▸ SOURCE_BRANCH [default=main]:
+
+
+print(f"  ⊗ ERR :: {e}")
 
 
 print("\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
@@ -24,27 +38,11 @@ COMPLETE ::
 
   [X] ERROR :: Fetch failed | {e}")
 
->> GITHUB CONFIG :: D
+>> GITHUB CONFIG :: 
 
- [>] Destination repository
-
-ept ValueError as e:
-    print(f"  [X] ERROR :: {e}")
-
- [>] Target branch
-
-[>] GitHub access token >>
-
-input_method = input("\n  [>] Select mode [1 or 2] >> ").strip()
+print(f"  [X] ERROR :: {e}")
 
   >> LOCAL UPLOAD :: Select files to process")
-    
-print("  [X] FATAL :: No glyphs detected in source")
-  
-  >> LOCAL UPLOAD :: Select files to process")
-    
-
-Access Token:
 
   ⊙ WARN :: REPO_NOT_FOUND → CREATING '{github_repo}'...")
 
@@ -66,8 +64,6 @@ print(f"█  ⌬ LIBRARY_EXPANDED :: {len(all_glyphs)} total glyphs")
         print(f"\n  ⌬ FETCHING_DATA :: {len(png_files)} files from {source_user}/{source_repo}/{source_path}")
 
 print(f"  ⊗ ERR :: FETCH_FAILED → {e}")
-
- print(f"  >> ERROR: {e}")
 
  [████░░░░░░] FETCHING :: 
 
