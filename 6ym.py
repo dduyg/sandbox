@@ -1,17 +1,3 @@
-"""
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-█  ⟪⟪⟪ GLYPH FEATURE PIPELINE v3.0 ⟫⟫⟫
-█    [EXTRACT] → [ANALYZE] → [CLASSIFY] → [COMMIT]
-█ ╠════════════════════════════════════════════════════════════════════════════╣
-█    • K-means color clustering → Dominant/secondary palette extraction
-█    • Visual metrics → Edge density, entropy, texture, contrast, shape
-█    • Mood classification → Color harmony & aesthetic profiling
-█    • Auto-storage → GitHub API (glyphs/ + data/)
-█    • Incremental JSON/CSV updates for continuous library expansion
-█ ╠════════════════════════════════════════════════════════════════════════════╣
-█    [SYS/AUTHOR] Duygu Dağdelen   [INIT] 2025-12-14
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-"""
 
 print("\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
 print("█ ⟪⟪⟪ GITHUB LINK PROTOCOL ⟫⟫⟫                                            █")
@@ -121,19 +107,6 @@ s + 2 data files committed\n")
     except GithubException as e:
         print(
 
-
-─────────────────────────────────────────────────────────────────────────────╣
-║  ⟨█⟩ K-means color clustering → Dominant/secondary palette extraction       ║
-║  ⟨█⟩ Quantitative visual metrics → Edge density, entropy, texture, contrast ║
-║  ⟨█⟩ Mood classification → Color harmony evaluation & aesthetic profiling   ║
-║  ⟨█⟩ Storage → Direct commit to GitHub via API (images/data/catalog)        ║
-║  ⟨█⟩ Incremental JSON/CSV updates for continuous library expansion          ║
-╠──────────────────────────────────────────────────────────────────────────────╣
-║  >> SYSTEM.AUTHOR: Duygu Dağdelen | 2025-12-14                              ║
-║  >> PROTOCOL.VERSION: 2.0.0-ALPHA                                            ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-"""
-
  = repo.get_git_ref(f"heads/{branch}")
         ref.edit(commit.sha)
         
@@ -147,19 +120,3 @@ s + 2 data files committed\n")
             
     except GithubException as e:
         print(f"\n   ✗ GitHub API Error: {e.status} - {e.data.get('message', 'Unknown')}")
-
-
-
-
-
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃ M.01 > K-MEANS.COLOR.CLUSTERING                                                        ┃
-┃        Dominant/secondary palette extraction                         ┃
-┃ M.02 > QUANTITATIVE.VISUAL.METRICS                                   ┃
-┃        Edge density | Entropy | Texture | Contrast | Shape analysis  ┃
-┃ M.03 > MOOD.CLASSIFICATION                                           ┃
-┃        Color harmony evaluation & aesthetic profiling                ┃
-┃ M.04 > GITHUB.STORAGE.PIPELINE                                       ┃
-┃        Images → glyphs/ | Data → data/                               ┃
-┃ M.05 > INCREMENTAL.UPDATE.SYSTEM                                     ┃
-┃        JSON + CSV for continuous library expansion 
