@@ -1,18 +1,5 @@
-▸▸▸ source.repo [username/repo-name]:
-
-dest_input = input("  >> DEST.REPO (username/repo-name): ").strip()
-branch = input("  >> DEST.BRANCH [main]: ").strip() or "main"
-token = getpass("  >> AUTH.TOKEN: ").strip()
-source_input = input("  >> SOURCE.REPO (username/repo-name): ").strip()
-
-
-▸▸▸ DEST_REPO [username/repo-name]:
-▸▸▸ ACCESS_TOKEN:
-▸▸▸ SOURCE_PATH [e.g. raw_glyphs]:
-▸▸▸ SOURCE_BRANCH [default=main]:
-
 print("\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
-print("█ ⟪⟪⟪ INPUT SOURCE CONFIGURATION ⟫⟫⟫                                      █")
+print("█ ⟪⟪⟪ INPUT SOURCE CONFIG ⟫⟫⟫                                      █")
 print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
 print("█  [1] LOCAL_UPLOAD → Select from computer                                 █")
 print("█  [2] GITHUB_FETCH → Pull from repository                                 █")
