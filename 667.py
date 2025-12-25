@@ -10,27 +10,12 @@ print(f"      │   └── ((if existing_glyphs) `2 catalogs updated` (else) 
 print(f"      ├── input.mode: `SELECT.FROM.LOCAL.COMPUTER` ( if chosen 1) or `FETCH.FROM.REPOSITORY` (if 2)")
 print(f"      └── location: (dest_repo)")
 print(f"        └── [↗] https://github.com/link-to-dest-repo")
-print(f"\n    yp//4/%5tgghatoutput_folder")
-
-
-if skipped:
-            print(f"██   >_  ⟨⚠⟩ {len(skipped)} file(s) skipped:")
+▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+     if skipped:
+            print(f"██  ")
+            print(f"██⎯⎯⎯ [×] Skipped (n total skipped) files:")
             for msg in skipped:
                 print(f"██        >> {msg}")
         
-        if existing_glyphs:
-            print(f"██   >_  ⟨◢◣⟩ Ltotal")
         
-        print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
-            
-
-
-
-
-"""
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-██   >_  : 75 glyphs + 2 catalogs created [COMMITTED]
-██   >_  ⟨⚠⟩ 1 file(s) skipped:
-██        >> SKIP.INVALID_IMAGE :: inwave1766494952127.png
-▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-"""
