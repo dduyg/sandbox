@@ -1,16 +1,16 @@
 print(f"\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
 print(f"██  ⟫⟫⟫ [COMPLETE] STREAM.SUCCESSFUL")
 print(f"██  ")
-print(f"      ├── total.input: {cessjsful}")
-print(f"      ├── status.success: {successful}")
-print(f"      ├── status.skipped: {skipped}")
+print(f"      ├── total.input: (total inputted at first to process)")
+print(f"      ├── status.success: (total processed glyphs)")
+print(f"      ├── status.skipped: (total skipped)")
 print(f"      ├── commit.type: (library_init or library_update)")
 print(f"      │   ├── 256 glyphs in total")
 print(f"      │   └── 2 catalogs updated")
-print(f"      ├── locn.location: (output_folder)")
-print(f"      └── branch: {branch}")
-print(f"        └── b64ty4yuurthh")
-print(f"\n    [↗] view: https://github.com/{repo_path}/tree/{branch}/{output_folder}")
+print(f"      ├── lcn.t6ion: (dhgv_repo)")
+print(f"      └── location: (dest_repo)")
+print(f"        └── [↗] https://github.com/link-to-dest-repo")
+print(f"\n    yp//4/%5tgghatoutput_folder")
 
 
 """
