@@ -97,21 +97,21 @@ mindmap
 flowchart TD
     Start([FEATURE PIPELINE]) --> InputMode{INPUT MODE}
     
-    InputMode -->|1| Local["<span style='color:#BDBEBD'>LOCAL COMPUTER</span>"]
-    InputMode -->|2| Remote["<span style='color:#BDBEBD'>REMOTE REPOSITORY</span>"]
+    InputMode -->|1| Local["LOCAL COMPUTER"]
+    InputMode -->|2| Remote["REPOSITORY"]
     
-    Local --> Fetch["<span style='color:#BDBEBD'>fetch_from_source</span>"]
+    Local --> Fetch["fetch_from_source"]
     Remote --> Fetch
     
     Fetch --> Pipeline["<b>pipeline_to_storage</b><br/><span style='color:#BDBEBD'>streamed_files dict<br/>filename: bytes</span>"]
     
-    Pipeline --> Processing["<span style='color:#BDBEBD'>M.01 Color Clustering<br/>M.02 Visual Metrics<br/>M.03 Mood Classification<br/>M.04 Data Generation</span>"]
+    Pipeline --> Processing["M.01 Color Clustering<br/>M.02 Visual Metrics<br/>M.03 Mood Classification<br/>M.04 Data Generation"]
     
-    Processing --> GitOps["<span style='color:#BDBEBD'>Git Blob Creation<br/>Catalog Assembly<br/>Tree Build</span>"]
+    Processing --> GitOps["Git Blob Creation<br/>Catalog Assembly<br/>Tree Build"]
     
-    GitOps --> Commit[SINGLE ATOMIC COMMIT<br/>LIBRARY.INIT or EXPANDED]
+    GitOps --> Commit[SINGLE ATOMIC COMMIT<br/>LIBRARY.INIT or LIBRARY.EXPANDED]
     
-    Commit --> Storage["<span style='color:#BDBEBD'><b>STORAGE</b></span><br/><span style='font-size:10px; color:#BDBEBD'>user/repo</span><br/><br/><span style='color:#BDBEBD'>glyphs/hex_uuid.png<br/>data/glyphs.catalog.json<br/>data/glyphs.catalog.csv</span>"]
+    Commit --> Storage["<b>STORAGE</b><br/><span style='font-size:10px; color:#BDBEBD'>user/repo</span><br/><br/><span style='color:#FFFEEC'>glyphs/hex_uuid.png<br/>data/glyphs.catalog.json<br/>data/glyphs.catalog.csv</span>"]
     
     Storage --> Success([STREAM SUCCESSFUL])
     
@@ -119,11 +119,11 @@ flowchart TD
     style Pipeline fill:#1F1D1E,stroke:#00d9ff,stroke-width:2px,color:#00d9ff
     style Commit fill:#1F1D1E,stroke:#ff2a6d,stroke-width:2px,color:#ff2a6d
     style Success fill:#1F1D1E,stroke:#39ff14,stroke-width:3px,color:#39ff14
-    style Processing fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
-    style GitOps fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
-    style Storage fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
-    style InputMode fill:#1F1D1E,stroke:#00d9ff,stroke-width:1px,color:#BDBEBD
-    style Local fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
-    style Remote fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
-    style Fetch fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
+    style Processing fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
+    style GitOps fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
+    style Storage fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
+    style InputMode fill:#1F1D1E,stroke:#00d9ff,stroke-width:1px,color:#FFFEEC
+    style Local fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
+    style Remote fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
+    style Fetch fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
 ```
