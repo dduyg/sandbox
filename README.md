@@ -93,54 +93,37 @@ mindmap
       Terraform
 ```
 
-
 ```mermaid
 flowchart TD
-    Start([⟪ GLYPH.FEATURE.PIPELINE ⟫]) --> InputMode{INPUT.MODE}
+    Start([FEATURE PIPELINE]) --> InputMode{INPUT MODE}
     
-    InputMode -->|[1]| Local[LOCAL.COMPUTER]
-    InputMode -->|[2]| Remote[REMOTE.REPOSITORY]
+    InputMode -->|1| Local["<span style='color:#BDBEBD'>LOCAL COMPUTER</span>"]
+    InputMode -->|2| Remote["<span style='color:#BDBEBD'>REMOTE REPOSITORY</span>"]
     
-    Local --> Fetch[fetch_from_source]
+    Local --> Fetch["<span style='color:#BDBEBD'>fetch_from_source</span>"]
     Remote --> Fetch
     
-    Fetch --> Stream["streamed_files dict
-    {filename: bytes}"]
+    Fetch --> Pipeline["<b>pipeline_to_storage</b><br/><span style='color:#BDBEBD'>streamed_files dict<br/>filename: bytes</span>"]
     
-    Stream --> Pipeline[pipeline_to_storage]
+    Pipeline --> Processing["<span style='color:#BDBEBD'>M.01 Color Clustering<br/>M.02 Visual Metrics<br/>M.03 Mood Classification<br/>M.04 Data Generation</span>"]
     
-    Pipeline --> Processing["M.01 → Color.Clustering
-    M.02 → Visual.Metrics
-    M.03 → Mood.Classification
-    M.04 → Metadata.Generation"]
+    Processing --> GitOps["<span style='color:#BDBEBD'>Git Blob Creation<br/>Catalog Assembly<br/>Tree Build</span>"]
     
-    Processing --> GitOps["Git.Blob.Creation
-    Catalog.Assembly [JSON+CSV]
-    Tree.Build [glyphs/ + data/]"]
+    GitOps --> Commit[SINGLE ATOMIC COMMIT<br/>LIBRARY.INIT or EXPANDED]
     
-    GitOps --> Commit["⚡ SINGLE.ATOMIC.COMMIT
-    [LIBRARY.INIT | LIBRARY.EXPANDED]"]
+    Commit --> Storage["<span style='color:#BDBEBD'><b>STORAGE</b></span><br/><span style='font-size:10px; color:#BDBEBD'>user/repo</span><br/><br/><span style='color:#BDBEBD'>glyphs/hex_uuid.png<br/>data/glyphs.catalog.json<br/>data/glyphs.catalog.csv</span>"]
     
-    Commit --> Storage["REMOTE.STORAGE
-    gh_user/gh_repo"]
+    Storage --> Success([STREAM SUCCESSFUL])
     
-    Storage --> Structure["glyphs/[hex]_[uuid].png
-    data/glyphs.catalog.json
-    data/glyphs.catalog.csv"]
-    
-    Structure --> Success([✓ STREAM.SUCCESSFUL])
-    
-    style Start fill:#0a0e27,stroke:#00ff41,stroke-width:2px,color:#00ff41
-    style Pipeline fill:#0d1117,stroke:#58a6ff,stroke-width:2px,color:#58a6ff
-    style Commit fill:#0d1117,stroke:#f778ba,stroke-width:2px,color:#f778ba
-    style Success fill:#0a0e27,stroke:#00ff41,stroke-width:2px,color:#00ff41
-    style Processing fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
-    style GitOps fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
-    style Stream fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
-    style Structure fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
-    style InputMode fill:#0d1117,stroke:#58a6ff,stroke-width:1px,color:#58a6ff
-    style Local fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
-    style Remote fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
-    style Fetch fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
-    style Storage fill:#161b22,stroke:#8b949e,stroke-width:1px,color:#c9d1d9
+    style Start fill:#1F1D1E,stroke:#0ff,stroke-width:3px,color:#0ff
+    style Pipeline fill:#1F1D1E,stroke:#00d9ff,stroke-width:2px,color:#00d9ff
+    style Commit fill:#1F1D1E,stroke:#ff2a6d,stroke-width:2px,color:#ff2a6d
+    style Success fill:#1F1D1E,stroke:#39ff14,stroke-width:3px,color:#39ff14
+    style Processing fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
+    style GitOps fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
+    style Storage fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
+    style InputMode fill:#1F1D1E,stroke:#00d9ff,stroke-width:1px,color:#BDBEBD
+    style Local fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
+    style Remote fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
+    style Fetch fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#BDBEBD
 ```
