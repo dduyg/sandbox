@@ -103,7 +103,7 @@ flowchart TD
     Local --> Fetch["fetch_from_source"]
     Remote --> Fetch
     
-    Fetch --> Pipeline["<b>pipeline_to_storage</b><br/><span style='color:#BDBEBD'>streamed_files dict<br/>filename: bytes</span>"]
+    Fetch --> Pipeline["<b>pipeline_to_storage</b><br/><span style='color:#FFFEEC'>streamed_files dict<br/>filename: bytes</span>"]
     
     Pipeline --> Processing["M.01 Color Clustering<br/>M.02 Visual Metrics<br/>M.03 Mood Classification<br/>M.04 Data Generation"]
     
@@ -115,15 +115,15 @@ flowchart TD
     
     Storage --> Success([STREAM SUCCESSFUL])
     
-    style Start fill:#1F1D1E,stroke:#0ff,stroke-width:3px,color:#0ff
-    style Pipeline fill:#1F1D1E,stroke:#00d9ff,stroke-width:2px,color:#00d9ff
+    style Start fill:#1F1D1E,stroke:#F829DC,stroke-width:3px,color:#F829DC
+    style Pipeline fill:#1F1D1E,stroke:#AD29F8,stroke-width:2px,color:#AD29F8
     style Commit fill:#1F1D1E,stroke:#ff2a6d,stroke-width:2px,color:#ff2a6d
-    style Success fill:#1F1D1E,stroke:#39ff14,stroke-width:3px,color:#39ff14
-    style Processing fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
-    style GitOps fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
-    style Storage fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
-    style InputMode fill:#1F1D1E,stroke:#00d9ff,stroke-width:1px,color:#FFFEEC
-    style Local fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
-    style Remote fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
-    style Fetch fill:#1F1D1E,stroke:#7dd3fc,stroke-width:1px,color:#FFFEEC
+    style Success fill:#1F1D1E,stroke:#29F8AD,stroke-width:3px,color:#29F8AD
+    style Processing fill:#1F1D1E,stroke:#DCF829,stroke-width:1px,color:#FFFEEC
+    style GitOps fill:#1F1D1E,stroke:#DCF829,stroke-width:1px,color:#FFFEEC
+    style Storage fill:#1F1D1E,stroke:#DCF829,stroke-width:1px,color:#FFFEEC
+    style InputMode fill:#1F1D1E,stroke:#DCF829,stroke-width:1px,color:#FFFEEC
+    style Local fill:#1F1D1E,stroke:#DCF829,stroke-width:1px,color:#FFFEEC
+    style Remote fill:#1F1D1E,stroke:#DCF829,stroke-width:1px,color:#FFFEEC
+    style Fetch fill:#1F1D1E,stroke:#DCF829,stroke-width:1px,color:#FFFEEC
 ```
