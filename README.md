@@ -111,7 +111,7 @@ flowchart TD
     
     GitOps --> Commit[SINGLE ATOMIC COMMIT<br/>LIBRARY.INIT or LIBRARY.EXPANDED]
     
-    Commit --> Storage["<b>STORAGE</b><br/><span style='font-size:10px; color:#BDBEBD'>user/repo</span><br/><br/><span style='color:#FFFEEC'>glyphs/hex_uuid.png<br/>data/glyphs.catalog.json<br/>data/glyphs.catalog.csv</span>"]
+    Commit --> Storage["<b>STORAGE</b><br/><span style='font-size:10px;color:#FFFEEC'>glyphs/hex_uuid.png<br/>data/glyphs.catalog.json<br/>data/glyphs.catalog.csv</span>"]
     
     Storage --> Success([STREAM.SUCCESSFUL])
     
