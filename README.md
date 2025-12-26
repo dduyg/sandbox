@@ -97,15 +97,15 @@ mindmap
 flowchart TD
     Start([FEATURE PIPELINE]) --> InputMode{INPUT MODE}
     
-    InputMode -->|1| Local["LOCAL COMPUTER"]
-    InputMode -->|2| Remote["REPOSITORY"]
+    InputMode -->|1| Local["SELECT.FROM.LOCAL.COMPUTER"]
+    InputMode -->|2| Remote["FETCH.FROM.REPOSITORY"]
     
     Local --> Fetch["fetch_from_source"]
     Remote --> Fetch
     
     Fetch --> Pipeline["<b>pipeline_to_storage</b><br/><span style='color:#FFFEEC'>streamed_files dict<br/>filename: bytes</span>"]
     
-    Pipeline --> Processing["M.01 Color Clustering<br/>M.02 Visual Metrics<br/>M.03 Mood Classification<br/>M.04 Data Generation"]
+    Pipeline --> Processing["M.01 Color.Clustering<br/>M.02 Visual.Metrics<br/>M.03 Mood.Classification<br/>M.04 Data.Generation"]
     
     Processing --> GitOps["Git Blob Creation<br/>Catalog Assembly<br/>Tree Build"]
     
@@ -113,7 +113,7 @@ flowchart TD
     
     Commit --> Storage["<b>STORAGE</b><br/><span style='font-size:10px; color:#BDBEBD'>user/repo</span><br/><br/><span style='color:#FFFEEC'>glyphs/hex_uuid.png<br/>data/glyphs.catalog.json<br/>data/glyphs.catalog.csv</span>"]
     
-    Storage --> Success([STREAM SUCCESSFUL])
+    Storage --> Success([STREAM.SUCCESSFUL])
     
     style Start fill:#1F1D1E,stroke:#CD8301,stroke-width:3px,color:#CD8301
     style Pipeline fill:#1F1D1E,stroke:#AD29F8,stroke-width:2px,color:#AD29F8
