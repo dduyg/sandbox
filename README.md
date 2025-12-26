@@ -115,7 +115,7 @@ flowchart TD
     
     Storage --> Success([STREAM SUCCESSFUL])
     
-    style Start fill:#1F1D1E,stroke:#F829DC,stroke-width:3px,color:#F829DC
+    style Start fill:#1F1D1E,stroke:#CD8301,stroke-width:3px,color:#CD8301
     style Pipeline fill:#1F1D1E,stroke:#AD29F8,stroke-width:2px,color:#AD29F8
     style Commit fill:#1F1D1E,stroke:#ff2a6d,stroke-width:2px,color:#ff2a6d
     style Success fill:#1F1D1E,stroke:#29F8AD,stroke-width:3px,color:#29F8AD
