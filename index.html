@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diverging Gradient Scale</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+        }
+
+        /* The Gradient Bar */
+        .gradient-bar {
+            height: 80px;
+            width: 100%;
+            border: 1px solid #333;
+            /* Exact CSS linear-gradient based on your image */
+            background: linear-gradient(
+                90deg, 
+                #8db9ff 0%,   /* Cool Blue */
+                #b8b29a 50%,  /* Neutral Middle */
+                #d4b500 100%  /* Golden Yellow */
+            );
+        }
+
+        /* Tick marks and Labels */
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .label-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20px;
+        }
+
+        .tick {
+            width: 2px;
+            height: 10px;
+            background-color: #333;
+            margin-bottom: 4px;
+        }
+
+        .number {
+            font-size: 18px;
+            font-weight: 500;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="gradient-bar"></div>
+        
+        <div class="labels">
+            <div class="label-item">
+                <div class="tick"></div>
+                <span class="number">-50</span>
+            </div>
+            <div class="label-item">
+                <div class="tick"></div>
+                <span class="number">0</span>
+            </div>
+            <div class="label-item">
+                <div class="tick"></div>
+                <span class="number">50</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
