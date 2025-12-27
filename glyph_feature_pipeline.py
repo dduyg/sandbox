@@ -111,28 +111,6 @@ def compute_secondary_color(rgb, mask, k=5):
     order = np.argsort(counts)[::-1]
     return tuple(int(x) for x in centers[order[1]])
 
-def compute_color_group(rgb):
-    r, g, b = rgb
-    r_f, g_f, b_f = r/255, g/255, b/255
-    h, s, v = colorsys.rgb_to_hsv(r_f, g_f, b_f)
-    h *= 360
-    brightness = 0.2126*r + 0.7152*g + 0.0722*b
-    sat = s
-    if brightness < 40: return "black"
-    if brightness > 230 and sat < 0.20: return "white"
-    if sat < 0.12 and 40 <= brightness <= 230: return "gray"
-    if 35 < h < 65 and 120 < brightness < 220 and 0.20 < sat < 0.55: return "gold"
-    if brightness > 180 and sat < 0.18: return "silver"
-    if brightness < 140 and sat > 0.25 and 15 < h < 65: return "brown"
-    if h <= 20 or h >= 345: return "red"
-    if 20 < h <= 45: return "orange"
-    if 45 < h <= 75: return "yellow"
-    if 75 < h <= 165: return "green"
-    if 165 < h <= 250: return "blue"
-    if 250 < h <= 295: return "purple"
-    if 295 < h <= 345: return "pink"
-    return "gray"
-
 def compute_color_harmony(c1, c2):
     h1 = compute_hue(c1)
     h2 = compute_hue(c2)
@@ -298,8 +276,6 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
     sec_hex = rgb_to_hex(sec)
     dom_lab = rgb_to_lab(dom)
     sec_lab = rgb_to_lab(sec)
-    dom_group = compute_color_group(dom)
-    sec_group = compute_color_group(sec)
     palette_contrast = compute_palette_contrast(dom, sec)
     edge = compute_edge_density(rgb_crop, mask_crop)
     ent = compute_entropy(rgb_crop, mask_crop)
@@ -329,13 +305,11 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
         "color": {
             "dominant": {
                 "hex": dom_hex,
-                "group": dom_group,
                 "rgb": list(dom),
                 "lab": [round(x, 2) for x in dom_lab]
             },
             "secondary": {
                 "hex": sec_hex,
-                "group": sec_group,
                 "rgb": list(sec),
                 "lab": [round(x, 2) for x in sec_lab]
             },
@@ -445,8 +419,8 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
         csv_writer = csv.writer(csv_output)
         csv_writer.writerow([
             "id", "filename", "glyph_url",
-            "dominant_hex", "dominant_group", "dominant_rgb", "dominant_lab",
-            "secondary_hex", "secondary_group", "secondary_rgb", "secondary_lab",
+            "dominant_hex", "dominant_rgb", "dominant_lab",
+            "secondary_hex", "secondary_rgb", "secondary_lab",
             "palette_contrast",
             "edge_density", "entropy", "texture", "contrast", "circularity", "aspect_ratio",
             "edge_angle", "color_harmony", "mood", "created_date", "created_time"
@@ -454,9 +428,9 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
         for g in all_glyphs:
             csv_writer.writerow([
                 g["id"], g["filename"], g["glyph_url"],
-                g["color"]["dominant"]["hex"], g["color"]["dominant"]["group"],
+                g["color"]["dominant"]["hex"],
                 str(g["color"]["dominant"]["rgb"]), str(g["color"]["dominant"]["lab"]),
-                g["color"]["secondary"]["hex"], g["color"]["secondary"]["group"],
+                g["color"]["secondary"]["hex"],
                 str(g["color"]["secondary"]["rgb"]), str(g["color"]["secondary"]["lab"]),
                 g["color"]["palette_contrast"],
                 g["metrics"]["edge_density"], g["metrics"]["entropy"], g["metrics"]["texture"],
