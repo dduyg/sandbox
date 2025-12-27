@@ -63,8 +63,8 @@ def compute_hue(rgb):
     r, g, b = rgb
     return colorsys.rgb_to_hsv(r/255, g/255, b/255)[0] * 360
 
-def compute_palette_contrast(rgb1, rgb2):
-    """Compute perceptual distance between two colors in LAB space"""
+def compute_palette_distance(rgb1, rgb2):
+    """Compute perceptual distance between dominant and secondary colors in LAB space"""
     lab1 = rgb_to_lab(rgb1)
     lab2 = rgb_to_lab(rgb2)
     delta = np.sqrt(
@@ -276,7 +276,7 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
     sec_hex = rgb_to_hex(sec)
     dom_lab = rgb_to_lab(dom)
     sec_lab = rgb_to_lab(sec)
-    palette_contrast = compute_palette_contrast(dom, sec)
+    palette_distance = compute_palette_distance(dom, sec)
     edge = compute_edge_density(rgb_crop, mask_crop)
     ent = compute_entropy(rgb_crop, mask_crop)
     tex = compute_texture_complexity(rgb_crop, mask_crop)
@@ -313,7 +313,7 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
                 "rgb": list(sec),
                 "lab": [round(x, 2) for x in sec_lab]
             },
-            "palette_contrast": palette_contrast
+            "palette_distance": palette_distance
         },
         "metrics": {
             "edge_density": edge,
@@ -421,7 +421,7 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
             "id", "filename", "glyph_url",
             "dominant_hex", "dominant_rgb", "dominant_lab",
             "secondary_hex", "secondary_rgb", "secondary_lab",
-            "palette_contrast",
+            "palette_distance",
             "edge_density", "entropy", "texture", "contrast", "circularity", "aspect_ratio",
             "edge_angle", "color_harmony", "mood", "created_date", "created_time"
         ])
@@ -432,7 +432,7 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
                 str(g["color"]["dominant"]["rgb"]), str(g["color"]["dominant"]["lab"]),
                 g["color"]["secondary"]["hex"],
                 str(g["color"]["secondary"]["rgb"]), str(g["color"]["secondary"]["lab"]),
-                g["color"]["palette_contrast"],
+                g["color"]["palette_distance"],
                 g["metrics"]["edge_density"], g["metrics"]["entropy"], g["metrics"]["texture"],
                 g["metrics"]["contrast"], g["metrics"]["circularity"], g["metrics"]["aspect_ratio"],
                 g["metrics"]["edge_angle"], g["color_harmony"], g["mood"],
