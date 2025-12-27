@@ -344,7 +344,7 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
     repo_created = False
     try:
         repo = user.get_repo(gh_repo)
-        print(f"\n  ◆ REPO.FOUND: {gh_repo}\n")
+        print(f"\n  ⬢ REPO.FOUND: {gh_repo}\n")
     except:
         print(f"\n   ⟨⚠⟩  REPO.NOT_FOUND → creating '{gh_repo}'...")
         repo = user.create_repo(gh_repo)
