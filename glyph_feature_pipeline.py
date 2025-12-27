@@ -272,21 +272,21 @@ def compute_mood(dom_rgb, entropy, edge, tex, contrast, circ, aspect, angle, har
     return max(scores, key=scores.get)
 
 def process_glyph_from_bytes(image_bytes, filename, existing_hashes, gh_user, gh_repo, branch="main"):
-    """Process a single glyph with perceptual hash deduplication"""
+    """Process a single glyph directly from bytes with deduplication"""
     try:
         pil = Image.open(BytesIO(image_bytes)).convert("RGBA")
     except Exception as e:
         return None, f"SKIP.INVALID_IMAGE :: {filename}"
     
-    # Generate perceptual hash (8 hex chars)
-    phash = str(imagehash.phash(pil, hash_size=4))
+    # Generate perceptual hash for deduplication
+    phash = str(imagehash.phash(pil, hash_size=4))  # 8 hex chars
     
     # Check for duplicates (Hamming distance ≤ 5 = very similar)
     for existing_hash, existing_file in existing_hashes.items():
         try:
             distance = imagehash.hex_to_hash(phash) - imagehash.hex_to_hash(existing_hash)
             if distance <= 5:  # Threshold: 0=identical, <5=very similar
-                return None, f"DUPLICATE :: {filename} → {existing_file} (similarity distance: {distance})"
+                return None, f"SKIP.DUPLICATE :: {filename} → similar to [{existing_file}] (distance={distance})"
         except:
             continue
     
@@ -424,14 +424,14 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
             for future in as_completed(futures):
                 result, skip_msg = future.result()
                 if skip_msg:
-                    if "DUPLICATE" in skip_msg:
+                    if "SKIP.DUPLICATE" in skip_msg:
                         duplicates_found.append(skip_msg)
                     else:
                         skipped.append(skip_msg)
                     continue
                     
                 newname, image_bytes, glyph_data, phash = result
-                existing_hashes[phash] = newname  # Track new hashes
+                existing_hashes[phash] = newname  # Track new hashes to prevent duplicates in same batch
                 all_data.append(glyph_data)
                 
                 # Create blob directly
@@ -455,43 +455,18 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
                 print(f"██      >> {dup}")
             print(f"██  ")
             print(f"▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
-            print(f"\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-            choice = input("  [?] Include duplicates anyway? [y/N] >> ").strip().lower()
-            print(f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n")
+            print(f"\n  [?] These duplicates were EXCLUDED from processing.")
+            print(f"      Continue with {len(all_data)} unique glyphs? [Y/n] >> ", end="")
+            choice = input().strip().lower()
             
-            if choice != 'y':
-                print(f"  [✓] Excluded {len(duplicates_found)} duplicates from library\n")
+            if choice == 'n':
+                print(f"\n  [✖] OPERATION.CANCELLED by user\n")
+                return
             else:
-                print(f"  [✓] Including {len(duplicates_found)} duplicates in library\n")
-                # Reprocess duplicates without dedup check
-                dup_hashes_temp = {}
-                for dup_msg in duplicates_found:
-                    # Extract original filename from message
-                    fname = dup_msg.split(" :: ")[1].split(" → ")[0]
-                    if fname in glyph_stream:
-                        result, _ = process_glyph_from_bytes(
-                            glyph_stream[fname], 
-                            fname, 
-                            dup_hashes_temp,  # Use empty dict to skip dedup
-                            gh_user, 
-                            gh_repo, 
-                            branch
-                        )
-                        if result:
-                            newname, image_bytes, glyph_data, phash = result
-                            all_data.append(glyph_data)
-                            blob_b64 = b64encode(image_bytes).decode("utf-8")
-                            blob = repo.create_git_blob(blob_b64, "base64")
-                            elements.append(InputGitTreeElement(
-                                path=f"glyphs/{newname}",
-                                mode='100644',
-                                type="blob",
-                                sha=blob.sha
-                            ))
-                duplicates_found = []  # Clear since we're including them
+                print(f"\n  [✓] Continuing with {len(all_data)} unique glyphs...\n")
         
         if not all_data:
-            print("\n  [✖] FATAL :: No valid glyphs to process")
+            print("\n  [✖] FATAL :: No valid glyphs to process (all duplicates or invalid)")
             return
         
         # Create catalog files
@@ -511,8 +486,8 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
         csv_writer = csv.writer(csv_output)
         csv_writer.writerow([
             "id", "filename", "glyph_url",
-            "dom_color_hex", "dom_color_group", "dom_color_rgb", "dom_color_lab",
-            "sec_color_hex", "sec_color_group", "sec_color_rgb", "sec_color_lab",
+            "dominant_hex", "dominant_group", "dominant_rgb", "dominant_lab",
+            "secondary_hex", "secondary_group", "secondary_rgb", "secondary_lab",
             "palette_contrast",
             "edge_density", "entropy", "texture", "contrast", "circularity", "aspect_ratio",
             "edge_angle", "color_harmony", "mood", "created_date", "created_time"
@@ -525,9 +500,8 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
                 g["color"]["secondary"]["hex"], g["color"]["secondary"]["group"],
                 str(g["color"]["secondary"]["rgb"]), str(g["color"]["secondary"]["lab"]),
                 g["color"]["palette_contrast"],
-                g["metrics"]["edge_density"], g["metrics"]["entropy"],
-                g["metrics"]["texture"], g["metrics"]["contrast"],
-                g["metrics"]["circularity"], g["metrics"]["aspect_ratio"],
+                g["metrics"]["edge_density"], g["metrics"]["entropy"], g["metrics"]["texture"],
+                g["metrics"]["contrast"], g["metrics"]["circularity"], g["metrics"]["aspect_ratio"],
                 g["metrics"]["edge_angle"], g["color_harmony"], g["mood"],
                 g["created_at"]["date"], g["created_at"]["time"]
             ])
@@ -570,8 +544,8 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
         print(f"██  ")
         print(f"██      ├── total.input: {total_input}")
         print(f"██      ├── status.success: {len(all_data)}")
-        print(f"██      ├── status.skipped: {len(skipped)}")
         print(f"██      ├── status.duplicates: {len(duplicates_found)}")
+        print(f"██      ├── status.skipped: {len(skipped)}")
         print(f"██      ├── commit.type: {commit_type}")
         print(f"██      │   ├── {library_info}")
         print(f"██      │   └── {catalog_status}")
@@ -654,7 +628,7 @@ def parse_repo_input(repo_input):
 
 print("\n▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
 print("     ├─ ⌬ 𝐆𝐋𝐘𝐏𝐇 𝐅𝐄𝐀𝐓𝐔𝐑𝐄 𝐏𝐈𝐏𝐄𝐋𝐈𝐍𝐄    ⟩⟩⟩      SYS.ACTIVE")
-print("     └──── [extract] → [analyze] → [classify] → [deduplicate] → [commit]")
+print("     └──── [extract] → [analyze] → [classify] → [dedup] → [commit]")
 print("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n")
 
 # Choose input method
