@@ -63,6 +63,17 @@ def compute_hue(rgb):
     r, g, b = rgb
     return colorsys.rgb_to_hsv(r/255, g/255, b/255)[0] * 360
 
+def compute_palette_contrast(rgb1, rgb2):
+    """Compute perceptual distance between two colors in LAB space"""
+    lab1 = rgb_to_lab(rgb1)
+    lab2 = rgb_to_lab(rgb2)
+    delta = np.sqrt(
+        (lab1[0] - lab2[0])**2 + 
+        (lab1[1] - lab2[1])**2 + 
+        (lab1[2] - lab2[2])**2
+    )
+    return round(float(delta / 100), 4)  # Normalize to 0-1 range
+
 def masked_pixels(rgb, mask):
     pts = rgb[mask]
     if len(pts) == 0:
@@ -283,9 +294,13 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
 
     dom = compute_dominant_color(rgb_crop, mask_crop)
     sec = compute_secondary_color(rgb_crop, mask_crop)
-    hex_color = rgb_to_hex(dom)
-    lab = rgb_to_lab(dom)
-    group = compute_color_group(dom)
+    dom_hex = rgb_to_hex(dom)
+    sec_hex = rgb_to_hex(sec)
+    dom_lab = rgb_to_lab(dom)
+    sec_lab = rgb_to_lab(sec)
+    dom_group = compute_color_group(dom)
+    sec_group = compute_color_group(sec)
+    palette_contrast = compute_palette_contrast(dom, sec)
     edge = compute_edge_density(rgb_crop, mask_crop)
     ent = compute_entropy(rgb_crop, mask_crop)
     tex = compute_texture_complexity(rgb_crop, mask_crop)
@@ -298,7 +313,7 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
     now = datetime.now(timezone.utc)
     date_str = now.strftime("%Y-%m-%d")
     time_str = now.strftime("%H:%M:%S")
-    newname = f"{hex_color}_{uid}.png"
+    newname = f"{dom_hex}_{sec_hex}_{uid}.png"
     
     # Save to bytes for streaming
     output_buffer = BytesIO()
@@ -311,12 +326,36 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
         "id": uid,
         "filename": newname,
         "glyph_url": url,
-        "color": {"hex": hex_color, "group": group, "rgb": list(dom), "lab": [round(x, 2) for x in lab]},
-        "metrics": {"edge_density": edge, "entropy": ent, "texture": tex, "contrast": con,
-                   "circularity": circ, "aspect_ratio": ar, "edge_angle": ang},
+        "color": {
+            "dominant": {
+                "hex": dom_hex,
+                "group": dom_group,
+                "rgb": list(dom),
+                "lab": [round(x, 2) for x in dom_lab]
+            },
+            "secondary": {
+                "hex": sec_hex,
+                "group": sec_group,
+                "rgb": list(sec),
+                "lab": [round(x, 2) for x in sec_lab]
+            },
+            "palette_contrast": palette_contrast
+        },
+        "metrics": {
+            "edge_density": edge,
+            "entropy": ent,
+            "texture": tex,
+            "contrast": con,
+            "circularity": circ,
+            "aspect_ratio": ar,
+            "edge_angle": ang
+        },
         "color_harmony": harmony,
         "mood": mood,
-        "created_at": {"date": date_str, "time": time_str}
+        "created_at": {
+            "date": date_str,
+            "time": time_str
+        }
     }
     
     return (newname, output_bytes, glyph_data), None
@@ -405,17 +444,25 @@ def execute_glyph_pipeline(glyph_stream, gh_user, gh_repo, token, branch="main",
         csv_output = StringIO()
         csv_writer = csv.writer(csv_output)
         csv_writer.writerow([
-            "id", "filename", "glyph_url", "color_hex", "color_group", "color_rgb", "color_lab",
+            "id", "filename", "glyph_url",
+            "dominant_hex", "dominant_group", "dominant_rgb", "dominant_lab",
+            "secondary_hex", "secondary_group", "secondary_rgb", "secondary_lab",
+            "palette_contrast",
             "edge_density", "entropy", "texture", "contrast", "circularity", "aspect_ratio",
             "edge_angle", "color_harmony", "mood", "created_date", "created_time"
         ])
         for g in all_glyphs:
             csv_writer.writerow([
-                g["id"], g["filename"], g["glyph_url"], g["color"]["hex"], g["color"]["group"],
-                str(g["color"]["rgb"]), str(g["color"]["lab"]), g["metrics"]["edge_density"],
-                g["metrics"]["entropy"], g["metrics"]["texture"], g["metrics"]["contrast"],
-                g["metrics"]["circularity"], g["metrics"]["aspect_ratio"], g["metrics"]["edge_angle"],
-                g["color_harmony"], g["mood"], g["created_at"]["date"], g["created_at"]["time"]
+                g["id"], g["filename"], g["glyph_url"],
+                g["color"]["dominant"]["hex"], g["color"]["dominant"]["group"],
+                str(g["color"]["dominant"]["rgb"]), str(g["color"]["dominant"]["lab"]),
+                g["color"]["secondary"]["hex"], g["color"]["secondary"]["group"],
+                str(g["color"]["secondary"]["rgb"]), str(g["color"]["secondary"]["lab"]),
+                g["color"]["palette_contrast"],
+                g["metrics"]["edge_density"], g["metrics"]["entropy"], g["metrics"]["texture"],
+                g["metrics"]["contrast"], g["metrics"]["circularity"], g["metrics"]["aspect_ratio"],
+                g["metrics"]["edge_angle"], g["color_harmony"], g["mood"],
+                g["created_at"]["date"], g["created_at"]["time"]
             ])
         
         elements.append(InputGitTreeElement(
