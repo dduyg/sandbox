@@ -645,7 +645,7 @@ else:
     branch = input("　　　＞ ").strip() or "main"
     
     # Ask for token once (used for both source fetch and storage push)
-    print("\n━━━ACCESS_TOKEN  [✦]")
+    print("\n━━━ACCESS_TOKEN  [◆]")
     token = getpass("　　　＞ ").strip()
     
     # Now fetch files from repository using the token
