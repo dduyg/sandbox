@@ -21,10 +21,10 @@ def get_path():
         return path
 
 def img_2_svg_engine():
-    print("\n" + "═"*60)
-    print("    🌌  ＩＭＧ_２_ＳＶＧ  //  ＥＮＧＩＮＥ  Ｖ１０.２  🌌    ")
+    print("\n" + "═"*70)
+    print("    🔮  ＩＭＧ_２_ＳＶＧ  //  ＥＮＧＩＮＥ    🗿🗿🗿    ")
     print("    [ STATUS: READY_TO_VECTORIZE ]  [ CONNECTION: ENCRYPTED ]    ")
-    print("═"*60 + "\n")
+    print("═"*70 + "\n")
     
     print(">>> 🌀 INPUT_STREAM (URL / Local Path / 'p' to Upload)")
     user_input = input(">>> SOURCE: ").strip()
@@ -46,9 +46,9 @@ def img_2_svg_engine():
             print(f"\n[!] DATA_TRANSFER_FAILURE: {e}"); return
 
     # --- MODE SELECTION ---
-    print("\n" + "─"*60)  
+    print("\n" + "─"*70)  
     print("💠 [1] LOGO_SPLINE (Smooth/Minimal)  |  🌌 [2] PHOTO_POLYGON (High-Detail)")
-    print("─"*60)
+    print("─"*70)
     mode_choice = "spline" if input(">>> SELECT RENDERING_MODE: ") == "1" else "polygon"
     
     temp_svg = "matrix_output.svg"
@@ -93,10 +93,10 @@ def img_2_svg_engine():
                 files.download(temp_svg)
                 time.sleep(2) 
             except:
-                print(f"💾 [SAVE.LOCAL]  Data stored at {os.path.abspath(temp_svg)}")
+                print(f"🏹 [SAVE.LOCAL]  Data stored at {os.path.abspath(temp_svg)}")
 
             # Visual Preview
-            print("\n>>> 🖥️ DATA_PREVIEW_STREAM:")
+            print("\n>>> 📺 CODE_PREVIEW_STREAM:")
             print(f"      {svg_code[:180]}...")
             print("\n" + "━"*60)
 
@@ -109,7 +109,7 @@ def img_2_svg_engine():
     if is_url and os.path.exists(local_img):
         os.remove(local_img)
     
-    print("\n[ENGINE_IDLE] SESSION_TERMINATED. 💤 ENGINE_SLEEP.")
+    print("\n🚪 [ENGINE_IDLE] SESSION_TERMINATED. 💤 ENGINE_SLEEP.")
 
 # Execute Engine
 img_2_svg_engine()
