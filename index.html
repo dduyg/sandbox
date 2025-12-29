@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Glyph Library Gallery — by Duygu</title>
+  <title>Liminal🌀Loop — Interactive Gallery</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0014;
-      --bg-2: #12002a;
-      --pink: #ff71ce;
-      --cyan: #01cdfe;
-      --purple: #b967ff;
-      --text: #eae6f7;
-      --glass: rgba(18, 0, 42, 0.75);
+      --glass: rgba(18, 0, 42, 0.6);
+      --text: #ffffff;
+      --primary: #FFD700; /* golden accent for titles */
+      --secondary: #ffffffcc; /* translucent white for subtitles */
+      --card-border: rgba(255, 255, 255, 0.2);
+      --card-glow: rgba(255, 255, 255, 0.15);
+      --hover-glow: rgba(255, 255, 0, 0.4);
     }
 
     * {
@@ -22,13 +22,21 @@
 
     body {
       margin: 0;
+      padding: 0;
       min-height: 100vh;
-      background: linear-gradient(180deg, var(--bg), var(--bg-2));
-      color: var(--text);
       font-family: "JetBrains Mono", monospace;
+      color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
+      background: linear-gradient(
+        90deg,
+        #8EC5FF 0%,
+        #B7C6DB 25%,
+        #C8C4B8 50%,
+        #D6C26F 75%,
+        #D9C300 100%
+      );
     }
 
     /* Header */
@@ -39,17 +47,49 @@
 
     h1 {
       font-family: "Orbitron", sans-serif;
-      font-size: 2.4rem;
+      font-size: 2.5rem;
       letter-spacing: 0.2em;
-      color: var(--pink);
-      text-shadow: 0 0 10px var(--pink);
+      color: var(--primary);
+      text-shadow: 0 0 12px var(--primary);
       margin-bottom: 0.5rem;
     }
 
     .subtitle {
-      color: var(--cyan);
-      font-size: 0.95rem;
+      color: var(--secondary);
+      font-size: 1rem;
       opacity: 0.9;
+    }
+
+    /* Control Panel */
+    .panel {
+      width: 100%;
+      max-width: 1100px;
+      margin: 1.5rem;
+      padding: 1.2rem;
+      background: var(--glass);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      box-shadow: 0 0 18px var(--card-glow);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel label {
+      font-size: 0.75rem;
+      color: var(--secondary);
+    }
+
+    .panel input,
+    .panel select {
+      background: rgba(0,0,0,0.3);
+      color: var(--text);
+      border: 1px solid var(--primary);
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      font-family: "JetBrains Mono", monospace;
     }
 
     /* Main container */
@@ -65,70 +105,38 @@
     /* Glyph Card */
     .glyph-card {
       background: var(--glass);
-      border: 1px solid var(--purple);
+      border: 1px solid var(--card-border);
       border-radius: 14px;
       padding: 1.5rem;
       text-align: center;
       position: relative;
-      box-shadow: 0 0 18px rgba(185, 103, 255, 0.25);
+      box-shadow: 0 0 18px var(--card-glow);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
     .glyph-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 0 22px var(--cyan);
+      box-shadow: 0 0 22px var(--hover-glow);
     }
 
     .glyph-symbol {
       font-size: 3rem;
       margin-bottom: 0.8rem;
-      color: var(--pink);
-      text-shadow: 0 0 12px var(--pink);
+      color: var(--primary);
+      text-shadow: 0 0 10px var(--primary);
     }
 
     .glyph-name {
       font-family: "Orbitron", sans-serif;
       font-size: 0.9rem;
       letter-spacing: 0.1em;
-      color: var(--cyan);
+      color: var(--primary);
       margin-bottom: 0.4rem;
     }
 
     .glyph-desc {
       font-size: 0.75rem;
       opacity: 0.85;
-    }
-
-    /* Control Panel */
-    .panel {
-      width: 100%;
-      max-width: 1100px;
-      margin: 1.5rem;
-      padding: 1.2rem;
-      background: var(--glass);
-      border: 1px solid var(--purple);
-      border-radius: 14px;
-      box-shadow: 0 0 18px rgba(185, 103, 255, 0.25);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .panel label {
-      font-size: 0.75rem;
-      color: var(--cyan);
-    }
-
-    .panel input,
-    .panel select {
-      background: #12002a;
-      color: var(--text);
-      border: 1px solid var(--cyan);
-      border-radius: 6px;
-      padding: 0.4rem 0.6rem;
-      font-family: "JetBrains Mono", monospace;
     }
 
     /* Footer */
@@ -138,7 +146,7 @@
       font-size: 0.7rem;
       opacity: 0.75;
       text-align: center;
-      text-shadow: 0 0 6px var(--pink);
+      text-shadow: 0 0 6px var(--primary);
     }
 
     footer span {
@@ -165,8 +173,8 @@
 <body>
 
   <header>
-    <h1>Glyph Library Gallery</h1>
-    <div class="subtitle">Vaporwave Cybercoder Builder • Designed by Duygu</div>
+    <h1>Liminal🌀Loop</h1>
+    <div class="subtitle">Vaporwave Gradient Gallery • Interactive Design</div>
   </header>
 
   <div class="panel">
@@ -212,7 +220,7 @@
     <div class="glyph-card">
       <div class="glyph-symbol">⨀</div>
       <div class="glyph-name">ORBIT</div>
-      <div class="glyph-desc">Focus &amp; center node</div>
+      <div class="glyph-desc">Focus & center node</div>
     </div>
 
     <div class="glyph-card">
@@ -230,14 +238,14 @@
     <div class="glyph-card">
       <div class="glyph-symbol">⚡</div>
       <div class="glyph-name">ENERGY</div>
-      <div class="glyph-desc">Power &amp; execution</div>
+      <div class="glyph-desc">Power & execution</div>
     </div>
   </main>
 
   <footer>
-    <span>Glyph Library Gallery</span>
+    <span>Liminal🌀Loop</span>
     <span>•</span>
-    <span>Cybercoder Builder</span>
+    <span>Gradient Gallery</span>
     <span>•</span>
     <span>Created by Duygu</span>
   </footer>
