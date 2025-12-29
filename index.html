@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glyph Library Gallery — by Duygu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0014;
+      --bg-2: #12002a;
+      --pink: #ff71ce;
+      --cyan: #01cdfe;
+      --purple: #b967ff;
+      --text: #eae6f7;
+      --glass: rgba(18, 0, 42, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--bg), var(--bg-2));
+      color: var(--text);
+      font-family: "JetBrains Mono", monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+
+    h1 {
+      font-family: "Orbitron", sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 0.2em;
+      color: var(--pink);
+      text-shadow: 0 0 10px var(--pink);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--cyan);
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Main container */
+    main {
+      width: 100%;
+      max-width: 1100px;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* Glyph Card */
+    .glyph-card {
+      background: var(--glass);
+      border: 1px solid var(--purple);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 0 18px rgba(185, 103, 255, 0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .glyph-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 22px var(--cyan);
+    }
+
+    .glyph-symbol {
+      font-size: 3rem;
+      margin-bottom: 0.8rem;
+      color: var(--pink);
+      text-shadow: 0 0 12px var(--pink);
+    }
+
+    .glyph-name {
+      font-family: "Orbitron", sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      color: var(--cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .glyph-desc {
+      font-size: 0.75rem;
+      opacity: 0.85;
+    }
+
+    /* Control Panel */
+    .panel {
+      width: 100%;
+      max-width: 1100px;
+      margin: 1.5rem;
+      padding: 1.2rem;
+      background: var(--glass);
+      border: 1px solid var(--purple);
+      border-radius: 14px;
+      box-shadow: 0 0 18px rgba(185, 103, 255, 0.25);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel label {
+      font-size: 0.75rem;
+      color: var(--cyan);
+    }
+
+    .panel input,
+    .panel select {
+      background: #12002a;
+      color: var(--text);
+      border: 1px solid var(--cyan);
+      border-radius: 6px;
+      padding: 0.4rem 0.6rem;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: auto;
+      padding: 1.5rem;
+      font-size: 0.7rem;
+      opacity: 0.75;
+      text-align: center;
+      text-shadow: 0 0 6px var(--pink);
+    }
+
+    footer span {
+      margin: 0 0.3rem;
+    }
+
+    /* Subtle scanline effect */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.02),
+        rgba(255, 255, 255, 0.02) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Glyph Library Gallery</h1>
+    <div class="subtitle">Vaporwave Cybercoder Builder • Designed by Duygu</div>
+  </header>
+
+  <div class="panel">
+    <div>
+      <label>Search Glyph</label><br />
+      <input type="text" placeholder="Type glyph name…" />
+    </div>
+
+    <div>
+      <label>Category</label><br />
+      <select>
+        <option>All</option>
+        <option>Symbols</option>
+        <option>Runes</option>
+        <option>UI Icons</option>
+        <option>Experimental</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Export</label><br />
+      <select>
+        <option>SVG</option>
+        <option>PNG</option>
+        <option>JSON</option>
+      </select>
+    </div>
+  </div>
+
+  <main>
+    <div class="glyph-card">
+      <div class="glyph-symbol">◇</div>
+      <div class="glyph-name">DIAMOND</div>
+      <div class="glyph-desc">Core geometry glyph</div>
+    </div>
+
+    <div class="glyph-card">
+      <div class="glyph-symbol">⟁</div>
+      <div class="glyph-name">DELTA</div>
+      <div class="glyph-desc">Change / transform marker</div>
+    </div>
+
+    <div class="glyph-card">
+      <div class="glyph-symbol">⨀</div>
+      <div class="glyph-name">ORBIT</div>
+      <div class="glyph-desc">Focus &amp; center node</div>
+    </div>
+
+    <div class="glyph-card">
+      <div class="glyph-symbol">⌬</div>
+      <div class="glyph-name">HEX CORE</div>
+      <div class="glyph-desc">System structure glyph</div>
+    </div>
+
+    <div class="glyph-card">
+      <div class="glyph-symbol">⧉</div>
+      <div class="glyph-name">STACK</div>
+      <div class="glyph-desc">Layered data symbol</div>
+    </div>
+
+    <div class="glyph-card">
+      <div class="glyph-symbol">⚡</div>
+      <div class="glyph-name">ENERGY</div>
+      <div class="glyph-desc">Power &amp; execution</div>
+    </div>
+  </main>
+
+  <footer>
+    <span>Glyph Library Gallery</span>
+    <span>•</span>
+    <span>Cybercoder Builder</span>
+    <span>•</span>
+    <span>Created by Duygu</span>
+  </footer>
+</body>
+</html>
