@@ -18,35 +18,25 @@
 
     * {box-sizing: border-box;}
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       min-height: 100vh;
       font-family: "JetBrains Mono", monospace;
       color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: linear-gradient(
-        90deg,
-        #8EC5FF 0%,
-        #B7C6DB 25%,
-        #C8C4B8 50%,
-        #D6C26F 75%,
-        #D9C300 100%);
+      background: linear-gradient(90deg, #8EC5FF 0%, #B7C6DB 25%, #C8C4B8 50%, #D6C26F 75%, #D9C300 100%);
     }
 
-    /* Header */
     header {
       text-align: center;
       padding: 3rem 1rem 2rem;
     }
-
     h1 {
       font-family: "Orbitron", sans-serif;
       font-size: 2.5rem;
       letter-spacing: 0.2em;
       color: var(--primary);
-      text-shadow: 0 0 12px var(--primary);
       margin-bottom: 0.5rem;
     }
 
@@ -58,14 +48,13 @@
 
     /* Control Panel */
     .panel {
-      width: 100%;
-      max-width: 1100px;
-      margin: 1.5rem;
+      width: 95%;
+      max-width: 800px;
+      margin: 1rem;
       padding: 1.2rem;
       background: var(--glass);
       border: 1px solid var(--card-border);
       border-radius: 14px;
-      box-shadow: 0 0 18px var(--card-glow);
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
@@ -106,7 +95,6 @@
       padding: 1.5rem;
       text-align: center;
       position: relative;
-      box-shadow: 0 0 18px var(--card-glow);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
     }
 
@@ -119,7 +107,6 @@
       font-size: 3rem;
       margin-bottom: 0.8rem;
       color: var(--primary);
-      text-shadow: 0 0 10px var(--primary);
     }
 
     .glyph-name {
@@ -142,7 +129,6 @@
       font-size: 0.7rem;
       opacity: 0.75;
       text-align: center;
-      text-shadow: 0 0 6px var(--primary);
     }
 
     footer span {
