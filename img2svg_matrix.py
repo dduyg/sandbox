@@ -26,7 +26,7 @@ def img_2_svg_engine():
     print("    [ STATUS: READY_TO_VECTORIZE ]  [ CONNECTION: ENCRYPTED ]    ")
     print("═"*60 + "\n")
     
-    print(">>> 📥 INPUT_STREAM (URL / Local Path / 'p' to Upload)")
+    print(">>> 🌀 INPUT_STREAM (URL / Local Path / 'p' to Upload)")
     user_input = input(">>> SOURCE: ").strip()
 
     source = get_path() if user_input.lower() == 'p' else user_input
@@ -87,14 +87,13 @@ def img_2_svg_engine():
             except:
                 pass
             
-            # Browser Handshake
             try:
                 from google.colab import files
-                print("💾 TERMINAL_EXPORT: Downloading SVG file...")
+                print("📡 [TERMINAL.EXPORT]  Downloading SVG file...")
                 files.download(temp_svg)
                 time.sleep(2) 
             except:
-                print(f"📄 LOCAL_SAVE: Data stored at {os.path.abspath(temp_svg)}")
+                print(f"💾 [SAVE.LOCAL]  Data stored at {os.path.abspath(temp_svg)}")
 
             # Visual Preview
             print("\n>>> 🖥️ DATA_PREVIEW_STREAM:")
