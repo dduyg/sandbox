@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Scroll-Revealing Chapter Container</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    min-height: 300vh; /* just to show normal page content */
+    padding: 40px;
+  }
+
+  /* Normal page content */
+  .page-content {
+    max-width: 600px;
+  }
+
+  /* Fixed chapter container */
+  .chapter-container {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 15vh;
+    width: min(700px, 90vw);
+    height: 70vh;
+    background: #111;
+    color: #f5f5f5;
+    z-index: 9999;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    will-change: transform;
+  }
+
+  .chapter-scroll {
+    height: 100%;
+    overflow-y: auto;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+  .chapter-scroll::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .chapter-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: 2rem;
+  }
+
+  p {
+    line-height: 1.7;
+    margin-bottom: 1.2em;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="page-content">
+  <h1>Normal Page Content</h1>
+  <p>
+    This content scrolls normally and is independent from the chapter container.
+    The chapter container floats on top of everything.
+  </p>
+  <p>Scroll the page or scroll the chapter container itself.</p>
+</div>
+
+<!-- Fixed chapter container -->
+<div class="chapter-container" id="chapter">
+  <div class="chapter-scroll" id="chapterScroll">
+    <h2>Chapter One</h2>
+
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.</p>
+    <p>Sed nisi. Nulla quis sem at nibh elementum imperdiet.</p>
+    <p>Duis sagittis ipsum. Praesent mauris.</p>
+    <p>Fusce nec tellus sed augue semper porta.</p>
+    <p>Mauris massa. Vestibulum lacinia arcu eget nulla.</p>
+    <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+    <p>Curabitur sodales ligula in libero.</p>
+    <p>Sed dignissim lacinia nunc.</p>
+    <p>Curabitur tortor. Pellentesque nibh.</p>
+    <p>Aenean quam. In scelerisque sem at dolor.</p>
+    <p>Maecenas mattis. Sed convallis tristique sem.</p>
+    <p>Proin ut ligula vel nunc egestas porttitor.</p>
+    <p>Morbi lectus risus, iaculis vel, suscipit quis, luctus non, massa.</p>
+    <p>Fusce ac turpis quis ligula lacinia aliquet.</p>
+    <p>Mauris ipsum. Nulla metus metus.</p>
+    <p>Ullamcorper vel, tincidunt sed, euismod in, nibh.</p>
+    <p>Quisque volutpat condimentum velit.</p>
+    <p>Class aptent taciti sociosqu ad litora torquent.</p>
+    <p>End of chapter.</p>
+  </div>
+</div>
+
+<script>
+  const container = document.getElementById("chapter");
+  const scroller = document.getElementById("chapterScroll");
+
+  let offsetY = 0;
+  let maxLift = window.innerHeight + container.offsetHeight;
+
+  scroller.addEventListener("wheel", (e) => {
+    const atTop = scroller.scrollTop === 0;
+    const atBottom =
+      scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight;
+
+    // If scrolling up at top, lift container
+    if (atTop && e.deltaY < 0) {
+      e.preventDefault();
+      offsetY += e.deltaY; // deltaY is negative
+      offsetY = Math.max(offsetY, -maxLift);
+      container.style.transform =
+        `translate(-50%, ${offsetY}px)`;
+    }
+
+    // If scrolling down and container lifted, lower it back
+    if (!atTop && offsetY < 0 && e.deltaY > 0) {
+      offsetY += e.deltaY;
+      offsetY = Math.min(offsetY, 0);
+      container.style.transform =
+        `translate(-50%, ${offsetY}px)`;
+    }
+  }, { passive: false });
+</script>
+
+</body>
+</html>
