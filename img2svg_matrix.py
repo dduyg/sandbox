@@ -9,7 +9,7 @@ import time
 def get_path():
     try:
         from google.colab import files
-        print(" [SYSTEM] INITIALIZING UPLOAD_VORTEX...")
+        print("🌌 [SYSTEM]: INITIATING NEURAL UPLOAD...")
         uploaded = files.upload()
         if not uploaded: return None
         return list(uploaded.keys())[0]
@@ -21,47 +21,36 @@ def get_path():
         return path
 
 def img_2_svg_engine():
-    print("""
-    ░█▀▀█ █░░█ █▀▀█ █▀▀ █▀▀█ 　 ▀▀█ 　 █▀▀ █░░█ █▀▀█ 
-    ░█░░░ █▄▄█ █▀▀▄ █▀▀ █▄▄▀ 　 ▄▀░ 　 ▀▀█ ▀▄▄█ █░░█ 
-    ░█▄▄█ ▄▄▄█ █▄▄█ ▀▀▀ ▀░▀▀ 　 ▀▀▀ 　 ▀▀▀ ▄▄▄█ ▀▀▀█
+    print("｡☆━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━☆｡")
+    print("    ＶＡＰＯＲＷＡＶＥ  ＳＶＧ  ＥＮＧＩＮＥ  ｖ１０．２    ")
+    print("       > STATUS: READY_TO_VECTORIZE <        ")
+    print("｡☆━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━☆｡")
     
-    >> VIRTUAL_TRACER :: VERSION_10.2_NEON
-    >> STATUS: READY_TO_CODE
-    """)
-    print("═" * 60)
-    print(" [LINK_INPUT] URL / LOCAL_PATH / 'P' (UPLOAD_SIGNAL)")
-    print("═" * 60)
-    
-    user_input = input(" 🖥️  SYS_ENTRY >> ").strip()
+    user_input = input("✨ [SIGNAL_INPUT] (URL / Local Path / 'p' for Upload): ").strip()
 
     source = get_path() if user_input.lower() == 'p' else user_input
     if not source: 
-        print(" [!] NULL_SOURCE_DETECTED. TERMINATING_THREAD.")
+        print("🏮 [ERROR]: SIGNAL LOST. SHUTTING DOWN...")
         return
 
     is_url = source.startswith("http")
-    local_img = "buffer_source.png" if is_url else source
+    local_img = "input_temp.png" if is_url else source
     
     if is_url:
         try:
-            print(" [NET] PULLING_DATA_FROM_GRID...")
             r = requests.get(source, timeout=10)
             with open(local_img, 'wb') as f: f.write(r.content)
         except Exception as e:
-            print(f" [!] NET_ERROR: {e}"); return
+            print(f"🏮 [ERROR]: PACKET LOSS DURING DOWNLOAD: {e}"); return
 
-    print("\n [SELECT_ALGORITHM]")
-    print(" 1: LOGO_SMOOTH (SPLINE_FLOW)")
-    print(" 2: PHOTO_REAL (POLY_CRUSH)")
+    print("\n[1] ＬＯＧＯ (Smooth Spline) | [2] ＰＨＯＴＯ (Grid Polygon)")
+    mode_choice = "spline" if input("🔮 [SELECT_AESTHETIC]: ") == "1" else "polygon"
+    temp_svg = "output.svg"
     
-    mode_choice = "spline" if input(" >> MODE_ID: ") == "1" else "polygon"
-    temp_svg = "vector_export.svg"
-    
-    print(f"\n [⚡] PARSING_PIXELS... PLEASE_WAIT...")
+    print(f"\n⚡ [COMPILING]: TRACING NEURAL PATHWAYS...")
 
     success = False
-    # Attempting various kernels for maximum compatibility
+    # Cycle through parameter sets for maximum compatibility
     for params in [{"mode": mode_choice, "precision": 2}, {"mode": mode_choice}, {}]:
         try:
             vtracer.convert_image_to_svg_py(local_img, temp_svg, **params)
@@ -76,44 +65,38 @@ def img_2_svg_engine():
                 svg_start = content.find("<svg")
                 svg_code = content[svg_start:] if svg_start != -1 else content
             
-            print("\n" + "─" * 60)
-            print(" ██████╗ ██╗  ██╗")
-            print(" ██╔══██╗██║ ██╔╝")
-            print(" ██║  ██║█████╔╝ ")
-            print(" ██║  ██║██╔═██╗ ")
-            print(" ██████╔╝██║  ██╗")
-            print(" ╚═════╝ ╚═╝  ╚═╝ VECTOR_SYNTHESIS_COMPLETE")
+            print("\n💎 [SUCCESS]: VECTOR STREAM STABILIZED!")
             
-            # Clipboard Sync
+            # Clipboard Logic
             try:
                 pyperclip.copy(svg_code)
-                print(" [CLIPBOARD] SVG_STRING_CACHED")
+                print("📋 [CLIPBOARD]: DATA COPIED TO LOCAL MEMORY.")
             except:
                 pass
             
-            # Grid Download (Colab)
+            # Google Colab Auto-Download
             try:
                 from google.colab import files
-                print(" [EXPORT] TRANSMITTING_FILE_TO_USER...")
+                print("💾 [TRANSFER]: DOWNLOADING DATA-PACK TO USER...")
                 files.download(temp_svg)
-                time.sleep(2) 
+                time.sleep(2) # Handshake buffer for browser trigger
             except:
-                print(f" [FILE] LOCAL_STORAGE: {os.path.abspath(temp_svg)}")
+                print(f"📄 [STORAGE]: SAVED TO VIRTUAL DISK: {os.path.abspath(temp_svg)}")
 
-            print("\n--- HEX_PREVIEW ---")
-            print(f"{svg_code[:180]}...")
-            print("─" * 60)
+            print("\n--- ＣＯＤＥ_ＰＲＥＶＩＥＷ ---")
+            print(f"{svg_code[:250]}...")
+            print("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
 
         except Exception as e:
-            print(f" [!] OUTPUT_FAILURE: {e}")
+            print(f"🏮 [ERROR]: DATA CORRUPTION DETECTED: {e}")
     else:
-        print(" [!] CORE_DUMP: CONVERSION_FAILED")
+        print("🏮 [ERROR]: CONVERSION SEQUENCE TERMINATED.")
 
-    # Final Grid Cleanup
+    # Cleanup temp download files
     if is_url and os.path.exists(local_img):
         os.remove(local_img)
     
-    print("\n [SYSTEM] THREAD_CLOSED. GOODBYE_USER.")
+    print("\n🌌 [ENGINE_IDLE]: DISCONNECTING FROM GRID...")
 
-# BOOT SYSTEM
+# Execute the engine
 img_2_svg_engine()
