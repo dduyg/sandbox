@@ -9,7 +9,7 @@ import time
 def get_path():
     try:
         from google.colab import files
-        print("\n[SYSTEM] 🟢 INITIALIZING UPLOAD_UPLINK...")
+        print("💾 [SYSTEM] ACCESSING NEURAL UPLOAD GATEWAY...")
         uploaded = files.upload()
         if not uploaded: return None
         return list(uploaded.keys())[0]
@@ -21,39 +21,39 @@ def get_path():
         return path
 
 def img_2_svg_engine():
-    print(" " + "═"*60)
-    print("   ░▒▓█ ERROR_404: IMG_2_SVG_ENGINE // V.10.2 █▓▒░   ")
-    print("   > STATUS: NEON_LINK_ESTABLISHED...")
-    print(" " + "═"*60)
+    # --- CYBERPUNK HEADER ---
+    print("\n" + "％"*25)
+    print("    💠 ɪᴍɢ_𝟸_sᴠɢ_ᴇɴɢɪɴᴇ // ᴠ.𝟷𝟶.𝟸 💠    ")
+    print("    > STATUS: HYPER-VIRTUAL ONLINE <    ")
+    print("％"*25)
     
-    user_input = input("\n[SYNTAX] 🔗 INPUT_STREAM (URL / PATH / 'p' for UPLINK): ").strip()
+    print("⚡ [INPUT] PROVIDE DATA STREAM (URL / LOCAL_PATH / 'p' for UPLOAD)")
+    user_input = input(">> NETWORK_PATH: ").strip()
 
     source = get_path() if user_input.lower() == 'p' else user_input
     if not source: 
-        print("\n[TERMINAL] 🔴 ABORT: NO_SOURCE_DETECTED.")
+        print("❌ [CRITICAL] NO SOURCE DETECTED. TERMINATING...")
         return
 
     is_url = source.startswith("http")
-    local_img = "buffer_input.png" if is_url else source
+    local_img = "buffer_img.png" if is_url else source
     
     if is_url:
         try:
-            print("[NETWORK] 🌐 DOWNLOADING_REMOTE_ASSET...")
+            print("🌐 [FETCH] PULLING PIXELS FROM THE GRID...")
             r = requests.get(source, timeout=10)
             with open(local_img, 'wb') as f: f.write(r.content)
         except Exception as e:
-            print(f"\n[CRITICAL] ❌ PROTOCOL_FAILURE: {e}"); return
+            print(f"❌ [ERROR] STREAM INTERRUPTED: {e}"); return
 
-    print("\n--- SELECT_VECTOR_MODE ---")
-    print("[1] 💠 LOGO_SPLINE (Ultra-Smooth)")
-    print("[2] 🌌 PHOTO_POLYGON (High-Detail)")
-    mode_choice = "spline" if input("\n[USER_INPUT] > ").strip() == "1" else "polygon"
+    print("\n[1] LOGO.spline (Smooth/Minimal) | [2] PHOTO.poly (High-Detail)")
+    mode_choice = "spline" if input(">> SELECT_ALGORITHM: ") == "1" else "polygon"
+    temp_svg = "vector_matrix.svg"
     
-    temp_svg = "cyber_render.svg"
-    print(f"\n[ENGINE] ⚙️ TRACING_PIXELS_INTO_VECTORS...")
+    print(f"\n✨ [PROCESS] RECONSTRUCTING GEOMETRY...")
 
     success = False
-    # Attempting conversion with adaptive fallback logic
+    # Attempting matrix decomposition with adaptive parameter injection
     for params in [{"mode": mode_choice, "precision": 2}, {"mode": mode_choice}, {}]:
         try:
             vtracer.convert_image_to_svg_py(local_img, temp_svg, **params)
@@ -68,39 +68,39 @@ def img_2_svg_engine():
                 svg_start = content.find("<svg")
                 svg_code = content[svg_start:] if svg_start != -1 else content
             
-            print("\n" + "─"*60)
-            print("✨ RENDER_COMPLETE: ASSET_VIRTUALIZED!")
+            print("\n" + "─"*40)
+            print("✅ [SUCCESS] SVG SYNTHESIS COMPLETE!")
             
-            # Clipboard Deployment
+            # Clipboard Uplink
             try:
                 pyperclip.copy(svg_code)
-                print("📋 CODE_DEPLOYED: Copied to Neural_Link (Clipboard)")
+                print("📋 [LINK] SVG_CODE PUSHED TO CLIPBOARD")
             except:
                 pass
             
-            # Colab Downlink
+            # File Extraction
             try:
                 from google.colab import files
-                print("💾 DOWNLOAD_STREAM: Initializing local save...")
+                print("💾 [DOWNLOAD] EXTRUDING SVG TO LOCAL STORAGE...")
                 files.download(temp_svg)
-                time.sleep(2) # Buffer for Colab's JavaScript to trigger
+                time.sleep(2) # Handshake delay
             except:
-                print(f"📄 LOCAL_SAVE: {os.path.abspath(temp_svg)}")
+                print(f"📄 [SAVE] VECTOR_MATRIX LOCATED AT: {os.path.abspath(temp_svg)}")
 
-            print("\n--- HEX_PREVIEW ---")
-            print(f"\033[95m{svg_code[:250]}...\033[0m")
-            print("─"*60)
+            print("\n--- DATA PREVIEW (NEURAL SCAN) ---")
+            print(f"\033[95m{svg_code[:200]}...\033[0m")
+            print("─"*40)
 
         except Exception as e:
-            print(f"\n[ERROR] ❌ OUTPUT_CORRUPTED: {e}")
+            print(f"❌ [FATAL] OUTPUT BUFFER CORRUPTED: {e}")
     else:
-        print("\n[CRITICAL] ❌ ENGINE_STALL: Conversion Failed.")
+        print("❌ [FAILED] ALGORITHM COLLAPSE.")
 
-    # Garbage Collection
+    # Final Grid Cleanup
     if is_url and os.path.exists(local_img):
         os.remove(local_img)
     
-    print("\n[SYSTEM] 💤 ENGINE_SLEEP. SESSION_CLOSED.")
+    print("\n✨ [SIGNAL] PROCESS FINISHED. LOGGING OFF...")
 
-# Start the Engine
+# --- INIT CORE ---
 img_2_svg_engine()
