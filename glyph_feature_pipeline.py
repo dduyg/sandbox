@@ -18,7 +18,7 @@
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 """
 
-!pip install -q opencv-python-headless scikit-learn scikit-image PyGithub
+!pip install -q opencv-python-headless scikit-learn scikit-image PyGithub pillow numpy
 
 import os, json, uuid, csv
 from pathlib import Path
@@ -72,7 +72,7 @@ def compute_palette_distance(rgb1, rgb2):
         (lab1[1] - lab2[1])**2 + 
         (lab1[2] - lab2[2])**2
     )
-    return round(float(delta / 100), 4)  # Normalize to 0-1 range
+    return round(float(delta / 100), 4)
 
 def masked_pixels(rgb, mask):
     pts = rgb[mask]
@@ -80,7 +80,7 @@ def masked_pixels(rgb, mask):
         return np.zeros((1, 3), dtype=np.uint8)
     return pts
 
-def compute_dominant_color(rgb, mask, k=5):
+def compute_dominant_color(rgb, mask, k=3, min_cluster_fraction=0.05):
     pts = masked_pixels(rgb, mask)
     if len(pts) < k:
         return (200, 200, 200)
@@ -92,9 +92,16 @@ def compute_dominant_color(rgb, mask, k=5):
     kmeans = KMeans(n_clusters=k, n_init="auto").fit(pts, sample_weight=weights)
     centers = kmeans.cluster_centers_
     labels, counts = np.unique(kmeans.labels_, return_counts=True)
-    return tuple(int(x) for x in centers[np.argmax(counts)])
+    total_pixels = mask.sum()
+    large_indices = [i for i, c in enumerate(counts) if c/total_pixels >= min_cluster_fraction]
+    if not large_indices:
+        dominant_idx = np.argmax(counts)
+    else:
+        dominant_idx = large_indices[np.argmax([counts[i] for i in large_indices])]
+    
+    return tuple(int(x) for x in centers[dominant_idx])
 
-def compute_secondary_color(rgb, mask, k=5):
+def compute_secondary_color(rgb, mask, k=3, min_cluster_fraction=0.05):
     pts = masked_pixels(rgb, mask)
     if len(pts) < k:
         return (200, 200, 200)
@@ -106,18 +113,34 @@ def compute_secondary_color(rgb, mask, k=5):
     kmeans = KMeans(n_clusters=k, n_init="auto").fit(pts, sample_weight=weights)
     centers = kmeans.cluster_centers_
     labels, counts = np.unique(kmeans.labels_, return_counts=True)
-    if len(counts) == 1:
-        return tuple(int(x) for x in centers[0])
-    order = np.argsort(counts)[::-1]
-    return tuple(int(x) for x in centers[order[1]])
+    total_pixels = mask.sum()
+    large_indices = [i for i, c in enumerate(counts) if c/total_pixels >= min_cluster_fraction]
+    
+    if len(large_indices) < 2:
+        if len(counts) == 1:
+            return tuple(int(x) for x in centers[0])
+        order = np.argsort(counts)[::-1]
+        return tuple(int(x) for x in centers[order[1]])
+    
+    dominant_idx = large_indices[np.argmax([counts[i] for i in large_indices])]
+    secondary_candidates = [i for i in large_indices if i != dominant_idx]
+    secondary_idx = secondary_candidates[np.argmax([counts[i] for i in secondary_candidates])]
+    
+    return tuple(int(x) for x in centers[secondary_idx])
 
 def compute_color_harmony(c1, c2):
     h1 = compute_hue(c1)
     h2 = compute_hue(c2)
     d = abs(h1 - h2)
-    if d < 30: return "analogous"
-    if abs(d - 180) < 30: return "complementary"
-    return "none"
+    d = min(d, 360 - d)
+    if d < 30:
+        return "analogous"
+    elif 150 <= d <= 210:
+        return "complementary"
+    elif 90 <= d < 150:
+        return "triadic"
+    else:
+        return "none"
 
 # ---------------------- PROCESSING GLYPHS ----------------------
 
@@ -181,70 +204,39 @@ def compute_mood(dom_rgb, entropy, edge, tex, contrast, circ, aspect, angle, har
     is_cool = (165 <= h <= 295)
 
     scores = {
-        "serene": 0,
-        "calm": 0,
-        "playful": 0,
-        "energetic": 0,
-        "futuristic": 0,
-        "mysterious": 0,
-        "dramatic": 0,
-        "chaotic": 0
+        "serene": 0, "calm": 0, "playful": 0, "energetic": 0,
+        "futuristic": 0, "mysterious": 0, "dramatic": 0, "chaotic": 0
     }
 
-    if entropy < 2.2:
-        scores["serene"] += (2.2 - entropy)/2.2
-    elif entropy <= 2.8:
-        scores["calm"] += (entropy - 2.2)/(2.8 - 2.2)
-    elif entropy <= 3.8:
-        scores["playful"] += (entropy - 2.8)/(3.8 - 2.8)
-    elif entropy <= 5.3:
-        scores["energetic"] += (entropy - 3.8)/(5.3 - 3.8)
-    else:
-        chaos_strength = min((entropy - 5.3)/2.5, 1) * 0.4
-        scores["chaotic"] += chaos_strength
+    if entropy < 2.2: scores["serene"] += (2.2 - entropy)/2.2
+    elif entropy <= 2.8: scores["calm"] += (entropy - 2.2)/(2.8 - 2.2)
+    elif entropy <= 3.8: scores["playful"] += (entropy - 2.8)/(3.8 - 2.8)
+    else: scores["chaotic"] += min((entropy - 3.8)/2.5,1)*0.4
 
-    if edge < 0.01:
-        scores["serene"] += 0.3
-    elif edge < 0.03:
-        scores["calm"] += 0.15
-    elif edge < 0.06:
-        scores["playful"] += 0.3
-    elif edge < 0.10:
-        scores["energetic"] += 0.3
-    else:
-        scores["chaotic"] += 0.1
+    if edge < 0.01: scores["serene"] += 0.3
+    elif edge < 0.03: scores["calm"] += 0.15
+    elif edge < 0.06: scores["playful"] += 0.3
+    elif edge < 0.10: scores["energetic"] += 0.3
+    else: scores["chaotic"] += 0.1
 
-    if brightness > 180:
-        scores["playful"] += 0.5
-    if brightness < 80:
-        scores["mysterious"] += 0.6
-    if contrast > 0.5:
-        scores["dramatic"] += (contrast - 0.5)/0.5 * 0.8
-    if sat > 0.6:
-        scores["energetic"] += 0.6
-    if sat < 0.2:
-        scores["calm"] += 0.2
-    if harmony == "analogous":
-        scores["calm"] += 0.2
-    elif harmony == "complementary":
-        scores["energetic"] += 0.3
-    if circ > 0.8:
-        scores["serene"] += 0.4
-    if circ < 0.55:
-        scores["playful"] += 0.4
-    if 0.4 < aspect < 0.7 or 1.3 < aspect < 1.6:
-        scores["futuristic"] += 0.6
+    if brightness > 180: scores["playful"] += 0.5
+    if brightness < 80: scores["mysterious"] += 0.6
+    if contrast > 0.5: scores["dramatic"] += (contrast - 0.5)/0.5 * 0.8
+    if sat > 0.6: scores["energetic"] += 0.6
+    if sat < 0.2: scores["calm"] += 0.2
 
-    if is_warm and sat > 0.45:
-        scores["energetic"] += 0.3
-        scores["playful"] += 0.2
-    if is_cool and brightness < 120:
-        scores["mysterious"] += 0.3
-        scores["calm"] += 0.1
-    if 2.8 < entropy <= 3.8:
-        scores["playful"] += 0.3
-    if sat > 0.5 and brightness > 120:
-        scores["energetic"] += 0.3
+    if harmony == "analogous": scores["calm"] += 0.3; scores["serene"] += 0.2
+    elif harmony == "complementary": scores["energetic"] += 0.4; scores["playful"] += 0.2
+    elif harmony == "triadic": scores["energetic"] += 0.3; scores["futuristic"] += 0.2
+
+    if circ > 0.8: scores["serene"] += 0.4
+    if circ < 0.55: scores["playful"] += 0.4
+    if 0.4 < aspect < 0.7 or 1.3 < aspect < 1.6: scores["futuristic"] += 0.6
+
+    if is_warm and sat > 0.45: scores["energetic"] += 0.3; scores["playful"] += 0.2
+    if is_cool and brightness < 120: scores["mysterious"] += 0.3; scores["calm"] += 0.1
+    if 2.8 < entropy <= 3.8: scores["playful"] += 0.3
+    if sat > 0.5 and brightness > 120: scores["energetic"] += 0.3
 
     return max(scores, key=scores.get)
 
