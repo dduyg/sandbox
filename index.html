@@ -93,7 +93,30 @@
         /* Row 5: 2 columns */
         .r5 {grid-column: span 6;}
         /* Row 6: 3 columns */
-        .r6 {grid-column: span 4;} 
+        .r6 {grid-column: span 4;}
+
+               
+        #controls {
+            position: fixed;
+            bottom: 0; right: 0;
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }    
+        #controls button {
+            padding: 12px 24px;
+            background: #CF9E77;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 14px;
+        }    
+        #controls button:hover {color: #b88860; background: #ccc;}
+        #status {font-size: 14px; color: #666;}
     </style>
 </head>
 <body>
@@ -105,6 +128,11 @@
             <div class="label-item"><div class="tick"></div><span class="number">50</span></div>
         </div>
     </main>
+   
+    <div id="controls">
+        <button id="recordBtn">Record (18 seconds)</button>
+        <div id="status">Click to start recording</div>
+    </div>
 
     <aside>     
         <div class="spacer"></div>
