@@ -62,39 +62,36 @@
         .content {
             pointer-events: auto;        
             width: 100%;
-            padding: 40px 20px;
+            margin: 0 auto;
+            padding: 10px 20px;
             padding-bottom: 110vh; /* Extra space to scroll off screen */
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            max-width: 800px;
-            margin: 0 auto;
-         }
-        .grid-item {
-            height: 150px;
-            overflow: hidden;
-            display: flex;
+        .row1 {display: grid; grid-template-columns: 3fr 7fr;}
+        .row2, .row3 {display: grid; grid-template-columns: 3fr 5fr 2fr;}
+        .row4 {display: grid; grid-template-columns: 8fr 2fr;}
+        .row5 {display: grid; grid-template-columns: 5fr 5fr;}
+
+        .row-txt {
+            font-size: 1.4rem;
+            text-align: right;
+            margin-top: 6px;      
+        }
+        .box {
+            margin-top: 50px;
+            text-align: center;
+            background: 1px solid;
             transition: transform 0.2s;
             cursor: pointer;
         }
-        .grid-item:hover {transform: scale(1.02);} 
-        .grid-item img {width: 100%; height: auto; display: block; object-fit: cover;}
-   
-        /* Row 1: 2 columns (12 / 2 = 6 units each) */
-        .r1 {grid-column: span 6;}
-        /* Row 2: 3 columns (12 / 3 = 4 units each) */
-        .r2 {grid-column: span 4;}    
-        /* Row 3: 4 columns (12 / 4 = 3 units each) */
-        .r3 {grid-column: span 3;}  
-        /* Row 4: 2 columns */
-        .r4 {grid-column: span 6;}
-        /* Row 5: 2 columns */
-        .r5 {grid-column: span 6;}
-        /* Row 6: 3 columns */
-        .r6 {grid-column: span 4;}
-
+        .box:hover {transform: scale(1.02);} 
+        .box img {width: 100%; height: auto; display: block; object-fit: cover;}
+       
+        .row1 .box {background: pink;}
+        .row2 .box {background: blue;}
+        .row3 .box {background: red;}
+        .row4 .box {background: #00f5a0;}
+        .row5 .box {background: yellow;}
 
         .top-left-blob {position: fixed; top: 0; left: 0; width: 100px; height: auto; z-index: 1;}
         .top-right-blob {position: fixed; top: 0; right: 0; width: 100px; height: auto; z-index: 1;}
@@ -138,38 +135,35 @@
     <div id="controls">
         <button id="recordBtn">Record (18 seconds)</button>
         <div id="status">Click to start recording</div>
-    </div>
-
-    
+    </div> 
 
     <aside>     
         <div class="spacer"></div>
-        <div class="content">     
-            <div class="grid">
-                <div class="grid-item r1"><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/converging.png"></div>
-                <div class="grid-item r1"></div>
-
-                <div class="grid-item r2">R2-A</div>
-                <div class="grid-item r2" style="background: #eee; display: flex; align-items: center; justify-content: center;"><span>Mixed Content</span></div>
-                <div class="grid-item r2">R2-C</div>
-
-                <div class="grid-item r3">R3-1</div>
-                <div class="grid-item r3">R3-2</div>
-                <div class="grid-item r3">R3-3</div>
-                <div class="grid-item r3">R3-4</div>
-
-                <div class="grid-item r4">R4-A</div>
-                <div class="grid-item r4">R4-B</div>
-
-                <div class="grid-item r5">R5-A</div>
-                <div class="grid-item r5">R5-B</div>
-
-                <div class="grid-item r6">R6-A</div>
-                <div class="grid-item r6">R6-B</div>
-                <div class="grid-item r6">R6-C</div>
+        <div class="content">
+            <div class="row1">
+                <div class="box">Metapolis, Hwaseong</div>
+                <div class="box"></div>
+            </div>
+            <div class="row2">
+                <div class="box">mission parameters</div>
+                <div class="box"></div>
+                <div class="box"></div>
+            </div>
+            <div class="row3">
+                <div class="box"></div>
+                <div class="box">Monte Carlo</div>
+                <div class="box"></div>
+            </div>
+            <div class="row4">
+                <div class="box"></div>
+                <div class="box">ProofofConcepts</div>
+            </div>
+            <div class="row-txt">low tide at the dryin' out facility<br><span style="font-size: 1.05em;">☹︎♓︎❍︎♓︎■︎♋︎●︎☹︎</span></div>
+            <div class="row5">
+                <div class="box">Kyoo-tae</div>
+                <div class="box"></div>  
             </div>
         </div>
     </aside>
-
 </body>
 </html>
