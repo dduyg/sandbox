@@ -75,34 +75,26 @@
         .grid-item {
             background-color: lemon;
             height: 150px;
+            overflow: hidden;
             display: flex;
-            justify-content: center;
-            align-items: center;
             transition: transform 0.2s;
             cursor: pointer;
         }
-        .grid-item:hover {
-            transform: scale(1.02);
-            background-color: #e0e0e0;
-        } 
-        
+        .grid-item:hover {transform: scale(1.02);} 
+        .grid-item img {width: 100%; height: auto; display: block; object-fit: cover;}
+   
         /* Row 1: 2 columns (12 / 2 = 6 units each) */
-        .r1 { grid-column: span 6; }
-
+        .r1 {grid-column: span 6;}
         /* Row 2: 3 columns (12 / 3 = 4 units each) */
-        .r2 { grid-column: span 4; }
-        
+        .r2 {grid-column: span 4;}    
         /* Row 3: 4 columns (12 / 4 = 3 units each) */
-        .r3 { grid-column: span 3; }
-        
+        .r3 {grid-column: span 3;}  
         /* Row 4: 2 columns */
-        .r4 { grid-column: span 6; }
-
+        .r4 {grid-column: span 6;}
         /* Row 5: 2 columns */
-        .r5 { grid-column: span 6; }
-    
+        .r5 {grid-column: span 6;}
         /* Row 6: 3 columns */
-        .r6 { grid-column: span 4; } 
+        .r6 {grid-column: span 4;} 
     </style>
 </head>
 <body>
