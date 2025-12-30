@@ -46,7 +46,7 @@
             color: #333;
         }
         
-       
+        /* Independent Scrolling Layer */
         aside {
             position: fixed;
             top: 0; left: 0;
@@ -62,17 +62,34 @@
         .content {
             pointer-events: auto;        
             width: 100%;
-            padding: 60px 20px;
-            /* padding-bottom allows to leave off the screen */
-            padding-bottom: 110vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 40px 20px;
+            padding-bottom: 110vh; /* Extra space to scroll off screen */
         }
-        .ch-text {
-            max-width: 600px;
-            line-height: 1.8;
-        }   
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+            grid-template-rows: repeat(6, 150px);   /* 6 rows, fixed height */
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .grid-item {
+            background-color: #eee;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #888;
+            border: 1px solid #ddd;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+        .grid-item:hover {
+            transform: scale(1.02);
+            background-color: #e0e0e0;
+        }    
     </style>
 </head>
 <body>
@@ -88,15 +105,28 @@
     <aside>     
         <div class="spacer"></div>
         <div class="content">
-            <div class="ch-text">
-                <h3>Chapter One</h3>
-                <p>Scroll up and watch this card slide over the static UI.</p>
-                <p>Because we addedy a large 110vh padding to the bottom of this container, you can keep scrolling even after the text is finished.</p>
-                <p>Keep scrolling... and the white card will eventually disappear off the top entirely, leaving you with just the background UI again.</p>
-                <div style="height: 300px; width: 100%; background: #f0f0f0; margin: 40px 0; border-radius: 12px; border: 1px dashed #ccc;"></div> 
-                <p>End of chapter content.</p>
+            <div class="grid-container">
+                <div class="grid-item">1</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">4</div>
+                <div class="grid-item">5</div>
+                <div class="grid-item">6</div>
+                <div class="grid-item">7</div>
+                <div class="grid-item">8</div>
+                <div class="grid-item">9</div>
+                <div class="grid-item">10</div>
+                <div class="grid-item">11</div>
+                <div class="grid-item">12</div>
+                <div class="grid-item">13</div>
+                <div class="grid-item">14</div>
+                <div class="grid-item">15</div>
+                <div class="grid-item">16</div>
+                <div class="grid-item">17</div>
+                <div class="grid-item">18</div>
             </div>
         </div>
     </aside>
+
 </body>
 </html>
