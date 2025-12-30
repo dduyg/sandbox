@@ -68,19 +68,18 @@
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 items per row */
-            grid-template-rows: repeat(6, 150px);   /* 6 rows, fixed height */
+            grid-template-columns: repeat(12, 1fr);
             gap: 15px;
             max-width: 800px;
             margin: 0 auto;
-        }
+         }
         .grid-item {
             background-color: #eee;
             border-radius: 12px;
+            height: 120px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: bold;
             color: #888;
             border: 1px solid #ddd;
             transition: transform 0.2s;
@@ -89,7 +88,25 @@
         .grid-item:hover {
             transform: scale(1.02);
             background-color: #e0e0e0;
-        }    
+        } 
+        
+        /* Row 1: 2 columns (12 / 2 = 6 units each) */
+        .r1 { grid-column: span 6; }
+
+        /* Row 2: 3 columns (12 / 3 = 4 units each) */
+        .r2 { grid-column: span 4; }
+        
+        /* Row 3: 4 columns (12 / 4 = 3 units each) */
+        .r3 { grid-column: span 3; }
+        
+        /* Row 4: 2 columns */
+        .r4 { grid-column: span 6; }
+
+        /* Row 5: 2 columns */
+        .r5 { grid-column: span 6; }
+    
+        /* Row 6: 3 columns */
+        .r6 { grid-column: span 4; } 
     </style>
 </head>
 <body>
@@ -104,26 +121,29 @@
 
     <aside>     
         <div class="spacer"></div>
-        <div class="content">
+        <div class="content">     
             <div class="grid-container">
-                <div class="grid-item">1</div>
-                <div class="grid-item">2</div>
-                <div class="grid-item">3</div>
-                <div class="grid-item">4</div>
-                <div class="grid-item">5</div>
-                <div class="grid-item">6</div>
-                <div class="grid-item">7</div>
-                <div class="grid-item">8</div>
-                <div class="grid-item">9</div>
-                <div class="grid-item">10</div>
-                <div class="grid-item">11</div>
-                <div class="grid-item">12</div>
-                <div class="grid-item">13</div>
-                <div class="grid-item">14</div>
-                <div class="grid-item">15</div>
-                <div class="grid-item">16</div>
-                <div class="grid-item">17</div>
-                <div class="grid-item">18</div>
+                <div class="grid-item r1">R1-A</div>
+                <div class="grid-item r1">R1-B</div>
+
+                <div class="grid-item r2">R2-A</div>
+                <div class="grid-item r2">R2-B</div>
+                <div class="grid-item r2">R2-C</div>
+
+                <div class="grid-item r3">R3-1</div>
+                <div class="grid-item r3">R3-2</div>
+                <div class="grid-item r3">R3-3</div>
+                <div class="grid-item r3">R3-4</div>
+
+                <div class="grid-item r4">R4-A</div>
+                <div class="grid-item r4">R4-B</div>
+
+                <div class="grid-item r5">R5-A</div>
+                <div class="grid-item r5">R5-B</div>
+
+                <div class="grid-item r6">R6-A</div>
+                <div class="grid-item r6">R6-B</div>
+                <div class="grid-item r6">R6-C</div>
             </div>
         </div>
     </aside>
