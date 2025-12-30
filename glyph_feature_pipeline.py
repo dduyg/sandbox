@@ -80,36 +80,63 @@ def masked_pixels(rgb, mask):
         return np.zeros((1, 3), dtype=np.uint8)
     return pts
 
-def compute_dominant_color(rgb, mask, k=5):
-    pts = masked_pixels(rgb, mask)
-    if len(pts) < k:
-        return (200, 200, 200)
-    r, g, b = pts[:, 0]/255.0, pts[:, 1]/255.0, pts[:, 2]/255.0
-    max_c = np.maximum(np.maximum(r, g), b)
-    min_c = np.minimum(np.minimum(r, g), b)
-    sat = (max_c - min_c)/(max_c + 1e-6)
-    weights = sat + 0.5
-    kmeans = KMeans(n_clusters=k, n_init="auto").fit(pts, sample_weight=weights)
-    centers = kmeans.cluster_centers_
-    labels, counts = np.unique(kmeans.labels_, return_counts=True)
-    return tuple(int(x) for x in centers[np.argmax(counts)])
+def extract_dominant_secondary_colors(pil_image, k=6):
+    """
+    Perceptual, human-vision–weighted dominant & secondary color extraction.
+    Returns: (dominant_rgb, secondary_rgb)
+    """
+    img = np.array(pil_image.convert("RGBA"))
+    rgb = img[..., :3]
+    alpha = img[..., 3]
 
-def compute_secondary_color(rgb, mask, k=5):
-    pts = masked_pixels(rgb, mask)
-    if len(pts) < k:
-        return (200, 200, 200)
-    r, g, b = pts[:, 0]/255.0, pts[:, 1]/255.0, pts[:, 2]/255.0
-    max_c = np.maximum(np.maximum(r, g), b)
-    min_c = np.minimum(np.minimum(r, g), b)
-    sat = (max_c - min_c)/(max_c + 1e-6)
-    weights = sat + 0.5
-    kmeans = KMeans(n_clusters=k, n_init="auto").fit(pts, sample_weight=weights)
+    mask = alpha > 10
+    if mask.sum() < 50:
+        return (200, 200, 200), (160, 160, 160)
+
+    pixels = rgb[mask]
+
+    # Convert to LAB (perceptually uniform)
+    lab = cv2.cvtColor(
+        pixels.reshape(-1, 1, 3),
+        cv2.COLOR_RGB2LAB
+    ).reshape(-1, 3)
+
+    n_clusters = min(k, max(2, len(lab) // 80))
+    kmeans = KMeans(n_clusters=n_clusters, n_init="auto")
+    labels = kmeans.fit_predict(lab)
     centers = kmeans.cluster_centers_
-    labels, counts = np.unique(kmeans.labels_, return_counts=True)
-    if len(counts) == 1:
-        return tuple(int(x) for x in centers[0])
-    order = np.argsort(counts)[::-1]
-    return tuple(int(x) for x in centers[order[1]])
+
+    total = len(lab)
+    saliency_scores = []
+
+    for i, center in enumerate(centers):
+        idx = labels == i
+        area_weight = idx.sum() / total
+
+        L, a, b = center
+        chroma = np.sqrt(a*a + b*b) / 128.0
+        opponent = (abs(a) + abs(b)) / 256.0
+        lightness_offset = abs((L / 100.0) - 0.5)
+
+        saliency = (
+            0.40 * area_weight +
+            0.30 * chroma +
+            0.20 * opponent +
+            0.10 * lightness_offset
+        )
+
+        saliency_scores.append((saliency, i))
+
+    saliency_scores.sort(reverse=True)
+    dom_idx = saliency_scores[0][1]
+    sec_idx = saliency_scores[1][1] if len(saliency_scores) > 1 else dom_idx
+
+    def lab_to_rgb(lab_color):
+        lab_img = np.uint8([[lab_color]])
+        rgb_img = cv2.cvtColor(lab_img, cv2.COLOR_LAB2RGB)
+        return tuple(int(x) for x in rgb_img[0, 0])
+
+    return lab_to_rgb(centers[dom_idx]), lab_to_rgb(centers[sec_idx])
 
 def compute_color_harmony(c1, c2):
     h1 = compute_hue(c1)
@@ -270,8 +297,7 @@ def process_glyph_from_bytes(image_bytes, filename, gh_user, gh_repo, branch="ma
     else:
         rgb_crop, alpha_crop, mask_crop = rgb, alpha, mask
 
-    dom = compute_dominant_color(rgb_crop, mask_crop)
-    sec = compute_secondary_color(rgb_crop, mask_crop)
+    dom, sec = extract_dominant_secondary_colors(pil) 
     dom_hex = rgb_to_hex(dom)
     sec_hex = rgb_to_hex(sec)
     dom_lab = rgb_to_lab(dom)
