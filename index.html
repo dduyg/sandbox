@@ -3,101 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flying Content Overlay</title>
     <style>
         body {
             margin: 0;
             font-family: sans-serif;
             background-color: #f0f0f0;
-            /* Height to ensure we have room to scroll */
-            height: 300vh; 
+            line-height: 1.6;
         }
 
         /* Normal background content */
-        .base-content {
+        .body-content {
             padding: 50px;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
+            color: #999;
         }
 
-        /* The Flying Container */
-        #flying-container {
-            position: fixed;
+        /* The scrolling overlay layer */
+        .scroll-wrapper {
+            position: absolute;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 100vh; /* Full height when revealed */
-            z-index: 999;
-            background: #1a1a1a;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
-            
-            /* Initial State: Starts 15vh from the bottom */
-            top: calc(100vh - 15vh); 
-            
-            /* Smooth movement */
-            transition: transform 0.1s linear;
+            z-index: 100;
+            pointer-events: none; /* Allows clicking through to body if needed */
+        }
+
+        /* Creates the gap so the content starts at the bottom */
+        .spacer {
+            height: 85vh; /* 100vh - 15vh initial visibility */
+        }
+
+        /* The actual flying chapter card */
+        .chapter-container {
+            pointer-events: auto; /* Re-enables interaction for the card */
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+            border-radius: 15px 15px 0 0;
             padding: 40px;
-            box-sizing: border-box;
+            min-height: 100vh; /* Ensures it covers the screen as it passes */
+            margin-bottom: 20vh; /* Buffer at the bottom */
         }
 
-        .chapter-text {
-            max-width: 600px;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        /* Reveal text when active */
-        #flying-container.active .chapter-text {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h1 { font-size: 3rem; margin-bottom: 20px; }
-        p { line-height: 1.6; font-size: 1.2rem; }
+        h1 { color: #333; }
+        p { margin-bottom: 20px; }
     </style>
+    <title>Flying Scroll Container</title>
 </head>
 <body>
 
-    <div class="base-content">
-        <h1>Background Layer</h1>
-        <p>This is your normal body content. It sits behind the flying container.</p>
-        <p>Scroll down to see the "Chapter 1" container fly up from the bottom 15vh mark and cover this text.</p>
-        <div style="height: 1000px;"></div> </div>
+    <div class="body-content">
+        <h2>Background Content</h2>
+        <p>This is the content that lives "behind" the flying container.</p>
+        <div style="height: 200vh;">Scroll down to see the chapter fly up...</div>
+    </div>
 
-    <div id="flying-container">
-        <div class="chapter-text">
-            <h2>Chapter 1: The Ascent</h2>
-            <p>This container started at the bottom and is now flying over the page. As you continue to scroll, it will eventually disappear off the top.</p>
+    <div class="scroll-wrapper">
+        <div class="spacer"></div>
+        
+        <div class="chapter-container">
+            <h1>Chapter 1: The Ascent</h1>
+            <p>This container started 15vh from the bottom. As you scroll the page, it moves upward at the natural scroll speed, covering the background content.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Satisne vobis videor pro meo iure rogare? Mihi enim erit ista discere, si re vera quid tria ista videntur. </p>
+            <p>Continue scrolling to watch it disappear off the top of the viewport.</p>
+            
+            <div style="height: 50vh; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 10px;">
+                [Inner Chapter Visual or Image]
+            </div>
+            
+            <p>More chapter text here... The high z-index ensures this stays on top of everything in the body.</p>
         </div>
     </div>
 
-    <script>
-        const flyer = document.getElementById('flying-container');
-        
-        window.addEventListener('scroll', () => {
-            const scrollPercent = window.scrollY / (document.body.offsetHeight - window.innerHeight);
-            
-            // Calculate movement:
-            // Starts at 0 (15vh position) 
-            // Moves up as you scroll. Adjust the multiplier (2000) to change speed.
-            const moveAmount = window.scrollY * 1.2; 
-            
-            flyer.style.transform = `translateY(-${moveAmount}px)`;
-
-            // Add active class to fade in text once it starts moving
-            if (window.scrollY > 50) {
-                flyer.classList.add('active');
-            } else {
-                flyer.classList.remove('active');
-            }
-        });
-    </script>
 </body>
 </html>
