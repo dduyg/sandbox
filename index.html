@@ -3,72 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dcale - Flying Overlay</title>
     <style>
-        body {
+        /* 1. LOCK THE BACKGROUND */
+        body, html {
             margin: 0;
-            font-family: sans-serif;
-            background-color: #f0f0f0;
-            line-height: 1.6;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden; /* Prevents the main body from scrolling */
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
         }
 
-        /* Normal background content */
-        .body-content {
-            padding: 50px;
-            color: #999;
+        /* Centered Background Content */
+        .background-ui {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
-        /* The scrolling overlay layer */
-        .scroll-wrapper {
+        .container {
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .gradient-bar {
+            height: 80px;
+            width: 100%;
+            border: 1px solid #333;
+            background: linear-gradient(90deg, #8db9ff 0%, #b8b29a 50%, #d4b500 100%);
+        }
+
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        .label-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20px;
+        }
+
+        .tick { width: 2px; height: 10px; background-color: #333; margin-bottom: 4px; }
+        .number { font-size: 18px; font-weight: 500; color: #333; }
+
+        /* 2. THE FLYING OVERLAY LAYER */
+        .scroll-layer {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
+            height: 100vh;
+            overflow-y: auto; /* This layer handles the scrolling */
             z-index: 100;
-            pointer-events: none; /* Allows clicking through to body if needed */
+            /* Hide scrollbar for a cleaner "flying" look (optional) */
+            scrollbar-width: none; 
         }
+        .scroll-layer::-webkit-scrollbar { display: none; }
 
-        /* Creates the gap so the content starts at the bottom */
+        /* The invisible gap that lets the background show through */
         .spacer {
-            height: 85vh; /* 100vh - 15vh initial visibility */
+            height: 85vh; 
+            pointer-events: none;
         }
 
-        /* The actual flying chapter card */
-        .chapter-container {
-            pointer-events: auto; /* Re-enables interaction for the card */
-            width: 90%;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px;
-            min-height: 100vh; /* Ensures it covers the screen as it passes */
-            margin-bottom: 20vh; /* Buffer at the bottom */
+        /* The actual Chapter Content */
+        .chapter-card {
+            background: white;
+            min-height: 100vh;
+            width: 100%;
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.15);
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            padding: 60px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        h1 { color: #333; }
-        p { margin-bottom: 20px; }
+        .chapter-text {
+            max-width: 600px;
+            line-height: 1.8;
+            color: #444;
+        }
+        
+        h2 { color: #111; font-size: 2rem; margin-bottom: 20px; }
     </style>
-    <title>Flying Scroll Container</title>
 </head>
 <body>
 
-    <div class="body-content">
-        <h2>Background Content</h2>
-        <p>This is the content that lives "behind" the flying container.</p>
+    <div class="background-ui">
+        <div class="container">
+            <div class="gradient-bar"></div>
+            <div class="labels">
+                <div class="label-item"><div class="tick"></div><span class="number">-50</span></div>
+                <div class="label-item"><div class="tick"></div><span class="number">0</span></div>
+                <div class="label-item"><div class="tick"></div><span class="number">50</span></div>
+            </div>
+        </div>
     </div>
 
-    <div class="scroll-wrapper">
+    <div class="scroll-layer">
         <div class="spacer"></div>
-        
-        <div class="chapter-container">
-            <h1>Chapter 1: The Ascent</h1>
-            <p>This container started 15vh from the bottom. As you scroll the page, it moves upward at the natural scroll speed, covering the background content.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Satisne vobis videor pro meo iure rogare? Mihi enim erit ista discere, si re vera quid tria ista videntur. </p>
-            <p>Continue scrolling to watch it disappear off the top of the viewport.</p>
-            
-            <div style="height: 50vh; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 10px;">
-                [Inner Chapter Visual or Image]
+
+        <div class="chapter-card">
+            <div class="chapter-text">
+                <h2>Chapter One</h2>
+                <p>This content is part of an independent scrolling layer. Notice that the background scale remains perfectly centered and fixed while you scroll this text.</p>
+                <p>As you scroll down, this card will move from its 15vh visible starting position all the way to the top and eventually off-screen.</p>
+                <div style="height: 400px; width: 100%; background: #eee; margin: 30px 0; border-radius: 10px;"></div>
+                <p>Scroll back up to return the card to the bottom "docked" position.</p>
             </div>
-            
-            <p>More chapter text here... The high z-index ensures this stays on top of everything in the body.</p>
         </div>
     </div>
 
