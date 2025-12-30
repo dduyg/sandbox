@@ -29,7 +29,8 @@
         .content {pointer-events: auto; width: 100%; margin: 0 auto; padding: 10px 20px; padding-bottom: 110vh; /* Extra space to scroll off screen */}
 
         .row1 {display: grid; grid-template-columns: 5fr 5fr;}
-        .row2, .row3 {display: grid; grid-template-columns: 3fr 5fr 2fr;}
+        .row2 {display: grid; grid-template-columns: 3fr 5fr 2fr;}
+        .row3 {display: grid; grid-template-columns: repeat(4, 1fr);}
         .row4 {display: grid; grid-template-columns: 8fr 2fr;}
         .row5 {display: grid; grid-template-columns: 3fr 7fr;}
 
@@ -42,8 +43,8 @@
         .row4 .box {background: #00f5a0;}
         .row5 .box {background: yellow;}
 
-        .top-header {position: fixed; top: 0; left: 0; width: 100%; height: 70px; display: flex; align-items: center; justify-content: space-between; z-index: 1;}
-        .top-blob {height: 40px; width: auto;}
+        .top-header {position: fixed; top: 0; left: 0; width: 100%; display: flex; align-items: center; justify-content: space-between; z-index: 1;}
+        .top-blob {width: 100px; height: auto;}
         .top-title {position: absolute; left: 50%; transform: translateX(-50%); font-size: 20px; font-weight: 600;}
 
         /* Bottom-right controls */
@@ -118,8 +119,9 @@
                 <div class="box"></div>
             </div>
             <div class="row3">
+                <div class="box">Text</div>
                 <div class="box"></div>
-                <div class="box">Monte Carlo</div>
+                <div class="box"></div>
                 <div class="box"></div>
             </div>
             <div class="row4">
