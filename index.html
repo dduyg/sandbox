@@ -95,7 +95,9 @@
         /* Row 6: 3 columns */
         .r6 {grid-column: span 4;}
 
-               
+
+        .top-right-blob {position: fixed; top: 0; right: 0; width: 100px; height: auto; z-index: 1;}
+           
         #controls {
             position: fixed;
             bottom: 0; right: 0;
@@ -128,11 +130,15 @@
             <div class="label-item"><div class="tick"></div><span class="number">50</span></div>
         </div>
     </main>
+
+    <img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/top_right_blob.png" class="top-right-blob">
    
     <div id="controls">
         <button id="recordBtn">Record (18 seconds)</button>
         <div id="status">Click to start recording</div>
     </div>
+
+    
 
     <aside>     
         <div class="spacer"></div>
