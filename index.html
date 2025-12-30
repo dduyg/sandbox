@@ -45,32 +45,31 @@
             font-weight: 500;
             color: #333;
         }
-
-
+        
        
         aside {
             position: fixed;
             top: 0; left: 0;
-            width: 100%;
-            height: 100vh;
-            overflow-y: scroll; /* Forces scroll visibility */
+            width: 100%; height: 100vh;
+            overflow-y: scroll;
             z-index: 100;
-            scrollbar-width: none; 
+            scrollbar-width: none;
+            pointer-events: none;         
         }
         aside::-webkit-scrollbar {display: none;}
         .spacer {/* To start 30vh from bottom */ height: 70vh;}
 
         .content {
+            pointer-events: auto;        
             width: 100%;
             padding: 60px 20px;
             /* padding-bottom allows to leave off the screen */
-            padding-bottom: 110vh; 
-            box-sizing: border-box;
+            padding-bottom: 110vh;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .chapter-text {
+        .ch-text {
             max-width: 600px;
             line-height: 1.8;
         }   
@@ -89,7 +88,7 @@
     <aside>     
         <div class="spacer"></div>
         <div class="content">
-            <div class="chapter-text">
+            <div class="ch-text">
                 <h3>Chapter One</h3>
                 <p>Scroll up and watch this card slide over the static UI.</p>
                 <p>Because we addedy a large 110vh padding to the bottom of this container, you can keep scrolling even after the text is finished.</p>
