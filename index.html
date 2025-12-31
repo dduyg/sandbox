@@ -29,7 +29,7 @@
         .number {font-size: 18px; font-weight: 500; color: #333;}
         
         /* Independent Scrolling Layer */
-        aside {position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow-y: scroll; z-index: 100; scrollbar-width: none; pointer-events: none;}
+        aside {position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow-y: scroll; z-index: 10; scrollbar-width: none; pointer-events: none;}
         aside::-webkit-scrollbar {display: none;}
         .spacer {/* To start 30vh from bottom */ height: 70vh;}
         .content {pointer-events: auto; width: 100%; max-width: 100%; margin: 0 auto; padding: 10px 20px; padding-bottom: 110vh; /* Extra space to scroll off screen */}
@@ -43,30 +43,32 @@
         .box {transition: transform 0.3s ease; cursor: pointer;}
         .box:hover {transform: scale(1.02);} 
         .box img {width: 100%; height: auto; display: block; object-fit: cover;}  
-        .row3 .box {display: flex; align-items: center; justify-content: center; overflow: hidden;}
         .row3 .box svg {width: 100%; max-width: 120px; height: auto; transition: transform 0.4s ease; --c1: beige; --c2: #38023b; --c3: fuchsia;}
         .row3 .box:hover svg {transform: scale(1.08) rotate(2deg); --c1: #f5f5dc; --c2: fuchsia; --c3: #38023b;}
         
-        .row4 .box {background: #00f5a0;}
-        .row5 .box {background: yellow;}
-
         /* Full top header */
-        .top-header {position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; z-index: 1;}
+        .top-header {position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; z-index: 100;}
         .top-blob {width: 100px; height: auto;}
-        nav {position: absolute; left: 50%; transform: translateX(-50%);}
+         nav {position: absolute; left: 50%; transform: translateX(-50%);}
         .menu-trigger {margin: 25px 0 15px; font-size: 20px; font-weight: 600; cursor: pointer; user-select: none; display: inline-block;}
         .menu {display: none; flex-direction: column; gap: 15px;}
         .menu.active {display: flex;}
         .menu a {color: #CF9E77; text-decoration: none; font-size: 18px; transition: all 0.2s ease;}
         .menu a:hover {color: #87fffb; letter-spacing: 2px;}
 
-        .dropdown-panel {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 300px; padding: 20px;
+        .dropdown-panel {
+            position: fixed; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            width: 300px; 
+            padding: 20px;
             background-color: #C9C9BF;
             color: #0B0B0B;
             border: 1px solid #ccc;
             border-radius: 8px;
-            z-index: 200; display: none;
+            z-index: 200; 
+            display: none;
         }
         .dropdown-panel.visible {display: block;}
 
@@ -80,12 +82,42 @@
             flex-direction: column; 
             align-items: flex-end; 
             padding: 20px; 
-            z-index: 1;
+            z-index: 100; /* Above the scroll layer */
+            pointer-events: auto;
         }
-        #controls button {padding: 10px 15px; background: #CF9E77; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Lab Mono', monospace; text-align: right; font-size: 13.5px;}   
+        #controls button {
+            padding: 10px 15px; 
+            background: #CF9E77; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-family: 'Lab Mono', monospace; 
+            text-align: right; 
+            font-size: 13.5px;
+            position: relative;
+            z-index: 101;
+        }   
         #controls button:hover {color: #b88860; background: #ccc;}
-        #status {position: relative; display: flex; align-items: center; justify-content: center;}
-        .anim {position: absolute; font-size: 12px; color: #666; white-space: nowrap; opacity: 0; filter: blur(8px);}
+        
+        #status {
+            position: relative; 
+            display: flex; 
+            align-items: center; 
+            justify-content: flex-end;
+            height: 20px;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .anim {
+            position: absolute; 
+            right: 0; /* Keep text anchored to the right edge */
+            font-size: 12px; 
+            color: #666; 
+            white-space: nowrap; 
+            opacity: 0; 
+            filter: blur(8px);
+        }
         .anim.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .anim:nth-child(1) {animation-delay: 0s;}
         .anim:nth-child(2) {animation-delay: 3s;}
@@ -93,7 +125,14 @@
         .anim:nth-child(4) {animation-delay: 9s;}
         .anim:nth-child(5) {animation-delay: 12s;}
         .anim:nth-child(6) {animation-delay: 15s;}
-        @keyframes text-blur-cycle { 0% {filter: blur(12px); opacity: 0;} 5% {filter: blur(0px); opacity: 1;} 11.11% {filter: blur(0px); opacity: 1;} 16.66% {filter: blur(12px); opacity: 0;} 100% {filter: blur(12px); opacity: 0;} }
+        
+        @keyframes text-blur-cycle { 
+            0% {filter: blur(12px); opacity: 0;} 
+            5% {filter: blur(0px); opacity: 1;} 
+            11.11% {filter: blur(0px); opacity: 1;} 
+            16.66% {filter: blur(12px); opacity: 0;} 
+            100% {filter: blur(12px); opacity: 0;} 
+        }
     </style>
 </head>
 <body>
@@ -119,10 +158,19 @@
         </nav>
         <img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/top_right_blob.png" alt="⏭️" class="top-blob">
     </div>
+
     <div id="controls">
-        <div id="status"><div class="anim active">On these</div><div class="anim active">paper planes,</div><div class="anim active">yeah,</div><div class="anim active">we wearin</div><div class="anim active">the crown</div><div class="anim active">➜record (18sec)</div></div>    
+        <div id="status">
+            <div class="anim active">On these</div>
+            <div class="anim active">paper planes,</div>
+            <div class="anim active">yeah,</div>
+            <div class="anim active">we wearin</div>
+            <div class="anim active">the crown</div>
+            <div class="anim active">➜record (18sec)</div>
+        </div>    
         <button id="dropdownToggle">･ﾟ✧LiminalLoop</button>
     </div>
+
     <div id="dropdownPanel" class="dropdown-panel">
         <h3>Nothing here but static and memories.</h3>
     </div>
@@ -140,10 +188,10 @@
             </div>
             <div class="row4">
                 <div class="box"></div>
-                <div class="box">ProofofConcepts</div>
+                <div class="box" style="background: #00f5a0; padding: 10px;">ProofofConcepts</div>
             </div>
             <div class="row5">
-                <div class="box">Kyoo-tae</div>
+                <div class="box" style="background: yellow; padding: 10px;">Kyoo-tae</div>
                 <div class="box"></div>
                 <div class="box"></div> 
             </div>
@@ -151,6 +199,7 @@
     </aside>
 
     <script>
+        // Menu Trigger Logic
         const trigger = document.querySelector('.menu-trigger');
         const menu = document.querySelector('.menu');
         const links = document.querySelectorAll('.menu a');
@@ -159,30 +208,22 @@
             menu.classList.toggle('active');
         });
 
-        links.forEach(link => {
-            link.addEventListener('click', () => {
-                menu.classList.remove('active');
-            });
-        });
-    </script>
-    <script>
+        // Dropdown Panel Logic
         document.addEventListener('DOMContentLoaded', () => {
             const toggleButton = document.getElementById('dropdownToggle');
             const dropdownPanel = document.getElementById('dropdownPanel');
 
-            toggleButton.addEventListener('click', () => {
+            toggleButton.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent immediate closing
                 dropdownPanel.classList.toggle('visible');
             });
             
             document.addEventListener('click', (event) => {
-                const isClickInsideButton = toggleButton.contains(event.target);
-                const isClickInsidePanel = dropdownPanel.contains(event.target);
-
-                if (!isClickInsideButton && !isClickInsidePanel && dropdownPanel.classList.contains('visible')) {
+                if (!dropdownPanel.contains(event.target) && event.target !== toggleButton) {
                     dropdownPanel.classList.remove('visible');
                 }
             });
         });
-     </script>
+    </script>
 </body>
 </html>
