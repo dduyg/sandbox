@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Modern Animated SVG Grid</title>
+<title>Animated SVG Noise Grid - Beige Pop</title>
 
 <style>
     body {
-        background: #f0f0f0;
+        background: #38023b;
         margin: 0;
         padding: 40px;
         font-family: system-ui, sans-serif;
@@ -23,29 +23,22 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #ffffff;
+        background: rgba(0,0,0,0.15);
         border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .box:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
     }
 
     .box svg {
         width: 120px;
-        --c1: #2d3142;
-        --c2: #ef8354;
-        --c3: #ffffff;
         transition: transform 0.4s ease;
+        --c1: beige;       /* main shapes, now pop */
+        --c2: fuchsia;     /* inner accents */
+        --c3: #38023b;     /* minor background shapes */
     }
 
     .box:hover svg {
-        --c1: #ef8354;
-        --c2: #ffffff;
-        --c3: #2d3142;
+        --c1: #fff8dc;    /* brighten beige on hover */
+        --c2: #ff00ff;    /* accent fuchsia intensifies */
+        --c3: #2a002f;    /* deep background */
         transform: scale(1.08) rotate(2deg);
     }
 </style>
@@ -70,8 +63,8 @@
                 <feDisplacementMap in="SourceGraphic" scale="80" />
             </filter>
 
-            <circle cx="100" cy="100" r="50" fill="var(--c1)" />
-            <circle cx="100" cy="100" r="25" fill="var(--c3)" filter="url(#noise1)" />
+            <circle cx="100" cy="100" r="50" fill="var(--c1)" /> <!-- beige -->
+            <circle cx="100" cy="100" r="25" fill="var(--c2)" filter="url(#noise1)" /> <!-- fuchsia -->
         </svg>
     </div>
 
@@ -89,8 +82,8 @@
                 <feDisplacementMap in="SourceGraphic" scale="160" />
             </filter>
 
-            <polygon points="100,190 30,40 140,60" fill="var(--c1)" />
-            <circle cx="100" cy="100" r="40" fill="var(--c2)" filter="url(#noise2)" />
+            <polygon points="100,190 30,40 140,60" fill="var(--c1)" /> <!-- beige main -->
+            <circle cx="100" cy="100" r="40" fill="var(--c2)" filter="url(#noise2)" /> <!-- fuchsia accent -->
         </svg>
     </div>
 
@@ -99,8 +92,8 @@
         <svg viewBox="0 0 200 200">
             <defs>
                 <linearGradient id="grad1">
-                    <stop offset="0%" stop-color="var(--c2)" />
-                    <stop offset="100%" stop-color="var(--c1)" />
+                    <stop offset="0%" stop-color="var(--c1)" />
+                    <stop offset="100%" stop-color="var(--c2)" />
                 </linearGradient>
 
                 <filter id="noise3" x="-100" y="-100" width="400" height="400">
@@ -123,7 +116,7 @@
                 cx="100"
                 cy="100"
                 r="50"
-                fill="url(#grad1)"
+                fill="url(#grad1)"   <!-- beige to fuchsia gradient -->
                 mask="url(#mask1)" />
         </svg>
     </div>
