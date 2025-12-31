@@ -163,21 +163,36 @@
             });
         });
 
-        // Dropdown Panel Logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleButton = document.getElementById('dropdownToggle');
-            const dropdownPanel = document.getElementById('dropdownPanel');
+        // Sound Generator (Short Static Burst)
+        const playGlitchSound = () => {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.1, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.1);
+        };
 
-            toggleButton.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent immediate closing
-                dropdownPanel.classList.toggle('visible');
-            });
-            
-            document.addEventListener('click', (event) => {
-                if (!dropdownPanel.contains(event.target) && event.target !== toggleButton) {
-                    dropdownPanel.classList.remove('visible');
-                }
-            });
+        const toggleButton = document.getElementById('dropdownToggle');
+        const dropdownPanel = document.getElementById('dropdownPanel');
+
+        toggleButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpening = !dropdownPanel.classList.contains('visible');
+            dropdownPanel.classList.toggle('visible');
+            if (isOpening) playGlitchSound();
+        });
+        
+        document.addEventListener('click', (event) => {
+            if (!dropdownPanel.contains(event.target) && event.target !== toggleButton) {
+                dropdownPanel.classList.remove('visible');
+            }
         });
     </script>
 </body>
