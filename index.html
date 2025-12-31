@@ -208,6 +208,12 @@
             menu.classList.toggle('active');
         });
 
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+            });
+        });
+
         // Dropdown Panel Logic
         document.addEventListener('DOMContentLoaded', () => {
             const toggleButton = document.getElementById('dropdownToggle');
