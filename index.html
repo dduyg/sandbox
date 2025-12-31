@@ -23,7 +23,7 @@
         }    
         main {width: 80%; max-width: 600px;}      
         .gradient-bar {height: 80px; width: 100%; border: 1px solid #333; background: linear-gradient(90deg, #8db9ff 0%, #b8b29a 50%, #d4b500 100%);}
-        .labels {display: flex; justify-content: space-between; margin-top: 8px; position: relative;}
+        .labels {display: flex; justify-content: space-between; margin-top: 8px;}    
         .label-item {display: flex; flex-direction: column; align-items: center; width: 20px;}
         .tick {width: 2px; height: 10px; background-color: #333; margin-bottom: 4px;}
         .number {font-size: 18px; font-weight: 500; color: #333;}
@@ -39,7 +39,7 @@
         .row3 {display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 120px;}   
         .row4 {display: grid; grid-template-columns: 7fr 3fr;} 
         .row5 {display: grid; grid-template-columns: 3fr 5fr 2fr;}   
-        
+
         .box {transition: transform 0.3s ease; cursor: pointer;}
         .box:hover {transform: scale(1.02);} 
         .box img {width: 100%; height: auto; display: block; object-fit: cover;}  
@@ -47,7 +47,7 @@
         .row3 .box:hover svg {transform: scale(1.08) rotate(2deg); --c1: #f5f5dc; --c2: fuchsia; --c3: #38023b;}
         
         /* Full top header */
-        .top-header {position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; z-index: 100;}
+        .top-header {position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; z-index: 5;}
         .top-blob {width: 100px; height: auto;}
          nav {position: absolute; left: 50%; transform: translateX(-50%);}
         .menu-trigger {margin: 25px 0 15px; font-size: 20px; font-weight: 600; cursor: pointer; user-select: none; display: inline-block;}
@@ -56,68 +56,17 @@
         .menu a {color: #CF9E77; text-decoration: none; font-size: 18px; transition: all 0.2s ease;}
         .menu a:hover {color: #87fffb; letter-spacing: 2px;}
 
-        .dropdown-panel {
-            position: fixed; 
-            top: 50%; 
-            left: 50%; 
-            transform: translate(-50%, -50%);
-            width: 300px; 
-            padding: 20px;
-            background-color: #C9C9BF;
-            color: #0B0B0B;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            z-index: 200; 
-            display: none;
-        }
-        .dropdown-panel.visible {display: block;}
-
+        /* Dropdown Panel with Glitch */
+        .dropdown-panel {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; padding: 20px; background-color: #C9C9BF; color: #0B0B0B; border: 1px solid #ccc; border-radius: 8px; z-index: 200; display: none;}
+        .dropdown-panel.visible {display: block; animation: panel-glitch 0.2s ease-out;}
+        @keyframes panel-glitch {0% { transform: translate(-52%, -48%) skew(3deg); filter: hue-rotate(90deg); 50% { transform: translate(-49%, -51%) skew(-3deg); filter: invert(20%); 100% { transform: translate(-50%, -50%) skew(0deg);}
+              
         /* Bottom-right controls */
-        #controls {
-            position: fixed; 
-            bottom: 0; 
-            right: 0; 
-            display: flex; 
-            gap: 10px; 
-            flex-direction: column; 
-            align-items: flex-end; 
-            padding: 20px; 
-            z-index: 100; /* Above the scroll layer */
-            pointer-events: auto;
-        }
-        #controls button {
-            padding: 10px 15px; 
-            background: #CF9E77; 
-            color: white; 
-            border: none; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-family: 'Lab Mono', monospace; 
-            text-align: right; 
-            font-size: 13.5px;
-            position: relative;
-            z-index: 101;
-        }   
-        #controls button:hover {color: #b88860; background: #ccc;}
-        
-        #status {
-            position: relative; 
-            display: flex; 
-            align-items: center; 
-            justify-content: flex-end;
-            height: 20px;
-            width: 100%;
-            margin-bottom: 5px;
-        }
-        .anim {
-            position: absolute; 
-            right: 0; /* Keep text anchored to the right edge */
-            font-size: 12px; 
-            color: #666; 
-            white-space: nowrap; 
-            opacity: 0; 
-            filter: blur(8px);
-        }
+        #controls {position: fixed; bottom: 0; right: 0; display: flex; flex-direction: column; align-items: flex-end; padding: 20px; z-index: 100; pointer-events: auto;}
+        #controls button {padding: 10px 15px; background: #CF9E77; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Lab Mono', monospace; font-size: 13.5px;}   
+        #controls button:hover {background: #ccc; color: #b88860;} 
+        #status {position: relative; width: 250px; height: 20px; margin-bottom: 10px;}  
+        .anim {position: absolute; top: 0; right: 0; width: 100%; text-align: right; font-size: 12px; color: #666; white-space: nowrap; opacity: 0; filter: blur(8px); pointer-events: none;}
         .anim.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .anim:nth-child(1) {animation-delay: 0s;}
         .anim:nth-child(2) {animation-delay: 3s;}
@@ -125,12 +74,12 @@
         .anim:nth-child(4) {animation-delay: 9s;}
         .anim:nth-child(5) {animation-delay: 12s;}
         .anim:nth-child(6) {animation-delay: 15s;}
-        
+         
         @keyframes text-blur-cycle { 
-            0% {filter: blur(12px); opacity: 0;} 
-            5% {filter: blur(0px); opacity: 1;} 
+            0% {filter: blur(12px); opacity: 0; transform: translateX(5px);} 
+            5% {filter: blur(0px); opacity: 1; transform: translateX(0);} 
             11.11% {filter: blur(0px); opacity: 1;} 
-            16.66% {filter: blur(12px); opacity: 0;} 
+            16.66% {filter: blur(12px); opacity: 0; transform: translateX(-5px);} 
             100% {filter: blur(12px); opacity: 0;} 
         }
     </style>
