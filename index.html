@@ -31,17 +31,53 @@
         .row2 {display: grid; grid-template-columns: 2fr 8fr; margin-top: 25px;}
         .row3 {display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 120px;}   
         .row4 {display: grid; grid-template-columns: 3fr 5fr 2fr; margin-bottom: 200px;}
-        .row5, .row6 {display: grid; gap: 15px; grid-template-columns: 6fr 4fr;}
+        .row6 {display: grid; grid-template-columns: 6fr 4fr;}
 
+
+.row5 {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: 6fr 4fr;
+    align-items: stretch; /* Forces both columns to be same height */
+}
+
+.row5 .box:nth-of-type(2) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers the poem vertically */
+    background: #C9C9BF;
+    color: #0B0B0B;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 0.6rem;
+    height: 100%; /* Ensures background fills the grid area */
+}
+
+/* Ensure the image doesn't create extra gaps */
+.row5 .box img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+}
+    
         .box img {width: 100%; height: auto; display: block; object-fit: cover;}  
         .box a {font-weight: 700; vertical-align: top; position: relative;}
         .box a::before {content: ''; background-color: #CFB9CB; position: absolute; left: 0.5rem; bottom: 5px; width: 100%; height: 8px; z-index: -1; transition: all 0.3s ease-in-out;}
         .box a:hover::before {left: -5px; bottom: 0; height: 100%; width: calc(100% + 10px);}
-         @keyframes float { 0% {transform: translateY(0);} 50% {transform: translateY(-20px);} 100% {transform: translateY(0);} }
         .row3 .box svg {width: 100%; max-width: 120px; height: auto; transition: transform 0.3s ease; --c1: beige; --c2: #38023b; --c3: fuchsia;}
         .row3 .box:hover svg {transform: scale(1.08) rotate(2deg); --c1: #f5f5dc; --c2: fuchsia; --c3: #38023b;}
-        .row4 .box h4 {display: inline-block; font-size: 0.8rem; animation: float 3s ease-in-out infinite;}
-        .row5 .box:nth-of-type(2) {display: flex; flex-direction: column; justify-content: flex-end; background: #C9C9BF; color: #0B0B0B; border: 1px solid #ccc; padding: 5px; font-size: 0.6rem;}
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0); }
+}
+
+.row4 .box h4 {
+    display: inline-block;
+    font-size: 0.8rem;
+    animation: float 3s ease-in-out infinite;
+    will-change: transform; /* Forces GPU acceleration */
+}      
         
         /* Full top header */
         .top-header {position: fixed; top: 0; left: 0; font-family: "Saira", sans-serif; width: 100%; display: flex; justify-content: space-between; z-index: 5;}
@@ -55,11 +91,11 @@
         .menu a:hover {font-weight:bold; letter-spacing: 2px;}
 
         /* Dropdown Panel with Glitch */
-        .dropdown-panel {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; max-width: 85vw; background: beige; padding: 20px; max-height: 50vh; overflow-y: auto; ; border-radius: 8px; z-index: 200; display: none;}
+        .dropdown-panel {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; max-width: 85vw; background: beige; padding: 20px; max-height: 50vh; overflow-y: auto; border-radius: 8px; z-index: 200; display: none;}
         .dropdown-panel.visible {display: block; animation: panel-glitch 0.2s ease-out;}
          @keyframes panel-glitch { 0% {transform: translate(-52%, -48%) skew(3deg); filter: hue-rotate(90deg);} 50% {transform: translate(-49%, -51%) skew(-3deg); filter: invert(20%);} 100% {transform: translate(-50%, -50%) skew(0deg);} }
-        section {margin-top: 25px; display: flex; flex-direction: row; align-items: stretch; padding: 1.25em 0; overflow-x: auto; -ms-scroll-snap-type: x mandatory; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; gap: 1em;}
-        section::-webkit-scrollbar {display: none;} 
+         section {margin-top: 25px; display: flex; flex-direction: row; align-items: stretch; padding: 1.25em 0; overflow-x: auto; -ms-scroll-snap-type: x mandatory; scroll-snap-type: x mandatory; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; gap: 1em;}
+         section::-webkit-scrollbar {display: none;} 
         .card {display: flex; flex-direction: column; flex: 0 0 180px; padding: 1em; border-radius: 12px; background: rgba(56, 2, 59, 0.05); scroll-snap-align: start; transition: all 0.4s; text-decoration: none; cursor: pointer; position: relative; overflow: hidden;}
         .card:hover {box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);}
         .card-title {font-size: 1.1rem; font-weight: bold;}
