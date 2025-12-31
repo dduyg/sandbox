@@ -43,9 +43,21 @@
         .row4 .box {background: #00f5a0;}
         .row5 .box {background: yellow;}
 
+        /* Full top header */
         .top-header {position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; z-index: 1;}
         .top-blob {width: 100px; height: auto;}
-        .top-title {position: absolute; left: 50%; transform: translateX(-50%); font-size: 20px; font-weight: 600;}
+        nav {position: absolute; left: 50%; transform: translateX(-50%);}
+        .menu-trigger {font-size: 20px; font-weight: 600; cursor: pointer; user-select: none; display: inline-block;}
+        .menu {display: none; flex-direction: column; gap: 15px; margin-top: 25px;}
+        .menu.active {display: flex;}
+        .menu a {
+            color: #171321;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .menu a:hover {color: #87fffb; letter-spacing: 1px;}
 
         /* Bottom-right controls */
         #controls {position: fixed; bottom: 0; right: 0; display: flex; gap: 10px; flex-direction: column; align-items: center; padding: 20px;}
@@ -57,7 +69,7 @@
             cursor: pointer;
             font-family: monospace;
             font-size: 14px;
-        }    
+        }   
         #controls button:hover {color: #b88860; background: #ccc;}
         #status {
             position: relative;
@@ -101,7 +113,15 @@
 
     <div class="top-header">
         <img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/top_left_blob.png" alt="⏮️" class="top-blob">
-        <h1 class="header-title">My Title</h1>
+        <nav>
+            <div class="menu-trigger">Noise Query</div>   
+            <div class="menu">
+                <a href="#">Start</a>
+                <a href="#">About</a>
+                <a href="#">Posts</a>
+                <a href="#">More</a>
+            </div>
+        </nav>
         <img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/top_right_blob.png" alt="⏭️" class="top-blob">
     </div>
     <div id="controls">
@@ -134,5 +154,22 @@
             </div>
         </div>
     </aside>
+
+    <script>
+        const trigger = document.querySelector('.menu-trigger');
+        const menu = document.querySelector('.menu');
+        const links = document.querySelectorAll('.menu a');
+
+        trigger.addEventListener('click', () => {
+            menu.classList.toggle('active');
+        });
+
+        // Auto-close when a link is clicked
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
