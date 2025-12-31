@@ -53,18 +53,28 @@
         /* Full top header */
         .top-header {position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; z-index: 1;}
         .top-blob {width: 100px; height: auto;}
-        nav {position: absolute; left: 50%; transform: translateX(-50%);}
-        .menu-trigger {margin-top: 25px; font-size: 20px; font-weight: 600; cursor: pointer; user-select: none; display: inline-block;}
+         nav {position: absolute; left: 50%; transform: translateX(-50%);}
+        .menu-trigger {margin: 25px 0 15px; font-size: 20px; font-weight: 600; cursor: pointer; user-select: none; display: inline-block;}
         .menu {display: none; flex-direction: column; gap: 15px;}
         .menu.active {display: flex;}
         .menu a {color: #CF9E77; text-decoration: none; font-size: 18px; transition: all 0.2s ease;}
         .menu a:hover {color: #87fffb; letter-spacing: 2px;}
 
+        .dropdown-panel {position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 300px; padding: 20px;
+            background-color: #C9C9BF;
+            color: #0B0B0B;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            z-index: 200; display: none;
+        }
+        .dropdown-panel.visible {display: block;}
+
         /* Bottom-right controls */
         #controls {position: fixed; bottom: 0; right: 0; display: flex; gap: 10px; flex-direction: column; align-items: center; padding: 20px; z-index: 1;}
         #controls button {padding: 10px 15px; background: #CF9E77; color: white; border: none; border-radius: 4px; cursor: pointer; font-family: 'Lab Mono', monospace; text-align: right; font-size: 13.5px;}   
         #controls button:hover {color: #b88860; background: #ccc;}
-        #status {position: relative; display: flex; align-items: center; justify-content: flex-end;}
+        #status {position: relative; display: flex; align-items: center; justify-content: center;}
         .anim {position: absolute; font-size: 12px; color: #666; white-space: nowrap; opacity: 0; filter: blur(8px);}
         .anim.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .anim:nth-child(1) {animation-delay: 0s;}
@@ -102,7 +112,10 @@
     <div id="controls">
         <div id="status"><div class="anim active">On these</div><div class="anim active">paper planes,</div><div class="anim active">yeah,</div><div class="anim active">we wearin</div><div class="anim active">the crown</div><div class="anim active">➜record (18sec)</div></div>    
         <button id="recordBtn">･ﾟ✧LiminalLoop</button>
-    </div> 
+    </div>
+    <div id="dropdownPanel" class="dropdown-panel">
+        <h3>Nothing here but static and memories.</h3>
+    </div>
 
     <aside>     
         <div class="spacer"></div>
@@ -142,5 +155,24 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('dropdownToggle');
+            const dropdownPanel = document.getElementById('dropdownPanel');
+
+            toggleButton.addEventListener('click', () => {
+                dropdownPanel.classList.toggle('visible');
+            });
+            
+            document.addEventListener('click', (event) => {
+                const isClickInsideButton = toggleButton.contains(event.target);
+                const isClickInsidePanel = dropdownPanel.contains(event.target);
+
+                if (!isClickInsideButton && !isClickInsidePanel && dropdownPanel.classList.contains('visible')) {
+                    dropdownPanel.classList.remove('visible');
+                }
+            });
+        });
+     </script>
 </body>
 </html>
