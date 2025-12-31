@@ -31,14 +31,21 @@
         .row2 {display: grid; grid-template-columns: 2fr 8fr; margin-top: 25px;}
         .row3 {display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 120px;}   
         .row4 {display: grid; grid-template-columns: 3fr 5fr 2fr; margin-bottom: 200px;}
-        .row6 {display: grid; grid-template-columns: 6fr 4fr;}
-
-
-.row5 {
+        
+/* Update both rows to be identical */
+.row5, .row6 {
     display: grid;
     gap: 15px;
     grid-template-columns: 6fr 4fr;
-    align-items: stretch; /* Forces both columns to be same height */
+    align-items: stretch;
+}
+
+/* Ensure images fill the 6fr width exactly without distortion */
+.row5 .box img, .row6 .box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This prevents the image from stretching weirdly */
+    display: block;
 }
 
 .row5 .box:nth-of-type(2) {
@@ -51,13 +58,6 @@
     padding: 10px;
     font-size: 0.6rem;
     height: 100%; /* Ensures background fills the grid area */
-}
-
-/* Ensure the image doesn't create extra gaps */
-.row5 .box img {
-    display: block;
-    height: 100%;
-    object-fit: cover;
 }
     
         .box img {width: 100%; height: auto; display: block; object-fit: cover;}  
