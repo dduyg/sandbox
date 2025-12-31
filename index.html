@@ -26,20 +26,44 @@
         aside {position: fixed; top: 0; left: 0; width: 100%; height: 100vh; overflow-y: scroll; z-index: 100; scrollbar-width: none; pointer-events: none;}
         aside::-webkit-scrollbar {display: none;}
         .spacer {/* To start 30vh from bottom */ height: 70vh;}
-        .content {pointer-events: auto; width: 100%; margin: 0 auto; padding: 10px 20px; padding-bottom: 110vh; /* Extra space to scroll off screen */}
+        .content {pointer-events: auto; width: 100%; max-width: 100%; margin: 0 auto; padding: 10px 20px; padding-bottom: 110vh; /* Extra space to scroll off screen */}
 
         .row1 {display: grid; grid-template-columns: 5fr 5fr;}
         .row2 {display: grid; grid-template-columns: 3fr 5fr 2fr;}
-        .row3 {display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;}   
+        .row3 {
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: clamp(8px, 2vw, 24px);
+            width: 100%;
+        }   
         .row4 {display: grid; grid-template-columns: 8fr 2fr;}
         .row5 {display: grid; grid-template-columns: 3fr 7fr;}
 
         .box {margin-top: 100px; transition: transform 0.3s ease; cursor: pointer;}
         .box:hover {transform: scale(1.02);} 
         .box img {width: 100%; height: auto; display: block; object-fit: cover;}  
-        .row3 .box {min-height:200px; display:flex; align-items:center; justify-content:center;}
-        .row3 .box svg {width:120px; transition: transform 0.4s ease; --c1:beige; --c2:#38023b; --c3:fuchsia;}
-        .row3 .box:hover svg {transform: scale(1.08) rotate(2deg); --c1:#f5f5dc; --c2:fuchsia; --c3:#38023b;}
+        .row3 .box {
+            min-height: 200px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden;
+        }
+        .row3 .box svg {
+            width: 100%; 
+            max-width: 120px;
+            height: auto;
+            transition: transform 0.4s ease; 
+            --c1: beige; 
+            --c2: #38023b; 
+            --c3: fuchsia;
+        }
+        .row3 .box:hover svg {
+            transform: scale(1.08) rotate(2deg); 
+            --c1: #f5f5dc; 
+            --c2: fuchsia; 
+            --c3: #38023b;
+        }
        
         .row2 .box {background: red;} 
         .row4 .box {background: #00f5a0;}
@@ -166,7 +190,6 @@
             menu.classList.toggle('active');
         });
 
-        // Auto-close when a link is clicked
         links.forEach(link => {
             link.addEventListener('click', () => {
                 menu.classList.remove('active');
