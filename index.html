@@ -31,7 +31,7 @@
         .row2 {display: grid; grid-template-columns: 2fr 8fr; margin-top: 25px;}
         .row3 {display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 120px;}   
         .row4 {display: grid; grid-template-columns: 3fr 5fr 2fr;}
-        .row5 {display: grid; grid-template-columns: 7fr 3fr;}
+        .row5, .row6 {display: grid; grid-template-columns: 6fr 4fr;}
 
         .box img {width: 100%; height: auto; display: block; object-fit: cover;}  
         .box a {font-weight: 700; vertical-align: top; position: relative;}
@@ -41,6 +41,7 @@
          @keyframes float { 0% {transform: translateY(0);} 50% {transform: translateY(-20px);} 100% {transform: translateY(0);} }
         .row3 .box svg {width: 100%; max-width: 120px; height: auto; transition: transform 0.3s ease; --c1: beige; --c2: #38023b; --c3: fuchsia;}
         .row3 .box:hover svg {transform: scale(1.08) rotate(2deg); --c1: #f5f5dc; --c2: fuchsia; --c3: #38023b;}
+        .row4 .box p {display: block; white-space: nowrap; padding-left: 10px;}
         
         /* Full top header */
         .top-header {position: fixed; top: 0; left: 0; font-family: "Saira", sans-serif; width: 100%; display: flex; justify-content: space-between; z-index: 5;}
@@ -130,11 +131,12 @@
             <div class="row2"><div></div><div class="box"><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/on-my-way.png"></div></div>
             <div class="row3"><div></div><div class="box"><svg viewBox="0 0 200 200"><filter id="noise1" x="-100" y="-100" width="400" height="400"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3"><animate attributeName="baseFrequency" dur="4s" values="0.6;0.9;0.6" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="80"/></filter><circle cx="100" cy="100" r="50" fill="var(--c1)"/><circle cx="100" cy="100" r="25" fill="var(--c2)" filter="url(#noise1)"/></svg></div><div class="box"><svg viewBox="0 0 200 200"><filter id="noise2" x="-100" y="-100" width="400" height="400"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2"><animate attributeName="seed" dur="0.6s" values="0;100" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="160"/></filter><polygon points="100,190 30,40 140,60" fill="var(--c2)"/><circle cx="100" cy="100" r="40" fill="var(--c1)" filter="url(#noise2)"/></svg></div><div class="box"><svg viewBox="0 0 200 200"><defs><linearGradient id="grad1"><stop offset="0%" stop-color="var(--c1)"/><stop offset="100%" stop-color="var(--c3)"/></linearGradient><filter id="noise3" x="-100" y="-100" width="400" height="400"><feTurbulence type="fractalNoise" baseFrequency="0.4" numOctaves="8"><animate attributeName="baseFrequency" dur="6s" values="0.3;0.6;0.3" repeatCount="indefinite"/></feTurbulence><feDisplacementMap scale="260"/></filter><mask id="mask1"><rect width="200" height="200" fill="white" filter="url(#noise3)"/></mask></defs><circle cx="100" cy="100" r="50" fill="url(#grad1)" mask="url(#mask1)"/></svg></div></div> 
             <div class="row4">
-                <div class="box" style="background: yellow; padding: 10px;"><h4>༼ つ ◕_◕ ༽つ</h4></div>
+                <div class="box"><p>༼ つ ◕_◕ ༽つ</p></div>
                 <div class="box"><a href="#">➜</a> Bir kadın, ne kadar zeki olursa olsun, kalbiyle hareket eder.</div>
                 <div></div> 
             </div>
-            <div class="row5"><div></div><div class="box" style="background: #00f5a0; padding: 10px;"><p>Oh Ataturk, father of the land,<br>Through battles and hardship,<br>he never lost his stride,<br>A leader and a warrior,<br>with honor as his guide.</p></div></div>
+            <div class="row5"><div><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/‎0-6/pixels/Are-ya-winning-daughter.png‎"></div><div class="box"><p>Oh Ataturk, father of the land,<br>Through battles and hardship,<br>he never lost his stride,<br>A leader and a warrior,<br>with honor as his guide.</p></div></div>
+            <div class="row6"><div><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/‎0-6/pixels/Are-ya-winning-daughter.png‎"></div><div></div></div>
         </div>
     </aside>
 
