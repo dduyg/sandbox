@@ -97,38 +97,16 @@
             background-color: #0B0B0B;
             color: #C9C9BF;
         }
-
-        .dropdown-panel {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            padding: 20px;
-            background-color: #C9C9BF;
-            color: #0B0B0B;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 99;
-            display: none;
-        }
-        .dropdown-panel.visible {
-            display: block;
-        }
-        .dropdown-panel h3 {
-            margin-top: 0;
-            color: #333;
-        }
-        .dropdown-panel ul {
+        ul {
             list-style: none;
             padding: 0;
             font-size: 0.6rem;
         }
-        .dropdown-panel li {
+        li {
             padding: 8px 0;
             border-bottom: 1px solid #eee;
         }
-        .dropdown-panel li:last-child {
+        li:last-child {
             border-bottom: none;
         }
     </style>
@@ -145,35 +123,13 @@
     
     <div class="cta">RETURN C_011 <span class="arrow">[↗]</span></div>
     
-    <div id="dropdownPanel" class="dropdown-panel">
-        <h3>Nothing here but static and memories.</h3>
-        <ul>
-            <li>The city forgot it.</li>
-            <li>The net erased it.</li>
-            <li>Now it's just another ghost signal.</li>
-        </ul>
-    </div>
+    <ul>
+        <li>Nothing here but static and memories.</li>
+        <li>The city forgot it.</li>
+        <li>The net erased it.</li>
+        <li>Now it's just another ghost signal.</li>
+    </ul>
 
     <footer><button id="dropdownToggle">D8W4VƎ</button></footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleButton = document.getElementById('dropdownToggle');
-            const dropdownPanel = document.getElementById('dropdownPanel');
-
-            toggleButton.addEventListener('click', () => {
-                dropdownPanel.classList.toggle('visible');
-            });
-            
-            document.addEventListener('click', (event) => {
-                const isClickInsideButton = toggleButton.contains(event.target);
-                const isClickInsidePanel = dropdownPanel.contains(event.target);
-
-                if (!isClickInsideButton && !isClickInsidePanel && dropdownPanel.classList.contains('visible')) {
-                    dropdownPanel.classList.remove('visible');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
