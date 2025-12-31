@@ -29,42 +29,18 @@
         .content {pointer-events: auto; width: 100%; max-width: 100%; margin: 0 auto; padding: 10px 20px; padding-bottom: 110vh; /* Extra space to scroll off screen */}
 
         .row1 {display: grid; grid-template-columns: 5fr 5fr;}
-        .row2 {display: grid; grid-template-columns: 3fr 5fr 2fr;}
-        .row3 {
-            display: grid; 
-            grid-template-columns: repeat(4, 1fr); 
-            gap: clamp(8px, 2vw, 24px);
-            width: 100%;
-        }   
+        .row2 {display: grid; grid-template-columns: 3fr 7fr;}
+        .row3 {display: grid; grid-template-columns: repeat(4, 1fr);}   
         .row4 {display: grid; grid-template-columns: 8fr 2fr;}
-        .row5 {display: grid; grid-template-columns: 3fr 7fr;}
-
-        .box {margin-top: 100px; transition: transform 0.3s ease; cursor: pointer;}
+        .row5 {display: grid; grid-template-columns: 3fr 5fr 2fr;}   
+        
+        .box {transition: transform 0.3s ease; cursor: pointer;}
         .box:hover {transform: scale(1.02);} 
         .box img {width: 100%; height: auto; display: block; object-fit: cover;}  
-        .row3 .box {
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            overflow: hidden;
-        }
-        .row3 .box svg {
-            width: 100%; 
-            max-width: 120px;
-            height: auto;
-            transition: transform 0.4s ease; 
-            --c1: beige; 
-            --c2: #38023b; 
-            --c3: fuchsia;
-        }
-        .row3 .box:hover svg {
-            transform: scale(1.08) rotate(2deg); 
-            --c1: #f5f5dc; 
-            --c2: fuchsia; 
-            --c3: #38023b;
-        }
-       
-        .row2 .box {background: red;} 
+        .row3 .box {display: flex; align-items: center; justify-content: center; overflow: hidden;}
+        .row3 .box svg {width: 100%; max-width: 120px; height: auto; transition: transform 0.4s ease; --c1: beige; --c2: #38023b; --c3: fuchsia;}
+        .row3 .box:hover svg { transform: scale(1.08) rotate(2deg); --c1: #f5f5dc; --c2: fuchsia; --c3: #38023b;}
+        
         .row4 .box {background: #00f5a0;}
         .row5 .box {background: yellow;}
 
@@ -76,11 +52,11 @@
         .menu {display: none; flex-direction: column; gap: 15px;}
         .menu.active {display: flex;}
         .menu a {
-            color: #171321;
+            color: blue;
             text-decoration: none; font-size: 18px;
             transition: all 0.3s ease;
         }
-        .menu a:hover {color: #87fffb; letter-spacing: 1px;}
+        .menu a:hover {color: #87fffb; letter-spacing: 2px;}
 
         /* Bottom-right controls */
         #controls {position: fixed; bottom: 0; right: 0; display: flex; gap: 10px; flex-direction: column; align-items: center; padding: 20px; z-index: 1;}
@@ -89,7 +65,7 @@
             text-align: right; font-size: 13.5px;
         }   
         #controls button:hover {color: #b88860; background: #ccc;}
-        #status {position: relative; display: flex; align-items: center; justify-content: center;}
+        #status {position: relative; display: flex; align-items: center; justify-content: flex-end;}
         .anim {position: absolute; font-size: 12px; color: #666; white-space: nowrap; opacity: 0; filter: blur(8px);}
         .anim.active {animation: text-blur-cycle 18s cubic-bezier(.455,.03,.515,.955) infinite;}
         .anim:nth-child(1) {animation-delay: 0s;}
@@ -98,13 +74,7 @@
         .anim:nth-child(4) {animation-delay: 9s;}
         .anim:nth-child(5) {animation-delay: 12s;}
         .anim:nth-child(6) {animation-delay: 15s;}
-        @keyframes text-blur-cycle {
-            0% {filter: blur(12px); opacity: 0;}
-            5% {filter: blur(0px); opacity: 1;}
-            11.11% {filter: blur(0px); opacity: 1;}
-            16.66% {filter: blur(12px); opacity: 0;}
-            100% {filter: blur(12px); opacity: 0;}
-        }
+        @keyframes text-blur-cycle { 0% {filter: blur(12px); opacity: 0;} 5% {filter: blur(0px); opacity: 1;} 11.11% {filter: blur(0px); opacity: 1;} 16.66% {filter: blur(12px); opacity: 0;} 100% {filter: blur(12px); opacity: 0;} }
     </style>
 </head>
 <body>
@@ -139,11 +109,7 @@
         <div class="spacer"></div>
         <div class="content">
             <div class="row1"><div class="box"><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/converging.png"></div><div></div></div>
-            <div class="row2">
-                <div class="box" style="background: #eee; display: flex; align-items: center; justify-content: center;"><span>Mixed Content</span></div>
-                <div class="box"></div>
-                <div class="box"></div>
-            </div>
+            <div class="row2"><div></div><div class="box"><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/‎0-6/pixels/on-my-way.png‎"></div></div>
             <div class="row3">
                 <div></div>
                 <div class="box"><svg viewBox="0 0 200 200"><filter id="noise1" x="-100" y="-100" width="400" height="400"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3"><animate attributeName="baseFrequency" dur="4s" values="0.6;0.9;0.6" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="80"/></filter><circle cx="100" cy="100" r="50" fill="var(--c1)"/><circle cx="100" cy="100" r="25" fill="var(--c2)" filter="url(#noise1)"/></svg></div>
@@ -156,7 +122,8 @@
             </div>
             <div class="row5">
                 <div class="box">Kyoo-tae</div>
-                <div class="box"></div>  
+                <div class="box"></div>
+                <div class="box"></div> 
             </div>
         </div>
     </aside>
