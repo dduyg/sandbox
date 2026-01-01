@@ -12,17 +12,11 @@
             font-weight: normal;
             font-style: normal;
         }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
             font-family: 'Standard Book', sans-serif;
             text-rendering: optimizeLegibility;
             font-size: 18px;
             background-color: #b1caf0;
-            overflow-x: hidden;
         }
         .cover {
             color: #b1caf0;
@@ -34,11 +28,11 @@
             padding: 50px;
         }
         .container {
-            display: flex;
-            width: 100vw;
-            margin: 0;
-            height: 90vh;
-            padding: 0;
+            display:flex;
+            width: 100%;
+            margin: auto;
+            height: 90%;
+            padding: 20px;
         }
         a {
             font-size: 50px;
@@ -60,12 +54,16 @@
             align-items: center;
             justify-content: center;
         }
-        #left-page {width: 40%;}
-        #right-page {width: 40%;}
+        #left-page {
+            width: 40%;
+        }
+        #right-page {
+            width: 40%;
+        }
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: repeat(3,1fr);
+            grid-template-rows: repeat(4,1fr);
             grid-gap: 20px;
             padding: 20px;
             margin: auto;
@@ -79,12 +77,12 @@
 </head>
 <body>
     <div class="container">
-        <div id="prev"><a href="#"> ← </a></div>
+        <div id="prev"><a href="../11/"> ← </a></div>
         <div id="left-page"></div>
-        <div id="right-page" class="cover" style="background-image: url(https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/nebula-node.png); background-repeat: no-repeat; background-size: cover;">
+        <div id="right-page" class="cover" style="background-image: url(covered.png); background-repeat: no-repeat; background-size: cover;">
             <h1 class="title">Nebula Nodes</h1>
         </div>
-        <div id="next"><a href="#"> → </a></div>
+        <div id="next"><a href="../"> → </a></div>
     </div>
 </body>
 </html>
