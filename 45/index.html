@@ -38,8 +38,7 @@
             width: 100vw;
             margin: 0;
             height: 90vh;
-            padding: 20px;
-            gap: 0;
+            padding: 0;
         }
         a {
             font-size: 50px;
@@ -50,26 +49,19 @@
             color: black;
         }
         #prev {
-            flex: 0 0 10%;
+            width: 10%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
         #next {
-            flex: 0 0 10%;
+            width: 10%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        #left-page {
-            flex: 0 0 40%;
-        }
-        #right-page {
-            flex: 0 0 40%;
-            background-image: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/nebula-node.png');
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
+        #left-page {width: 40%;}
+        #right-page {width: 40%;}
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -87,18 +79,12 @@
 </head>
 <body>
     <div class="container">
-        <div id="prev">
-            <a href="../11/"> ← </a>
-        </div>
-        <div id="left-page">
-            
-        </div>
-        <div id="right-page" class="cover">
+        <div id="prev"><a href="#"> ← </a></div>
+        <div id="left-page"></div>
+        <div id="right-page" class="cover" style="background-image: url(https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/nebula-node.png); background-repeat: no-repeat; background-size: cover;">
             <h1 class="title">Nebula Nodes</h1>
         </div>
-        <div id="next">
-            <a href="../"> → </a>
-        </div>
+        <div id="next"><a href="#"> → </a></div>
     </div>
 </body>
 </html>
