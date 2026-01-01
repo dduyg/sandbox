@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liminal Loop</title>
+    <style>
+        @font-face {
+            font-family: 'Standard Book';
+            src: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/Standard-Book.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Standard Book', sans-serif;
+            text-rendering: optimizeLegibility;
+            font-size: 18px;
+            background-color: #b1caf0;
+            overflow-x: hidden;
+        }
+        .cover {
+            color: #b1caf0;
+            display: flex;
+            align-items: end;
+        }
+        .title {
+            font-family: 'Standard Book', sans-serif;
+            padding: 50px;
+        }
+        .container {
+            display: flex;
+            width: 100vw;
+            margin: 0;
+            height: 90vh;
+            padding: 20px;
+            gap: 0;
+        }
+        a {
+            font-size: 50px;
+            color: black;
+            text-decoration: none;
+        }
+        a:visited {
+            color: black;
+        }
+        #prev {
+            flex: 0 0 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #next {
+            flex: 0 0 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #left-page {
+            flex: 0 0 40%;
+        }
+        #right-page {
+            flex: 0 0 40%;
+            background-image: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/nebula-node.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            grid-gap: 20px;
+            padding: 20px;
+            margin: auto;
+            justify-content: center;
+            height: 80%;
+        }
+        .grid-container div {
+            overflow: hidden;
+        }     
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="prev">
+            <a href="../11/"> ← </a>
+        </div>
+        <div id="left-page">
+            
+        </div>
+        <div id="right-page" class="cover">
+            <h1 class="title">Nebula Nodes</h1>
+        </div>
+        <div id="next">
+            <a href="../"> → </a>
+        </div>
+    </div>
+</body>
+</html>
