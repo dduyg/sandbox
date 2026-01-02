@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historical Landmarks Dataset - GridViz Visualization</title>
-    <script src="https://unpkg.com/gridviz/dist/gridviz.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -61,6 +60,7 @@
             background-color: #2d3748;
             border-radius: 8px;
             margin-bottom: 20px;
+            overflow: hidden;
         }
         
         .controls {
@@ -142,13 +142,43 @@
             font-weight: bold;
             margin-top: 5px;
         }
+
+        canvas {
+            display: block;
+        }
+
+        .point {
+            cursor: pointer;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            pointer-events: none;
+            font-size: 0.85em;
+            max-width: 300px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .tooltip a {
+            color: #3182ce;
+            text-decoration: none;
+        }
+
+        .tooltip a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Historical Landmarks Dataset</h1>
         <p class="description">
-            300 historical landmarks with projected coordinates (x, y, z) visualized using GridViz library
+            300 historical landmarks with projected coordinates (x, y, z) - Interactive Canvas Visualization
         </p>
         
         <div class="legend">
@@ -183,16 +213,16 @@
         </div>
         
         <div id="map-container">
-            <div class="loading">
-                <div class="spinner"></div>
-                <p>Initializing visualization...</p>
-            </div>
+            <canvas id="canvas"></canvas>
         </div>
+        
+        <div class="tooltip" id="tooltip"></div>
         
         <div class="controls">
             <button onclick="downloadCSV()">Download CSV Dataset</button>
             <button onclick="downloadJSON()">Download JSON Dataset</button>
             <button onclick="showStats()">Toggle Statistics</button>
+            <button onclick="resetView()">Reset View</button>
         </div>
         
         <div class="stats" id="stats" style="display: none;">
@@ -251,56 +281,172 @@
         }
 
         const landmarks = generateLandmarks();
+        
+        const eraColors = {
+            'Ancient': '#8B4513',
+            'Medieval': '#4B0082',
+            'Renaissance': '#DAA520',
+            'Colonial': '#2F4F4F',
+            'Victorian': '#800020',
+            'Modern': '#1E90FF',
+            'Contemporary': '#32CD32'
+        };
 
-        // Initialize GridViz map
-        function initializeMap() {
+        // Canvas visualization
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const tooltip = document.getElementById('tooltip');
+        
+        let scale = 1;
+        let offsetX = 0;
+        let offsetY = 0;
+        let isDragging = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        function resizeCanvas() {
             const container = document.getElementById('map-container');
-            container.innerHTML = '';
-            
-            const eraColors = {
-                'Ancient': '#8B4513',
-                'Medieval': '#4B0082',
-                'Renaissance': '#DAA520',
-                'Colonial': '#2F4F4F',
-                'Victorian': '#800020',
-                'Modern': '#1E90FF',
-                'Contemporary': '#32CD32'
-            };
-
-            try {
-                const map = gridviz.map({
-                    container: container,
-                    x: 0,
-                    y: 0,
-                    z: 1,
-                    cellSize: 500000
-                });
-
-                map.layers.push(
-                    gridviz.layer_points({
-                        data: landmarks,
-                        x: d => d.x,
-                        y: d => d.y,
-                        color: d => eraColors[d.era] || '#666666',
-                        size: d => d.z * 3 + 5,
-                        opacity: 0.8,
-                        tooltip: d => `
-                            <strong>${d.name}</strong><br/>
-                            Type: ${d.type}<br/>
-                            Era: ${d.era}<br/>
-                            Built: ${d.yearBuilt > 0 ? d.yearBuilt + ' AD' : Math.abs(d.yearBuilt) + ' BC'}<br/>
-                            Visitors/year: ${d.visitors.toLocaleString()}<br/>
-                            Importance (z): ${d.z.toFixed(2)}<br/>
-                            UNESCO: ${d.unesco ? '✓ Yes' : '✗ No'}<br/>
-                            <a href="${d.website}" target="_blank" style="color: #3182ce;">Visit Website →</a>
-                        `
-                    })
-                );
-            } catch (error) {
-                console.error('GridViz initialization error:', error);
-                container.innerHTML = `<div class="loading"><p style="color: #fc8181;">Error: ${error.message}</p></div>`;
-            }
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            draw();
         }
+
+        function worldToScreen(x, y) {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            return {
+                x: centerX + (x * scale / 100000) + offsetX,
+                y: centerY - (y * scale / 100000) + offsetY
+            };
+        }
+
+        function screenToWorld(sx, sy) {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            return {
+                x: ((sx - centerX - offsetX) / scale) * 100000,
+                y: -((sy - centerY - offsetY) / scale) * 100000
+            };
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw grid
+            ctx.strokeStyle = '#4a5568';
+            ctx.lineWidth = 0.5;
+            const gridSize = 50;
+            for (let i = -10; i <= 10; i++) {
+                const pos = worldToScreen(i * 1000000, 0);
+                ctx.beginPath();
+                ctx.moveTo(pos.x, 0);
+                ctx.lineTo(pos.x, canvas.height);
+                ctx.stroke();
+                
+                const posY = worldToScreen(0, i * 1000000);
+                ctx.beginPath();
+                ctx.moveTo(0, posY.y);
+                ctx.lineTo(canvas.width, posY.y);
+                ctx.stroke();
+            }
+            
+            // Draw landmarks
+            landmarks.forEach(landmark => {
+                const pos = worldToScreen(landmark.x, landmark.y);
+                const radius = (landmark.z * 0.5 + 2) * scale;
+                
+                ctx.fillStyle = eraColors[landmark.era];
+                ctx.globalAlpha = 0.8;
+                ctx.beginPath();
+                ctx.arc(pos.x, pos.y, radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            });
+        }
+
+        function findLandmarkAt(x, y) {
+            for (let i = landmarks.length - 1; i >= 0; i--) {
+                const landmark = landmarks[i];
+                const pos = worldToScreen(landmark.x, landmark.y);
+                const radius = (landmark.z * 0.5 + 2) * scale;
+                const dx = x - pos.x;
+                const dy = y - pos.y;
+                if (dx * dx + dy * dy <= radius * radius) {
+                    return landmark;
+                }
+            }
+            return null;
+        }
+
+        function showTooltip(landmark, x, y) {
+            tooltip.innerHTML = `
+                <strong>${landmark.name}</strong><br/>
+                Type: ${landmark.type}<br/>
+                Era: ${landmark.era}<br/>
+                Built: ${landmark.yearBuilt > 0 ? landmark.yearBuilt + ' AD' : Math.abs(landmark.yearBuilt) + ' BC'}<br/>
+                Visitors/year: ${landmark.visitors.toLocaleString()}<br/>
+                Importance (z): ${landmark.z.toFixed(2)}<br/>
+                UNESCO: ${landmark.unesco ? '✓ Yes' : '✗ No'}<br/>
+                <a href="${landmark.website}" target="_blank">Visit Website →</a>
+            `;
+            tooltip.style.display = 'block';
+            tooltip.style.left = (x + 10) + 'px';
+            tooltip.style.top = (y + 10) + 'px';
+        }
+
+        function hideTooltip() {
+            tooltip.style.display = 'none';
+        }
+
+        // Event listeners
+        canvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            lastX = e.clientX;
+            lastY = e.clientY;
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            if (isDragging) {
+                offsetX += e.clientX - lastX;
+                offsetY += e.clientY - lastY;
+                lastX = e.clientX;
+                lastY = e.clientY;
+                draw();
+                hideTooltip();
+            } else {
+                const landmark = findLandmarkAt(x, y);
+                if (landmark) {
+                    canvas.style.cursor = 'pointer';
+                    showTooltip(landmark, e.clientX, e.clientY);
+                } else {
+                    canvas.style.cursor = 'default';
+                    hideTooltip();
+                }
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDragging = false;
+            hideTooltip();
+        });
+
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? 0.9 : 1.1;
+            scale *= delta;
+            scale = Math.max(0.1, Math.min(scale, 10));
+            draw();
+        });
+
+        window.addEventListener('resize', resizeCanvas);
 
         // Download CSV
         function downloadCSV() {
@@ -343,6 +489,14 @@
             }
         }
 
+        // Reset view
+        function resetView() {
+            scale = 1;
+            offsetX = 0;
+            offsetY = 0;
+            draw();
+        }
+
         // Update statistics
         function updateStats() {
             const unescoCount = landmarks.filter(l => l.unesco).length;
@@ -356,10 +510,8 @@
             document.getElementById('stat-visitors').textContent = mostVisited.visitors.toLocaleString();
         }
 
-        // Initialize when page loads
-        window.addEventListener('load', () => {
-            setTimeout(initializeMap, 100);
-        });
+        // Initialize
+        resizeCanvas();
     </script>
 </body>
 </html>
