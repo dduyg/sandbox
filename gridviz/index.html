@@ -1,74 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gridviz Personal Projects Visualization</title>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            background: linear-gradient(90deg, #8EC5FF 0%, #B7C6DB 25%, #C8C4B8 50%, #D6C26F 75%, #D9C300 100%);
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gridviz Personal Projects</title>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: linear-gradient(90deg, #8EC5FF 0%, #B7C6DB 25%, #C8C4B8 50%, #D6C26F 75%, #D9C300 100%);
+    }
+    #map {
+        height: 100%;
+        width: 100%;
+    }
+</style>
 </head>
 <body>
-    <div id="map" style="height: 100%; width: 100%"></div>
 
-    <!-- Include Gridviz library -->
-    <script src="https://cdn.jsdelivr.net/gh/eurostat/gridviz/dist/gridviz.js"></script>
+<div id="map"></div>
 
-    <script>
-        // Initialize map
-        const map = new gridviz.Map(document.getElementById('map'), {
-            x: 0,
-            y: 0,
-            z: 2,
-        }).addZoomButtons();
+<script src="https://unpkg.com/gridviz/dist/gridviz.min.js"></script>
+<script>
+    // Web Mercator conversion
+    function lonLatToMeters(lon, lat){
+        const R = 6378137;
+        const x = R * lon * Math.PI / 180;
+        const y = R * Math.log(Math.tan((90 + lat) * Math.PI / 360));
+        return [x, y];
+    }
 
-        // Dataset URL (your CSV file)
-        const dataset = new gridviz.CSVGrid(
-            map,
-            'https://raw.githubusercontent.com/dduyg/sandbox/main/personal_projects_creative_spaces.csv', // Replace with your CSV link
-            50000 // grid resolution
-        );
+    // Initialize map
+    const map = new gridviz.Map(document.getElementById('map'), {
+        x: 0,
+        y: 0,
+        z: 2,
+        backgroundColor: 'transparent'
+    }).addZoomButtons();
 
-        // Map project types to glyph URLs
-        const typeToImage = {
-            'Photography': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/45a18b_0b4536_e4a51e6b.png',
-            'Science': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/c9fd0f_1a280c_8f628b44.png',
-            'Software': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/dfced8_687446_4b962a92.png',
-            'Writing': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/f9d6c9_ad7775_391df7dd.png',
-            'Art': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/202c36_d7e0f3_6bf7fefb.png',
-            'Music': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/32839c_5da6c5_3939d9e2.png',
-            'Craft': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/acacac_eeeeee_f7bc3f6b.png'
-        };
+    // Load CSV and convert lat/lon to x/y meters
+    const csvUrl = 'https://raw.githubusercontent.com/dduyg/sandbox/main/personal_projects_creative_spaces.csv';
+    const dataset = new gridviz.CSVGrid(map, csvUrl, 50000, {
+        x: (row) => lonLatToMeters(+row.longitude, +row.latitude)[0],
+        y: (row) => lonLatToMeters(+row.longitude, +row.latitude)[1]
+    });
 
-        // Map project status to sizes
-        const statusToSize = {
-            'Planned': 0.5,
-            'On Hold': 0.7,
-            'In Progress': 1.0,
-            'Completed': 1.3
-        };
+    // Glyphs by type
+    const typeToImage = {
+        'Photography': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/45a18b_0b4536_e4a51e6b.png',
+        'Science': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/c9fd0f_1a280c_8f628b44.png',
+        'Software': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/dfced8_687446_4b962a92.png',
+        'Writing': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/f9d6c9_ad7775_391df7dd.png',
+        'Art': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/202c36_d7e0f3_6bf7fefb.png',
+        'Music': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/32839c_5da6c5_3939d9e2.png',
+        'Craft': 'https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/acacac_eeeeee_f7bc3f6b.png'
+    };
 
-        // Define image style
-        const style = new gridviz.ImageStyle({
-            image: (cell) => {
-                return typeToImage[cell.type] || typeToImage['Art'];
-            },
-            size: (cell, r, z, viewScale) => {
-                return r * (statusToSize[cell.status] || 1);
-            },
-            tooltip: (cell) => {
-                return `${cell.project_name}<br>Type: ${cell.type}<br>Status: ${cell.status}<br><a href="${cell.project_url}" target="_blank">Visit Project</a>`;
-            }
-        });
+    const statusToSize = {
+        'Planned': 0.5,
+        'On Hold': 0.7,
+        'In Progress': 1.0,
+        'Completed': 1.3
+    };
 
-        // Add layer
-        map.layers = [new gridviz.GridLayer(dataset, [style])];
+    const style = new gridviz.ImageStyle({
+        image: (cell) => typeToImage[cell.type] || typeToImage['Art'],
+        size: (cell, r, z, viewScale) => r * (statusToSize[cell.status] || 1),
+        tooltip: (cell) => `${cell.project_name}<br>Type: ${cell.type}<br>Status: ${cell.status}<br><a href="${cell.project_url}" target="_blank">Visit Project</a>`
+    });
 
-    </script>
+    map.layers = [new gridviz.GridLayer(dataset, [style])];
+
+</script>
+
 </body>
 </html>
