@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Landmarks Dataset - GridViz Visualization</title>
+    <script src="https://unpkg.com/gridviz/dist/gridviz.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #1a202c;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .description {
+            color: #cbd5e0;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 2px;
+        }
+        
+        #map-container {
+            width: 100%;
+            height: 600px;
+            background-color: #2d3748;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: #2c5aa0;
+        }
+        
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 600px;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .stats {
+            background-color: #2d3748;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .stats h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            font-size: 0.9em;
+        }
+        
+        .stat-item {
+            background-color: #1a202c;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        
+        .stat-label {
+            color: #cbd5e0;
+            font-size: 0.85em;
+        }
+        
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Historical Landmarks Dataset</h1>
+        <p class="description">
+            300 historical landmarks with projected coordinates (x, y, z) visualized using GridViz library
+        </p>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #8B4513;"></div>
+                <span>Ancient</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #4B0082;"></div>
+                <span>Medieval</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #DAA520;"></div>
+                <span>Renaissance</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #2F4F4F;"></div>
+                <span>Colonial</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #800020;"></div>
+                <span>Victorian</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #1E90FF;"></div>
+                <span>Modern</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background-color: #32CD32;"></div>
+                <span>Contemporary</span>
+            </div>
+        </div>
+        
+        <div id="map-container">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Initializing visualization...</p>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="downloadCSV()">Download CSV Dataset</button>
+            <button onclick="downloadJSON()">Download JSON Dataset</button>
+            <button onclick="showStats()">Toggle Statistics</button>
+        </div>
+        
+        <div class="stats" id="stats" style="display: none;">
+            <h3>Dataset Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Total Landmarks</div>
+                    <div class="stat-value" id="stat-total">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">UNESCO Sites</div>
+                    <div class="stat-value" id="stat-unesco">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Oldest Landmark</div>
+                    <div class="stat-value" id="stat-oldest">-</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Most Visited</div>
+                    <div class="stat-value" id="stat-visitors">-</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate 300 historical landmarks with projected coordinates
+        function generateLandmarks() {
+            const landmarks = [];
+            const types = ['Monument', 'Castle', 'Temple', 'Fort', 'Palace', 'Cathedral', 'Ruins', 'Museum', 'Memorial', 'Bridge'];
+            const eras = ['Ancient', 'Medieval', 'Renaissance', 'Colonial', 'Victorian', 'Modern', 'Contemporary'];
+            const firstNames = ['Royal', 'Grand', 'Ancient', 'Sacred', 'Imperial', 'Historic', 'Old', 'Great', 'Noble', 'Majestic'];
+            const secondNames = ['Stone', 'Hill', 'River', 'Mountain', 'Valley', 'Gate', 'Tower', 'Plaza', 'Square', 'Gardens'];
+            
+            for (let i = 0; i < 300; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                const era = eras[Math.floor(Math.random() * eras.length)];
+                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const secondName = secondNames[Math.floor(Math.random() * secondNames.length)];
+                
+                landmarks.push({
+                    id: i + 1,
+                    name: `${firstName} ${secondName} ${type}`,
+                    x: (Math.random() - 0.5) * 20000000,
+                    y: (Math.random() - 0.5) * 20000000,
+                    z: Math.random() * 10,
+                    era: era,
+                    type: type,
+                    yearBuilt: Math.floor(Math.random() * 2500) + -500,
+                    visitors: Math.floor(Math.random() * 5000000),
+                    website: `https://heritage-site-${i + 1}.org`,
+                    unesco: Math.random() > 0.7
+                });
+            }
+            return landmarks;
+        }
+
+        const landmarks = generateLandmarks();
+
+        // Initialize GridViz map
+        function initializeMap() {
+            const container = document.getElementById('map-container');
+            container.innerHTML = '';
+            
+            const eraColors = {
+                'Ancient': '#8B4513',
+                'Medieval': '#4B0082',
+                'Renaissance': '#DAA520',
+                'Colonial': '#2F4F4F',
+                'Victorian': '#800020',
+                'Modern': '#1E90FF',
+                'Contemporary': '#32CD32'
+            };
+
+            try {
+                const map = gridviz.map({
+                    container: container,
+                    x: 0,
+                    y: 0,
+                    z: 1,
+                    cellSize: 500000
+                });
+
+                map.layers.push(
+                    gridviz.layer_points({
+                        data: landmarks,
+                        x: d => d.x,
+                        y: d => d.y,
+                        color: d => eraColors[d.era] || '#666666',
+                        size: d => d.z * 3 + 5,
+                        opacity: 0.8,
+                        tooltip: d => `
+                            <strong>${d.name}</strong><br/>
+                            Type: ${d.type}<br/>
+                            Era: ${d.era}<br/>
+                            Built: ${d.yearBuilt > 0 ? d.yearBuilt + ' AD' : Math.abs(d.yearBuilt) + ' BC'}<br/>
+                            Visitors/year: ${d.visitors.toLocaleString()}<br/>
+                            Importance (z): ${d.z.toFixed(2)}<br/>
+                            UNESCO: ${d.unesco ? '✓ Yes' : '✗ No'}<br/>
+                            <a href="${d.website}" target="_blank" style="color: #3182ce;">Visit Website →</a>
+                        `
+                    })
+                );
+            } catch (error) {
+                console.error('GridViz initialization error:', error);
+                container.innerHTML = `<div class="loading"><p style="color: #fc8181;">Error: ${error.message}</p></div>`;
+            }
+        }
+
+        // Download CSV
+        function downloadCSV() {
+            const csv = [
+                'id,name,x,y,z,era,type,yearBuilt,visitors,website,unesco',
+                ...landmarks.map(l => 
+                    `${l.id},"${l.name}",${l.x},${l.y},${l.z},${l.era},${l.type},${l.yearBuilt},${l.visitors},${l.website},${l.unesco}`
+                )
+            ].join('\n');
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'historical_landmarks.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Download JSON
+        function downloadJSON() {
+            const json = JSON.stringify(landmarks, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'historical_landmarks.json';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Show/hide statistics
+        function showStats() {
+            const statsDiv = document.getElementById('stats');
+            if (statsDiv.style.display === 'none') {
+                statsDiv.style.display = 'block';
+                updateStats();
+            } else {
+                statsDiv.style.display = 'none';
+            }
+        }
+
+        // Update statistics
+        function updateStats() {
+            const unescoCount = landmarks.filter(l => l.unesco).length;
+            const oldest = landmarks.reduce((min, l) => l.yearBuilt < min.yearBuilt ? l : min);
+            const mostVisited = landmarks.reduce((max, l) => l.visitors > max.visitors ? l : max);
+
+            document.getElementById('stat-total').textContent = landmarks.length;
+            document.getElementById('stat-unesco').textContent = unescoCount;
+            document.getElementById('stat-oldest').textContent = oldest.yearBuilt > 0 ? 
+                oldest.yearBuilt + ' AD' : Math.abs(oldest.yearBuilt) + ' BC';
+            document.getElementById('stat-visitors').textContent = mostVisited.visitors.toLocaleString();
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', () => {
+            setTimeout(initializeMap, 100);
+        });
+    </script>
+</body>
+</html>
