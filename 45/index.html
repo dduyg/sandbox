@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liminal🪩Loop</title>
+    <title>Liminal Loop</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
         @font-face {
             font-family: 'Standard Book';
             src: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/Standard-Book.woff2') format('woff2');
@@ -55,8 +54,12 @@
             align-items: center;
             justify-content: center;
         }
-        #left-page { width: 40%; }
-        #right-page { width: 40%; }
+        #left-page {
+            width: 40%;
+        }
+        #right-page {
+            width: 40%;
+        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(3,1fr);
@@ -74,12 +77,12 @@
 </head>
 <body>
     <div class="container">
-        <div id="prev"><a href="#"> ← </a></div>
+        <div id="prev"><a href="../11/"> ← </a></div>
         <div id="left-page"></div>
-        <div id="right-page" class="cover" style="background-image: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/nebula-node.png'); background-repeat: no-repeat; background-size: cover;">
+        <div id="right-page" class="cover" style="background-image: url(https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/pixels/nebula-node.png); background-repeat: no-repeat; background-size: cover;">
             <h1 class="title">Nebula Nodes</h1>
         </div>
-        <div id="next"><a href="#"> → </a></div>
+        <div id="next"><a href="../"> → </a></div>
     </div>
 </body>
 </html>
