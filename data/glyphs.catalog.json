@@ -1,0 +1,103 @@
+{
+  "total": 2,
+  "glyphs": [
+    {
+      "id": "cd1f2ec7",
+      "filename": "10088c_160036_cd1f2ec7.png",
+      "glyph_url": "https://cdn.jsdelivr.net/gh/dduyg/sandbox@main/glyphs/10088c_160036_cd1f2ec7.png",
+      "color": {
+        "dominant": {
+          "hex": "10088c",
+          "rgb": [
+            16,
+            8,
+            140
+          ],
+          "lab": [
+            16.39,
+            48.15,
+            -66.57
+          ]
+        },
+        "secondary": {
+          "hex": "160036",
+          "rgb": [
+            22,
+            0,
+            54
+          ],
+          "lab": [
+            3.95,
+            23.46,
+            -29.33
+          ]
+        },
+        "palette_distance": 0.4638
+      },
+      "metrics": {
+        "edge_density": 0.0041,
+        "entropy": 12.6215,
+        "texture": 2.7224,
+        "contrast": 1.0,
+        "circularity": 0.6048,
+        "aspect_ratio": 1.4747,
+        "edge_angle": 52.5946
+      },
+      "color_harmony": "analogous",
+      "mood": "mysterious",
+      "created_at": {
+        "date": "2026-01-04",
+        "time": "20:02:08"
+      }
+    },
+    {
+      "id": "8df7b5f0",
+      "filename": "b4d9e6_95c2d2_8df7b5f0.png",
+      "glyph_url": "https://cdn.jsdelivr.net/gh/dduyg/sandbox@main/glyphs/b4d9e6_95c2d2_8df7b5f0.png",
+      "color": {
+        "dominant": {
+          "hex": "b4d9e6",
+          "rgb": [
+            180,
+            217,
+            230
+          ],
+          "lab": [
+            84.51,
+            -9.31,
+            -10.41
+          ]
+        },
+        "secondary": {
+          "hex": "95c2d2",
+          "rgb": [
+            149,
+            194,
+            210
+          ],
+          "lab": [
+            75.84,
+            -11.08,
+            -12.84
+          ]
+        },
+        "palette_distance": 0.0917
+      },
+      "metrics": {
+        "edge_density": 0.0127,
+        "entropy": 10.7081,
+        "texture": 2.6614,
+        "contrast": 0.9245,
+        "circularity": 0.1844,
+        "aspect_ratio": 1.2587,
+        "edge_angle": 0.0
+      },
+      "color_harmony": "analogous",
+      "mood": "playful",
+      "created_at": {
+        "date": "2026-01-04",
+        "time": "20:02:08"
+      }
+    }
+  ]
+}
