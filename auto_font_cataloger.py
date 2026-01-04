@@ -1,17 +1,21 @@
 """
 ═══════════════════════════════════════════════════════════════════
-                        FONT CATALOGER PIPELINE
+　　　　　　　　　Ｆ Ｏ Ｎ Ｔ 　Ｃ Ａ Ｔ Ａ Ｌ Ｏ Ｇ Ｅ Ｒ　　　　　　　　
 ═══════════════════════════════════════════════════════════════════
-Author: Duygu Dağdelen
-Date: January 2026
 
-Features:
-- High-resolution rendering for CLIP
-- Always produces suggested tags
-- Silent warnings
-- Interactive tag selection
-- Single/multiple fonts support
-- Google, Web, or Custom font support
+　░▒▓█  ＴＡＧ　ＰＡＬＥＴＴＥ  █▓▒░
+
+　geometric • formal • handwritten • fatface • monospaced • techno
+　pixel • medieval • art nouveau • blobby • distressed • wood
+　wacky • shaded • marker • futuristic • vintage • calm • playful
+　sophisticated • business • stiff • childlike • horror • distorted
+　clean • warm • aesthetic • brutalist • modular • neutral
+　contemporary • rounded • approachable • humanist • coding
+　retro • android
+
+═══════════════════════════════════════════════════════════════════
+　Ａｕｔｈｏｒ：　Duygu Dağdelen
+　Ｄａｔｅ：　　December 2024
 ═══════════════════════════════════════════════════════════════════
 """
 
