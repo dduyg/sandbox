@@ -568,9 +568,9 @@ def process_font_entry(font_entry, step, total):
             "scripts": scripts
         }
         
-        print("\n" + "═" * 67)
+        print("\n" + "═" * 60)
         print("░▒▓█  ＰＲＥＶＩＥＷ  █▓▒░")
-        print("═" * 67)
+        print("═" * 60)
         print(json.dumps(entry, indent=2, ensure_ascii=False))
         
         confirm = input("\n🔘 Add? (y/n): ").strip().lower()
@@ -682,7 +682,7 @@ def main():
     else:
         print("\n⚠  No changes made")
     
-    print("\n🎊 ＡＬＬ ＤＯＮＥ！")
+    print("\n╰┈➤ 🎊 ＡＬＬ ＤＯＮＥ！")
 
 if __name__ == "__main__":
     main()
