@@ -166,7 +166,7 @@ def parse_google_fonts_url(url):
         
         # If URL doesn't specify weights, check what's actually available
         if not weights:
-            print("      ℹ️  Checking available weights...")
+            print("      🌀  Checking available weights...")
             available_weights, available_variable, available_italic = check_google_font_availability(family_name)
             weights = available_weights
             is_variable = available_variable
@@ -522,11 +522,11 @@ def process_font_entry(font_entry, step, total):
             pass
         
         if not images:
-            print("   ❌ Failed to render")
+            print("   ⊗ Failed to render")
             return None
         
         # Show detected info
-        print(f"\n   📊 Detected: {len(weights)} weight(s), {'Variable' if is_variable else 'Static'}, Scripts: {', '.join(scripts)}")
+        print(f"\n   📜 Detected: {len(weights)} weight(s), {'Variable' if is_variable else 'Static'}, Scripts: {', '.join(scripts)}")
         
         # Filter top tags
         threshold = 0.20
@@ -575,7 +575,7 @@ def process_font_entry(font_entry, step, total):
         return entry if confirm == "y" else None
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"　　　🤷‍♀️ Oops, error: {e}")
         import traceback
         traceback.print_exc()
         return None
@@ -598,9 +598,9 @@ def main():
     # Fetch existing catalog
     try:
         catalog, sha = fetch_catalog(repo, token)
-        print(f"📖 Loaded catalog with {len(catalog)} fonts\n")
+        print(f"📡 Fetching current catalog with {len(catalog)} fonts\n")
     except Exception as e:
-        print(f"⚠️  Starting new catalog: {e}\n")
+        print(f"⚠  Starting new catalog: {e}\n")
         catalog, sha = [], None
     
     fonts_to_process = []
@@ -629,12 +629,12 @@ def main():
             break
     
     if not fonts_to_process:
-        print("No fonts to process.")
+        print("⊗ No fonts to process.")
         return
     
     # Process all fonts
     print(f"\n\n{'#'*60}")
-    print(f"Processing {len(fonts_to_process)} font(s)")
+    print(f"📡 Processing {len(fonts_to_process)} font(s)...")
     print(f"{'#'*60}")
     
     added_count = 0
@@ -656,25 +656,25 @@ def main():
     # Commit all changes at once
     if added_count > 0 and sha:
         print(f"\n{'='*60}")
-        print(f"💾 Committing {added_count} font(s) to catalog...")
+        print(f"🌀 Committing {added_count} font(s) to catalog...")
         try:
             update_catalog(repo, token, catalog, sha)
             print("🎉 Catalog updated successfully!")
         except Exception as e:
-            print(f"❌ Commit failed: {e}")
-            print("\n💾 Saving locally...")
+            print(f"⊗ Commit failed: {e}")
+            print("\n🌀 Saving locally...")
             with open("catalog.fonts.json", "w", encoding="utf-8") as f:
                 json.dump(catalog, f, indent=2, ensure_ascii=False)
-            print("✅ Saved to catalog.fonts.json")
+            print("☑️ Saved to catalog.fonts.json")
     elif added_count > 0:
-        print("\n💾 Saving to local file...")
+        print("\n🌀 Saving to local file...")
         with open("catalog.fonts.json", "w", encoding="utf-8") as f:
             json.dump(catalog, f, indent=2, ensure_ascii=False)
-        print("✅ Saved to catalog.fonts.json")
+        print("☑️ Saved to catalog.fonts.json")
     else:
-        print("\nℹ️  No changes made")
+        print("\n⚠  No changes made")
     
-    print("\n👋 Done!")
+    print("\n🎊 ＡＬＬ ＤＯＮＥ！")
 
 if __name__ == "__main__":
     main()
