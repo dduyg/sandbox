@@ -588,14 +588,16 @@ def main():
 ║　　　　　　　　Ｆ Ｏ Ｎ Ｔ 　Ｃ Ａ Ｔ Ａ Ｌ Ｏ Ｇ Ｅ Ｒ　　　　　　　　║
 ╚═══════════════════════════════════════════════════════════════════╝
 """)
-    
-    repo = input("📦 Repository (username/repo): ").strip()
-    token = getpass.getpass("🔑 Token: ").strip()
+    print("\n　━━━ ＳＯＵＲＣＥ ＲＥＰＯ ━━━")
+    print(f"  　     (username/repo)  ")
+    repo = input("　　　＞ ").strip()
+    print("\n　━━━ ＴＯＫＥＮ ━━━")
+    token = getpass.getpass("　　　＞ ").strip()
     
     # Load model once
-    print("\n🤖 Loading AI model...")
+    print("\n📡 Loading AI model...")
     get_model()
-    print("✅ Ready!\n")
+    print("☑️ Ready!\n")
     
     # Fetch existing catalog
     try:
