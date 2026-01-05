@@ -532,7 +532,7 @@ def process_font_entry(font_entry, step, total):
         threshold = 0.20
         suggested_tags = [k for k, v in scores.items() if v >= threshold][:6]
         
-        print(f"\n　　　━━━ ＳＵＧＧＥＳＴＥＤ　ＴＡＧＳ ━━━")
+        print("\n━━━ ＳＵＧＧＥＳＴＥＤ　ＴＡＧＳ ━━━")
         for idx, tag in enumerate(suggested_tags, 1):
             score = scores[tag]
             bar = "█" * int(score * 20)
@@ -597,7 +597,7 @@ def main():
     # Load model once
     print("\n📡 Loading AI model...")
     get_model()
-    print("☑️ Ready!\n")
+    print("✓ Ready!\n")
     
     # Fetch existing catalog
     try:
@@ -625,7 +625,7 @@ def main():
         print("\n　━━━ ＵＲＬ ━━━")
         url = input("　　　＞ ").strip()
         print("\n　━━━ ＣＡＴＥＧＯＲＹ ━━━")
-        print("f　　　({' • '.join(CATEGORIES)}）")
+        print(f"　　　({' • '.join(CATEGORIES)}）")
         category = input("　　　＞ ").strip().lower()
         if category not in CATEGORIES:
             category = "sans-serif"
