@@ -526,25 +526,25 @@ def process_font_entry(font_entry, step, total):
             return None
         
         # Show detected info
-        print(f"\n   📜 Detected: {len(weights)} weight(s), {'Variable' if is_variable else 'Static'}, Scripts: {', '.join(scripts)}")
+        print(f"\n   ✓ Detected: {len(weights)} weight(s), {'Variable' if is_variable else 'Static'}, Scripts: {', '.join(scripts)}")
         
         # Filter top tags
         threshold = 0.20
         suggested_tags = [k for k, v in scores.items() if v >= threshold][:6]
         
-        print(f"\n🏷️  Suggested Tags:")
+        print(f"\n　　　━━━ ＳＵＧＧＥＳＴＥＤ　ＴＡＧＳ ━━━")
         for idx, tag in enumerate(suggested_tags, 1):
             score = scores[tag]
             bar = "█" * int(score * 20)
             print(f"   {idx}. {tag:15s} {bar} {score:.3f}")
         
-        print("\n⚙️  Options:")
-        print("   [Enter] = Accept all")
-        print("   [1,3,5] = Select by number")
-        print("   [tag1,tag2] = Custom tags")
-        print("   [skip] = Skip")
+        print("\n　　　ＯＰＴＩＯＮＳ：")
+        print("　　　 • [Enter] = Accept all")
+        print("　　　 • [1,3,5] = Select by number")
+        print("　　　 • [tag1,tag2] = Custom tags")
+        print("　　　 • [skip] = Skip")
         
-        user_input = input("\nChoice: ").strip()
+        user_input = input("\n🎛 Choice: ").strip()
         
         if user_input.lower() == "skip":
             print("⏭️  Skipped")
@@ -568,10 +568,12 @@ def process_font_entry(font_entry, step, total):
             "scripts": scripts
         }
         
-        print("\n📄 Preview:")
+        print("\n" + "═" * 67)
+        print("░▒▓█  ＰＲＥＶＩＥＷ  █▓▒░")
+        print("═" * 67)
         print(json.dumps(entry, indent=2, ensure_ascii=False))
         
-        confirm = input("\n✅ Add? (y/n): ").strip().lower()
+        confirm = input("\n🔘 Add? (y/n): ").strip().lower()
         return entry if confirm == "y" else None
         
     except Exception as e:
@@ -608,17 +610,21 @@ def main():
     # Collect fonts to process
     while True:
         print(f"\n{'='*60}")
-        print(f"Font #{len(fonts_to_process) + 1}")
+        print(f"░▒▓█  ＡＤＤＩＮＧ　ＦＯＮＴ　＃{len(fonts_to_process) + 1}  █▓▒░")
         print(f"{'='*60}")
         
-        name = input("Name: ").strip()
+        print("\n　━━━ ＦＯＮＴ ＮＡＭＥ ━━━")
+        name = input("　　　＞ ").strip()
         if not name:
             if fonts_to_process:
                 break
             continue
-            
-        url = input("URL: ").strip()
-        category = input(f"Category ({'/'.join(CATEGORIES)}): ").strip().lower()
+        
+        print("\n　━━━ ＵＲＬ ━━━")
+        url = input("　　　＞ ").strip()
+        print("\n　━━━ ＣＡＴＥＧＯＲＹ ━━━")
+        print("f　　　({' • '.join(CATEGORIES)}）")
+        category = input("　　　＞ ").strip().lower()
         if category not in CATEGORIES:
             category = "sans-serif"
         
