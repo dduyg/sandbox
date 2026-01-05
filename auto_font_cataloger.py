@@ -641,9 +641,9 @@ def main():
         return
     
     # Process all fonts
-    print(f"\n\n{'#'*60}")
+    print(f"\n\n{'─'*60}")
     print(f"📡 Processing {len(fonts_to_process)} font(s)...")
-    print(f"{'#'*60}")
+    print(f"{'─'*60}")
     
     added_count = 0
     for i, font_entry in enumerate(fonts_to_process, 1):
