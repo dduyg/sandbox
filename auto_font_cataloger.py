@@ -535,7 +535,7 @@ def process_font_entry(font_entry, step, total):
         print("\n━━━ ＳＵＧＧＥＳＴＥＤ　ＴＡＧＳ ━━━")
         for idx, tag in enumerate(suggested_tags, 1):
             score = scores[tag]
-            bar = "█" * int(score * 20)
+            bar = "▓" * int(score * 20)
             print(f"   {idx}. {tag:15s} {bar} {score:.3f}")
         
         print("\n　　　ＯＰＴＩＯＮＳ：")
