@@ -144,7 +144,8 @@ class Config:
         self.SCRIPT_TESTS = {
             'latin-ext': [0x011E, 0x011F, 0x0130, 0x0131, 0x015E, 0x015F,
                           0x0104, 0x0105, 0x0141, 0x0142, 0x010C, 0x010D,
-                          0x0158, 0x0159, 0x0152, 0x0153, 0x0100, 0x0101],
+                          0x0158, 0x0159, 0x0152, 0x0153, 0x0100, 0x0101,
+                          0x0112, 0x0113],
             'vietnamese': [0x1EA0, 0x1EA1, 0x1EB0, 0x1EB1, 0x1EE4, 0x1EE5,
                            0x01A0, 0x01A1, 0x01AF, 0x01B0],
             'cyrillic': [0x0410, 0x0411, 0x0412, 0x0430, 0x0431, 0x0432,
@@ -216,15 +217,15 @@ class FontSourceDetector:
         return "web"
 
 # ═══════════════════════════════════════════════════════════════════
-# FONT DOWNLOAD
+# FONT RETRIEVER
 # ═══════════════════════════════════════════════════════════════════
 
-class FontDownloader:
-    """Handles font file downloads"""
+class FontRetriever:
+    """Retrieves font files from various sources"""
     
     @staticmethod
-    def download_file(url: str) -> str:
-        """Download font file and return temp path"""
+    def retrieve_file(url: str) -> str:
+        """Retrieve font file and return temp path"""
         response = requests.get(url, timeout=30)
         response.raise_for_status()
         
@@ -236,8 +237,8 @@ class FontDownloader:
         return tmp.name
     
     @staticmethod
-    def download_from_css(css_url: str) -> Tuple[str, Optional[List[int]]]:
-        """Download font from CSS URL and extract weights"""
+    def retrieve_from_css(css_url: str) -> Tuple[str, Optional[List[int]]]:
+        """Retrieve font from CSS URL and extract weights"""
         response = requests.get(css_url, timeout=30)
         response.raise_for_status()
         
@@ -265,18 +266,18 @@ class FontDownloader:
                         next((u for u in font_urls if "woff" in u), font_urls[0]))
         
         weights = list(set(font_weights.values())) if font_weights else None
-        return FontDownloader.download_file(font_url), weights
+        return FontRetriever.retrieve_file(font_url), weights
     
     @staticmethod
     def retrieve(url: str, source: str) -> Tuple[str, Optional[List[int]]]:
         """Main retrieval method"""
         if source in ["google", "adobe", "web"]:
-            result = FontDownloader.download_from_css(url)
+            result = FontRetriever.retrieve_from_css(url)
             if isinstance(result, tuple):
                 return result
             return result, None
         else:
-            return FontDownloader.download_file(url), None
+            return FontRetriever.retrieve_file(url), None
 
 # ═══════════════════════════════════════════════════════════════════
 # GOOGLE FONTS ANALYZER
@@ -504,10 +505,10 @@ class FontRenderer:
         return img.convert('RGB')
 
 # ═══════════════════════════════════════════════════════════════════
-# CLIP TAGGER
+# FONT TAGGER
 # ═══════════════════════════════════════════════════════════════════
 
-class CLIPTagger:
+class FontTagger:
     """AI-powered font tagging using CLIP"""
     
     def __init__(self, config: Config):
@@ -586,11 +587,11 @@ class CLIPTagger:
         return results
 
 # ═══════════════════════════════════════════════════════════════════
-# GITHUB CATALOG MANAGER
+# SOURCE CATALOG MANAGER
 # ═══════════════════════════════════════════════════════════════════
 
-class GitHubCatalogManager:
-    """Manages font catalog on GitHub"""
+class SourceCatalogManager:
+    """Manages font catalog in source repository"""
     
     def __init__(self, repo: str, token: str, file_path: str = "catalog.fonts.json"):
         self.repo = repo
@@ -611,7 +612,7 @@ class GitHubCatalogManager:
         return json.loads(data), sha
     
     def update(self, catalog: List[dict], sha: str):
-        """Update catalog on GitHub"""
+        """Update catalog in repository"""
         url = f"https://api.github.com/repos/{self.repo}/contents/{self.file_path}"
         content_bytes = json.dumps(catalog, indent=2, ensure_ascii=False).encode("utf-8")
         content_b64 = base64.b64encode(content_bytes).decode("utf-8")
@@ -632,22 +633,22 @@ class GitHubCatalogManager:
             json.dump(catalog, f, indent=2, ensure_ascii=False)
 
 # ═══════════════════════════════════════════════════════════════════
-# MAIN FONT CATALOG MANAGER
+# CATALOG PROCESSOR
 # ═══════════════════════════════════════════════════════════════════
 
-class FontCatalogManager:
+class CatalogProcessor:
     """Main application class for font cataloging"""
     
     def __init__(self):
         self.config = Config()
         self.analyzer = FontFileAnalyzer(self.config)
         self.renderer = FontRenderer(self.config)
-        self.tagger = CLIPTagger(self.config)
-        self.github = None
+        self.tagger = FontTagger(self.config)
+        self.catalog_manager = None
     
     def initialize(self, repo: str, token: str):
-        """Initialize GitHub connection"""
-        self.github = GitHubCatalogManager(repo, token)
+        """Initialize repository connection"""
+        self.catalog_manager = SourceCatalogManager(repo, token)
         print("\n📡 Loading AI model...")
         self.tagger.load_model()
         print("✓ Ready!\n")
@@ -657,19 +658,25 @@ class FontCatalogManager:
         print(f"\n📡 Processing {step}/{total}: {name}")
         
         try:
-            # Detect source and download
+            # Detect source and retrieve
             source = FontSourceDetector.detect(url)
-            font_path, css_weights = FontDownloader.retrieve(url, source)
+            font_path, css_weights = FontRetriever.retrieve(url, source)
             
             # Analyze metadata
             if source == "google":
-                weights, is_variable, has_italic, scripts = GoogleFontsAnalyzer.parse_url(url)
-                # Check monospace for Google fonts
+                weights, is_variable, has_italic, scripts_from_url = GoogleFontsAnalyzer.parse_url(url)
+                
+                # For Google fonts, also analyze the actual file for accurate script detection
                 try:
                     face = freetype.Face(font_path)
                     is_monospace = face.is_fixed_width
+                    
+                    # Use FontFileAnalyzer for script detection
+                    file_metadata = self.analyzer.analyze(font_path)
+                    scripts = file_metadata.scripts
                 except:
                     is_monospace = False
+                    scripts = scripts_from_url
                 
                 metadata = FontMetadata(weights, is_variable, has_italic, scripts, is_monospace)
             else:
@@ -707,14 +714,10 @@ class FontCatalogManager:
             print("　　　 • [Enter] = Accept all")
             print("　　　 • [1,3,5] = Select by number")
             print("　　　 • [tag1,tag2] = Custom tags")
-            print("　　　 • [skip] = Skip")
             
             user_input = input("\n🎛 Choice: ").strip()
             
-            if user_input.lower() == "skip":
-                print("⏭️  Skipped")
-                return None
-            elif user_input == "":
+            if user_input == "":
                 final_tags = suggested_tags
             elif all(c.isdigit() or c in ", " for c in user_input):
                 numbers = [int(n) - 1 for n in user_input.split(",") if n.strip().isdigit()]
@@ -804,7 +807,7 @@ class FontCatalogManager:
         
         # Fetch existing catalog
         try:
-            catalog, sha = self.github.fetch()
+            catalog, sha = self.catalog_manager.fetch()
             print(f"📡 Fetching current catalog with {len(catalog)} fonts\n")
         except Exception as e:
             print(f"⚠  Starting new catalog: {e}\n")
@@ -851,16 +854,16 @@ class FontCatalogManager:
             print(f"\n{'='*60}")
             print(f"🌀 Committing {added_count} font(s) to catalog...")
             try:
-                self.github.update(catalog, sha)
+                self.catalog_manager.update(catalog, sha)
                 print("🎉 Catalog updated successfully!")
             except Exception as e:
                 print(f"⊗ Commit failed: {e}")
                 print("\n🌀 Saving locally...")
-                GitHubCatalogManager.save_local(catalog)
+                SourceCatalogManager.save_local(catalog)
                 print("☑️ Saved to catalog.fonts.json")
         elif added_count > 0:
             print("\n🌀 Saving to local file...")
-            GitHubCatalogManager.save_local(catalog)
+            SourceCatalogManager.save_local(catalog)
             print("☑️ Saved to catalog.fonts.json")
         else:
             print("\n⚠  No changes made")
@@ -873,8 +876,8 @@ class FontCatalogManager:
 
 def main():
     """Application entry point"""
-    manager = FontCatalogManager()
-    manager.run()
+    processor = CatalogProcessor()
+    processor.run()
 
 if __name__ == "__main__":
     main()
