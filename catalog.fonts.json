@@ -182,5 +182,23 @@
       "monospace": false,
       "glyphs": 756
     }
+  },
+  {
+    "name": "Milky Coffee",
+    "source": "custom",
+    "url": "https://cdn.jsdelivr.net/gh/dduyg/sandbox@main/MilkyCoffee.woff",
+    "category": "sans-serif",
+    "tags": [
+      "childlike",
+      "organic",
+      "distorted"
+    ],
+    "weights": [
+      400
+    ],
+    "variable": false,
+    "scripts": [
+      "latin"
+    ]
   }
 ]
