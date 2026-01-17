@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bleed Design Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font (editorial / minimalist) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f4f3ee;
+      --text: #1a1a1a;
+      --muted: #6f6f6f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .page {
+      padding: 60px 80px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .studio-title {
+      font-weight: 400;
+      font-size: 18px;
+      margin-bottom: 80px;
+    }
+
+    /* Main grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.2fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .column h4 {
+      font-weight: 400;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .column li {
+      margin-bottom: 4px;
+      white-space: nowrap;
+    }
+
+    .arrow {
+      display: inline-block;
+      transform: translateY(-1px);
+    }
+
+    /* Featured */
+    .featured {
+      text-align: left;
+    }
+
+    .featured img {
+      width: 140px;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      margin-top: 16px;
+    }
+
+    /* Footer text */
+    .footer {
+      margin-top: 140px;
+      max-width: 520px;
+    }
+
+    .footer p {
+      font-size: 20px;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .footer a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .footer a span {
+      margin-left: 6px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .page {
+        padding: 40px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .featured img {
+        width: 120px;
+        height: 160px;
+      }
+
+      .footer {
+        margin-top: 80px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <div class="studio-title">Bleed Design Studio</div>
+
+    <div class="grid">
+
+      <!-- Playing at the studio -->
+      <div class="column">
+        <h4>Playing at the studio;</h4>
+        <ul>
+          <li>Oslo &rarr;</li>
+          <li>Lomvv (feat. China peyghamy)</li>
+          <li>Azu Tiwaline</li>
+          <li style="margin-top: 12px;">Vienna &rarr;</li>
+          <li>Snub (Club Edit)</li>
+          <li>Broken English Club</li>
+        </ul>
+      </div>
+
+      <!-- Lately -->
+      <div class="column">
+        <h4>Lately;</h4>
+        <ul>
+          <li>&rarr; R U OKAY launched (ext.)</li>
+          <li>&rarr; ADC Merits for Selective &amp; KUL (work)</li>
+          <li>&rarr; TOMWOOD installation (work)</li>
+          <li>&rarr; Gold in Visual for KUL 50 Years (work)</li>
+          <li>&rarr; Ambassadors launched (work)</li>
+          <li>&rarr; Selective Music awarded at TDC (work)</li>
+          <li>&rarr; AI exploration (ig)</li>
+        </ul>
+      </div>
+
+      <!-- Featured -->
+      <div class="column featured">
+        <h4>Featured;</h4>
+        <div>Son Venïn<br />Eau de Perfume</div>
+        <img src="https://images.unsplash.com/photo-1520975922284-9a6bb5f07b3c?q=80&w=400&auto=format&fit=crop" alt="Featured Portrait">
+      </div>
+
+    </div>
+
+    <!-- Footer statement -->
+    <div class="footer">
+      <p>
+        Bleed blurs design, technology, art and strategy to formulate,
+        strengthen and expand brands globally.
+      </p>
+      <a href="#">
+        Learn more <span>&rarr;</span>
+      </a>
+    </div>
+
+  </div>
+</body>
+</html>
