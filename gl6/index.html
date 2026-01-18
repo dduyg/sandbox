@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gradient Background</title>
     <style>
+        /* Ensure the body covers the full screen */
         body, html {
             margin: 0;
             padding: 0;
@@ -12,23 +13,25 @@
             width: 100%;
         }
 
-        .gradient-bg {
-            height: 100vh;
-            width: 100%;
-            /* The gradient matches the 4 distinct zones in your image */
-            background-image: linear-gradient(to right, #00dbb6, #C0B7B9, #ff61bd);
-            /* Optional: This adds the thin dark line seen in the center of your image */
-            display: flex;
-            justify-content: center;
+        body {
+            /* The gradient breakdown:
+               1. #26d0ce (Turquoise) at the start
+               2. #a3b1af (Muted Gray-Green) reaching the center
+               3. #c5b1b6 (Muted Gray-Pink) starting after the center
+               4. #ff86b7 (Bright Pink) at the end
+            */
+            background: linear-gradient(
+                90deg, 
+                rgba(38,208,206,1) 0%, 
+                rgba(163,177,175,1) 49%, 
+                rgba(51,51,51,1) 50%, /* This creates the thin dark center line */
+                rgba(197,177,182,1) 51%, 
+                rgba(255,134,183,1) 100%
+            );
+            background-attachment: fixed;
         }
-
     </style>
 </head>
 <body>
-
-    <div class="gradient-bg">
-        <div class="center-line"></div>
-    </div>
-
-</body>
+    </body>
 </html>
