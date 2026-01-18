@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Scale</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: sans-serif;
+        }
+
+        .container {
+            width: 600px;
+        }
+
+        /* The Gradient Bar */
+        .gradient-bar {
+            height: 120px;
+            width: 100%;
+            border-bottom: 2px solid #333;
+            background: linear-gradient(to right, 
+                #00e5b5 0%,      /* Start Teal */
+                #00e5b5 25%,     /* Keep Teal until -50 */
+                #97bcaf 45%,     /* Transition to muted teal-gray */
+                #666666 50%,     /* Center Line (Gray) */
+                #d3abb8 55%,     /* Transition to muted pink */
+                #ff6ec7 75%,     /* Reaches full Pink at 50 */
+                #ff6ec7 100%     /* Ends Pink */
+            );
+            position: relative;
+        }
+
+        /* The Center Divider Line */
+        .gradient-bar::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #333;
+        }
+
+        /* Tick Marks and Labels */
+        .labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            color: #444;
+            font-size: 18px;
+        }
+
+        .tick-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 0; /* Ensures labels are centered on the point */
+        }
+
+        .tick {
+            height: 10px;
+            width: 2px;
+            background-color: #333;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="gradient-bar"></div>
+    
+    <div class="labels">
+        <div class="tick-container">
+            <div class="tick"></div>
+            <span>-100</span>
+        </div>
+        <div class="tick-container">
+            <div class="tick"></div>
+            <span>-50</span>
+        </div>
+        <div class="tick-container">
+            <div class="tick"></div>
+            <span>0</span>
+        </div>
+        <div class="tick-container">
+            <div class="tick"></div>
+            <span>50</span>
+        </div>
+        <div class="tick-container" style="align-items: flex-end;">
+            <div class="tick"></div>
+            <span>A</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
