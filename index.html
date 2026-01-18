@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Replication</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        .gradient-box {
+            width: 80%;
+            height: 200px;
+            /* Replicating the colors from the scale: -100 (Teal) to 0 (Gray) to +100 (Pink) */
+            background: linear-gradient(
+                90deg, 
+                #00e5b5 0%,    /* Vibrant Teal at -100 */
+                #00e5b5 25%,   /* Solid teal block start */
+                #8fb9b0 40%,   /* Transitioning through muted teal */
+                #b2b2b2 50%,   /* Neutral Gray at 0 */
+                #d3a4b3 60%,   /* Transitioning through muted pink */
+                #ff6ec7 75%,   /* Solid pink block start */
+                #ff52d0 100%   /* Vibrant Magenta at A */
+            );
+            border: 1px solid #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="gradient-box"></div>
+
+</body>
+</html>
