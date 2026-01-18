@@ -3,101 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gradient Scale</title>
+    <title>Gradient Background</title>
     <style>
-        body {
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        .gradient-bg {
+            height: 100vh;
+            width: 100%;
+            /* The gradient matches the 4 distinct zones in your image */
+            background: linear-gradient(to right, 
+                #00e5bc 0%,    /* Vibrant Cyan */
+                #94bdb3 40%,   /* Muted Teal/Grey */
+                #d3b1b9 60%,   /* Dusty Rose */
+                #ff3bc2 100%   /* Bright Magenta */
+            );
+            
+            /* Optional: This adds the thin dark line seen in the center of your image */
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            font-family: sans-serif;
         }
 
-        .container {
-            width: 600px;
-        }
-
-        /* The Gradient Bar */
-        .gradient-bar {
-            height: 120px;
-            width: 100%;
-            border-bottom: 2px solid #333;
-            background: linear-gradient(to right, 
-                #00e5b5 0%,      /* Start Teal */
-                #00e5b5 25%,     /* Keep Teal until -50 */
-                #97bcaf 45%,     /* Transition to muted teal-gray */
-                #666666 50%,     /* Center Line (Gray) */
-                #d3abb8 55%,     /* Transition to muted pink */
-                #ff6ec7 75%,     /* Reaches full Pink at 50 */
-                #ff6ec7 100%     /* Ends Pink */
-            );
-            position: relative;
-        }
-
-        /* The Center Divider Line */
-        .gradient-bar::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
+        .center-line {
             width: 2px;
-            background-color: #333;
-        }
-
-        /* Tick Marks and Labels */
-        .labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-            color: #444;
-            font-size: 18px;
-        }
-
-        .tick-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 0; /* Ensures labels are centered on the point */
-        }
-
-        .tick {
-            height: 10px;
-            width: 2px;
-            background-color: #333;
-            margin-bottom: 5px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="gradient-bar"></div>
-    
-    <div class="labels">
-        <div class="tick-container">
-            <div class="tick"></div>
-            <span>-100</span>
-        </div>
-        <div class="tick-container">
-            <div class="tick"></div>
-            <span>-50</span>
-        </div>
-        <div class="tick-container">
-            <div class="tick"></div>
-            <span>0</span>
-        </div>
-        <div class="tick-container">
-            <div class="tick"></div>
-            <span>50</span>
-        </div>
-        <div class="tick-container" style="align-items: flex-end;">
-            <div class="tick"></div>
-            <span>A</span>
-        </div>
+    <div class="gradient-bg">
+        <div class="center-line"></div>
     </div>
-</div>
 
 </body>
 </html>
