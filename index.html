@@ -10,33 +10,41 @@
             padding: 0;
             height: 100%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background-color: #f0f0f0;
+            justify-content: center;
+            font-family: sans-serif;
+            /* This is the gradient from your image */
+            background: linear-gradient(
+                to right, 
+                #00e5bc 0%,   /* Vibrant Cyan */
+                #91c2b5 45%,  /* Muted Seafoam */
+                #d6abb2 55%,  /* Dusty Rose */
+                #ff33cc 100%  /* Bright Magenta */
+            );
         }
 
-        .gradient-box {
-            width: 80%;
-            height: 200px;
-            /* Replicating the colors from the scale: -100 (Teal) to 0 (Gray) to +100 (Pink) */
-            background: linear-gradient(
-                90deg, 
-                #00e5b5 0%,    /* Vibrant Teal at -100 */
-                #00e5b5 25%,   /* Solid teal block start */
-                #8fb9b0 40%,   /* Transitioning through muted teal */
-                #b2b2b2 50%,   /* Neutral Gray at 0 */
-                #d3a4b3 60%,   /* Transitioning through muted pink */
-                #ff6ec7 75%,   /* Solid pink block start */
-                #ff52d0 100%   /* Vibrant Magenta at A */
-            );
-            border: 1px solid #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        /* Adding the vertical line to match your image exactly */
+        .divider {
+            height: 100%;
+            width: 2px;
+            background-color: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
 
-    <div class="gradient-box"></div>
+    <div class="divider"></div>
+
+    <div class="container">
+        <h1>Gradient Replicated</h1>
+    </div>
 
 </body>
 </html>
