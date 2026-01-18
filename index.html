@@ -5,37 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gradient Replication</title>
     <style>
-        body, html {
-            margin: 0; padding: 0;
-            height: 100%;
+        body {
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
             font-family: sans-serif;
-        background: linear-gradient(
-                90deg, 
-                #00e5b5 0%,    /* Vibrant Teal at -100 */
-                #00e5b5 25%,   /* Solid teal block start */
-                #8fb9b0 40%,   /* Transitioning through muted teal */
-                #b2b2b2 50%,   /* Neutral Gray at 0 */
-                #d3a4b3 60%,   /* Transitioning through muted pink */
-                #ff6ec7 75%,   /* Solid pink block start */
-                #ff52d0 100%   /* Vibrant Magenta at A */
-            );
         }
 
+        .gradient-container {
+            width: 80%;
+            max-width: 600px;
+        }
 
-        .container {
-            text-align: center;
-            color: white;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+        .gradient-bar {
+            height: 150px;
+            width: 100%;
+            /* This is the core gradient logic */
+            background: linear-gradient(to right, 
+                #00e5b5 0%,    /* Vibrant Cyan -100 */
+                #00e5b5 25%,   /* Hold color to -50 */
+                #94bdb0 45%,   /* Muted Teal/Grey */
+                #bdb0b5 55%,   /* Muted Pink/Grey */
+                #ff82bc 75%,   /* Soft Pink +50 */
+                #ff48c4 100%   /* Bright Magenta 'A' */
+            );
+            border-bottom: 2px solid #333;
+            position: relative;
+        }
+
+        /* Scale Markings */
+        .scale {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        /* The center black line */
+        .center-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #333;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Gradient Replicated</h1>
+    <div class="gradient-container">
+        <div class="gradient-bar">
+            <div class="center-line"></div>
+        </div>
+        <div class="scale">
+            <span>-100</span>
+            <span>-50</span>
+            <span>0</span>
+            <span>50</span>
+            <span>A</span>
+        </div>
     </div>
 
 </body>
