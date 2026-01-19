@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Grotta",
+    "source": "custom",
+    "url": "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/Grotta-Regular.woff2",
+    "category": "sans-serif",
+    "tags": [
+      "sophisticated",
+      "contemporary"
+    ],
+    "weights": [
+      400
+    ],
+    "variable": false,
+    "scripts": [
+      "latin",
+      "latin-ext"
+    ],
+    "favorite": true
+  }
+]

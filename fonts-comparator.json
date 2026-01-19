@@ -1,0 +1,138 @@
+[
+  {
+    "name": "Public Sans",
+    "source": "google",
+    "url": "https://fonts.googleapis.com/css2?family=Public+Sans&display=swap",
+    "category": "sans-serif",
+    "tags": [
+      "sophisticated",
+      "formal",
+      "neutral"
+    ],
+    "weights": [
+      100,
+      200,
+      300,
+      400,
+      500,
+      600,
+      700,
+      800,
+      900
+    ],
+    "variable": true,
+    "scripts": [
+      "latin",
+      "latin-ext"
+    ],
+    "favorite": false
+  },
+  {
+    "name": "Roboto",
+    "source": "google",
+    "url": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+    "category": "sans-serif",
+    "tags": [
+      "clean",
+      "android",
+      "formal"
+    ],
+    "weights": [
+      400,
+      700
+    ],
+    "variable": false,
+    "scripts": [
+      "cyrillic",
+      "latin",
+      "latin-ext"
+    ],
+    "favorite": false
+  },
+  {
+    "name": "Grotta",
+    "source": "custom",
+    "url": "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/Grotta-Regular.woff2",
+    "category": "sans-serif",
+    "tags": [
+      "sophisticated",
+      "contemporary"
+    ],
+    "weights": [
+      400
+    ],
+    "variable": false,
+    "scripts": [
+      "latin",
+      "latin-ext"
+    ],
+    "favorite": true
+  },
+  {
+    "name": "Host Grotesk",
+    "source": "google",
+    "url": "https://fonts.googleapis.com/css2?family=Host+Grotesk&display=swap",
+    "category": "sans-serif",
+    "tags": [
+      "sophisticated",
+      "organic",
+      "approachable"
+    ],
+    "weights": [
+      300,
+      400,
+      500,
+      600,
+      700,
+      800
+    ],
+    "variable": true,
+    "scripts": [
+      "latin",
+      "latin-ext"
+    ],
+    "favorite": false
+  },
+  {
+    "name": "Lab Mono",
+    "source": "custom",
+    "url": "https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/labmono-regular.woff2",
+    "category": "monospace",
+    "tags": [
+      "monospaced",
+      "contemporary",
+      "coding"
+    ],
+    "weights": [
+      400
+    ],
+    "variable": false,
+    "scripts": [
+      "latin",
+      "latin-ext"
+    ],
+    "favorite": false
+  },
+  {
+    "name": "Roboto",
+    "source": "google",
+    "url": "https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap",
+    "category": "sans-serif",
+    "tags": [
+      "clean",
+      "android",
+      "formal"
+    ],
+    "weights": [
+      400,
+      700
+    ],
+    "variable": false,
+    "scripts": [
+      "cyrillic",
+      "latin",
+      "latin-ext"
+    ],
+    "favorite": false
+  }
+]
