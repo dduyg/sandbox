@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liminal Loop</title>
+  <meta name="mobile-web-app-capable" content="yes">
+  <style>
+    body {
+      margin: 0; padding: 0;
+      font-family: Georgia, serif;
+      background-color: #3A3A3C;
+      color: #B8B9BE;
+      padding-top: 40%; /* Adjust based on height of top asset  */
+    }
+    #fixed-corner {
+      position: fixed;
+      top: 0; left: 0;
+      width: 35%;
+      max-width: 35vw;
+      z-index: -1;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: scale(0.9);}
+      to {opacity: 1; transform: scale(1);}
+    }
+    section { 
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+    a {
+      color: #f0f0f0;
+      display: inline-block;
+      margin-top: 20%;
+      margin-left: 15%;
+      padding: 2px 20px 10px;
+      font-size: 2.5rem;
+      font-weight: bold;
+      font-family: 'VT323', monospace;
+      text-decoration: wavy underline;
+      background-color: transparent;
+      border-radius: 100%;
+      border: 1px solid #f0f0f0;
+      text-align: center;
+      transition: all 0.3s ease;
+      outline: none; /* Remove default outline */
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    a:hover {
+      background-color: #AC4E5E;
+      color: #3A3A3C;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+<img id="fixed-corner" src="https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/78717c_70456b_b9376753.png">
+<main>
+<section>Using ML-powered search, find the suitable vector you are looking for easily</section>
+  <a href="01/">▷</a>
+</main>
+</body>
+</html>
