@@ -27,22 +27,14 @@
             z-index: 1000;
         }
         
-        .badge {width: 200px;
-            height: 200px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);}
+        .badge {width: 160px;
+            height: 160px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: -1; position: relative;}
         .badge:hover {transform: scale(1.05) rotate(5deg);}
         .badge img {width: 100%; height: 100%; object-fit: contain;}
         
-        .details {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: flex-end;
-            margin: 20px;
-        }
-        .title {
-            font-size: 1.8em;
-            font-weight: 700;
-        }
+        .details {display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+            margin: 6% 5% 0;}
+        .title {font-size: 1.8em; font-family: 'Quimbie', sans-serif; font-weight: 700;}
         .stats {
             font-size: 0.9em;
             font-weight: 500;
@@ -65,7 +57,7 @@
             50% {transform: scale(1.05);}
             100% {opacity: 1; transform: scale(1);}
         }
-        @keyframes selectionPulseOut {
+        @keyframes selectionPulseOut { 
             0% {opacity: 1; transform: scale(1);}
             100% {opacity: 0; transform: scale(0.5);}
         }
@@ -346,29 +338,14 @@
             font-weight: 600;
             font-size: 0.9em;
             margin-bottom: 12px;
-            color: #B8B9BE;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        main {
-            position: absolute;
-            left: 0; right: 0;
-            top: 0; bottom: 0;
-            width: 100vw; height: 100vh;
-            overflow: hidden;
-            z-index: 10;
-            pointer-events: all;
-        }
-        .scroll {
-            position: absolute;
-            left: 0; right: 0;
-            top: 0; bottom: 0;
-            width: 100vw; height: 100vh;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            pointer-events: all;
-            scrollbar-width: none;
+        main {position: absolute; left: 0; right: 0; top: 0; bottom: 0; width: 100vw; height: 100vh; overflow: hidden; z-index: 10; pointer-events: all;}
+        .scroll {position: absolute; left: 0; right: 0;
+            top: 0; bottom: 0; width: 100vw; height: 100vh;
+            overflow-y: scroll; overflow-x: hidden; pointer-events: all; scrollbar-width: none;
             -ms-overflow-style: none;
         }
         .scroll::-webkit-scrollbar {display: none;}
@@ -378,16 +355,13 @@
             min-height: 100vh;
             display: grid;
             grid-template-columns: 25% 75%;
-            padding-top: 20vh;
+            padding-top: 25vh;
             padding-bottom: 75vh;
         }
 
         .empty-space {grid-column: 1;}
-        .gallery-wrapper {
-            grid-column: 2;
-            width: 100%;
-            max-width: 1000px;
-            padding-right: 10%;
+        .gallery-wrapper {grid-column: 2; width: 100%;
+    max-width: 1000px; padding-right: 15%;
         }
         .gallery {
             display: grid;
@@ -406,7 +380,7 @@
             border: 0.1em dashed transparent;
         }
         .glyph-card:hover {transform: translateY(-8px) scale(1.05);}
-        .glyph-card.selected {border-color: #f0f0f0;}
+        .glyph-card.selected {border-color: #AC4E5E;}
         .glyph-image {width: 100%; height: 100%; object-fit: contain;}
 
         .loading, .empty-state {
@@ -454,11 +428,10 @@
             border-bottom-color: #f0f0f0;
             transform: translateY(-4px);
         }
-        footer a:hover:before {height: 100%;}
-        footer a:active {transform: translateY(0px);}
 
         @media (max-width: 768px) {
-            .badge { width: 160px; height: 160px; }
+            .badge {width: 120px; height: 120px;}
+            .title {font-size: 1.6em;}
             .stats, .selection-stat { font-size: 0.7em; }
             #selectionTick { width: 16px; height: 16px; }
             .sidebar { max-width: 85%; padding-top: 80px; }
