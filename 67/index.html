@@ -23,23 +23,9 @@
         .badge:hover {transform: scale(1.05) rotate(5deg);}
         .badge img {width: 100%; height: 100%; object-fit: contain;}
 
-        header {position: fixed;
-            top: 6%;
-            right: 5%;
-            z-index: 1000;
-        }
-        
-        .details {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            align-items: flex-end;
-        }
-        .badge {
-            font-size: 1.9em;
-            font-weight: 700;
-            font-family: 'Quimbie', sans-serif;
-        }
+        header {position: fixed; top: 6%; right: 5%; z-index: 1000;}
+        .details {display: flex; flex-direction: column; gap: 8px; align-items: flex-end;}
+        .title {font-size: 1.8em; font-weight: 700; font-family: 'Quimbie', sans-serif;}
         .stats {font-size: 0.9em;}
         .selection-stat {
             display: none;
@@ -53,7 +39,6 @@
         }
         .selection-stat.active {display: flex; opacity: 1; transform: scale(1); animation: selectionPulseIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);}
         .selection-stat.clearing {animation: selectionPulseOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;}
-
         @keyframes selectionPulseIn {
             0% {opacity: 0; transform: scale(0.5);}
             50% {transform: scale(1.05);}
@@ -468,10 +453,7 @@
 </head>
 <body>
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <div class="badge">
-        <img src="https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/78717c_70456b_b9376753.png" alt="Glyph Gallery">
-    </div>
+<div class="badge"><img src="https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/78717c_70456b_b9376753.png" alt=""></div>
 
     <header>
         <div class="details">
