@@ -4,18 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.cdnfonts.com/css/quimbie?styles=4662" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap" rel="stylesheet">
     <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/favicons/pythonString.ico">
     <title>Glyph Library Gallery _by_duygu</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
-        @font-face {
-            font-family: 'Grotta';
-            src: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/Grotta-Regular.woff2') format('woff2');
-            font-style: normal;
-            font-weight: normal;
-        }
         body {
-            font-family: 'Grotta', sans-serif;
+            font-family: "Viaoda Libre", serif;
             background: #3A3A3C;
             color: #B8B9BE;
             height: 100vh;
@@ -32,20 +27,10 @@
             z-index: 1000;
         }
         
-        .logo-badge {
-            width: 140px;
-            height: 140px;
-            cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .logo-badge:hover {
-            transform: scale(1.05) rotate(5deg);
-        }
-        .logo-badge img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+        .badge {width: 200px;
+            height: 200px; cursor: pointer; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);}
+        .badge:hover {transform: scale(1.05) rotate(5deg);}
+        .badge img {width: 100%; height: 100%; object-fit: contain;}
         
         .details {
             display: flex;
@@ -54,7 +39,7 @@
             align-items: flex-end;
             margin: 20px;
         }
-        .badge {
+        .title {
             font-size: 1.8em;
             font-weight: 700;
         }
@@ -97,12 +82,11 @@
 
         .controls {
             position: fixed;
-            left: 5%;
-            top: 50%;
+            left: 5%; top: 50%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 50px;
             align-items: center;
             z-index: 1000;
         }
@@ -144,7 +128,7 @@
             width: 450px;
             max-width: 55%;
             height: 100vh;
-            background: rgba(50, 50, 52, 0.95);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(24px);
             border-left: 1px solid rgba(184, 185, 190, 0.2);
             z-index: 2000;
@@ -303,14 +287,11 @@
         }
         .search-color-btn:active { transform: translateY(0); }
         .search-color-btn svg {
-            width: 30px;
-            height: 30px;
+            width: 30px; height: 30px;
             fill: #B8B9BE;
             transition: fill 0.3s;
         }
-        .search-color-btn:hover svg {
-            fill: #f0f0f0;
-        }
+        .search-color-btn:hover svg {fill: #f0f0f0;}
 
         .tags {
             display: flex;
@@ -390,7 +371,7 @@
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
-        .scroll::-webkit-scrollbar { display: none; }
+        .scroll::-webkit-scrollbar {display: none;}
         .gallery-container {
             position: relative;
             width: 100%;
@@ -401,7 +382,7 @@
             padding-bottom: 75vh;
         }
 
-        .empty-space { grid-column: 1; }
+        .empty-space {grid-column: 1;}
         .gallery-wrapper {
             grid-column: 2;
             width: 100%;
@@ -473,13 +454,11 @@
             border-bottom-color: #f0f0f0;
             transform: translateY(-4px);
         }
-        footer a:hover:before {
-            height: 100%;
-        }
-        footer a:active { transform: translateY(0px); }
+        footer a:hover:before {height: 100%;}
+        footer a:active {transform: translateY(0px);}
 
         @media (max-width: 768px) {
-            .logo-badge { width: 50px; height: 50px; }
+            .badge { width: 160px; height: 160px; }
             .stats, .selection-stat { font-size: 0.7em; }
             #selectionTick { width: 16px; height: 16px; }
             .sidebar { max-width: 85%; padding-top: 80px; }
@@ -498,12 +477,9 @@
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <header>
-        <div class="logo-badge">
-            <img src="https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/78717c_70456b_b9376753.png" alt="Glyph Gallery">
-        </div>
-        
+        <div class="badge"><img src="https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/78717c_70456b_b9376753.png"></div>  
         <div class="details">
-            <div class="badge">Glyph Gallery</div>
+            <div class="title">Glyph Gallery</div>
             <div class="stats">Showing <strong id="showingCount">0</strong> of <strong id="totalCount">0</strong> glyphs</div>
             <div class="selection-stat" id="selectionLine">
                 <svg id="selectionTick" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 233"><path d="M194,133.48V199H34V39h119.25l32.09-32H2v224h224V101.57L194,133.48z M114.109,168.111l-60.048-60.048l22.627-22.627 l37.453,37.452L235.404,2.007L258,24.667L114.109,168.111z"></path></svg>
