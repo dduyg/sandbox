@@ -13,57 +13,56 @@
 
         body {
             font-family: monospace;
-            background: white;
             padding: 20px;
+            background-color: #f5f5f5;
         }
 
-        .container {
+        main {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 40px;
-            max-width: 1400px;
-            margin: 0 auto;
+            gap: 20px;
+            max-width: 100%;
             min-height: 100vh;
         }
 
         /* Left Column */
-        .left-column {
+        .column-left {
             display: flex;
             flex-direction: column;
         }
 
-        .left-column h2 {
-            font-size: 32px;
-            font-weight: normal;
-            margin-bottom: 40px;
+        .column-left h2 {
+            font-size: clamp(16px, 3vw, 24px);
+            margin-bottom: 20px;
             line-height: 1.2;
         }
 
-        .left-column ul {
+        .releases-list {
             list-style: none;
-            font-size: 24px;
+            font-size: clamp(14px, 2.5vw, 18px);
             line-height: 1.6;
         }
 
-        .left-column li {
-            margin-bottom: 20px;
+        .releases-list li {
+            margin-bottom: 15px;
         }
 
         /* Middle Column */
-        .middle-column {
+        .column-middle {
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
             align-items: center;
         }
 
-        .middle-column img {
+        .column-middle img {
             max-width: 100%;
             height: auto;
+            display: block;
         }
 
         /* Right Column */
-        .right-column {
+        .column-right {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -71,30 +70,36 @@
             text-align: right;
         }
 
-        .right-column .top-text {
-            font-size: 32px;
-            font-weight: normal;
+        .top-text,
+        .middle-text,
+        .bottom-text {
+            font-size: clamp(14px, 2.5vw, 20px);
         }
 
-        .right-column .middle-text {
-            font-size: 32px;
-            font-weight: normal;
-        }
-
-        .right-column .bottom-text {
-            font-size: 32px;
-            font-weight: normal;
-            background: linear-gradient(90deg, rgba(255,0,0,0.3), rgba(0,255,255,0.3));
+        .bottom-text {
+            background-color: rgba(255, 100, 100, 0.3);
             padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        /* Responsive adjustments for very small screens */
+        @media (max-width: 600px) {
+            main {
+                gap: 10px;
+            }
+
+            body {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <main>
         <!-- Left Column -->
-        <div class="left-column">
+        <div class="column-left">
             <h2>Ab[Releas-<br>es:</h2>
-            <ul>
+            <ul class="releases-list">
                 <li>2:17<br>postmasters;</li>
                 <li>1:17<br>kahn;</li>
                 <li>1:16<br>marfa;</li>
@@ -102,16 +107,16 @@
         </div>
 
         <!-- Middle Column -->
-        <div class="middle-column">
-            <img src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&q=80" alt="Jacket">
+        <div class="column-middle">
+            <img src="https://placeholder.co/400x500" alt="Jacket with blue and white design">
         </div>
 
         <!-- Right Column -->
-        <div class="right-column">
+        <div class="column-right">
             <div class="top-text">ab:labs;</div>
             <div class="middle-text">ab:fabs;<br>ab:favs;</div>
             <div class="bottom-text">Appointment;</div>
         </div>
-    </div>
+    </main>
 </body>
 </html>
