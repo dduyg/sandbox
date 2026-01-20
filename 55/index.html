@@ -107,6 +107,9 @@
   .item:hover {
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   }
+  @media(max-width: 500px){
+    .item { width: 100px; }
+  }
 
   .item svg {
     width: 100%;
@@ -139,14 +142,7 @@
   }
   .actions button:hover {
     opacity: 0.7;
-  }
-
-  /* Responsive adjustments */
-  @media(max-width: 500px){
-    .item { width: 90px; }
-    .controls input { font-size: 13px; padding: 6px 8px; }
-    .mode button { font-size: 12px; padding: 0 8px; }
-  }
+  }  
 </style>
 </head>
 <body>
