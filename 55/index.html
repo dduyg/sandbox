@@ -56,11 +56,10 @@ h1 {
   align-items: center;
   justify-content: center;
   height: 100%;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
-.mode button.active,
-.mode button:hover {
+.mode button.active {
   background: #6C83C0;
   color: #fff;
   border-color: #6C83C0;
@@ -92,7 +91,6 @@ h1 {
   border-color: #333;
 }
 
-/* "More tags" button */
 .tag.more {
   font-weight: bold;
 }
@@ -181,7 +179,7 @@ h1 {
 <div class="controls">
   <input id="search" placeholder="Search icons…" />
   <div class="mode">
-    <button id="orBtn">OR</button>
+    <button id="orBtn" class="active">OR</button>
     <button id="andBtn">AND</button>
     <button id="favToggle">☆</button>
   </div>
