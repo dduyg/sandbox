@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVG Catalog</title>
+<title>LiminalLoop</title>
 <style>
 * { box-sizing: border-box; }
-
 body {
   margin: 0;
   padding: 20px;
@@ -17,11 +16,8 @@ body {
   overflow-x: hidden;
 }
 
-h1 {
-  margin-bottom: 16px;
-}
+h1 {margin-bottom: 16px;}
 
-/* Controls */
 .controls {
   display: flex;
   align-items: stretch;
@@ -29,7 +25,6 @@ h1 {
   margin-bottom: 12px;
   flex-wrap: nowrap;
 }
-
 .controls input {
   flex: 1;
   min-width: 120px;
@@ -44,7 +39,6 @@ h1 {
   gap: 6px;
   flex-shrink: 0;
 }
-
 .mode button {
   background: #EFEFEF;
   border: 1px solid #767676;
@@ -58,22 +52,19 @@ h1 {
   height: 100%;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
-
 .mode button.active {
   background: #6C83C0;
   color: #fff;
   border-color: #6C83C0;
 }
 
-/* Tags */
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 18px;
+  margin-bottom: 60px;
   max-width: 900px;
 }
-
 .tag {
   border: 1px solid #ccc;
   padding: 4px 10px;
@@ -84,28 +75,22 @@ h1 {
   background: rgba(255,255,255,0.8);
   transition: background 0.2s;
 }
-
 .tag.active {
   background: #333;
   color: #fff;
   border-color: #333;
 }
-
 .tag.more {
   font-weight: bold;
 }
 
-/* Grid */
 .grid {
   display: grid;
   gap: 5%;
   width: 100%;
   max-width: 900px;
-  margin: 0 auto;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
-
-/* Items */
 .item {
   width: 100%;
   max-width: 120px;
@@ -119,11 +104,7 @@ h1 {
   aspect-ratio: 1 / 1;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-
-.item:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
+.item:hover {box-shadow: 0 8px 20px rgba(0,0,0,0.15);}
 .item svg {
   width: 100%;
   height: 100%;
@@ -131,20 +112,17 @@ h1 {
   fill: #fff;
   transition: fill 0.2s ease, transform 0.2s ease;
 }
-
 .item:hover svg {
   fill: #6C83C0;
   transform: scale(1.1);
 }
 
-/* Actions */
 .actions {
   display: flex;
   justify-content: flex-end;
   gap: 6px;
   margin-top: 6px;
 }
-
 .actions button {
   background: transparent;
   border: none;
@@ -155,20 +133,14 @@ h1 {
   padding: 2px 4px;
   transition: opacity 0.2s;
 }
-
 .actions button:hover {
   opacity: 0.7;
 }
 
-/* Responsive */
 @media(max-width: 480px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  }
-  .item { max-width: 100px; max-height: 100px; }
-  .actions button { font-size: 12px; }
-  .mode button { font-size: 12px; padding: 0 8px; }
-  .controls input { font-size: 12px; }
+  .grid {grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));}
+  .item {max-width: 100px; max-height: 100px;}
+  .actions button {font-size: 12px;}
 }
 </style>
 </head>
