@@ -6,33 +6,43 @@
   <title>SVG Catalog</title>
 
   <style>
-    /* ---------- GLOBAL ---------- */
+    /* ===== GLOBAL ===== */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      margin: 0;
+      min-height: 100vh;
       font-family: system-ui, sans-serif;
       padding: 20px;
-      margin: 0;
-      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.55),
+          rgba(0,0,0,0.55)
+        ),
+        url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png")
+        center / cover no-repeat fixed;
       color: #fff;
     }
 
     h1 {
       margin-bottom: 16px;
+      font-weight: 600;
     }
 
-    /* ---------- CONTROLS ---------- */
+    /* ===== CONTROLS ===== */
     .controls {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
       width: 100%;
+      margin-bottom: 12px;
+      flex-wrap: nowrap;
     }
 
     .controls input {
-      flex: 1;
+      flex: 1 1 auto;
       min-width: 0;
       padding: 8px 10px;
       font-size: 14px;
@@ -44,34 +54,34 @@
     .mode {
       display: flex;
       gap: 6px;
-      flex-shrink: 0;
+      flex-shrink: 1;
     }
 
-    button {
-      padding: 6px 10px;
+    .mode button {
+      padding: 6px 8px;
       font-size: 13px;
-      cursor: pointer;
+      white-space: nowrap;
       border-radius: 6px;
       border: none;
-      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      background: rgba(255,255,255,0.15);
       color: #fff;
-      backdrop-filter: blur(6px);
     }
 
-    button:hover {
-      background: rgba(255, 255, 255, 0.3);
+    .mode button:hover {
+      background: rgba(255,255,255,0.25);
     }
 
     #favToggle {
-      margin-left: auto;
+      margin-left: 6px;
     }
 
-    /* ---------- TAGS ---------- */
+    /* ===== TAGS ===== */
     .tags {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .tag {
@@ -79,8 +89,7 @@
       border-radius: 999px;
       font-size: 13px;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.12);
     }
 
     .tag.active {
@@ -88,27 +97,26 @@
       color: #000;
     }
 
-    /* ---------- GRID ---------- */
+    /* ===== GRID ===== */
     .grid {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
       gap: 16px;
-      width: 100%;
+      justify-content: center;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
     }
 
     @media (max-width: 1100px) {
       .grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
       }
     }
 
-    /* ---------- ITEM CARD ---------- */
+    /* ===== ITEM CARD ===== */
     .item {
       position: relative;
-      aspect-ratio: 1 / 1;
+      height: 120px;
+      background: rgba(0,0,0,0.35);
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -116,39 +124,43 @@
     }
 
     .item:hover {
-      background: rgba(255, 255, 255, 0.22);
+      background: rgba(0,0,0,0.55);
     }
 
-    /* ---------- SVG ---------- */
-    svg {
+    /* SVG */
+    .item svg {
       width: 48px;
       height: 48px;
-      fill: rgba(255, 255, 255, 0.85);
-      transition: fill 0.2s ease, transform 0.2s ease;
+      fill: #e6e6e6;
+      transition: fill 0.2s ease;
     }
 
     .item:hover svg {
-      fill: #00ffd5;
-      transform: scale(1.1);
+      fill: #4fd1ff;
     }
 
-    /* ---------- ACTIONS ---------- */
+    /* ===== ACTIONS ===== */
     .actions {
       position: absolute;
-      top: 6px;
-      right: 6px;
+      right: 8px;
+      top: 8px;
       display: flex;
-      gap: 4px;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .actions button {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 13px;
       padding: 4px 6px;
-      font-size: 14px;
-      background: rgba(0, 0, 0, 0.4);
+      border-radius: 6px;
+      cursor: pointer;
     }
 
     .actions button:hover {
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(255,255,255,0.3);
     }
   </style>
 </head>
@@ -162,8 +174,8 @@
   <div class="mode">
     <button id="orBtn">OR</button>
     <button id="andBtn">AND</button>
+    <button id="favToggle">☆</button>
   </div>
-  <button id="favToggle">⭐</button>
 </div>
 
 <div class="tags" id="tagList"></div>
@@ -171,5 +183,6 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
