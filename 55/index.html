@@ -4,31 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
-
   <style>
-    /* ===== Global ===== */
-    * {
-      box-sizing: border-box;
-    }
-
+    * {box-sizing: border-box;}
     body {
       margin: 0;
       padding: 20px;
       font-family: system-ui, sans-serif;
-      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
     h1 {
       color: #fff;
-      margin-bottom: 16px;
+      text-shadow: 1px 1px 4px #000;
+      margin-bottom: 20px;
     }
 
-    /* ===== Controls Row ===== */
     .controls {
       display: flex;
       align-items: center;
@@ -76,7 +69,7 @@
       font-size: 12px;
       border-radius: 999px;
       border: 1px solid #ccc;
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.8);
       cursor: pointer;
       user-select: none;
     }
@@ -96,14 +89,14 @@
       max-width: 100%;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 700px) {
       .grid {
         grid-template-columns: repeat(5, 1fr);
       }
     }
 
-    /* ===== Item Card ===== */
     .item {
+      border: 1px solid #ddd;
       background: rgba(255,255,255,0.92);
       border-radius: 12px;
       padding: 14px;
@@ -113,13 +106,11 @@
       aspect-ratio: 1 / 1;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-
     .item:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
-    /* ===== SVG ===== */
     .item svg {
       width: 100%;
       height: 100%;
