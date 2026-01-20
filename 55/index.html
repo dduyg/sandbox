@@ -5,22 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
   <style>
+    /* Body and background */
     body {
       font-family: system-ui, sans-serif;
       padding: 20px;
       margin: 0;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') center/cover no-repeat fixed;
+      color: #fff;
     }
 
     h1 {
       text-align: center;
-      color: #fff;
-      text-shadow: 1px 1px 4px #000;
       margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(0,0,0,0.6);
     }
 
+    /* Controls */
     .controls {
       display: flex;
       gap: 12px;
@@ -33,32 +33,32 @@
       padding: 8px;
       font-size: 16px;
       flex: 1;
-      max-width: 400px;
-      border-radius: 6px;
+      max-width: 300px;
+      border-radius: 8px;
       border: 1px solid #ccc;
     }
 
     button {
-      padding: 6px 12px;
+      padding: 6px 10px;
       cursor: pointer;
       border-radius: 6px;
       border: none;
       background: rgba(0,0,0,0.6);
       color: #fff;
-      font-weight: bold;
       transition: background 0.3s;
     }
 
     button:hover {
-      background: rgba(0,0,0,0.9);
+      background: rgba(255,255,255,0.2);
     }
 
+    /* Tags */
     .tags {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
       justify-content: center;
+      margin-bottom: 20px;
     }
 
     .tag {
@@ -66,25 +66,28 @@
       padding: 4px 10px;
       border-radius: 999px;
       cursor: pointer;
-      background: rgba(255,255,255,0.8);
-      transition: all 0.2s;
-    }
-
-    .tag:hover {
-      background: rgba(255,255,255,1);
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      transition: all 0.3s;
     }
 
     .tag.active {
-      background: black;
-      color: white;
-      font-weight: bold;
+      background: #fff;
+      color: #000;
+      border-color: #fff;
     }
 
+    /* Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       gap: 16px;
-      justify-items: center;
+    }
+
+    @media (max-width: 1200px) {
+      .grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
     }
 
     @media (max-width: 768px) {
@@ -99,44 +102,47 @@
       }
     }
 
+    /* Item card */
     .item {
-      width: 100%;
-      max-width: 140px;
-      background: rgba(0,0,0,0.2);
-      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.3);
       border-radius: 12px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s, background 0.2s;
+      min-height: 120px;
+      background: rgba(0,0,0,0.3);
+      transition: transform 0.3s, background 0.3s;
     }
 
-    .item:hover {
-      transform: translateY(-4px);
-      background: rgba(0,0,0,0.5);
-    }
-
-    svg {
+    .item svg {
       width: 48px;
       height: 48px;
       fill: #fff;
-      transition: fill 0.2s;
+      transition: fill 0.3s, transform 0.3s;
+      margin-bottom: 12px;
     }
 
     .item:hover svg {
-      fill: #00ffff; /* hover color */
+      fill: #00ffff; /* Hover color */
+      transform: scale(1.2);
     }
 
+    /* Actions (buttons) */
     .actions {
       display: flex;
       justify-content: flex-end;
       gap: 6px;
-      margin-top: 8px;
     }
 
     .actions button {
       padding: 4px 8px;
       font-size: 14px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .actions button:hover {
+      background: rgba(255,255,255,0.5);
     }
   </style>
 </head>
@@ -154,10 +160,8 @@
 </div>
 
 <div class="tags" id="tagList"></div>
-
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
