@@ -5,27 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
   <style>
+    /* Body background and overall styling */
     body {
       font-family: system-ui, sans-serif;
-      padding: 20px;
       margin: 0;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-      background-size: cover;
+      padding: 20px;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') center/cover no-repeat fixed;
       color: #fff;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 20px;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
     }
 
+    /* Controls */
     .controls {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
       justify-content: center;
+      margin-bottom: 12px;
     }
 
     input {
@@ -34,7 +35,7 @@
       flex: 1;
       max-width: 400px;
       border-radius: 6px;
-      border: 1px solid #ccc;
+      border: none;
     }
 
     button {
@@ -42,22 +43,22 @@
       cursor: pointer;
       border-radius: 6px;
       border: none;
-      background: rgba(0,0,0,0.6);
+      background-color: rgba(0,0,0,0.6);
       color: #fff;
-      font-weight: bold;
-      transition: background 0.3s;
+      transition: 0.2s;
     }
 
     button:hover {
-      background: rgba(0,0,0,0.9);
+      background-color: rgba(255,255,255,0.2);
     }
 
+    /* Tags */
     .tags {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
       justify-content: center;
+      margin-bottom: 20px;
     }
 
     .tag {
@@ -65,69 +66,77 @@
       padding: 4px 10px;
       border-radius: 999px;
       cursor: pointer;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      transition: all 0.2s;
+      background-color: rgba(0,0,0,0.4);
+      transition: 0.2s;
     }
 
     .tag.active {
-      background: #fff;
+      background-color: #ffcc00;
       color: #000;
-      border-color: #fff;
+      border-color: #ffcc00;
     }
 
+    /* Grid layout */
     .grid {
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       gap: 16px;
       justify-items: center;
     }
 
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: repeat(6, 1fr); }
     }
 
-    @media (max-width: 480px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: repeat(5, 1fr); }
     }
 
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 400px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Item card */
     .item {
-      width: 100%;
-      max-width: 140px;
-      background: rgba(0,0,0,0.2);
-      padding: 12px;
+      background: rgba(0,0,0,0.5);
       border-radius: 12px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      align-items: center;
       transition: transform 0.2s, background 0.2s;
+      width: 100%;
     }
 
     .item:hover {
       transform: translateY(-4px);
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.7);
     }
 
+    /* SVG style and hover color */
     svg {
       width: 48px;
       height: 48px;
       fill: #fff;
-      transition: fill 0.2s;
+      transition: fill 0.2s, transform 0.2s;
     }
 
     .item:hover svg {
-      fill: #00ffff; /* hover color */
+      fill: #ffcc00;
+      transform: scale(1.2);
     }
 
+    /* Actions buttons aligned right */
     .actions {
       display: flex;
       justify-content: flex-end;
       gap: 6px;
       margin-top: 8px;
+      width: 100%;
     }
 
     .actions button {
