@@ -20,41 +20,39 @@
     margin-bottom: 16px;
   }
 
-  /* Controls */
-  .controls {
-    display: flex;
-    gap: 8px;
-    align-items: stretch;
-    flex-wrap: nowrap;
-    margin-bottom: 12px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+/* ===== Controls ===== */
+    .controls {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      margin-bottom: 12px;
+      width: 100%;
+      flex-wrap: nowrap;
+    }
+    .controls input {
+      flex: 1;
+      min-width: 120px;
+      max-width: 400px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
 
-  .controls input {
-    flex: 1;
-    min-width: 120px;
-    max-width: 450px;
-    padding: 8px 10px;
-    font-size: 14px;
-  }
-
-  .mode {
-    display: flex;
-    gap: 6px;
-  }
-
-  .mode button {
-    padding: 0 12px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Make buttons same height as input */
-  .mode button { height: 100%; }
+    .mode {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .mode button {
+      padding: 0 12px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Make buttons same height as input */
+    .mode button {height: 100%;}
 
   /* Tags */
   .tags {
