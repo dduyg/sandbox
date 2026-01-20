@@ -7,8 +7,13 @@ const gallery = document.getElementById('gallery');
 const tagList = document.getElementById('tagList');
 const searchInput = document.getElementById('search');
 
+const orBtn = document.getElementById('orBtn');
+const andBtn = document.getElementById('andBtn');
+const favToggle = document.getElementById('favToggle');
+
 const FAVORITES_KEY = 'svg-favorites';
 
+// Load JSON
 fetch('catalog.svgs.json')
   .then(res => res.json())
   .then(data => {
@@ -69,8 +74,6 @@ function renderIcons() {
 function renderTags() {
   const tagCounts = {};
   svgs.forEach(svg => svg.tags.forEach(t => tagCounts[t] = (tagCounts[t] || 0) + 1));
-
-  // Sort by count descending
   const sortedTags = Object.keys(tagCounts).sort((a,b) => tagCounts[b] - tagCounts[a]);
 
   tagList.innerHTML = '';
@@ -79,8 +82,7 @@ function renderTags() {
 
   sortedTags.forEach((tag, i) => {
     if (i < maxVisible) {
-      const el = createTagElement(tag);
-      tagList.appendChild(el);
+      tagList.appendChild(createTagElement(tag));
     } else {
       hiddenTags.push(tag);
     }
@@ -115,11 +117,8 @@ function copySVG(svg) {
   navigator.clipboard.writeText(code);
 }
 
+// Event listeners
 searchInput.addEventListener('input', renderIcons);
-
-const orBtn = document.getElementById('orBtn');
-const andBtn = document.getElementById('andBtn');
-const favToggle = document.getElementById('favToggle');
 
 orBtn.onclick = () => {
   tagMode = 'OR';
