@@ -70,7 +70,6 @@
     user-select: none;
     font-size: 12px;
     background: rgba(255,255,255,0.8);
-    color: #111;
   }
 
     .tag.active {
@@ -82,7 +81,7 @@
     /* ===== Grid ===== */ 
     .grid {
       display: grid;
-      gap: 16px;
+      gap: 5%;
       width: 100%;
       max-width: 900px;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -107,13 +106,9 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
     @media(max-width: 480px) {
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-      }
-      .item {
-        max-width: 100px;
-        max-height: 100px;
-      }
+      .grid {grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));}
+      .item {max-width: 100px; max-height: 100px;}
+      .actions button {font-size: 12px;}
     }
 
     .item svg {
