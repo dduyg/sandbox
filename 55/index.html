@@ -2,58 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SVG Catalog</title>
   <style>
-    /* Body background and basic */
+    /* Body with background image */
     body {
       font-family: system-ui, sans-serif;
-      padding: 20px;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') center/cover no-repeat;
       margin: 0;
+      padding: 20px;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+      background-size: cover;
       color: #fff;
     }
 
     h1 {
       text-align: center;
       margin-bottom: 20px;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
     }
 
-    /* Controls row (search + AND/OR + favorites) */
+    /* Controls row: search + OR/AND + favorites */
     .controls {
       display: flex;
-      flex-wrap: nowrap;
       gap: 8px;
-      margin-bottom: 16px;
+      flex-wrap: nowrap;
+      margin-bottom: 12px;
       align-items: center;
-      flex-shrink: 0;
-      overflow-x: auto;
     }
 
     .controls input {
       flex: 1;
-      min-width: 100px;
       padding: 8px;
       font-size: 16px;
-      border-radius: 6px;
-      border: none;
+      min-width: 0; /* allow shrink */
     }
 
-    .mode button, #favToggle {
-      padding: 6px 10px;
-      cursor: pointer;
-      border-radius: 6px;
-      border: none;
-      background: rgba(0,0,0,0.5);
-      color: #fff;
+    .controls .mode {
+      display: flex;
+      gap: 4px;
       flex-shrink: 0;
     }
 
-    /* Tags row */
+    .controls button {
+      padding: 6px 10px;
+      cursor: pointer;
+      border: none;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+
+    .controls button:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Tags */
     .tags {
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
+      flex-wrap: wrap;
       margin-bottom: 20px;
     }
 
@@ -62,55 +70,55 @@
       padding: 4px 10px;
       border-radius: 999px;
       cursor: pointer;
-      background: rgba(0,0,0,0.2);
-      color: #fff;
-      transition: all 0.2s;
+      background: rgba(0,0,0,0.4);
+      transition: 0.2s;
     }
 
     .tag.active {
-      background: #000;
-      color: #fff;
+      background: #fff;
+      color: #000;
     }
 
-    /* Grid layout */
+    /* Grid */
     .grid {
       display: grid;
       gap: 16px;
       grid-template-columns: repeat(8, 1fr);
     }
 
-    @media (max-width: 1200px) {
+    @media(max-width:1200px){
       .grid {
         grid-template-columns: repeat(6, 1fr);
       }
     }
 
-    @media (max-width: 900px) {
+    @media(max-width:900px){
       .grid {
         grid-template-columns: repeat(5, 1fr);
       }
     }
 
-    @media (max-width: 600px) {
-      .grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
-
-    @media (max-width: 400px) {
+    @media(max-width:600px){
       .grid {
         grid-template-columns: repeat(3, 1fr);
       }
     }
 
+    @media(max-width:400px){
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     /* Item card */
     .item {
-      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.3);
       padding: 12px;
-      border-radius: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: rgba(0,0,0,0.4);
+      border-radius: 8px;
       transition: transform 0.2s, background 0.2s;
     }
 
@@ -118,44 +126,40 @@
       width: 48px;
       height: 48px;
       fill: #fff;
-      transition: fill 0.2s;
+      transition: fill 0.2s, transform 0.2s;
+      flex-shrink: 0;
     }
 
     .item:hover svg {
-      fill: #1abc9c;
+      fill: #00ffcc;
+      transform: scale(1.1);
     }
 
+    /* Action buttons right-aligned */
     .actions {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
       align-items: flex-end;
       flex-shrink: 0;
     }
 
     .actions button {
       background: rgba(255,255,255,0.2);
-      color: #fff;
       border: none;
+      color: #fff;
       padding: 4px 6px;
-      border-radius: 6px;
-      cursor: pointer;
+      border-radius: 4px;
       font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s;
     }
 
     .actions button:hover {
-      background: #1abc9c;
+      background: rgba(0,255,255,0.5);
       color: #000;
     }
 
-    /* prevent wrapping of search + AND/OR buttons */
-    .controls::-webkit-scrollbar {
-      height: 6px;
-    }
-    .controls::-webkit-scrollbar-thumb {
-      background: rgba(255,255,255,0.3);
-      border-radius: 3px;
-    }
   </style>
 </head>
 <body>
@@ -164,8 +168,10 @@
 
 <div class="controls">
   <input id="search" placeholder="Search icons..." />
-  <button id="orBtn">OR</button>
-  <button id="andBtn">AND</button>
+  <div class="mode">
+    <button id="orBtn">OR</button>
+    <button id="andBtn">AND</button>
+  </div>
   <button id="favToggle">⭐ Favorites</button>
 </div>
 
