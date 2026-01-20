@@ -1,179 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVG Catalog</title>
-<style>
-  * { box-sizing: border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Catalog</title>
+  <style>
+    * { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    padding: 20px;
-    font-family: system-ui, sans-serif;
-    background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
-    color: #111;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, sans-serif;
+      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
+      color: #111;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  h1 {
-    margin-bottom: 16px;
-    text-align: center;
-    color: #fff;
-    text-shadow: 1px 1px 4px #000;
-  }
+    h1 {
+      margin-bottom: 16px;
+    }
 
-  /* ===== Controls ===== */
-  .controls {
-    display: flex;
-    align-items: stretch; /* buttons same height as input */
-    gap: 8px;
-    margin-bottom: 12px;
-    flex-wrap: nowrap;
-    width: 100%;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .controls input {
-    flex: 1;
-    min-width: 120px;
-    max-width: 400px; /* input won't get too long on big screens */
-    padding: 8px 10px;
-    font-size: 14px;
-  }
-
-  .mode {
-    display: flex;
-    gap: 6px;
-  }
-
-  .mode button {
-    padding: 0 10px;
-    font-size: 13px;
-    cursor: pointer;
-    white-space: nowrap;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    display: flex;
-    align-items: center; /* vertically center */
-    justify-content: center;
-  }
-
-  .mode button:hover {
-    background: rgba(0,0,0,0.7);
-  }
-
-  /* ===== Tags ===== */
-  .tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .tag {
-    border: 1px solid #ccc;
-    padding: 4px 10px;
-    border-radius: 999px;
-    cursor: pointer;
-    user-select: none;
-    font-size: 12px;
-    background: rgba(255,255,255,0.8);
-  }
-
-  .tag.active {
-    background: #333;
-    color: #fff;
-    border-color: #333;
-  }
-
-  /* ===== Grid ===== */
-  .grid {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* auto-fit items */
-    justify-content: center; /* center grid if fewer items */
-    max-width: 900px; /* maximum width for grid */
-    margin: 0 auto;
-  }
-
-  /* ===== Item Card ===== */
-  .item {
-    border: 1px solid rgba(255,255,255,0.3);
-    background: rgba(0,0,0,0.3);
-    border-radius: 8px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    aspect-ratio: 1 / 1;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .item:hover {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  }
-
-  .item svg {
-    width: 100%;
-    height: 100%;
-    max-height: 64px;
-    fill: #fff;
-    transition: fill 0.2s ease, transform 0.2s ease;
-  }
-
-  .item:hover svg {
-    fill: #00ffcc;
-    transform: scale(1.1);
-  }
-
-  /* ===== Actions ===== */
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .actions button {
-    background: transparent;
-    border: none;
-    font-size: 16px;
-    color: #fff;
-    text-shadow: 1px 1px 4px #000;
-    cursor: pointer;
-    padding: 4px;
-  }
-
-  .actions button:hover {
-    opacity: 0.7;
-  }
-
-  /* ===== Responsive tweaks ===== */
-  @media(max-width: 400px){
-    .grid {
-      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* smaller items */
+    /* ===== Controls ===== */
+    .controls {
+      display: flex;
+      align-items: stretch; /* Make children same height */
+      gap: 8px;
+      margin-bottom: 12px;
+      width: 100%;
+      flex-wrap: nowrap;
     }
 
     .controls input {
-      max-width: 200px;
-      font-size: 13px;
+      flex: 1;
+      min-width: 120px;
+      max-width: 400px; /* Max width for large screens */
+      padding: 8px 10px;
+      font-size: 14px;
     }
 
-    .mode button {
-      font-size: 12px;
-      padding: 0 6px;
+    .mode {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
     }
-  }
-</style>
+    .mode button {
+      padding: 0 12px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Make buttons same height as input */
+    .mode button {height: 100%;}
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .tag {
+      border: 1px solid #ccc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 12px;
+      background: rgba(255,255,255,0.8);
+    }
+    .tag.active {
+      background: #333;
+      color: #fff;
+      border-color: #333;
+    }
+
+    /* ===== Grid ===== */
+    .grid {
+      display: grid;
+      gap: 5%;
+      grid-template-columns: repeat(6, 1fr);
+      max-width: 900px;
+      width: 100%;
+    }
+    @media(max-width:500px){
+      .grid {grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));}
+    }
+
+    /* ===== Item Card ===== */
+    .item {
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      aspect-ratio: 1 / 1;
+      max-width: 120px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .item:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .item svg {
+      width: 100%;
+      height: 100%;
+      max-height: 54px;
+      fill: #fff;
+      transition: fill 0.2s ease, transform 0.2s ease;
+      margin: 0 auto;
+    }
+    .item:hover svg {
+      fill: #00ffcc;
+      transform: scale(1.1);
+    }
+
+    /* ===== Actions ===== */
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .actions button {
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      color: #fff;
+      text-shadow: 1px 1px 4px #000;
+      cursor: pointer;
+      padding: 4px 10px;
+      line-height: 1;
+    }
+    .actions button:hover {
+      opacity: 0.7;
+    }
+  </style>
 </head>
 <body>
 
