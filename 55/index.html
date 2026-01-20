@@ -2,173 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SVG Catalog</title>
-
   <style>
-    /* ===== Global ===== */
-    * {
-      box-sizing: border-box;
-    }
-
+    /* Body & background */
     body {
-      margin: 0;
-      padding: 20px;
       font-family: system-ui, sans-serif;
-      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
+      padding: 20px;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      min-height: 100vh;
-      overflow-x: hidden;
+      margin: 0;
     }
 
     h1 {
-      color: #fff;
-      margin-bottom: 16px;
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
     }
 
-    /* ===== Controls Row ===== */
+    /* Controls */
     .controls {
       display: flex;
-      align-items: center;
+      flex-wrap: nowrap;
       gap: 8px;
-      width: 100%;
-      max-width: 100%;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
+      justify-content: space-between;
+      flex-direction: row;
+      flex-wrap: wrap;
     }
 
-    .controls input {
-      flex: 1 1 auto;
-      min-width: 0;
-      padding: 8px 10px;
-      font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-
-    .mode {
+    .search-and-mode {
       display: flex;
-      gap: 6px;
-      flex-shrink: 0;
+      gap: 8px;
+      flex-wrap: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    input#search {
+      flex: 1;
+      padding: 8px;
+      font-size: 16px;
+      min-width: 0;
     }
 
     .mode button {
       padding: 6px 10px;
-      font-size: 13px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: rgba(255,255,255,0.9);
+      cursor: pointer;
+    }
+
+    #favToggle {
+      padding: 6px 10px;
       cursor: pointer;
       white-space: nowrap;
     }
 
-    /* ===== Tags ===== */
+    /* Tags */
     .tags {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .tag {
-      padding: 4px 10px;
-      font-size: 12px;
-      border-radius: 999px;
       border: 1px solid #ccc;
-      background: rgba(255,255,255,0.85);
+      padding: 4px 10px;
+      border-radius: 999px;
       cursor: pointer;
-      user-select: none;
+      background: rgba(255,255,255,0.8);
+      transition: all 0.2s;
     }
 
     .tag.active {
-      background: #000;
-      color: #fff;
-      border-color: #000;
+      background: black;
+      color: white;
     }
 
-    /* ===== Grid ===== */
+    /* Grid */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
-      gap: 14px;
-      width: 100%;
-      max-width: 100%;
+      gap: 16px;
     }
 
     @media (max-width: 1200px) {
+      .grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
       .grid {
         grid-template-columns: repeat(5, 1fr);
       }
     }
 
-    /* ===== Item Card ===== */
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* Item Card */
     .item {
-      background: rgba(255,255,255,0.92);
-      border-radius: 12px;
-      padding: 14px;
+      border: 1px solid #ddd;
+      padding: 12px;
+      background: rgba(255,255,255,0.85);
       display: flex;
-      flex-direction: column;
       justify-content: space-between;
-      aspect-ratio: 1 / 1;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      align-items: center;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    /* ===== SVG ===== */
-    .item svg {
-      width: 100%;
-      height: 100%;
-      max-height: 64px;
-      fill: #222;
-      transition: fill 0.2s ease;
+    svg {
+      width: 48px;
+      height: 48px;
+      fill: #333;
+      transition: fill 0.2s;
     }
 
     .item:hover svg {
-      fill: #6a5cff; /* hover color */
+      fill: #ff6600;
     }
 
-    /* ===== Actions ===== */
     .actions {
       display: flex;
-      justify-content: flex-end;
       gap: 6px;
-      margin-top: 8px;
     }
 
     .actions button {
-      background: transparent;
-      border: none;
-      font-size: 16px;
       cursor: pointer;
-      padding: 4px;
+      padding: 4px 6px;
+      font-size: 16px;
+      border: 1px solid #aaa;
+      background: white;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
     }
 
     .actions button:hover {
-      opacity: 0.7;
+      background: #333;
+      color: white;
     }
   </style>
 </head>
-
 <body>
 
 <h1>SVG Catalog</h1>
 
 <div class="controls">
-  <input id="search" placeholder="Search icons…" />
-  <div class="mode">
-    <button id="orBtn">OR</button>
-    <button id="andBtn">AND</button>
-    <button id="favToggle">☆</button>
+  <div class="search-and-mode">
+    <input id="search" placeholder="Search icons..." />
+    <div class="mode">
+      <button id="orBtn">OR</button>
+      <button id="andBtn">AND</button>
+    </div>
   </div>
+  <button id="favToggle">⭐ Favorites</button>
 </div>
 
 <div class="tags" id="tagList"></div>
-
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
