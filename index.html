@@ -1,40 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVG Catalog</title>
-<style>
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    padding: 20px;
-    font-family: system-ui, sans-serif;
-    background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
-    color: #fff;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Catalog</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, sans-serif;
+      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
+      color: #111;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-  h1 {
-    margin-bottom: 16px;
-  }
+    h1 {
+      margin-bottom: 16px;
+      text-align: center;
+    }
 
-/* ===== Controls ===== */
+    /* ===== Controls ===== */
     .controls {
       display: flex;
       align-items: stretch;
       gap: 8px;
       margin-bottom: 12px;
       width: 100%;
-      flex-wrap: nowrap;
+      max-width: 900px;
     }
+
     .controls input {
       flex: 1;
-      min-width: 120px;
-      max-width: 400px;
+      min-width: 150px;
+      max-width: 500px; /* limit input width on large screens */
       padding: 8px 10px;
       font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
 
     .mode {
@@ -42,105 +49,116 @@
       gap: 6px;
       flex-shrink: 0;
     }
+
     .mode button {
       padding: 0 12px;
       font-size: 13px;
       cursor: pointer;
       white-space: nowrap;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: #eee;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      align-items: center; /* match search input height */
     }
-    /* Make buttons same height as input */
-    .mode button {height: 100%;}
 
-  /* Tags */
-  .tags {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
-    max-width: 900px;
-  }
+    .mode button:hover {
+      background: #ddd;
+    }
 
-  .tag {
-    border: 1px solid #ccc;
-    padding: 4px 10px;
-    border-radius: 999px;
-    cursor: pointer;
-    user-select: none;
-    font-size: 12px;
-    background: rgba(255,255,255,0.8);
-    color: #111;
-  }
+    /* ===== Tags ===== */
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      max-width: 900px;
+      width: 100%;
+    }
 
-  .tag.active {
-    background: #333;
-    color: #fff;
-    border-color: #333;
-  }
+    .tag {
+      border: 1px solid #ccc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 12px;
+      background: rgba(255,255,255,0.8);
+    }
 
-  /* Grid */
-  .grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5%;
-    max-width: 900px;
-  }
+    .tag.active {
+      background: #333;
+      color: #fff;
+      border-color: #333;
+    }
 
-  /* Item Cards */
-  .item {
-    width: 120px; /* fixed width */
-    background: rgba(0,0,0,0.3);
-    border-radius: 8px;
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    aspect-ratio: 1 / 1;
-  }
-  .item:hover {
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  }
-  @media(max-width: 500px){
-    .item { width: 95px; }
-  }
+    /* ===== Grid ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 900px; /* max width container */
+    }
 
-  .item svg {
-    width: 100%;
-    height: 100%;
-    max-height: 54px;
-    fill: #fff;
-    transition: fill 0.2s ease, transform 0.2s ease;
-  }
-  .item:hover svg {
-    fill: #00ffcc;
-    transform: scale(1.1);
-  }
+    @media(max-width:400px){
+      .grid {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      }
+    }
 
-  /* Actions */
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 15px;
-    margin-left: 20px;
-  }
+    /* ===== Item Card ===== */
+    .item {
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      aspect-ratio: 1 / 1;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .item:hover {
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
 
-  .actions button {
-    background: transparent;
-    border: none;
-    font-size: 16px;
-    color: #fff;
-    text-shadow: 1px 1px 4px #000;
-    cursor: pointer;
-    padding: 4px;
-  }
-  .actions button:hover {
-    opacity: 0.7;
-  }  
-</style>
+    .item svg {
+      width: 100%;
+      height: 100%;
+      max-height: 64px;
+      fill: #fff;
+      transition: fill 0.2s ease, transform 0.2s ease;
+    }
+
+    .item:hover svg {
+      fill: #00ffcc;
+      transform: scale(1.1);
+    }
+
+    /* ===== Actions ===== */
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .actions button {
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      color: #fff;
+      text-shadow: 1px 1px 4px #000;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .actions button:hover {
+      opacity: 0.7;
+    }
+
+  </style>
 </head>
 <body>
 
