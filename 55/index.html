@@ -4,36 +4,47 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
+
   <style>
-    * {box-sizing: border-box;}
+    /* ===== Global ===== */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 20px;
       font-family: system-ui, sans-serif;
-      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
-      color: #111;
+      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
     h1 {
+      color: #fff;
       margin-bottom: 16px;
     }
 
+    /* ===== Controls Row ===== */
     .controls {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
       width: 100%;
-      flex-wrap: nowrap;
+      max-width: 100%;
+      margin-bottom: 14px;
     }
 
     .controls input {
+      flex: 1 1 auto;
       min-width: 0;
-      flex: 1;
       padding: 8px 10px;
       font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
 
     .mode {
@@ -45,6 +56,9 @@
     .mode button {
       padding: 6px 10px;
       font-size: 13px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: rgba(255,255,255,0.9);
       cursor: pointer;
       white-space: nowrap;
     }
@@ -58,27 +72,28 @@
     }
 
     .tag {
-      border: 1px solid #ccc;
       padding: 4px 10px;
+      font-size: 12px;
       border-radius: 999px;
+      border: 1px solid #ccc;
+      background: rgba(255,255,255,0.85);
       cursor: pointer;
       user-select: none;
-      font-size: 12px;
-      background: rgba(255,255,255,0.8);
     }
 
     .tag.active {
-      background: #333;
+      background: #000;
       color: #fff;
-      border-color: #333;
+      border-color: #000;
     }
 
     /* ===== Grid ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
-      gap: 16px;
+      gap: 14px;
       width: 100%;
+      max-width: 100%;
     }
 
     @media (max-width: 1200px) {
@@ -89,7 +104,6 @@
 
     /* ===== Item Card ===== */
     .item {
-      border: 1px solid #ddd;
       background: rgba(255,255,255,0.92);
       border-radius: 12px;
       padding: 14px;
@@ -99,11 +113,13 @@
       aspect-ratio: 1 / 1;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
+
     .item:hover {
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
+    /* ===== SVG ===== */
     .item svg {
       width: 100%;
       height: 100%;
@@ -137,6 +153,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <h1>SVG Catalog</h1>
@@ -155,5 +172,6 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
