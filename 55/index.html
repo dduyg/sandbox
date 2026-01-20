@@ -88,14 +88,12 @@
     .grid {
       display: grid;
       gap: 16px;
+      grid-template-columns: repeat(6, 1fr);
       max-width: 900px;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Flexible, fit screen */
+      width: 100%;
     }
-
     @media(max-width:500px){
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* max 4 items */
-      }
+      .grid {grid-template-columns: repeat(4, 1fr);}
     }
 
     /* ===== Item Card ===== */
@@ -108,7 +106,6 @@
       flex-direction: column;
       justify-content: space-between;
       aspect-ratio: 1 / 1;
-      max-width: 120px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
