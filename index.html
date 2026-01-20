@@ -11,7 +11,7 @@
             font-family: "Inter", sans-serif;
             background-color: #b1acb9;
             color: #171321;
-            font-size: 18px;
+            font-size: clamp(15px, 2.5vw, 19px);
             height: 100vh;
             overflow: hidden;
         }
@@ -30,12 +30,6 @@
             padding: 3px 5px;
             border-radius: 3px;
         }
-        .logo {
-            font-size: 30px;
-            font-weight: bold;
-            line-height: 1.2;
-            color: #87fffb;
-        }
 
         main {
             margin: 25vh 30px 0;
@@ -43,21 +37,19 @@
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
             max-width: 100%;
-            min-height: 50vh;
+            max-height: 50vh;
         }
         .releases {
             display: flex;
             flex-direction: column;
         }
         .releases h2 {
-            font-size: clamp(16px, 3vw, 24px);
             margin-bottom: 20px;
             line-height: 1.2;
         }
         .list-item {
             margin-left: 40px;
             margin-bottom: 15px;
-            font-size: clamp(14px, 2.5vw, 18px);
             line-height: 1.3;
         }
         @media (max-width: 600px) {    
@@ -86,7 +78,6 @@
         .appointment {
             background: linear-gradient(to right, #ff6b6b, #4ecdc4);
             padding: 12px 20px;
-            cursor: pointer;
         }
        
         footer {
@@ -98,17 +89,13 @@
             padding: 20px 30px;
         }
         .footer-left {
-            line-height: 1.6;
-            margin-bottom: 70px;
-        }
-        .footer-right {
-            font-weight: bold;
+            margin-bottom: 60px;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">Ab[Screen-<br>wear]</div>
+        <h1>Ab[Screen-<br>wear]</h1>
         <div><code>Shop</code></div>
     </header>
    
@@ -131,7 +118,7 @@
 
     <footer>
         <div class="footer-left">About;<br>Press;</div>
-        <div class="footer-right">ab:news;</div>
+        <div>ab:news;</div>
     </footer>
 </body>
 </html>
