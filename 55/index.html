@@ -6,155 +6,150 @@
   <title>SVG Catalog</title>
 
   <style>
-    :root {
-      --card-bg: rgba(255,255,255,0.85);
-      --card-border: rgba(0,0,0,0.08);
-      --hover-color: #4f46e5;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    /* ===== GLOBAL ===== */
     body {
       margin: 0;
       padding: 20px;
       font-family: system-ui, sans-serif;
-      background:
-        url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png")
-        center / cover
-        fixed;
+      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     h1 {
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
-    /* ================= CONTROLS ================= */
-
+    /* ===== CONTROLS ===== */
     .controls {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+      width: 100%;
       margin-bottom: 12px;
-      flex-wrap: nowrap;
     }
 
-    .controls input {
+    .search-group {
+      display: flex;
+      gap: 6px;
       flex: 1;
       min-width: 0;
-      padding: 8px 10px;
-      font-size: 15px;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    .mode button,
+    #favToggle {
+      padding: 6px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
     .mode {
       display: flex;
       gap: 6px;
-      flex-shrink: 0;
     }
 
-    button {
-      padding: 6px 10px;
-      font-size: 14px;
-      cursor: pointer;
-      white-space: nowrap;
+    #favToggle {
+      margin-left: auto;
     }
 
-    /* ================= TAGS ================= */
-
+    /* ===== TAGS ===== */
     .tags {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-bottom: 16px;
     }
 
     .tag {
       padding: 4px 10px;
       border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.2);
+      border: 1px solid #ccc;
       background: rgba(255,255,255,0.8);
       cursor: pointer;
       font-size: 13px;
     }
 
     .tag.active {
-      background: black;
-      color: white;
-      border-color: black;
+      background: #000;
+      color: #fff;
+      border-color: #000;
     }
 
-    /* ================= GRID ================= */
-
+    /* ===== GRID ===== */
     .grid {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
       gap: 14px;
+      grid-template-columns: repeat(8, 1fr);
       width: 100%;
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1200px) {
       .grid {
         grid-template-columns: repeat(5, 1fr);
       }
     }
 
-    /* ================= ITEM CARD ================= */
-
+    /* ===== ITEM CARD ===== */
     .item {
       position: relative;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 18px 12px;
+      aspect-ratio: 1 / 1;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.85);
       display: flex;
       align-items: center;
       justify-content: center;
-      aspect-ratio: 1 / 1;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.15s ease, background 0.15s ease;
     }
 
     .item:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      background: rgba(255,255,255,0.95);
     }
 
-    /* SVG styling */
-    .item svg {
-      width: 42px;
-      height: 42px;
-      fill: currentColor;
-      transition: color 0.15s ease;
+    /* ===== SVG ===== */
+    svg {
+      width: 46px;
+      height: 46px;
+      fill: #222;
+      transition: fill 0.2s ease;
+      pointer-events: none;
     }
 
     .item:hover svg {
-      color: var(--hover-color);
+      fill: #4b6cff;
     }
 
-    /* ================= ACTIONS ================= */
-
+    /* ===== ACTIONS ===== */
     .actions {
       position: absolute;
       top: 6px;
       right: 6px;
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .actions button {
-      padding: 2px 6px;
-      font-size: 14px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid rgba(0,0,0,0.15);
+      border: none;
+      background: rgba(0,0,0,0.05);
       border-radius: 6px;
+      padding: 4px 6px;
       cursor: pointer;
-      line-height: 1;
+      font-size: 14px;
     }
 
     .actions button:hover {
-      background: black;
-      color: white;
+      background: rgba(0,0,0,0.12);
     }
   </style>
 </head>
@@ -164,13 +159,14 @@
 <h1>SVG Catalog</h1>
 
 <div class="controls">
-  <input id="search" placeholder="Search icons..." />
-
-  <div class="mode">
-    <button id="orBtn">OR</button>
-    <button id="andBtn">AND</button>
-    <button id="favToggle">⭐</button>
+  <div class="search-group">
+    <input id="search" placeholder="Search icons…" />
+    <div class="mode">
+      <button id="orBtn">OR</button>
+      <button id="andBtn">AND</button>
+    </div>
   </div>
+  <button id="favToggle">⭐</button>
 </div>
 
 <div class="tags" id="tagList"></div>
