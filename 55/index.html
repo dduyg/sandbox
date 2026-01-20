@@ -1,134 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVG Catalog</title>
-<style>
-  body {
-    font-family: system-ui, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-    background-size: cover;
-    color: #333;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Catalog</title>
 
-  h1 {
-    text-align: center;
-    color: #E7DADA;
-    margin-bottom: 20px;
-  }
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-  .controls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
+    h1 {
+      color: #fff;
+    }
 
-  input {
-    padding: 8px;
-    font-size: 16px;
-    flex: 1;
-    min-width: 200px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-  }
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
 
-  button {
-    padding: 6px 12px;
-    cursor: pointer;
-    border-radius: 6px;
-    border: none;
-    background-color: #E7DADA;
-    color: #333;
-    font-weight: bold;
-    transition: background 0.2s;
-  }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      flex: 1;
+    }
 
-  button:hover {
-    background-color: #d2c1c1;
-  }
+    button {
+      padding: 6px 10px;
+      cursor: pointer;
+    }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
 
-  .tag {
-    border: 1px solid #ccc;
-    padding: 4px 12px;
-    border-radius: 999px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.8);
-    transition: all 0.2s;
-  }
+    .tag {
+      border: 1px solid #ccc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      background: rgba(255,255,255,0.85);
+    }
 
-  .tag.active {
-    background: #E7DADA;
-    color: black;
-    border-color: #E7DADA;
-  }
+    .tag.active {
+      background: black;
+      color: white;
+    }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 16px;
-    justify-items: center;
-  }
-  @media (max-width: 700px) {
-    .grid {grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));}
-  }
+    /* ===== GRID ===== */
 
-  .item {
-    background: rgba(255, 255, 255, 0.85);
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100px; /* fixed height to prevent grid jump */
-    width: 100%;
-    box-sizing: border-box;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 16px;
+    }
 
-  .item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  }
+    @media (max-width: 600px) {
+      .grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
 
-  svg {
-    width: 48px;
-    height: 48px;
-    fill: #333;
-    transition: fill 0.2s;
-    margin-bottom: 6px;
-  }
+    /* ===== ITEM CARD ===== */
 
-  .item:hover svg {
-    fill: #E7DADA;
-  }
+    .item {
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 14px;
+      background: rgba(255,255,255,0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
 
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 6px;
-  }
+    svg {
+      width: 48px;
+      height: 48px;
+      fill: #111;
+      transition: fill 0.2s ease;
+    }
 
-  .actions button {
-    padding: 4px 6px;
-    font-size: 14px;
-  }
+    .item:hover svg {
+      fill: #0070f3;
+    }
 
-</style>
+    /* ===== ACTIONS ===== */
+
+    .actions {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .actions button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
 </head>
+
 <body>
 
 <h1>SVG Catalog</h1>
@@ -143,6 +130,7 @@
 </div>
 
 <div class="tags" id="tagList"></div>
+
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
