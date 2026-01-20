@@ -5,37 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
   <style>
-    /* Body background and overall styling */
     body {
       font-family: system-ui, sans-serif;
-      margin: 0;
       padding: 20px;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') center/cover no-repeat fixed;
-      color: #fff;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
     }
 
     h1 {
       text-align: center;
+      color: #fff;
+      text-shadow: 1px 1px 4px #000;
       margin-bottom: 20px;
-      text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
     }
 
-    /* Controls */
     .controls {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      justify-content: center;
       margin-bottom: 12px;
+      align-items: center;
     }
 
     input {
       padding: 8px;
       font-size: 16px;
       flex: 1;
-      max-width: 400px;
       border-radius: 6px;
-      border: none;
+      border: 1px solid #ccc;
     }
 
     button {
@@ -43,21 +41,18 @@
       cursor: pointer;
       border-radius: 6px;
       border: none;
-      background-color: rgba(0,0,0,0.6);
-      color: #fff;
-      transition: 0.2s;
+      background: rgba(255,255,255,0.8);
+      transition: background 0.2s;
     }
 
     button:hover {
-      background-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,1);
     }
 
-    /* Tags */
     .tags {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      justify-content: center;
       margin-bottom: 20px;
     }
 
@@ -66,82 +61,91 @@
       padding: 4px 10px;
       border-radius: 999px;
       cursor: pointer;
-      background-color: rgba(0,0,0,0.4);
-      transition: 0.2s;
+      background: rgba(255,255,255,0.8);
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      background: rgba(255,255,255,1);
     }
 
     .tag.active {
-      background-color: #ffcc00;
-      color: #000;
-      border-color: #ffcc00;
+      background: black;
+      color: white;
+      font-weight: bold;
     }
 
-    /* Grid layout */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
       gap: 16px;
-      justify-items: center;
     }
 
     @media (max-width: 1200px) {
-      .grid { grid-template-columns: repeat(6, 1fr); }
+      .grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
     }
 
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: repeat(5, 1fr); }
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
-    @media (max-width: 600px) {
-      .grid { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
-    @media (max-width: 400px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    /* Item card */
     .item {
-      background: rgba(0,0,0,0.5);
+      background: rgba(255,255,255,0.9);
       border-radius: 12px;
       padding: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.2s, background 0.2s;
-      width: 100%;
+      justify-content: center;
+      position: relative;
+      min-height: 120px; /* preserves space even if filtered */
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .item:hover {
       transform: translateY(-4px);
-      background: rgba(0,0,0,0.7);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
 
-    /* SVG style and hover color */
     svg {
       width: 48px;
       height: 48px;
-      fill: #fff;
-      transition: fill 0.2s, transform 0.2s;
+      fill: #333;
+      transition: fill 0.2s;
     }
 
     .item:hover svg {
-      fill: #ffcc00;
-      transform: scale(1.2);
+      fill: #007BFF; /* hover color */
     }
 
-    /* Actions buttons aligned right */
     .actions {
       display: flex;
       justify-content: flex-end;
-      gap: 6px;
-      margin-top: 8px;
+      gap: 8px;
       width: 100%;
+      margin-top: 12px;
     }
 
     .actions button {
-      padding: 4px 8px;
-      font-size: 14px;
+      background: #f0f0f0;
+      color: #333;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+
+    .actions button:hover {
+      background: #007BFF;
+      color: #fff;
     }
   </style>
 </head>
@@ -163,6 +167,5 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
