@@ -78,15 +78,9 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-columns: repeat(7, 1fr);
       gap: 16px;
       justify-items: center;
-    }
-
-    @media (max-width: 1200px) {
-      .grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
     }
 
     @media (max-width: 768px) {
@@ -104,7 +98,7 @@
     .item {
       width: 100%;
       max-width: 140px;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.2);
       padding: 12px;
       border-radius: 12px;
       display: flex;
@@ -115,7 +109,7 @@
 
     .item:hover {
       transform: translateY(-4px);
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.5);
     }
 
     svg {
