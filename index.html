@@ -1,177 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Catalog</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: system-ui, sans-serif;
-      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
-      color: #111;
-      min-height: 100vh;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Catalog</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: system-ui, sans-serif;
+  background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
+  color: #111;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-    h1 {
-      margin-bottom: 16px;
-      text-align: center;
-    }
+h1 {
+  margin-bottom: 16px;
+  text-align: center;
+}
 
-    /* ===== Controls ===== */
-    .controls {
-      display: flex;
-      align-items: stretch;
-      gap: 8px;
-      margin-bottom: 12px;
-      width: 100%;
-      max-width: 900px;
-      flex-wrap: nowrap;
-    }
+/* ===== Controls ===== */
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: nowrap;
+  width: 100%;
+  align-items: stretch;
+}
 
-    .controls input {
-      flex: 1;
-      padding: 8px 10px;
-      font-size: 14px;
-      border-radius: 6px;
-      border: none;
-      max-width: 500px; /* limit input width */
-    }
+.controls input {
+  flex: 1;
+  min-width: 150px;
+  max-width: 400px; /* Limit search width on large screens */
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 
-    .mode {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
+.mode {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
 
-    .mode button {
-      padding: 0 12px;
-      font-size: 13px;
-      cursor: pointer;
-      white-space: nowrap;
-      border-radius: 6px;
-      border: none;
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      display: flex;
-      align-items: center;
-    }
+.mode button {
+  padding: 0 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  flex: 1; /* equal height with input */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
 
-    .mode button:hover {
-      background: rgba(0,0,0,0.7);
-    }
+/* ===== Tags ===== */
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
 
-    /* ===== Tags ===== */
-    .tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-      justify-content: center;
-      max-width: 900px;
-      width: 100%;
-    }
+.tag {
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 12px;
+  background: rgba(255,255,255,0.8);
+}
 
-    .tag {
-      border: 1px solid #ccc;
-      padding: 4px 10px;
-      border-radius: 999px;
-      cursor: pointer;
-      user-select: none;
-      font-size: 12px;
-      background: rgba(255,255,255,0.8);
-    }
+.tag.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
 
-    .tag.active {
-      background: #333;
-      color: #fff;
-      border-color: #333;
-    }
+/* ===== Grid ===== */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  max-width: 900px; /* grid max width */
+  margin: 0 auto; /* center */
+  justify-content: flex-start;
+}
 
-    /* ===== Grid ===== */
-    .grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 16px;
-      max-width: 900px;
-      width: 100%;
-    }
+.item {
+  flex: 1 1 120px; /* grow, shrink, basis */
+  max-width: 160px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
 
-    .item {
-      border: 1px solid rgba(255,255,255,0.3);
-      background: rgba(0,0,0,0.3);
-      border-radius: 8px;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      width: 120px;  /* fixed width item */
-      height: 140px; /* fixed height for consistency */
-    }
+.item:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
 
-    .item:hover {
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
+.item svg {
+  width: 100%;
+  height: auto;
+  max-height: 64px;
+  fill: #fff;
+  transition: fill 0.2s ease, transform 0.2s ease;
+}
 
-    .item svg {
-      width: 100%;
-      height: 64px;
-      fill: #fff;
-      transition: fill 0.2s ease, transform 0.2s ease;
-      margin-bottom: 10px;
-    }
+.item:hover svg {
+  fill: #00ffcc;
+  transform: scale(1.1);
+}
 
-    .item:hover svg {
-      fill: #00ffcc;
-      transform: scale(1.1);
-    }
+/* ===== Actions ===== */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
 
-    /* ===== Actions ===== */
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 6px;
-    }
+.actions button {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  text-shadow: 1px 1px 4px #000;
+  cursor: pointer;
+  padding: 4px;
+}
 
-    .actions button {
-      background: transparent;
-      border: none;
-      font-size: 16px;
-      color: #fff;
-      cursor: pointer;
-      padding: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+.actions button:hover {
+  opacity: 0.7;
+}
 
-    .actions button:hover {
-      opacity: 0.7;
-    }
+/* ===== Responsive adjustments ===== */
+@media(max-width:600px) {
+  .item {
+    flex: 1 1 100px;
+    max-width: 120px;
+  }
 
-    /* ===== Responsive Items ===== */
-    @media(max-width: 500px) {
-      .item {
-        width: 90px;
-        height: 110px;
-      }
-    }
+  .controls input {
+    max-width: 200px;
+  }
 
-    @media(max-width: 400px) {
-      .item {
-        width: 70px;
-        height: 90px;
-      }
-    }
-  </style>
+  .mode button {
+    font-size: 12px;
+    padding: 0 8px;
+  }
+}
+
+@media(max-width:400px) {
+  .item {
+    flex: 1 1 80px;
+    max-width: 100px;
+  }
+
+  .controls input {
+    max-width: 160px;
+  }
+
+  .mode button {
+    font-size: 12px;
+    padding: 0 6px;
+  }
+}
+</style>
 </head>
 <body>
 
