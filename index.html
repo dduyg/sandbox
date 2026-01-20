@@ -20,8 +20,7 @@
         header {    
             position: fixed;    
             top: 0; left: 0; right: 0;    
-            display: flex;    
-            align-items: flex-start;    
+            display: flex;   
             justify-content: space-between;    
             padding: 20px 30px 0;   
         }
@@ -39,48 +38,57 @@
             color: #87fffb;
         }
 
-        .labs {
-            position: fixed;
-            top: 350px;
-            right: 30px;
+        main {
+            margin: 350px 30px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            max-width: 100%;
+            min-height: 50vh;
         }
-
         .releases {
-            position: fixed;
-            top: 420px;
-            left: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        .releases h2 {
+            font-size: clamp(16px, 3vw, 24px);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .list-item {
+            margin-left: 40px;
+            margin-bottom: 15px;
+            font-size: clamp(14px, 2.5vw, 18px);
+            line-height: 1.3;
+        }
+        @media (max-width: 600px) {    
+            .list-item {margin-left: 15px;}
         }
 
-        .release-list {
-            margin-top: 20px;
-            font-size: 17px;
-            line-height: 1.8;
+        .main-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
         }
-
-        img {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
+        .main-middle img {
+            max-width: 100%;
             height: auto;
+            display: block;
         }
-
-        .fabs-favs {
-            position: fixed;
-            top: 650px;
-            right: 30px;
-            line-height: 1.6;
+        
+        .main-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            text-align: right;
         }
-
         .appointment {
-            position: fixed;
-            bottom: 180px;
-            right: 30px;
             background: linear-gradient(to right, #ff6b6b, #4ecdc4);
             padding: 12px 20px;
             cursor: pointer;
         }
-
        
         footer {
             position: fixed;    
@@ -104,29 +112,23 @@
         <div class="logo">Ab[Screen-<br>wear]</div>
         <div><code>Shop</code></div>
     </header>
-
-    <div class="labs">ab:labs;</div>
-
-    <div class="releases">
-        Ab[Releas-<br>es:
-        <div class="release-list">
-            2:17<br>
-            postmasters;<br><br>
-            1:17<br>
-            kahn;<br><br>
-            1:16<br>
-            marfa;
+   
+    <main>
+        <div class="releases">
+            <h2>Ab[Releas-<br>es:</h2>
+            <div class="list-item">2:17<br>postmasters;</div>
+            <div class="list-item">1:17<br>kahn;</div>
+            <div class="list-item">1:16<br>marfa;</div>
         </div>
-    </div>
 
-    <img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/waiting-around.png" alt="">
+        <div class="main-middle"><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/waiting-around.png" alt="🪩"></div>
 
-    <div class="fabs-favs">
-        ab:fabs;<br>
-        ab:favs;
-    </div>
-
-    <div class="appointment">Appointment;</div>
+        <div class="main-right">
+            <div>ab:labs;</div>
+            <div>ab:fabs;<br>ab:favs;</div>
+            <div class="appointment">Appointment;</div>
+        </div>
+    </main>
 
     <footer>
         <div class="footer-left">About;<br>Press;</div>
