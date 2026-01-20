@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three Column Layout</title>
+    <title>Ab[Screenwear]</title>
     <style>
         * {
             margin: 0;
@@ -13,110 +13,147 @@
 
         body {
             font-family: monospace;
-            padding: 20px;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             background-color: #f5f5f5;
         }
 
-        main {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 20px;
-            max-width: 100%;
-            min-height: 100vh;
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
         }
 
-        /* Left Column */
-        .column-left {
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .shop-btn {
+            background-color: #ffcccc;
+            padding: 10px 20px;
+            border: none;
+            font-size: 18px;
+            font-family: monospace;
+            cursor: pointer;
+        }
+
+        main {
+            margin-top: 10vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            gap: 40px;
+        }
+
+        .left-column {
+            flex: 1;
             display: flex;
             flex-direction: column;
         }
 
-        .column-left h2 {
-            font-size: clamp(16px, 3vw, 24px);
-            margin-bottom: 20px;
-            line-height: 1.2;
+        .releases-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
         }
 
-        .releases-list {
-            list-style: none;
-            font-size: clamp(14px, 2.5vw, 18px);
+        .release-list {
+            font-size: 20px;
             line-height: 1.6;
         }
 
-        .releases-list li {
-            margin-bottom: 15px;
-        }
-
-        /* Middle Column */
-        .column-middle {
+        .middle-column {
+            flex: 1;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+            justify-content: center;
             align-items: center;
         }
 
-        .column-middle img {
+        .middle-column img {
             max-width: 100%;
-            height: auto;
-            display: block;
+            max-height: 60vh;
+            object-fit: contain;
         }
 
-        /* Right Column */
-        .column-right {
+        .right-column {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: flex-end;
+            height: 60vh;
+        }
+
+        .right-item {
+            font-size: 24px;
+            font-weight: bold;
             text-align: right;
         }
 
-        .top-text,
-        .middle-text,
-        .bottom-text {
-            font-size: clamp(14px, 2.5vw, 20px);
+        .appointment {
+            background-color: #ff6666;
+            background: linear-gradient(to right, #ff6666 50%, #66cccc 50%);
+            padding: 10px 20px;
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        .bottom-text {
-            background-color: rgba(255, 100, 100, 0.3);
-            padding: 5px 10px;
-            border-radius: 5px;
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 20px 40px;
+            background-color: #f5f5f5;
         }
 
-        /* Responsive adjustments for very small screens */
-        @media (max-width: 600px) {
-            main {
-                gap: 10px;
-            }
+        .footer-left {
+            font-size: 20px;
+            font-weight: bold;
+        }
 
-            body {
-                padding: 10px;
-            }
+        .footer-right {
+            font-size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="logo">Ab[Screen-<br>wear]</div>
+        <button class="shop-btn">Shop</button>
+    </header>
+
     <main>
-        <!-- Left Column -->
-        <div class="column-left">
-            <h2>Ab[Releas-<br>es:</h2>
-            <ul class="releases-list">
-                <li>2:17<br>postmasters;</li>
-                <li>1:17<br>kahn;</li>
-                <li>1:16<br>marfa;</li>
-            </ul>
+        <div class="left-column">
+            <div class="releases-title">Ab[Releas-<br>es:</div>
+            <div class="release-list">
+                2:17<br>
+                postmasters;<br><br>
+                1:17<br>
+                kahn;<br><br>
+                1:16<br>
+                marfa;
+            </div>
         </div>
 
-        <!-- Middle Column -->
-        <div class="column-middle">
-            <img src="https://placeholder.co/400x500" alt="Jacket with blue and white design">
+        <div class="middle-column">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23fff'/%3E%3Cpath d='M50 100 L150 50 L250 100 L350 80 L350 320 L250 300 L150 350 L50 320 Z' fill='%2387CEEB' opacity='0.6'/%3E%3Cpath d='M100 80 L200 120 L300 90 L300 340 L200 310 L100 350 Z' fill='%235B9BD5' opacity='0.4'/%3E%3Cpath d='M150 200 L250 180 L250 300 L150 320 Z' fill='%23ADD8E6' opacity='0.5'/%3E%3Crect x='60' y='90' width='280' height='220' fill='none' stroke='%23333' stroke-width='2'/%3E%3Cline x1='200' y1='50' x2='200' y2='350' stroke='%23666' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E" alt="Abstract garment">
         </div>
 
-        <!-- Right Column -->
-        <div class="column-right">
-            <div class="top-text">ab:labs;</div>
-            <div class="middle-text">ab:fabs;<br>ab:favs;</div>
-            <div class="bottom-text">Appointment;</div>
+        <div class="right-column">
+            <div class="right-item">ab:labs;</div>
+            <div class="right-item">ab:fabs;<br>ab:favs;</div>
+            <div class="appointment">Appointment;</div>
         </div>
     </main>
+
+    <footer>
+        <div class="footer-left">About;<br>Press;</div>
+        <div class="footer-right">ab:news;</div>
+    </footer>
 </body>
 </html>
