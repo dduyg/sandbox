@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ab[Screenwear]</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #f5f5f5;
+            color: #000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .shop-btn {
+            background-color: #ffcccc;
+            padding: 10px 40px;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .left-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .releases {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 18px;
+        }
+
+        .labs {
+            margin-top: 100px;
+        }
+
+        .fabs-favs {
+            margin-top: 20px;
+        }
+
+        .appointment {
+            background-color: #ff6666;
+            padding: 10px 20px;
+            margin-bottom: 100px;
+            font-weight: bold;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 40px 0;
+        }
+
+        .about-press {
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .news {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Ab[Screen-<br>wear]</div>
+            <button class="shop-btn">Shop</button>
+        </header>
+
+        <div class="main-content">
+            <div class="left-sidebar">
+                <div class="releases">
+                    <strong>Ab[Releas-<br>es:</strong><br><br>
+                    <strong>2:17</strong><br>
+                    postmasters;<br><br>
+                    <strong>1:17</strong><br>
+                    kahn;<br><br>
+                    <strong>1:16</strong><br>
+                    marfa;
+                </div>
+            </div>
+
+            <div class="center-content">
+                <img src="jacket.jpg" alt="Blue and white jacket" class="product-image">
+            </div>
+
+            <div class="right-sidebar">
+                <div class="labs">ab:labs;</div>
+                <div class="fabs-favs">
+                    ab:fabs;<br>
+                    ab:favs;
+                </div>
+                <div class="appointment">Appointment;</div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="about-press">
+                About;<br>
+                Press;
+            </div>
+            <div class="news">ab:news;</div>
+        </footer>
+    </div>
+</body>
+</html>
