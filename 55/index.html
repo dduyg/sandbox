@@ -13,11 +13,11 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      color: #fff;
+      background-repeat: no-repeat;
     }
 
     h1 {
-      margin-bottom: 16px;
+      color: #fff;
     }
 
     .controls {
@@ -31,15 +31,11 @@
       padding: 8px;
       font-size: 16px;
       flex: 1;
-      border-radius: 6px;
-      border: none;
     }
 
     button {
       padding: 6px 10px;
       cursor: pointer;
-      border-radius: 6px;
-      border: none;
     }
 
     .tags {
@@ -50,19 +46,19 @@
     }
 
     .tag {
-      border: 1px solid rgba(255,255,255,0.4);
+      border: 1px solid #ccc;
       padding: 4px 10px;
       border-radius: 999px;
       cursor: pointer;
-      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.85);
     }
 
     .tag.active {
-      background: #fff;
-      color: #000;
+      background: black;
+      color: white;
     }
 
-    /* ===== GRID LAYOUT ===== */
+    /* GRID: 8 columns desktop, 5 columns smaller screens */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
@@ -75,55 +71,44 @@
       }
     }
 
-    /* ===== ITEM CARD ===== */
     .item {
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 12px;
+      background: rgba(255,255,255,0.85);
       position: relative;
-      border-radius: 12px;
-      padding: 18px;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s ease;
+      transition: transform 0.15s ease;
     }
 
     .item:hover {
       transform: translateY(-2px);
     }
 
-    /* SVG */
     svg {
       width: 48px;
       height: 48px;
-      fill: #ffffff;
-      transition: fill 0.2s ease;
+      fill: currentColor;
+      color: #333;
+      transition: color 0.2s ease;
     }
 
+    /* SVG hover color */
     .item:hover svg {
-      fill: #00e5ff; /* hover color */
+      color: #0070f3;
     }
 
-    /* ===== ACTION BUTTONS ===== */
+    /* Actions right-aligned */
     .actions {
-      position: absolute;
-      top: 8px;
-      right: 8px;
       display: flex;
-      flex-direction: column;
+      justify-content: flex-end;
       gap: 6px;
+      margin-top: 8px;
     }
 
     .actions button {
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-      font-size: 14px;
-      border-radius: 6px;
-      padding: 4px 6px;
-    }
-
-    .actions button:hover {
-      background: rgba(255,255,255,0.35);
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
     }
   </style>
 </head>
