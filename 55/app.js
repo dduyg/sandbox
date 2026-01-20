@@ -6,18 +6,17 @@ let favoritesOnly = false;
 const gallery = document.getElementById('gallery');
 const tagList = document.getElementById('tagList');
 const searchInput = document.getElementById('search');
+
 const FAVORITES_KEY = 'svg-favorites';
-const MAX_VISIBLE_TAGS = 20;
 
 fetch('catalog.svgs.json')
   .then(res => res.json())
   .then(data => {
     svgs = data;
     renderTags();
-    renderSvgs();
+    renderIcons();
   });
 
-// Favorites
 function getFavorites() {
   return new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]'));
 }
@@ -26,10 +25,9 @@ function toggleFavorite(id) {
   const favs = getFavorites();
   favs.has(id) ? favs.delete(id) : favs.add(id);
   localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favs]));
-  renderSvgs();
+  renderIcons();
 }
 
-// Tag matching
 function matchesTags(svg) {
   if (activeTags.size === 0) return true;
   return tagMode === 'AND'
@@ -37,8 +35,7 @@ function matchesTags(svg) {
     : [...activeTags].some(t => svg.tags.includes(t));
 }
 
-// Render SVGs
-function renderSvgs() {
+function renderIcons() {
   const search = searchInput.value.toLowerCase();
   const favs = getFavorites();
 
@@ -54,7 +51,6 @@ function renderSvgs() {
     .forEach(svg => {
       const div = document.createElement('div');
       div.className = 'item';
-
       div.innerHTML = `
         <svg viewBox="${svg.viewBox}" xmlns="http://www.w3.org/2000/svg">
           ${svg.svg}
@@ -70,72 +66,77 @@ function renderSvgs() {
     });
 }
 
-// Render Tags
 function renderTags() {
-  const tagsCount = {};
-  svgs.forEach(svg => svg.tags.forEach(t => {
-    tagsCount[t] = (tagsCount[t] || 0) + 1;
-  }));
+  const tagCounts = {};
+  svgs.forEach(svg => svg.tags.forEach(t => tagCounts[t] = (tagCounts[t] || 0) + 1));
 
-  // Sort tags by count descending
-  const sortedTags = Object.keys(tagsCount).sort((a,b)=>tagsCount[b]-tagsCount[a]);
-  let expanded = false;
+  // Sort by count descending
+  const sortedTags = Object.keys(tagCounts).sort((a,b) => tagCounts[b] - tagCounts[a]);
 
-  function render() {
-    tagList.innerHTML = '';
-    const visibleTags = expanded ? sortedTags : sortedTags.slice(0, MAX_VISIBLE_TAGS);
+  tagList.innerHTML = '';
+  const maxVisible = 20;
+  let hiddenTags = [];
 
-    visibleTags.forEach(tag => {
-      const el = document.createElement('div');
-      el.className = 'tag';
-      el.textContent = tag;
-      if (activeTags.has(tag)) el.classList.add('active');
-      el.onclick = () => {
-        activeTags.has(tag) ? activeTags.delete(tag) : activeTags.add(tag);
-        el.classList.toggle('active');
-        renderSvgs();
-      };
+  sortedTags.forEach((tag, i) => {
+    if (i < maxVisible) {
+      const el = createTagElement(tag);
       tagList.appendChild(el);
-    });
-
-    if (sortedTags.length > MAX_VISIBLE_TAGS) {
-      const toggleEl = document.createElement('div');
-      toggleEl.className = 'tag more-toggle';
-      toggleEl.textContent = expanded ? '... less' : '... more';
-      toggleEl.onclick = () => {
-        expanded = !expanded;
-        render();
-      };
-      tagList.appendChild(toggleEl);
+    } else {
+      hiddenTags.push(tag);
     }
-  }
+  });
 
-  render();
+  if (hiddenTags.length) {
+    const moreEl = document.createElement('div');
+    moreEl.className = 'tag more';
+    moreEl.textContent = '...';
+    moreEl.onclick = () => {
+      hiddenTags.forEach(tag => tagList.appendChild(createTagElement(tag)));
+      moreEl.remove();
+    };
+    tagList.appendChild(moreEl);
+  }
 }
 
-// Copy SVG
+function createTagElement(tag) {
+  const el = document.createElement('div');
+  el.className = 'tag';
+  el.textContent = tag;
+  el.onclick = () => {
+    activeTags.has(tag) ? activeTags.delete(tag) : activeTags.add(tag);
+    el.classList.toggle('active');
+    renderIcons();
+  };
+  return el;
+}
+
 function copySVG(svg) {
   const code = `<svg viewBox="${svg.viewBox}" xmlns="http://www.w3.org/2000/svg">${svg.svg}</svg>`;
   navigator.clipboard.writeText(code);
 }
 
-searchInput.addEventListener('input', renderSvgs);
+searchInput.addEventListener('input', renderIcons);
 
-document.getElementById('orBtn').onclick = () => {
+const orBtn = document.getElementById('orBtn');
+const andBtn = document.getElementById('andBtn');
+const favToggle = document.getElementById('favToggle');
+
+orBtn.onclick = () => {
   tagMode = 'OR';
-  document.getElementById('orBtn').classList.add('active');
-  document.getElementById('andBtn').classList.remove('active');
-  renderSvgs();
+  orBtn.classList.add('active');
+  andBtn.classList.remove('active');
+  renderIcons();
 };
 
-document.getElementById('andBtn').onclick = () => {
+andBtn.onclick = () => {
   tagMode = 'AND';
-  document.getElementById('andBtn').classList.add('active');
-  document.getElementById('orBtn').classList.remove('active');
-  renderSvgs();
+  andBtn.classList.add('active');
+  orBtn.classList.remove('active');
+  renderIcons();
 };
 
-document.getElementById('favToggle').onclick = () => {
+favToggle.onclick = () => {
   favoritesOnly = !favoritesOnly;
-  renderSvgs();
+  favToggle.classList.toggle('active', favoritesOnly);
+  renderIcons();
 };
