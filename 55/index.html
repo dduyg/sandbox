@@ -5,18 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SVG Catalog</title>
 <style>
-* {box-sizing: border-box;}
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
   padding: 20px;
   font-family: system-ui, sans-serif;
   background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
+  color: #111;
   min-height: 100vh;
   overflow-x: hidden;
-  color: #111;
 }
 
-h1 {margin-bottom: 16px;}
+h1 {
+  margin-bottom: 16px;
+}
 
 /* Controls */
 .controls {
@@ -53,10 +56,11 @@ h1 {margin-bottom: 16px;}
   align-items: center;
   justify-content: center;
   height: 100%;
-  transition: background 0.2s ease;
+  transition: background 0.2s;
 }
 
-.mode button.active, .mode button:hover {
+.mode button.active,
+.mode button:hover {
   background: #6C83C0;
   color: #fff;
   border-color: #6C83C0;
@@ -79,6 +83,7 @@ h1 {margin-bottom: 16px;}
   user-select: none;
   font-size: 12px;
   background: rgba(255,255,255,0.8);
+  transition: background 0.2s;
 }
 
 .tag.active {
@@ -87,24 +92,22 @@ h1 {margin-bottom: 16px;}
   border-color: #333;
 }
 
-.tag.more-toggle {
+/* "More tags" button */
+.tag.more {
   font-weight: bold;
 }
 
 /* Grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 5%;
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
-@media (max-width: 480px){
-  .grid {grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));}
-}
-
-/* Item Card */
+/* Items */
 .item {
   width: 100%;
   max-width: 120px;
@@ -118,6 +121,7 @@ h1 {margin-bottom: 16px;}
   aspect-ratio: 1 / 1;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+
 .item:hover {
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
@@ -129,6 +133,7 @@ h1 {margin-bottom: 16px;}
   fill: #fff;
   transition: fill 0.2s ease, transform 0.2s ease;
 }
+
 .item:hover svg {
   fill: #6C83C0;
   transform: scale(1.1);
@@ -145,11 +150,11 @@ h1 {margin-bottom: 16px;}
 .actions button {
   background: transparent;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
   text-shadow: 1px 1px 4px #000;
   cursor: pointer;
-  padding: 3px;
+  padding: 2px 4px;
   transition: opacity 0.2s;
 }
 
@@ -157,8 +162,15 @@ h1 {margin-bottom: 16px;}
   opacity: 0.7;
 }
 
-@media (max-width:480px){
-  .actions button {font-size: 12px; padding: 2px;}
+/* Responsive */
+@media(max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+  .item { max-width: 100px; max-height: 100px; }
+  .actions button { font-size: 12px; }
+  .mode button { font-size: 12px; padding: 0 8px; }
+  .controls input { font-size: 12px; }
 }
 </style>
 </head>
@@ -169,7 +181,7 @@ h1 {margin-bottom: 16px;}
 <div class="controls">
   <input id="search" placeholder="Search icons…" />
   <div class="mode">
-    <button id="orBtn" class="active">OR</button>
+    <button id="orBtn">OR</button>
     <button id="andBtn">AND</button>
     <button id="favToggle">☆</button>
   </div>
