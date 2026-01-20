@@ -4,154 +4,145 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SVG Catalog</title>
-
 <style>
-* { box-sizing: border-box; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: system-ui, sans-serif;
+    background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
+    color: #fff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: system-ui, sans-serif;
-  background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png")
-              center / cover no-repeat fixed;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-/* ===== Header ===== */
-h1 {
-  margin-bottom: 16px;
-}
+  h1 {
+    margin-bottom: 16px;
+  }
 
 /* ===== Controls ===== */
-.controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
-  flex-wrap: nowrap;
-}
+    .controls {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      margin-bottom: 12px;
+      width: 100%;
+      flex-wrap: nowrap;
+    }
+    .controls input {
+      flex: 1;
+      min-width: 120px;
+      max-width: 400px;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
 
-/* Search */
-.controls input {
-  height: 36px;
-  padding: 0 12px;
-  font-size: 14px;
-  width: 100%;
-  max-width: 360px;     /* <<< max width added */
-  flex: 1;
-}
+    .mode {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .mode button {
+      padding: 0 12px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Make buttons same height as input */
+    .mode button {height: 100%;}
 
-/* Mode buttons */
-.mode {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.mode button {
-  height: 36px;         /* <<< same height as input */
-  padding: 0 12px;
-  font-size: 13px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-/* ===== Tags ===== */
-.tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-
-.tag {
-  border: 1px solid #ccc;
-  padding: 4px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  user-select: none;
-  font-size: 12px;
-  background: rgba(255,255,255,0.85);
-}
-
-.tag.active {
-  background: #333;
-  color: #fff;
-  border-color: #333;
-}
-
-/* ===== Grid ===== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 16px;
-  max-width: 900px;      /* <<< grid max width */
-  margin: 0 auto;        /* <<< center grid */
-}
-
-/* Smaller item size on tiny screens */
-@media (max-width: 400px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  /* Tags */
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    max-width: 900px;
   }
-}
 
-/* ===== Item Card ===== */
-.item {
-  border: 1px solid rgba(255,255,255,0.3);
-  background: rgba(0,0,0,0.3);
-  border-radius: 8px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  aspect-ratio: 1 / 1;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
+  .tag {
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    background: rgba(255,255,255,0.8);
+    color: #111;
+  }
 
-.item:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
+  .tag.active {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+  }
 
-/* SVG */
-.item svg {
-  width: 100%;
-  height: 100%;
-  max-height: 64px;
-  fill: #fff;
-  transition: fill 0.2s ease, transform 0.2s ease;
-}
+  /* Grid */
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5%;
+    max-width: 900px;
+  }
 
-.item:hover svg {
-  fill: #00ffcc;
-  transform: scale(1.1);
-}
+  /* Item Cards */
+  .item {
+    width: 110px;
+    height: 110px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    aspect-ratio: 1 / 1;
+  }
+  .item:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  @media(max-width: 500px){
+    .item { width: 95px; height: 95px;}
+  }
 
-/* ===== Actions ===== */
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 6px;
-}
+  .item svg {
+    width: 100%;
+    height: 100%;
+    max-height: 64px;
+    fill: #fff;
+    transition: fill 0.2s ease, transform 0.2s ease;
+  }
+  .item:hover svg {
+    fill: #00ffcc;
+    transform: scale(1.1);
+  }
 
-.actions button {
-  background: transparent;
-  border: none;
-  font-size: 16px;
-  color: #fff;
-  text-shadow: 1px 1px 4px #000;
-  cursor: pointer;
-  padding: 4px;
-}
+  /* Actions */
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 15px;
+    margin-left: 20px;
+  }
 
-.actions button:hover {
-  opacity: 0.7;
-}
+  .actions button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    text-shadow: 1px 1px 4px #000;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .actions button:hover {
+    opacity: 0.7;
+  }  
 </style>
 </head>
-
 <body>
 
 <h1>SVG Catalog</h1>
