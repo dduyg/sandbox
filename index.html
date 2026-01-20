@@ -24,17 +24,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 30px;
+            padding: 20px 40px;
             background-color: #f5f5f5;
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
         }
 
         .shop-btn {
-            background-color: #ffd4d4;
+            background-color: #ffcccc;
             padding: 10px 40px;
             border: none;
             font-size: 24px;
@@ -48,19 +48,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 30px;
+            padding: 0 40px;
             gap: 40px;
         }
 
         .left-column {
             flex: 1;
-            font-size: 20px;
-            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .releases-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
         }
 
         .release-list {
-            margin-top: 40px;
-            line-height: 1.8;
+            font-size: 20px;
+            line-height: 1.6;
         }
 
         .middle-column {
@@ -83,31 +89,38 @@
             justify-content: space-between;
             align-items: flex-end;
             height: 60vh;
-            font-size: 20px;
+        }
+
+        .right-item {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: right;
         }
 
         .appointment {
-            background: linear-gradient(to right, #ff6b6b, #4ecdc4);
+            background-color: #ff6666;
+            background: linear-gradient(to right, #ff6666 50%, #66cccc 50%);
             padding: 10px 20px;
             font-size: 24px;
             font-weight: bold;
-            cursor: pointer;
         }
 
         footer {
             display: flex;
             justify-content: space-between;
-            padding: 20px 30px;
-            font-size: 20px;
+            align-items: flex-end;
+            padding: 20px 40px;
             background-color: #f5f5f5;
         }
 
         .footer-left {
-            align-self: flex-start;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .footer-right {
-            align-self: flex-end;
+            font-size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -119,7 +132,7 @@
 
     <main>
         <div class="left-column">
-            Ab[Releas-<br>es:
+            <div class="releases-title">Ab[Releas-<br>es:</div>
             <div class="release-list">
                 2:17<br>
                 postmasters;<br><br>
@@ -131,12 +144,12 @@
         </div>
 
         <div class="middle-column">
-            <img src="data:image/svg+xml,%3Csvg width='400' height='500' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='400' height='500' fill='%23e0e0e0'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23666' font-size='16' font-family='monospace'%3EJacket Image%3C/text%3E%3C/svg%3E" alt="Screenwear Jacket">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23fff'/%3E%3Cpath d='M50 100 L150 50 L250 100 L350 80 L350 320 L250 300 L150 350 L50 320 Z' fill='%2387CEEB' opacity='0.6'/%3E%3Cpath d='M100 80 L200 120 L300 90 L300 340 L200 310 L100 350 Z' fill='%235B9BD5' opacity='0.4'/%3E%3Cpath d='M150 200 L250 180 L250 300 L150 320 Z' fill='%23ADD8E6' opacity='0.5'/%3E%3Crect x='60' y='90' width='280' height='220' fill='none' stroke='%23333' stroke-width='2'/%3E%3Cline x1='200' y1='50' x2='200' y2='350' stroke='%23666' stroke-width='1' opacity='0.3'/%3E%3C/svg%3E" alt="Abstract garment">
         </div>
 
         <div class="right-column">
-            <div>ab:labs;</div>
-            <div>ab:fabs;<br>ab:favs;</div>
+            <div class="right-item">ab:labs;</div>
+            <div class="right-item">ab:fabs;<br>ab:favs;</div>
             <div class="appointment">Appointment;</div>
         </div>
     </main>
