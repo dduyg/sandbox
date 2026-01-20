@@ -1,152 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVG Catalog</title>
-<style>
-  /* Body background */
-  body {
-    font-family: system-ui, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-    background-size: cover;
-    color: #fff;
-  }
-
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #fff;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-  }
-
-  .controls {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 12px;
-    justify-content: center;
-  }
-
-  input {
-    padding: 8px;
-    font-size: 16px;
-    flex: 1;
-    min-width: 200px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-  }
-
-  button {
-    padding: 6px 10px;
-    cursor: pointer;
-    border-radius: 6px;
-    border: none;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    transition: background 0.2s;
-  }
-
-  button:hover {
-    background: rgba(0,0,0,0.8);
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .tag {
-    border: 1px solid #ccc;
-    padding: 4px 10px;
-    border-radius: 999px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
-    transition: all 0.2s;
-  }
-
-  .tag.active {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
-  }
-
-  /* Grid */
-  .grid {
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(8, 1fr);
-  }
-
-  @media (max-width: 1200px) {
-    .grid {
-      grid-template-columns: repeat(6, 1fr);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Catalog</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') center/cover no-repeat;
+      color: #fff;
     }
-  }
 
-  @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: repeat(5, 1fr);
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
     }
-  }
 
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
     }
-  }
 
-  .item {
-    background: rgba(0,0,0,0.4);
-    border-radius: 12px;
-    padding: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: background 0.2s;
-  }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      flex: 1;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
 
-  .item:hover {
-    background: rgba(0,0,0,0.7);
-  }
+    button {
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: none;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      transition: background 0.2s;
+    }
 
-  svg {
-    width: 48px;
-    height: 48px;
-    fill: #fff;
-    transition: fill 0.2s;
-  }
+    button:hover {
+      background: rgba(0,0,0,0.9);
+    }
 
-  .item:hover svg {
-    fill: #ffcc00; /* hover color */
-  }
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
 
-  .actions {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    justify-content: flex-end;
-  }
+    .tag {
+      border: 1px solid #ccc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #fff;
+      background: rgba(0,0,0,0.3);
+    }
 
-  .actions button {
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-    padding: 4px 6px;
-    font-size: 14px;
-  }
+    .tag.active {
+      background: #000;
+      color: #fff;
+      box-shadow: 0 0 4px #fff;
+    }
 
-  .actions button:hover {
-    background: #ffcc00;
-    color: #000;
-  }
-</style>
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 16px;
+    }
+
+    @media(max-width: 1200px) {
+      .grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+
+    .item {
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.2s;
+      height: 80px; /* fixed height to keep grid stable */
+    }
+
+    .item svg {
+      width: 48px;
+      height: 48px;
+      fill: #fff;
+      transition: fill 0.2s;
+      flex-shrink: 0;
+    }
+
+    .item:hover svg {
+      fill: #1e90ff; /* hover color */
+    }
+
+    .actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .actions button {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border-radius: 6px;
+      padding: 4px 6px;
+      font-size: 16px;
+    }
+
+    .actions button:hover {
+      background: rgba(30,144,255,0.8);
+      color: #fff;
+    }
+
+  </style>
 </head>
 <body>
 
