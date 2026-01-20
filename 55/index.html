@@ -1,149 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Catalog</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      padding: 20px;
-      margin: 0;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #333;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Catalog</title>
+<style>
+  /* Body background */
+  body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #fff;
+  }
 
-    h1 {
-      text-align: center;
-      color: #fff;
-      text-shadow: 1px 1px 4px #000;
-      margin-bottom: 20px;
-    }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+  }
 
-    .controls {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-      justify-content: center;
-    }
+  .controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    justify-content: center;
+  }
 
-    input {
-      padding: 8px;
-      font-size: 16px;
-      flex: 1;
-      max-width: 400px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+  input {
+    padding: 8px;
+    font-size: 16px;
+    flex: 1;
+    min-width: 200px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
 
-    button {
-      padding: 6px 12px;
-      cursor: pointer;
-      border-radius: 6px;
-      border: none;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      font-weight: bold;
-      transition: background 0.3s;
-    }
+  button {
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    transition: background 0.2s;
+  }
 
-    button:hover {
-      background: rgba(0,0,0,0.9);
-    }
+  button:hover {
+    background: rgba(0,0,0,0.8);
+  }
 
-    .tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      justify-content: center;
-    }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
 
-    .tag {
-      border: 1px solid #ccc;
-      padding: 4px 10px;
-      border-radius: 999px;
-      cursor: pointer;
-      background: rgba(255,255,255,0.8);
-      transition: all 0.2s;
-    }
+  .tag {
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    transition: all 0.2s;
+  }
 
-    .tag:hover {
-      background: rgba(255,255,255,1);
-    }
+  .tag.active {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+  }
 
-    .tag.active {
-      background: black;
-      color: white;
-      font-weight: bold;
-    }
+  /* Grid */
+  .grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(8, 1fr);
+  }
 
+  @media (max-width: 1200px) {
     .grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 16px;
-      justify-items: center;
+      grid-template-columns: repeat(6, 1fr);
     }
+  }
 
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(5, 1fr);
     }
+  }
 
-    @media (max-width: 480px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
     }
+  }
 
-    .item {
-      width: 100%;
-      max-width: 140px;
-      background: rgba(0,0,0,0.2);
-      padding: 12px;
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.2s, background 0.2s;
-    }
+  .item {
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
 
-    .item:hover {
-      transform: translateY(-4px);
-      background: rgba(0,0,0,0.5);
-    }
+  .item:hover {
+    background: rgba(0,0,0,0.7);
+  }
 
-    svg {
-      width: 48px;
-      height: 48px;
-      fill: #fff;
-      transition: fill 0.2s;
-    }
+  svg {
+    width: 48px;
+    height: 48px;
+    fill: #fff;
+    transition: fill 0.2s;
+  }
 
-    .item:hover svg {
-      fill: #00ffff; /* hover color */
-    }
+  .item:hover svg {
+    fill: #ffcc00; /* hover color */
+  }
 
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 6px;
-      margin-top: 8px;
-    }
+  .actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: flex-end;
+  }
 
-    .actions button {
-      padding: 4px 8px;
-      font-size: 14px;
-      background: rgba(255,255,255,0.2);
-    }
+  .actions button {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 4px 6px;
+    font-size: 14px;
+  }
 
-    .actions button:hover {
-      background: rgba(255,255,255,0.5);
-    }
-  </style>
+  .actions button:hover {
+    background: #ffcc00;
+    color: #000;
+  }
+</style>
 </head>
 <body>
 
@@ -163,6 +166,5 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
