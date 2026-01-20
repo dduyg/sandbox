@@ -1,143 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Catalog</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') center/cover no-repeat;
-      color: #fff;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Catalog</title>
+<style>
+body {
+  font-family: system-ui, sans-serif;
+  padding: 20px;
+  background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.6);
-    }
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
 
-    .controls {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
 
-    input {
-      padding: 8px;
-      font-size: 16px;
-      flex: 1;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+.controls-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  flex: 1;
+}
 
-    button {
-      padding: 6px 10px;
-      cursor: pointer;
-      border-radius: 6px;
-      border: none;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      transition: background 0.2s;
-    }
+.controls-left input {
+  padding: 8px;
+  font-size: 16px;
+  flex: 1;
+}
 
-    button:hover {
-      background: rgba(0,0,0,0.9);
-    }
+.controls-left .mode button {
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  transition: background 0.2s;
+}
 
-    .tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
+.controls-left .mode button:hover {
+  background: rgba(255,255,255,0.2);
+}
 
-    .tag {
-      border: 1px solid #ccc;
-      padding: 4px 10px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.2s;
-      color: #fff;
-      background: rgba(0,0,0,0.3);
-    }
+#favToggle {
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  background: rgba(255,215,0,0.8);
+  color: #000;
+  margin-left: auto;
+}
 
-    .tag.active {
-      background: #000;
-      color: #fff;
-      box-shadow: 0 0 4px #fff;
-    }
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 16px;
-    }
+.tag {
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.3);
+  transition: all 0.2s;
+}
 
-    @media(max-width: 1200px) {
-      .grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
-    }
+.tag.active {
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+}
 
-    .item {
-      background: rgba(0,0,0,0.3);
-      border-radius: 8px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background 0.2s;
-      height: 80px; /* fixed height to keep grid stable */
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 16px;
+}
 
-    .item svg {
-      width: 48px;
-      height: 48px;
-      fill: #fff;
-      transition: fill 0.2s;
-      flex-shrink: 0;
-    }
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
 
-    .item:hover svg {
-      fill: #1e90ff; /* hover color */
-    }
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
 
-    .actions {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
-    .actions button {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border-radius: 6px;
-      padding: 4px 6px;
-      font-size: 16px;
-    }
+.item {
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.3);
+  border-radius: 8px;
+  transition: transform 0.2s, background 0.2s;
+}
 
-    .actions button:hover {
-      background: rgba(30,144,255,0.8);
-      color: #fff;
-    }
+.item svg {
+  width: 48px;
+  height: 48px;
+  fill: #fff;
+  transition: fill 0.2s, transform 0.2s;
+}
 
-  </style>
+.item svg:hover {
+  fill: #00ffff;
+  transform: scale(1.2);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.actions button {
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.actions button:hover {
+  background: rgba(255,255,255,0.5);
+}
+
+.tag, button, input {
+  font-size: 14px;
+}
+</style>
 </head>
 <body>
 
 <h1>SVG Catalog</h1>
 
 <div class="controls">
-  <input id="search" placeholder="Search icons..." />
-  <div class="mode">
-    <button id="orBtn">OR</button>
-    <button id="andBtn">AND</button>
-    <button id="favToggle">⭐ Favorites</button>
+  <div class="controls-left">
+    <input id="search" placeholder="Search icons..." />
+    <div class="mode">
+      <button id="orBtn">OR</button>
+      <button id="andBtn">AND</button>
+    </div>
   </div>
+  <button id="favToggle">⭐ Favorites</button>
 </div>
 
 <div class="tags" id="tagList"></div>
