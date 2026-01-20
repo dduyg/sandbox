@@ -1,147 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Catalog</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      padding: 20px;
-      margin: 0;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Catalog</title>
+<style>
+body {
+  font-family: system-ui, sans-serif;
+  padding: 20px;
+  margin: 0;
+  background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      text-shadow: 0 0 6px rgba(0,0,0,0.6);
-    }
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-    .controls {
-      display: flex;
-      gap: 12px;
-      flex-wrap: nowrap;
-      margin-bottom: 12px;
-      align-items: center;
-    }
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
 
-    input#search {
-      padding: 8px;
-      font-size: 16px;
-      flex: 1;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+#search {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+}
 
-    .mode button,
-    #favToggle {
-      padding: 6px 12px;
-      cursor: pointer;
-      border-radius: 6px;
-      border: none;
-      background-color: rgba(0,0,0,0.5);
-      color: #fff;
-      font-weight: bold;
-      transition: 0.2s;
-    }
+.mode, #favToggle {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
 
-    .mode button:hover,
-    #favToggle:hover {
-      background-color: rgba(0,0,0,0.8);
-    }
+.mode button, #favToggle {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  cursor: pointer;
+}
 
-    .tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
+.mode button.active {
+  background: black;
+}
 
-    .tag {
-      border: 1px solid #ccc;
-      padding: 4px 10px;
-      border-radius: 999px;
-      cursor: pointer;
-      background: rgba(0,0,0,0.3);
-      color: #fff;
-      transition: 0.2s;
-    }
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
 
-    .tag.active {
-      background: black;
-      color: white;
-    }
+.tag {
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.2s;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 16px;
-    }
+.tag.active {
+  background: #000;
+  color: #fff;
+}
 
-    @media(max-width: 1200px) {
-      .grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 16px;
+}
 
-    @media(max-width: 800px) {
-      .grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+@media(max-width: 1200px) {
+  .grid { grid-template-columns: repeat(5, 1fr); }
+}
 
-    @media(max-width: 500px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+.item {
+  background: rgba(0,0,0,0.5);
+  padding: 12px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.2s, transform 0.2s;
+}
 
-    .item {
-      border-radius: 8px;
-      padding: 12px;
-      background: rgba(0,0,0,0.3);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: 0.3s;
-    }
+.item svg {
+  width: 48px;
+  height: 48px;
+  fill: currentColor;
+  transition: fill 0.2s;
+}
 
-    .item svg {
-      width: 48px;
-      height: 48px;
-      fill: currentColor;
-      transition: fill 0.3s;
-      flex-shrink: 0;
-    }
+.item:hover svg {
+  fill: #ffcc00; /* hover color */
+}
 
-    .item:hover svg {
-      fill: #00ffff; /* hover color */
-    }
+.actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
 
-    .actions {
-      display: flex;
-      gap: 6px;
-    }
+.actions button {
+  border: none;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-    .actions button {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border: none;
-      padding: 4px 6px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.2s;
-    }
+.actions button:hover {
+  background: rgba(255,255,255,0.5);
+}
 
-    .actions button:hover {
-      background: rgba(255,255,255,0.3);
-    }
-
-  </style>
+</style>
 </head>
 <body>
 
@@ -150,7 +137,7 @@
 <div class="controls">
   <input id="search" placeholder="Search icons..." />
   <div class="mode">
-    <button id="orBtn">OR</button>
+    <button id="orBtn" class="active">OR</button>
     <button id="andBtn">AND</button>
   </div>
   <button id="favToggle">⭐ Favorites</button>
@@ -161,6 +148,5 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
