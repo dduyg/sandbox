@@ -64,7 +64,7 @@ function renderIcons() {
           <button onclick="toggleFavorite('${icon.id}')">
             ${favs.has(icon.id) ? '★' : '☆'}
           </button>
-          <button onclick='copySVG(${JSON.stringify(icon)})'>Copy</button>
+          <button onclick='copySVG(${JSON.stringify(icon)})'><b>⿻</b></button>
         </div>
       `
       gallery.appendChild(div)
