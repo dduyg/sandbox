@@ -1,172 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVG Catalog</title>
-<style>
-body {
-  font-family: system-ui, sans-serif;
-  padding: 20px;
-  background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG Catalog</title>
+  <style>
+    /* Body and background */
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-}
+    h1 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
 
-.controls-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: nowrap;
-  flex: 1;
-}
+    .search-and-mode {
+      display: flex;
+      gap: 8px;
+      flex: 1;
+      min-width: 300px;
+      flex-wrap: nowrap;
+    }
 
-.controls-left input {
-  padding: 8px;
-  font-size: 16px;
-  flex: 1;
-}
+    input#search {
+      padding: 8px;
+      font-size: 16px;
+      flex: 1;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
 
-.controls-left .mode button {
-  padding: 6px 12px;
-  cursor: pointer;
-  border-radius: 6px;
-  border: none;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  transition: background 0.2s;
-}
+    .mode button,
+    #favToggle {
+      padding: 6px 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      border: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
 
-.controls-left .mode button:hover {
-  background: rgba(255,255,255,0.2);
-}
+    .mode button:hover,
+    #favToggle:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
 
-#favToggle {
-  padding: 6px 12px;
-  cursor: pointer;
-  border-radius: 6px;
-  border: none;
-  background: rgba(255,215,0,0.8);
-  color: #000;
-  margin-left: auto;
-}
+    /* Tags */
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
 
-.tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
+    .tag {
+      border: 1px solid #ccc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.3);
+      transition: 0.2s;
+    }
 
-.tag {
-  border: 1px solid #ccc;
-  padding: 4px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  background: rgba(0,0,0,0.3);
-  transition: all 0.2s;
-}
+    .tag.active {
+      background: black;
+      color: white;
+    }
 
-.tag.active {
-  background: rgba(0,0,0,0.8);
-  color: #fff;
-}
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 16px;
+    }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 16px;
-}
+    @media (max-width: 1200px) {
+      .grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
 
-@media (max-width: 1200px) {
-  .grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
+    @media (max-width: 800px) {
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
+    @media (max-width: 500px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
 
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+    .item {
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
 
-.item {
-  border: 1px solid rgba(255,255,255,0.3);
-  padding: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(0,0,0,0.3);
-  border-radius: 8px;
-  transition: transform 0.2s, background 0.2s;
-}
+    .item svg {
+      width: 48px;
+      height: 48px;
+      fill: white;
+      transition: 0.3s;
+      flex-shrink: 0;
+    }
 
-.item svg {
-  width: 48px;
-  height: 48px;
-  fill: #fff;
-  transition: fill 0.2s, transform 0.2s;
-}
+    .item:hover svg {
+      fill: #ffcc00; /* hover color */
+    }
 
-.item svg:hover {
-  fill: #00ffff;
-  transform: scale(1.2);
-}
+    .actions {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+    }
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-end;
-}
+    .actions button {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 4px 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
 
-.actions button {
-  padding: 4px 8px;
-  cursor: pointer;
-  border-radius: 4px;
-  border: none;
-  background: rgba(255,255,255,0.2);
-  color: #fff;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-
-.actions button:hover {
-  background: rgba(255,255,255,0.5);
-}
-
-.tag, button, input {
-  font-size: 14px;
-}
-</style>
+    .actions button:hover {
+      background: rgba(255,255,255,0.5);
+    }
+  </style>
 </head>
 <body>
 
 <h1>SVG Catalog</h1>
 
 <div class="controls">
-  <div class="controls-left">
+  <div class="search-and-mode">
     <input id="search" placeholder="Search icons..." />
     <div class="mode">
       <button id="orBtn">OR</button>
@@ -181,5 +174,6 @@ h1 {
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
