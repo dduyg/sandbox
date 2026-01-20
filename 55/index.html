@@ -6,7 +6,6 @@
   <title>SVG Catalog</title>
   <style>
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       padding: 20px;
@@ -22,7 +21,6 @@
 
     h1 {
       margin-bottom: 16px;
-      text-align: center;
     }
 
     /* ===== Controls ===== */
@@ -42,8 +40,6 @@
       max-width: 400px;
       padding: 8px 10px;
       font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
     }
 
     .mode {
@@ -57,14 +53,10 @@
       padding: 0 12px;
       font-size: 14px;
       cursor: pointer;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     .mode button:hover {
       background: #eee;
     }
@@ -101,13 +93,13 @@
       width: 100%;
       max-width: 900px;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      justify-items: center;
     }
 
     /* ===== Item Card ===== */
     .item {
       width: 100%;
-      max-width: 140px;
+      max-width: 120px;
+      max-width: 120px;
       background: rgba(0,0,0,0.3);
       border: 1px solid rgba(255,255,255,0.3);
       border-radius: 8px;
@@ -118,7 +110,6 @@
       aspect-ratio: 1 / 1;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-
     .item:hover {
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
@@ -130,7 +121,6 @@
       fill: #fff;
       transition: fill 0.2s ease, transform 0.2s ease;
     }
-
     .item:hover svg {
       fill: #00ffcc;
       transform: scale(1.1);
@@ -141,7 +131,7 @@
       display: flex;
       justify-content: flex-end;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .actions button {
@@ -153,29 +143,19 @@
       cursor: pointer;
       padding: 4px;
     }
-
     .actions button:hover {
       opacity: 0.7;
     }
 
     /* ===== Responsive adjustments ===== */
     @media(max-width: 480px) {
-      .controls input {
-        max-width: 200px;
-      }
-
-      .mode button {
-        font-size: 12px;
-        padding: 0 8px;
-      }
-
       .grid {
         gap: 12px;
         grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
       }
-
       .item {
         max-width: 100px;
+        max-height: 100px;
       }
     }
   </style>
