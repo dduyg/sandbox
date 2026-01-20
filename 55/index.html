@@ -1,152 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Catalog</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Catalog</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+    background-size: cover;
+    color: #333;
+  }
 
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      padding: 20px;
-      min-height: 100vh;
-      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      color: #fff;
-    }
+  h1 {
+    text-align: center;
+    color: #E7DADA;
+    margin-bottom: 20px;
+  }
 
-    h1 {
-      margin-top: 0;
-      margin-bottom: 16px;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
 
-    /* ---------- Controls ---------- */
-    .controls {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 12px;
-    }
+  input {
+    padding: 8px;
+    font-size: 16px;
+    flex: 1;
+    min-width: 200px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
 
-    input {
-      padding: 10px 12px;
-      font-size: 16px;
-      flex: 1;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-    }
+  button {
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background-color: #E7DADA;
+    color: #333;
+    font-weight: bold;
+    transition: background 0.2s;
+  }
 
-    .mode button {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      background: rgba(255,255,255,0.85);
-    }
+  button:hover {
+    background-color: #d2c1c1;
+  }
 
-    .mode button:hover {
-      background: white;
-    }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
 
-    /* ---------- Tags ---------- */
-    .tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
+  .tag {
+    border: 1px solid #ccc;
+    padding: 4px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    background: rgba(255,255,255,0.8);
+    transition: all 0.2s;
+  }
 
-    .tag {
-      padding: 6px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 14px;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(6px);
-    }
+  .tag.active {
+    background: #E7DADA;
+    color: black;
+    border-color: #E7DADA;
+  }
 
-    .tag.active {
-      background: white;
-      color: black;
-    }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 16px;
+    justify-items: center;
+  }
+  @media (max-width: 700px) {
+    .grid {grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));}
+  }
 
-    /* ---------- Grid ---------- */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
-      gap: 16px;
-      width: 100%;
-    }
+  .item {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100px; /* fixed height to prevent grid jump */
+    width: 100%;
+    box-sizing: border-box;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
 
-    /* Auto-fit on very small screens */
-    @media (max-width: 700px) {
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      }
-    }
+  .item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  }
 
-    /* ---------- Item Card ---------- */
-    .item {
-      position: relative;
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 110px;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
+  svg {
+    width: 48px;
+    height: 48px;
+    fill: #333;
+    transition: fill 0.2s;
+    margin-bottom: 6px;
+  }
 
-    .item:hover {
-      transform: translateY(-2px);
-      background: rgba(0,0,0,0.6);
-    }
+  .item:hover svg {
+    fill: #E7DADA;
+  }
 
-    /* ---------- SVG ---------- */
-    .item svg {
-      width: 48px;
-      height: 48px;
-      fill: #eaeaea;
-      transition: fill 0.2s ease;
-    }
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+  }
 
-    .item:hover svg {
-      fill: #4fd1ff; /* hover color */
-    }
+  .actions button {
+    padding: 4px 6px;
+    font-size: 14px;
+  }
 
-    /* ---------- Actions ---------- */
-    .actions {
-      position: absolute;
-      top: 6px;
-      right: 6px;
-      display: flex;
-      gap: 6px;
-    }
-
-    .actions button {
-      background: rgba(255,255,255,0.85);
-      border: none;
-      border-radius: 8px;
-      padding: 4px 6px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .actions button:hover {
-      background: white;
-    }
-  </style>
+</style>
 </head>
 <body>
 
@@ -162,7 +143,6 @@
 </div>
 
 <div class="tags" id="tagList"></div>
-
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
