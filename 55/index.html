@@ -1,164 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Catalog</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: system-ui, sans-serif;
-      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
-      color: #111;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVG Catalog</title>
+<style>
+* { box-sizing: border-box; }
 
-    h1 { margin-bottom: 14px; }
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: system-ui, sans-serif;
+  background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png")
+              center / cover no-repeat fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-    /* ===== Controls ===== */
-    .controls {
-      display: flex;
-      align-items: stretch;
-      gap: 8px;
-      margin-bottom: 12px;
-      max-width: 900px;
-    }
+/* ===== Header ===== */
+h1 { margin-bottom: 16px; }
 
-    .controls input {
-      flex: 1;
-      min-width: 120px;
-      max-width: 420px;
-      padding: 8px 10px;
-      font-size: 14px;
-      border: 1px solid #777;
-    }
+/* ===== Controls ===== */
+.controls {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 12px;
+}
 
-    .mode {
-      display: flex;
-      gap: 6px;
-      flex-shrink: 0;
-    }
+.controls input {
+  flex: 1;
+  min-width: 120px;
+  max-width: 400px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #767676;
+}
 
-    .mode button {
-      padding: 0 12px;
-      font-size: 13px;
-      border: 1px solid #777;
-      background: #eee;
-      cursor: pointer;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+/* Mode buttons */
+.mode {
+  display: flex;
+  gap: 6px;
+}
 
-    /* ===== Tags ===== */
-    .tags {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-      max-width: 900px;
-    }
+.mode button {
+  padding: 0 12px;
+  font-size: 13px;
+  border: 1px solid #767676;
+  background: #efefef;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
 
-    .tag {
-      border: 1px solid #ccc;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: rgba(255,255,255,0.85);
-      cursor: pointer;
-      user-select: none;
-    }
+.mode button:hover {
+  background: #dcdcdc;
+}
 
-    .tag.active {
-      background: #333;
-      color: #fff;
-      border-color: #333;
-    }
+.mode button.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
 
-    /* ===== Grid ===== */
-    .grid {
-      display: grid;
-      gap: 14px;
-      max-width: 900px;
-      width: 100%;
-      margin-top: 8px;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    }
+/* ===== Tags ===== */
+.tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+  max-width: 900px;
+}
 
-    /* ===== Item ===== */
-    .item {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 8px;
-      padding: 12px;
-      aspect-ratio: 1 / 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: box-shadow 0.15s ease;
-    }
+.tag {
+  border: 1px solid #ccc;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  background: rgba(255,255,255,0.85);
+  cursor: pointer;
+  user-select: none;
+}
 
-    .item:hover {
-      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
-    }
+.tag.active {
+  background: #333;
+  color: #fff;
+  border-color: #333;
+}
 
-    .item svg {
-      width: 100%;
-      height: 100%;
-      max-height: 64px;
-      fill: #fff;
-      transition: fill 0.2s ease, transform 0.2s ease;
-    }
+.tag.more {
+  font-weight: bold;
+  background: rgba(0,0,0,0.1);
+}
 
-    .item:hover svg {
-      fill: #6C83C0;
-      transform: scale(1.08);
-    }
+/* ===== Grid ===== */
+.grid {
+  display: grid;
+  gap: 5%;
+  max-width: 900px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
 
-    /* ===== Actions ===== */
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-      margin-top: 6px;
-    }
+/* ===== Item ===== */
+.item {
+  max-width: 120px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1 / 1;
+  transition: box-shadow 0.15s ease;
+}
 
-    .actions button {
-      background: transparent;
-      border: none;
-      font-size: 15px;
-      color: #fff;
-      cursor: pointer;
-      padding: 2px;
-      text-shadow: 1px 1px 4px #000;
-    }
+.item:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
 
-    .actions button:hover { opacity: 0.7; }
+.item svg {
+  max-height: 64px;
+  width: 100%;
+  fill: #fff;
+  transition: fill 0.2s, transform 0.2s;
+}
 
-    /* ===== Small Screens ===== */
-    @media (max-width: 480px) {
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-      }
+.item:hover svg {
+  fill: #6C83C0;
+  transform: scale(1.1);
+}
 
-      .actions button {
-        font-size: 12px;
-      }
-    }
-  </style>
+/* ===== Actions ===== */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.actions button {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  padding: 2px;
+}
+
+/* Smaller buttons on mobile */
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+  .item {
+    max-width: 100px;
+    padding: 10px;
+  }
+  .actions button {
+    font-size: 12px;
+  }
+}
+</style>
 </head>
 <body>
 
 <h1>SVG Catalog</h1>
 
 <div class="controls">
-  <input id="search" placeholder="Search SVGs…" />
+  <input id="search" placeholder="Search icons…" />
   <div class="mode">
-    <button id="orBtn">OR</button>
+    <button id="orBtn" class="active">OR</button>
     <button id="andBtn">AND</button>
     <button id="favToggle">☆</button>
   </div>
