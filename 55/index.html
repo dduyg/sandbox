@@ -4,118 +4,150 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
-
   <style>
+    :root {
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(0, 0, 0, 0.08);
+      --hover-color: #4f46e5;
+    }
+
+    * {box-sizing: border-box;}
     body {
       font-family: system-ui, sans-serif;
       padding: 20px;
       margin: 0;
+      min-height: 100vh;
       background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
       background-size: cover;
       background-position: center;
-      background-repeat: no-repeat;
-      min-height: 100vh;
+      background-attachment: fixed;
       overflow-x: hidden;
     }
 
     h1 {
-      color: #fff;
+      margin-bottom: 16px;
     }
 
     .controls {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     input {
-      padding: 8px;
-      font-size: 16px;
+      padding: 10px 12px;
+      font-size: 15px;
       flex: 1;
+      border-radius: 8px;
+      border: 1px solid #ccc;
     }
 
     button {
-      padding: 6px 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background: white;
       cursor: pointer;
+    }
+
+    button:hover {
+      background: #f0f0f0;
     }
 
     .tags {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .tag {
-      border: 1px solid #ccc;
-      padding: 4px 10px;
+      padding: 6px 12px;
       border-radius: 999px;
+      border: 1px solid #ccc;
+      background: white;
       cursor: pointer;
-      background: rgba(255,255,255,0.85);
+      font-size: 14px;
     }
 
     .tag.active {
       background: black;
       color: white;
+      border-color: black;
     }
 
-    /* ===== GRID ===== */
-
+    /* GRID */
     .grid {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-columns: repeat(8, minmax(0, 1fr));
       gap: 16px;
+      max-width: 100%;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 1200px) {
       .grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
       }
     }
 
-    /* ===== ITEM CARD ===== */
+    @media (max-width: 700px) {
+      .grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+    }
 
+    /* ITEM CARD */
     .item {
-      border: 1px solid rgba(255,255,255,0.4);
-      padding: 14px;
-      background: rgba(255,255,255,0.9);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
+      gap: 10px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    /* SVG */
+    .icon {
+      display: flex;
+      justify-content: center;
       align-items: center;
-      position: relative;
+      flex: 1;
+      color: #111;
+      transition: color 0.2s ease;
+    }
+
+    .item:hover .icon {
+      color: var(--hover-color);
     }
 
     svg {
-      width: 48px;
-      height: 48px;
-      fill: #111;
-      transition: fill 0.2s ease;
+      width: 42px;
+      height: 42px;
+      fill: currentColor;
     }
 
-    .item:hover svg {
-      fill: #0070f3;
-    }
-
-    /* ===== ACTIONS ===== */
-
+    /* ACTIONS */
     .actions {
-      width: 100%;
       display: flex;
       justify-content: flex-end;
       gap: 6px;
-      margin-top: 10px;
     }
 
     .actions button {
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
+      padding: 6px 8px;
+      font-size: 14px;
+      border-radius: 6px;
     }
   </style>
 </head>
-
 <body>
 
 <h1>SVG Catalog</h1>
