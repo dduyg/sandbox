@@ -73,25 +73,30 @@
       border-color: #333;
     }
 
-    /* ===== Grid ===== */
+    /* ===== Grid ===== */ 
     .grid {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
       gap: 16px;
-      width: 100%;
+      grid-template-columns: repeat(7, 1fr);
     }
 
-    @media (max-width: 1200px) {
+    @media(max-width:600px){
       .grid {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media(max-width:400px){
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     /* ===== Item Card ===== */
     .item {
-      border: 1px solid #ddd;
-      background: rgba(255,255,255,0.92);
-      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.3);
+      border-radius: 8px;
       padding: 14px;
       display: flex;
       flex-direction: column;
@@ -100,7 +105,6 @@
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
     .item:hover {
-      transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
@@ -113,7 +117,8 @@
     }
 
     .item:hover svg {
-      fill: #6a5cff; /* hover color */
+      fill: #00ffcc;
+      transform: scale(1.1);
     }
 
     /* ===== Actions ===== */
