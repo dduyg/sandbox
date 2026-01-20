@@ -4,40 +4,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
+
   <style>
-    * {box-sizing: border-box;}
+    /* ===== Base ===== */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 20px;
       font-family: system-ui, sans-serif;
-      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
-      background-size: cover;
-      min-height: 100vh;
+      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png")
+        center / cover no-repeat fixed;
+      color: #111;
       overflow-x: hidden;
     }
 
     h1 {
-      color: #fff;
-      text-shadow: 1px 1px 4px #000;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
+    /* ===== Controls ===== */
     .controls {
       display: flex;
       align-items: center;
       gap: 8px;
+      margin-bottom: 12px;
       width: 100%;
-      max-width: 100%;
-      margin-bottom: 14px;
+      flex-wrap: nowrap;
     }
 
     .controls input {
-      flex: 1 1 auto;
       min-width: 0;
+      flex: 1;
       padding: 8px 10px;
       font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
     }
 
     .mode {
@@ -49,9 +51,6 @@
     .mode button {
       padding: 6px 10px;
       font-size: 13px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: rgba(255,255,255,0.9);
       cursor: pointer;
       white-space: nowrap;
     }
@@ -59,91 +58,98 @@
     /* ===== Tags ===== */
     .tags {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 18px;
     }
 
     .tag {
-      padding: 4px 10px;
-      font-size: 12px;
-      border-radius: 999px;
       border: 1px solid #ccc;
-      background: rgba(255,255,255,0.8);
+      padding: 4px 10px;
+      border-radius: 999px;
       cursor: pointer;
-      user-select: none;
+      font-size: 13px;
+      background: rgba(255,255,255,0.8);
     }
 
     .tag.active {
-      background: #333;
+      background: #000;
       color: #fff;
-      border-color: #333;
+      border-color: #000;
     }
 
     /* ===== Grid ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
-      gap: 14px;
+      gap: 16px;
       width: 100%;
-      max-width: 100%;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 1200px) {
       .grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
       }
     }
 
+    /* ===== Item Card ===== */
     .item {
-      border: 1px solid #ddd;
-      background: rgba(255,255,255,0.92);
+      position: relative;
       border-radius: 12px;
-      padding: 14px;
+      padding: 18px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(6px);
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      aspect-ratio: 1 / 1;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
+
     .item:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
     }
 
+    /* ===== SVG ===== */
     .item svg {
-      width: 100%;
-      height: 100%;
-      max-height: 64px;
-      fill: #222;
+      width: 48px;
+      height: 48px;
+      fill: #444;
       transition: fill 0.2s ease;
     }
 
     .item:hover svg {
-      fill: #6a5cff; /* hover color */
+      fill: #0066ff;
     }
 
     /* ===== Actions ===== */
     .actions {
+      position: absolute;
+      top: 8px;
+      right: 8px;
       display: flex;
-      justify-content: flex-end;
+      flex-direction: column;
       gap: 6px;
-      margin-top: 8px;
     }
 
     .actions button {
-      background: transparent;
       border: none;
-      font-size: 16px;
+      background: rgba(255,255,255,0.9);
       cursor: pointer;
-      padding: 4px;
+      padding: 4px 6px;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 1;
     }
 
     .actions button:hover {
-      opacity: 0.7;
+      background: #000;
+      color: #fff;
     }
   </style>
 </head>
+
 <body>
 
 <h1>SVG Catalog</h1>
@@ -162,6 +168,5 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
