@@ -4,20 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVG Catalog</title>
-
   <style>
-    /* ===== Base ===== */
-    * {
-      box-sizing: border-box;
-    }
-
+    * {box-sizing: border-box;}
     body {
       margin: 0;
       padding: 20px;
       font-family: system-ui, sans-serif;
-      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png")
-        center / cover no-repeat fixed;
+      background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
       color: #111;
+      min-height: 100vh;
       overflow-x: hidden;
     }
 
@@ -25,7 +20,6 @@
       margin-bottom: 16px;
     }
 
-    /* ===== Controls ===== */
     .controls {
       display: flex;
       align-items: center;
@@ -58,7 +52,7 @@
     /* ===== Tags ===== */
     .tags {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
       margin-bottom: 18px;
     }
@@ -68,14 +62,15 @@
       padding: 4px 10px;
       border-radius: 999px;
       cursor: pointer;
-      font-size: 13px;
+      user-select: none;
+      font-size: 12px;
       background: rgba(255,255,255,0.8);
     }
 
     .tag.active {
-      background: #000;
+      background: #333;
       color: #fff;
-      border-color: #000;
+      border-color: #333;
     }
 
     /* ===== Grid ===== */
