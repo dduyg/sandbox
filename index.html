@@ -23,7 +23,7 @@
             justify-content: space-between;    
             padding: 20px;   
         }
-        h2, h3 {color: #87fffb;}
+        .badge {font-size: 1.4em;}
         a {
             display: inline-block;
             text-decoration: none;
@@ -31,11 +31,12 @@
             transition: transform 0.3s ease;
         }
         a:hover {transform: scale(1.1);}
-        code {
+        a.code {
             background-color: #000;
             color: #FFD700;
             padding: 3px 5px;
             border-radius: 3px;
+            font-size: 0.9em;
         }
 
         main {
@@ -51,7 +52,10 @@
             flex-direction: column;
             min-width: 0;
         }
-        .releases h2 {margin: 40px 0 10px;}
+        .releases h2 {
+            margin: 40px 0 10px;
+            color: #87fffb;
+        }
         .list-item {
             margin-left: 40px;
             margin-bottom: 15px;
@@ -99,8 +103,8 @@
 </head>
 <body>
     <header>
-        <h1>Dy[person_<br>online]</h1>
-        <h4>🀢🀣🀦🀤</h4>
+        <h2>Dy[person_<br>online]</h2>
+        <div class="badge">🀢🀣🀦🀤</div>
     </header>
    
     <main>
@@ -116,7 +120,7 @@
         <div class="main-right">
             <a href="#">ab:labs;</a>
             <div>ab:fabs;<br>ab:davs;</div>
-            <a href="#"><code>&gt; svg.catalog;</code></a>
+            <a href="#" class="code">&gt; svg.catalog;</a>
         </div>
     </main>
 
