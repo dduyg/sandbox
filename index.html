@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LiminalLoop</title>
+    <title>Ab[Screenwear]</title>
     <style>
         * {
             margin: 0;
@@ -24,52 +24,47 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 20px 30px;
             background-color: #f5f5f5;
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
         }
 
         .shop-btn {
-            background-color: #ffcccc;
+            background-color: #ffd4d4;
             padding: 10px 40px;
             border: none;
             font-size: 24px;
             font-weight: bold;
-            cursor: pointer;
             font-family: monospace;
+            cursor: pointer;
         }
 
         main {
             flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 40px;
-            padding: 40px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
+            padding: 0 30px;
+            gap: 40px;
         }
 
         .left-column {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .releases-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            flex: 1;
+            font-size: 20px;
+            line-height: 1.4;
         }
 
         .release-list {
-            font-size: 18px;
+            margin-top: 40px;
             line-height: 1.8;
         }
 
         .middle-column {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,58 +72,42 @@
 
         .middle-column img {
             max-width: 100%;
-            height: auto;
+            max-height: 60vh;
+            object-fit: contain;
         }
 
         .right-column {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100%;
             align-items: flex-end;
-            padding: 20px 0;
-        }
-
-        .right-item {
+            height: 60vh;
             font-size: 20px;
-            font-weight: bold;
-            text-align: right;
-        }
-
-        .labs {
-            margin-top: 20px;
-        }
-
-        .fabs-favs {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
         }
 
         .appointment {
-            background-color: #ff6666;
-            color: white;
+            background: linear-gradient(to right, #ff6b6b, #4ecdc4);
             padding: 10px 20px;
-            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         footer {
-            padding: 20px 40px;
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            padding: 20px 30px;
+            font-size: 20px;
             background-color: #f5f5f5;
         }
 
         .footer-left {
-            font-size: 18px;
-            font-weight: bold;
+            align-self: flex-start;
         }
 
         .footer-right {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: right;
+            align-self: flex-end;
         }
     </style>
 </head>
@@ -140,30 +119,25 @@
 
     <main>
         <div class="left-column">
-            <div class="releases-title">Ab[Releas-<br>es:</div>
+            Ab[Releas-<br>es:
             <div class="release-list">
                 2:17<br>
-                postmasters;<br>
-                <br>
+                postmasters;<br><br>
                 1:17<br>
-                kahn;<br>
-                <br>
+                kahn;<br><br>
                 1:16<br>
                 marfa;
             </div>
         </div>
 
         <div class="middle-column">
-            <img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/waiting-around.png" alt="🪩">
+            <img src="data:image/svg+xml,%3Csvg width='400' height='500' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='400' height='500' fill='%23e0e0e0'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23666' font-size='16' font-family='monospace'%3EJacket Image%3C/text%3E%3C/svg%3E" alt="Screenwear Jacket">
         </div>
 
         <div class="right-column">
-            <div class="right-item labs">ab:labs;</div>
-            <div class="fabs-favs">
-                <div class="right-item">ab:fabs;</div>
-                <div class="right-item">ab:favs;</div>
-            </div>
-            <div class="right-item appointment">Appointment;</div>
+            <div>ab:labs;</div>
+            <div>ab:fabs;<br>ab:favs;</div>
+            <div class="appointment">Appointment;</div>
         </div>
     </main>
 
