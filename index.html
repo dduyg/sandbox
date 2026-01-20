@@ -93,19 +93,20 @@
             cursor: pointer;
         }
 
-        .about-press {
-            position: fixed;
-            bottom: 100px;
-            left: 30px;
+       
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 20px 30px;
+        }
+        .footer-left {
             font-size: 20px;
             font-weight: bold;
             line-height: 1.6;
+            margin-bottom: 70px;
         }
-
-        .news {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
+        .footer-right {
             font-size: 20px;
             font-weight: bold;
         }
@@ -140,11 +141,9 @@
 
     <div class="appointment">Appointment;</div>
 
-    <div class="about-press">
-        About;<br>
-        Press;
-    </div>
-
-    <div class="news">ab:news;</div>
+    <footer>
+        <div class="footer-left">About;<br>Press;</div>
+        <div class="footer-right">ab:news;</div>
+    </footer>
 </body>
 </html>
