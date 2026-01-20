@@ -1,173 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SVG Catalog</title>
-<style>
-  /* Body & Background */
-  body {
-    font-family: system-ui, sans-serif;
-    padding: 20px;
-    margin: 0;
-    background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') center/cover no-repeat;
-    color: #fff;
-  }
-
-  h1 {
-    margin-bottom: 16px;
-    text-align: center;
-    text-shadow: 0 0 8px rgba(0,0,0,0.7);
-  }
-
-  /* Controls */
-  .controls {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 8px;
-    margin-bottom: 12px;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    overflow-x: auto;
-  }
-
-  .controls input {
-    padding: 6px 10px;
-    font-size: 14px;
-    flex: 1;
-    min-width: 120px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-
-  .controls .mode button {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: rgba(0,0,0,0.6);
-    color: #fff;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .controls .mode button:hover {
-    background: rgba(255,255,255,0.2);
-  }
-
-  /* Tags */
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 20px;
-    justify-content: center;
-  }
-
-  .tag {
-    border: 1px solid #ccc;
-    padding: 4px 10px;
-    border-radius: 999px;
-    cursor: pointer;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
-    font-size: 12px;
-  }
-
-  .tag.active {
-    background: #fff;
-    color: #000;
-  }
-
-  /* Grid Layout */
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 16px;
-    justify-items: center;
-  }
-
-  @media (max-width: 1200px) {
-    .grid {
-      grid-template-columns: repeat(6, 1fr);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SVG Catalog</title>
+  <style>
+    /* Body and background */
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+      margin: 0;
+      background: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
     }
-  }
 
-  @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: repeat(5, 1fr);
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 0 0 6px #000;
     }
-  }
 
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: repeat(4, 1fr);
+    /* Controls row */
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+      overflow: hidden;
     }
-  }
 
-  @media (max-width: 400px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
+    .controls input {
+      padding: 8px;
+      font-size: 16px;
+      flex: 1 1 auto;
+      min-width: 120px;
     }
-  }
 
-  /* Item Cards */
-  .item {
-    width: 100%;
-    padding: 12px;
-    border-radius: 12px;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    box-sizing: border-box;
-    transition: transform 0.2s, background 0.2s;
-  }
+    .controls button {
+      padding: 6px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      border-radius: 6px;
+      border: none;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      transition: background 0.2s;
+    }
 
-  .item svg {
-    width: 48px;
-    height: 48px;
-    fill: #fff;
-    transition: fill 0.2s, transform 0.2s;
-  }
+    .controls button:hover {
+      background: rgba(255,255,255,0.2);
+    }
 
-  .item:hover svg {
-    fill: #ffcc00; /* hover color */
-    transform: scale(1.2);
-  }
+    /* Tags row */
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
 
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 6px;
-    margin-top: auto;
-    width: 100%;
-  }
+    .tag {
+      border: 1px solid #ccc;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      transition: all 0.2s;
+    }
 
-  .actions button {
-    border: none;
-    background: rgba(255,255,255,0.2);
-    color: #fff;
-    padding: 4px 6px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-  }
+    .tag.active {
+      background: #000;
+      color: #fff;
+    }
 
-  .actions button:hover {
-    background: rgba(255,255,255,0.6);
-    color: #000;
-  }
+    /* Grid */
+    .grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(7, 1fr);
+    }
 
-  /* Ensure filtering does not collapse grid */
-  .grid:empty::before {
-    content: "No icons found";
-    color: #fff;
-    grid-column: 1 / -1;
-    text-align: center;
-    font-size: 18px;
-  }
-</style>
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: repeat(5, 1fr); }
+    }
+
+    @media (max-width: 400px) {
+      .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Item card */
+    .item {
+      background: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .item svg {
+      width: 48px;
+      height: 48px;
+      fill: #fff;
+      transition: fill 0.3s, transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .item:hover svg {
+      fill: #1abc9c;
+      transform: scale(1.2);
+    }
+
+    /* Actions (right aligned) */
+    .actions {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .actions button {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 4px 6px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s;
+    }
+
+    .actions button:hover {
+      background: rgba(255,255,255,0.4);
+    }
+
+    /* Grid stability placeholder */
+    .item::after {
+      content: '';
+      display: block;
+      height: 0;
+      visibility: hidden;
+    }
+  </style>
 </head>
 <body>
 
@@ -175,14 +156,13 @@
 
 <div class="controls">
   <input id="search" placeholder="Search icons..." />
-  <div class="mode">
-    <button id="orBtn">OR</button>
-    <button id="andBtn">AND</button>
-    <button id="favToggle">⭐ Favorites</button>
-  </div>
+  <button id="orBtn">OR</button>
+  <button id="andBtn">AND</button>
+  <button id="favToggle">⭐ Favorites</button>
 </div>
 
 <div class="tags" id="tagList"></div>
+
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
