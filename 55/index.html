@@ -1,153 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SVG Catalog</title>
 <style>
-* { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: system-ui, sans-serif;
-  background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
-  color: #111;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-h1 {
-  margin-bottom: 16px;
-}
-
-/* ===== Controls ===== */
-.controls {
-  display: flex;
-  align-items: stretch; /* make all children same height */
-  gap: 8px;
-  margin-bottom: 12px;
-  width: 100%;
-  flex-wrap: nowrap;
-}
-
-.controls input {
-  flex: 1;
-  min-width: 120px;
-  max-width: 400px; /* max-width so input not too long */
-  padding: 0 10px;
-  font-size: 14px;
-}
-
-.mode {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.mode button {
-  font-size: 13px;
-  cursor: pointer;
-  white-space: nowrap;
-  padding: 0 10px;
-  background: #eee;
-  transition: background 0.2s;
-}
-
-.mode button:hover {
-  background: #ddd;
-}
-
-/* ===== Tags ===== */
-.tags {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-
-.tag {
-  border: 1px solid #ccc;
-  padding: 4px 10px;
-  border-radius: 999px;
-  cursor: pointer;
-  user-select: none;
-  font-size: 12px;
-  background: rgba(255,255,255,0.8);
-}
-
-.tag.active {
-  background: #333;
-  color: #fff;
-  border-color: #333;
-}
-
-/* ===== Grid ===== */
-.grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(6, 1fr); /* default 6 items */
-  max-width: 900px; /* max width for container */
-  margin: 0 auto;
-}
-
-@media(max-width: 500px){
-  .grid {
-    grid-template-columns: repeat(4, 1fr); /* max 4 items */
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: system-ui, sans-serif;
+    background: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png") center / cover no-repeat fixed;
+    color: #111;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
-}
 
-/* ===== Item Card ===== */
-.item {
-  border: 1px solid rgba(255,255,255,0.3);
-  background: rgba(0,0,0,0.3);
-  border-radius: 8px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  aspect-ratio: 1 / 1;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  overflow: hidden;
-}
+  h1 {
+    margin-bottom: 16px;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 0 6px #000;
+  }
 
-.item:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
+  /* ===== Controls ===== */
+  .controls {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: nowrap;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.item svg {
-  width: 100%;
-  height: 100%;
-  max-height: 64px;
-  fill: #fff;
-  transition: fill 0.2s ease, transform 0.2s ease;
-}
-.item:hover svg {
-  fill: #00ffcc;
-  transform: scale(1.1);
-}
+  .controls input {
+    flex: 1;
+    min-width: 120px;
+    max-width: 400px; /* limit search input width */
+    padding: 8px 10px;
+    font-size: 14px;
+    border-radius: 6px;
+    border: none;
+  }
 
-/* ===== Actions ===== */
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 10px;
-}
+  .mode {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
 
-.actions button {
-  background: transparent;
-  border: none;
-  font-size: 16px;
-  color: #fff;
-  text-shadow: 1px 1px 4px #000;
-  cursor: pointer;
-  padding: 4px;
-}
+  .mode button {
+    padding: 0 12px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 6px;
+    border: none;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center; /* match height of input */
+  }
 
-.actions button:hover {
-  opacity: 0.7;
-}
+  .mode button:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* ===== Tags ===== */
+  .tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tag {
+    border: 1px solid #ccc;
+    padding: 4px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    background: rgba(255,255,255,0.8);
+    transition: all 0.2s;
+  }
+
+  .tag.active {
+    background: #333;
+    color: #fff;
+    border-color: #333;
+  }
+
+  /* ===== Grid ===== */
+  .grid {
+    display: grid;
+    gap: 16px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-template-columns: repeat(6, 1fr); /* 6 items default */
+  }
+
+  @media(max-width: 500px) {
+    .grid {
+      grid-template-columns: repeat(4, 1fr); /* max 4 items on small screens */
+    }
+  }
+
+  /* ===== Item Card ===== */
+  .item {
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    aspect-ratio: 1 / 1;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    overflow: hidden;
+  }
+
+  .item:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .item svg {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    fill: #fff;
+    transition: fill 0.2s ease, transform 0.2s ease;
+  }
+
+  .item:hover svg {
+    fill: #00ffcc;
+    transform: scale(1.1);
+  }
+
+  /* ===== Actions ===== */
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .actions button {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    color: #fff;
+    text-shadow: 1px 1px 4px #000;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  .actions button:hover {
+    opacity: 0.7;
+  }
 </style>
 </head>
 <body>
