@@ -6,157 +6,124 @@
   <title>SVG Catalog</title>
 
   <style>
-    /* ---------- GLOBAL ---------- */
     body {
-      margin: 0;
-      padding: 24px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: system-ui, sans-serif;
+      padding: 20px;
       background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      color: #f5f7fa;
+      color: #fff;
     }
 
     h1 {
       margin-bottom: 16px;
-      font-weight: 600;
-      text-shadow: 0 2px 10px rgba(0,0,0,.6);
     }
 
-    /* ---------- CONTROLS ---------- */
     .controls {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
-      backdrop-filter: blur(10px);
+      margin-bottom: 12px;
     }
 
     input {
+      padding: 8px;
+      font-size: 16px;
       flex: 1;
-      padding: 10px 14px;
-      font-size: 15px;
-      border-radius: 10px;
+      border-radius: 6px;
       border: none;
-      outline: none;
-      background: rgba(0,0,0,.45);
-      color: #fff;
     }
 
-    input::placeholder {
-      color: #bbb;
-    }
-
-    .mode button {
-      padding: 8px 12px;
-      border-radius: 10px;
-      border: none;
-      background: rgba(0,0,0,.45);
-      color: #fff;
+    button {
+      padding: 6px 10px;
       cursor: pointer;
-      transition: background .2s;
+      border-radius: 6px;
+      border: none;
     }
 
-    .mode button:hover {
-      background: rgba(255,255,255,.15);
-    }
-
-    /* ---------- TAGS ---------- */
     .tags {
       display: flex;
-      flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
     .tag {
-      padding: 6px 12px;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 4px 10px;
       border-radius: 999px;
-      font-size: 13px;
       cursor: pointer;
-      background: rgba(0,0,0,.45);
-      border: 1px solid rgba(255,255,255,.15);
-      transition: all .2s;
-    }
-
-    .tag:hover {
-      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(6px);
     }
 
     .tag.active {
-      background: #4fd1c5;
-      color: #001;
-      border-color: #4fd1c5;
+      background: #fff;
+      color: #000;
     }
 
-    /* ---------- GRID ---------- */
+    /* ===== GRID LAYOUT ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
       gap: 16px;
     }
 
-    @media (max-width: 1400px) {
+    @media (max-width: 1200px) {
       .grid {
         grid-template-columns: repeat(5, 1fr);
       }
     }
 
-    /* ---------- ITEM CARD ---------- */
+    /* ===== ITEM CARD ===== */
     .item {
       position: relative;
+      border-radius: 12px;
       padding: 18px;
-      border-radius: 18px;
-      background: rgba(0,0,0,.45);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      transition: transform .2s, box-shadow .2s;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
     }
 
     .item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+      transform: translateY(-2px);
     }
 
-    /* ---------- SVG ---------- */
+    /* SVG */
     svg {
       width: 48px;
       height: 48px;
-      fill: #e6e9ee;
-      transition: fill .2s, transform .2s;
+      fill: #ffffff;
+      transition: fill 0.2s ease;
     }
 
     .item:hover svg {
-      fill: #4fd1c5;
-      transform: scale(1.1);
+      fill: #00e5ff; /* hover color */
     }
 
-    /* ---------- ACTIONS ---------- */
+    /* ===== ACTION BUTTONS ===== */
     .actions {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 8px;
+      right: 8px;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
 
     .actions button {
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255,255,255,.15);
+      background: rgba(255,255,255,0.15);
       color: #fff;
-      cursor: pointer;
-      transition: background .2s, transform .2s;
+      font-size: 14px;
+      border-radius: 6px;
+      padding: 4px 6px;
     }
 
     .actions button:hover {
-      background: #4fd1c5;
-      color: #001;
-      transform: scale(1.05);
+      background: rgba(255,255,255,0.35);
     }
   </style>
 </head>
@@ -170,7 +137,7 @@
   <div class="mode">
     <button id="orBtn">OR</button>
     <button id="andBtn">AND</button>
-    <button id="favToggle">⭐</button>
+    <button id="favToggle">⭐ Favorites</button>
   </div>
 </div>
 
