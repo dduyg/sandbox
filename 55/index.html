@@ -3,32 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG Catalog</title>
+  <title>LiminalLoop</title>
   <style>
     body {
       font-family: system-ui, sans-serif;
+      padding: 20px;
       margin: 0;
-      padding: 24px;
       min-height: 100vh;
       background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      color: #111;
+      color: #fff;
       overflow-x: hidden;
     }
 
     h1 {
       margin-bottom: 16px;
-      color: #fff;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
     }
-    
+
+    /* ---------- CONTROLS ---------- */
     .controls {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     input {
@@ -42,18 +41,19 @@
 
     button {
       padding: 8px 12px;
-      font-size: 14px;
+      cursor: pointer;
       border-radius: 8px;
       border: none;
-      cursor: pointer;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(4px);
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      backdrop-filter: blur(6px);
     }
 
     button:hover {
-      background: white;
+      background: rgba(255,255,255,0.3);
     }
 
+    /* ---------- TAGS ---------- */
     .tags {
       display: flex;
       gap: 8px;
@@ -62,67 +62,68 @@
     }
 
     .tag {
-      padding: 6px 12px;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 5px 12px;
       border-radius: 999px;
-      font-size: 13px;
       cursor: pointer;
-      background: rgba(255,255,255,0.75);
+      font-size: 13px;
       backdrop-filter: blur(4px);
     }
 
     .tag.active {
-      background: #111;
-      color: white;
+      background: #fff;
+      color: #000;
     }
 
+    /* ---------- GRID ---------- */
     .grid {
       display: grid;
-      gap: 16px;
       grid-template-columns: repeat(8, 1fr);
+      gap: 16px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    /* Small screens → auto-fit */
-    @media (max-width: 900px) {
+    /* Auto fit on very small screens */
+    @media (max-width: 700px) {
       .grid {
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
       }
     }
 
-    /* =====================
-       ITEM CARD
-    ====================== */
+    /* ---------- ITEM CARD ---------- */
     .item {
       position: relative;
-      padding: 18px;
       border-radius: 14px;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(6px);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      padding: 14px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px);
+      transition: transform 0.2s ease, background 0.2s ease;
     }
 
     .item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+      background: rgba(0,0,0,0.5);
     }
 
-    /* SVG */
+    /* ---------- SVG ---------- */
     svg {
       width: 48px;
       height: 48px;
-      display: block;
-      margin: 0 auto;
-      fill: #111;
+      fill: #ffffff;
       transition: fill 0.2s ease;
+      pointer-events: none;
     }
 
-    /* SVG hover color */
     .item:hover svg {
-      fill: #6a00ff;
+      fill: #00ffd5; /* hover color */
     }
 
-    /* =====================
-       ACTION BUTTONS
-    ====================== */
+    /* ---------- ACTIONS ---------- */
     .actions {
       position: absolute;
       top: 8px;
@@ -134,12 +135,12 @@
     .actions button {
       padding: 4px 6px;
       font-size: 14px;
+      background: rgba(255,255,255,0.2);
       border-radius: 6px;
-      background: rgba(255,255,255,0.9);
     }
 
     .actions button:hover {
-      background: #fff;
+      background: rgba(255,255,255,0.4);
     }
   </style>
 </head>
@@ -149,11 +150,9 @@
 
 <div class="controls">
   <input id="search" placeholder="Search icons..." />
-  <div class="mode">
-    <button id="orBtn">OR</button>
-    <button id="andBtn">AND</button>
-    <button id="favToggle">⭐ Favorites</button>
-  </div>
+  <button id="orBtn">OR</button>
+  <button id="andBtn">AND</button>
+  <button id="favToggle">⭐ Favorites</button>
 </div>
 
 <div class="tags" id="tagList"></div>
