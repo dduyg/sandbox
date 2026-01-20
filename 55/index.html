@@ -9,11 +9,13 @@
     body {
       font-family: system-ui, sans-serif;
       padding: 20px;
+      margin: 0;
       background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
       background-repeat: no-repeat;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -58,7 +60,8 @@
       color: white;
     }
 
-    /* GRID: 8 columns desktop, 5 columns smaller screens */
+    /* ===== GRID ===== */
+
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
@@ -71,37 +74,37 @@
       }
     }
 
+    /* ===== ITEM CARD ===== */
+
     .item {
       border: 1px solid rgba(255,255,255,0.4);
-      padding: 12px;
-      background: rgba(255,255,255,0.85);
+      padding: 14px;
+      background: rgba(255,255,255,0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       position: relative;
-      transition: transform 0.15s ease;
-    }
-
-    .item:hover {
-      transform: translateY(-2px);
     }
 
     svg {
       width: 48px;
       height: 48px;
-      fill: currentColor;
-      color: #333;
-      transition: color 0.2s ease;
+      fill: #111;
+      transition: fill 0.2s ease;
     }
 
-    /* SVG hover color */
     .item:hover svg {
-      color: #0070f3;
+      fill: #0070f3;
     }
 
-    /* Actions right-aligned */
+    /* ===== ACTIONS ===== */
+
     .actions {
+      width: 100%;
       display: flex;
       justify-content: flex-end;
       gap: 6px;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .actions button {
