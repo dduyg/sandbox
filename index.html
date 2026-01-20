@@ -13,224 +13,152 @@
 
         body {
             font-family: 'Courier New', monospace;
-            background-color: #f5f0eb;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
+            background-color: #f5f5f0;
+            color: #000;
         }
 
-        .container {
-            height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 2fr 1fr;
-            grid-template-rows: auto 1fr auto;
-            padding: 40px;
-            gap: 20px;
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
         }
 
         .logo {
-            grid-column: 1;
-            grid-row: 1;
             font-size: 32px;
             font-weight: bold;
-            line-height: 1.2;
         }
 
         .shop-btn {
-            grid-column: 3;
-            grid-row: 1;
-            justify-self: end;
-            background-color: #ffd4d4;
-            padding: 15px 50px;
-            border-radius: 30px;
+            background-color: #ffcccc;
+            padding: 12px 40px;
+            border: none;
             font-size: 24px;
             font-weight: bold;
             cursor: pointer;
-            border: none;
-            transition: background-color 0.3s;
+            font-family: 'Courier New', monospace;
         }
 
-        .shop-btn:hover {
-            background-color: #ffb8b8;
-        }
-
-        .releases {
-            grid-column: 1;
-            grid-row: 2;
-            align-self: start;
-            padding-top: 100px;
-        }
-
-        .releases h2 {
-            font-size: 20px;
-            margin-bottom: 30px;
-            line-height: 1.3;
-        }
-
-        .release-item {
-            margin-bottom: 25px;
-            font-size: 18px;
-            line-height: 1.4;
-        }
-
-        .product-image {
-            grid-column: 2;
-            grid-row: 1 / 3;
+        .main-content {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            padding: 60px 40px;
+            min-height: 70vh;
             position: relative;
         }
 
-        .product-image img {
-            max-width: 90%;
-            max-height: 80vh;
-            object-fit: contain;
-            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.1));
+        .left-section {
+            flex: 1;
         }
 
-        .sidebar-right {
-            grid-column: 3;
-            grid-row: 2;
+        .releases {
+            margin-bottom: 60px;
+        }
+
+        .releases h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .release-item {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .center-section {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .right-section {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: flex-end;
-            padding-top: 100px;
         }
 
         .labs {
             font-size: 20px;
-            margin-bottom: 150px;
+            margin-bottom: 200px;
         }
 
         .fabs-favs {
             font-size: 18px;
-            line-height: 1.6;
             text-align: right;
-            margin-bottom: 150px;
+            margin-bottom: 80px;
         }
 
         .appointment {
-            background: linear-gradient(90deg, #ff6b6b 0%, #4ecdc4 100%);
-            padding: 15px 40px;
-            border-radius: 30px;
+            background: linear-gradient(to right, #ff6666, #66cccc);
+            padding: 12px 20px;
             font-size: 20px;
             font-weight: bold;
             cursor: pointer;
             border: none;
-            color: black;
-            transition: transform 0.3s;
+            font-family: 'Courier New', monospace;
         }
 
-        .appointment:hover {
-            transform: scale(1.05);
-        }
-
-        .footer {
-            grid-column: 1 / 2;
-            grid-row: 3;
+        footer {
+            padding: 40px;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            justify-content: space-between;
         }
 
-        .footer-item {
-            font-size: 18px;
-            line-height: 1.4;
-        }
-
-        .news {
-            grid-column: 3;
-            grid-row: 3;
-            justify-self: end;
-            align-self: end;
+        .about-press {
             font-size: 20px;
         }
 
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto auto auto;
-                padding: 20px;
-            }
+        .about-press div {
+            margin-bottom: 10px;
+        }
 
-            .logo {
-                grid-column: 1;
-                grid-row: 1;
-            }
-
-            .shop-btn {
-                grid-column: 1;
-                grid-row: 2;
-                justify-self: start;
-                margin-top: 20px;
-            }
-
-            .releases {
-                grid-column: 1;
-                grid-row: 3;
-                padding-top: 40px;
-            }
-
-            .product-image {
-                grid-column: 1;
-                grid-row: 4;
-            }
-
-            .sidebar-right {
-                grid-column: 1;
-                grid-row: 5;
-                align-items: flex-start;
-                padding-top: 40px;
-            }
-
-            .fabs-favs {
-                text-align: left;
-            }
-
-            .footer {
-                grid-column: 1;
-                grid-row: 6;
-            }
-
-            .news {
-                grid-column: 1;
-                grid-row: 7;
-                justify-self: start;
-            }
+        .news {
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <div class="logo">Ab[Screen-<br>wear]</div>
-        
         <button class="shop-btn">Shop</button>
-        
-        <div class="releases">
-            <h2>Ab[Releas-<br>es:</h2>
-            <div class="release-item">2:17<br>postmasters;</div>
-            <div class="release-item">1:17<br>kahn;</div>
-            <div class="release-item">1:16<br>marfa;</div>
+    </header>
+
+    <div class="main-content">
+        <div class="left-section">
+            <div class="releases">
+                <h2>Ab[Releas-<br>es:</h2>
+                <div class="release-item">2:17<br>postmasters;</div>
+                <div class="release-item">1:17<br>kahn;</div>
+                <div class="release-item">1:16<br>marfa;</div>
+            </div>
         </div>
-        
-        <div class="product-image">
-            <img src="data:image/svg+xml,%3Csvg width='600' height='700' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='700' fill='%23f5f0eb'/%3E%3Cpath d='M200 100 L400 100 L400 600 L200 600 Z' fill='%23d0e8f0' stroke='%234db8e8' stroke-width='3'/%3E%3Cpath d='M220 120 L380 120 L380 580 L220 580 Z' fill='%23ffffff' opacity='0.7'/%3E%3Cpath d='M250 150 L280 400 L350 200 L320 450' fill='none' stroke='%234db8e8' stroke-width='8'/%3E%3Crect x='150' y='100' width='50' height='500' fill='%23ffffff' opacity='0.8'/%3E%3Crect x='400' y='100' width='50' height='500' fill='%23ffffff' opacity='0.8'/%3E%3Cpath d='M200 95 L400 95 L410 85 L405 80 L395 82 L205 82 L195 80 L190 85 Z' fill='%23ffa500'/%3E%3Cline x1='200' y1='600' x2='400' y2='600' stroke='%23333' stroke-width='2'/%3E%3C/svg%3E" alt="Abstract colorful jacket">
+
+        <div class="center-section">
+            <img src="jacket.jpg" alt="Blue and white jacket" class="product-image">
         </div>
-        
-        <div class="sidebar-right">
+
+        <div class="right-section">
             <div class="labs">ab:labs;</div>
             <div class="fabs-favs">ab:fabs;<br>ab:favs;</div>
             <button class="appointment">Appointment;</button>
         </div>
-        
-        <div class="footer">
-            <div class="footer-item">About;</div>
-            <div class="footer-item">Press;</div>
-        </div>
-        
-        <div class="news">ab:news;</div>
     </div>
+
+    <footer>
+        <div class="about-press">
+            <div>About;</div>
+            <div>Press;</div>
+        </div>
+        <div class="news">ab:news;</div>
+    </footer>
 </body>
 </html>
