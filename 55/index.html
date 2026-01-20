@@ -18,7 +18,6 @@
 
   h1 {
     margin-bottom: 16px;
-    text-align: center;
   }
 
   /* Controls */
@@ -36,11 +35,9 @@
   .controls input {
     flex: 1;
     min-width: 120px;
-    max-width: 500px; /* max width so input doesn't get too long */
+    max-width: 450px;
     padding: 8px 10px;
     font-size: 14px;
-    border-radius: 6px;
-    border: none;
   }
 
   .mode {
@@ -52,10 +49,6 @@
     padding: 0 12px;
     font-size: 14px;
     cursor: pointer;
-    border-radius: 6px;
-    border: none;
-    background: rgba(0,0,0,0.5);
-    color: #fff;
     display: flex;
     align-items: center;
   }
@@ -95,9 +88,8 @@
   .grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 16px;
-    justify-content: center;
-    max-width: 900px; /* max width of grid */
+    gap: 5%;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -114,7 +106,6 @@
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     aspect-ratio: 1 / 1;
   }
-
   .item:hover {
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   }
@@ -126,7 +117,6 @@
     fill: #fff;
     transition: fill 0.2s ease, transform 0.2s ease;
   }
-
   .item:hover svg {
     fill: #00ffcc;
     transform: scale(1.1);
@@ -136,8 +126,8 @@
   .actions {
     display: flex;
     justify-content: flex-end;
-    gap: 6px;
-    margin-top: 8px;
+    gap: 8px;
+    margin-top: 15px;
   }
 
   .actions button {
@@ -149,7 +139,6 @@
     cursor: pointer;
     padding: 4px;
   }
-
   .actions button:hover {
     opacity: 0.7;
   }
@@ -160,11 +149,6 @@
     .controls input { font-size: 13px; padding: 6px 8px; }
     .mode button { font-size: 12px; padding: 0 8px; }
   }
-
-  @media(max-width: 350px){
-    .item { width: 70px; }
-  }
-
 </style>
 </head>
 <body>
