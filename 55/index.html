@@ -19,7 +19,6 @@
 
     h1 {
       margin-bottom: 16px;
-      text-align: center;
     }
 
     /* ===== Controls ===== */
@@ -38,8 +37,6 @@
       max-width: 400px; /* Max width for large screens */
       padding: 8px 10px;
       font-size: 14px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
     }
 
     .mode {
@@ -53,9 +50,6 @@
       font-size: 13px;
       cursor: pointer;
       white-space: nowrap;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: #eee;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,8 +88,7 @@
     .grid {
       display: grid;
       gap: 16px;
-      max-width: 900px; /* Limit max width */
-      margin: 0 auto;
+      max-width: 900px;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Flexible, fit screen */
     }
 
@@ -115,6 +108,7 @@
       flex-direction: column;
       justify-content: space-between;
       aspect-ratio: 1 / 1;
+      min-width: 0;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
