@@ -6,43 +6,33 @@
   <title>SVG Catalog</title>
 
   <style>
-    /* ===== GLOBAL ===== */
-    * {
-      box-sizing: border-box;
-    }
-
+    /* ---------- PAGE ---------- */
     body {
       margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, sans-serif;
       padding: 20px;
-      background:
-        linear-gradient(
-          rgba(0,0,0,0.55),
-          rgba(0,0,0,0.55)
-        ),
-        url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png")
-        center / cover no-repeat fixed;
+      font-family: system-ui, sans-serif;
+      background-image: url("https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/backscapes/inwave1763.png");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
       color: #fff;
     }
 
     h1 {
       margin-bottom: 16px;
-      font-weight: 600;
     }
 
-    /* ===== CONTROLS ===== */
+    /* ---------- CONTROLS ROW ---------- */
     .controls {
       display: flex;
       align-items: center;
       gap: 8px;
-      width: 100%;
       margin-bottom: 12px;
-      flex-wrap: nowrap;
+      width: 100%;
     }
 
     .controls input {
-      flex: 1 1 auto;
+      flex: 1;
       min-width: 0;
       padding: 8px 10px;
       font-size: 14px;
@@ -54,42 +44,38 @@
     .mode {
       display: flex;
       gap: 6px;
-      flex-shrink: 1;
+      flex-shrink: 0;
     }
 
-    .mode button {
-      padding: 6px 8px;
+    button {
+      padding: 6px 10px;
       font-size: 13px;
-      white-space: nowrap;
       border-radius: 6px;
       border: none;
       cursor: pointer;
-      background: rgba(255,255,255,0.15);
-      color: #fff;
-    }
-
-    .mode button:hover {
-      background: rgba(255,255,255,0.25);
+      white-space: nowrap;
     }
 
     #favToggle {
-      margin-left: 6px;
+      background: gold;
+      color: #000;
     }
 
-    /* ===== TAGS ===== */
+    /* ---------- TAGS ---------- */
     .tags {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
+      gap: 8px;
       margin-bottom: 18px;
     }
 
     .tag {
       padding: 4px 10px;
+      font-size: 12px;
       border-radius: 999px;
-      font-size: 13px;
+      background: rgba(0,0,0,0.45);
       cursor: pointer;
-      background: rgba(255,255,255,0.12);
+      user-select: none;
     }
 
     .tag.active {
@@ -97,25 +83,27 @@
       color: #000;
     }
 
-    /* ===== GRID ===== */
+    /* ---------- GRID ---------- */
     .grid {
       display: grid;
-      gap: 16px;
-      justify-content: center;
-      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-columns: repeat(8, 1fr);
+      gap: 14px;
+      width: 100%;
     }
 
-    @media (max-width: 1100px) {
-      .grid {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
+    @media (max-width: 1200px) {
+      .grid { grid-template-columns: repeat(5, 1fr); }
     }
 
-    /* ===== ITEM CARD ===== */
+    @media (max-width: 700px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* ---------- ITEM CARD ---------- */
     .item {
       position: relative;
-      height: 120px;
-      background: rgba(0,0,0,0.35);
+      aspect-ratio: 1 / 1;
+      background: rgba(0,0,0,0.45);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -124,43 +112,42 @@
     }
 
     .item:hover {
-      background: rgba(0,0,0,0.55);
+      background: rgba(255,255,255,0.12);
     }
 
-    /* SVG */
+    /* ---------- SVG ---------- */
     .item svg {
       width: 48px;
       height: 48px;
-      fill: #e6e6e6;
-      transition: fill 0.2s ease;
+      fill: #ffffff;
+      transition: fill 0.2s ease, transform 0.2s ease;
     }
 
     .item:hover svg {
-      fill: #4fd1ff;
+      fill: #ffd54a; /* hover color */
+      transform: scale(1.05);
     }
 
-    /* ===== ACTIONS ===== */
+    /* ---------- ACTION BUTTONS ---------- */
     .actions {
       position: absolute;
-      right: 8px;
       top: 8px;
+      right: 8px;
       display: flex;
-      flex-direction: column;
       gap: 6px;
     }
 
     .actions button {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: #fff;
-      font-size: 13px;
       padding: 4px 6px;
+      font-size: 14px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
       border-radius: 6px;
-      cursor: pointer;
     }
 
     .actions button:hover {
-      background: rgba(255,255,255,0.3);
+      background: #fff;
+      color: #000;
     }
   </style>
 </head>
@@ -183,6 +170,5 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
-
 </body>
 </html>
