@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Courier New', monospace;
-            background-color: #f5f5f0;
+            background-color: #f5f0eb;
             height: 100vh;
             overflow: hidden;
             position: relative;
@@ -41,26 +41,30 @@
             grid-row: 1;
             justify-self: end;
             background-color: #ffd4d4;
-            border: none;
             padding: 15px 50px;
+            border-radius: 30px;
             font-size: 24px;
             font-weight: bold;
-            font-family: 'Courier New', monospace;
             cursor: pointer;
-            border-radius: 5px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .shop-btn:hover {
+            background-color: #ffb8b8;
         }
 
         .releases {
             grid-column: 1;
             grid-row: 2;
             align-self: start;
-            padding-top: 80px;
+            padding-top: 100px;
         }
 
         .releases h2 {
             font-size: 20px;
             margin-bottom: 30px;
-            font-weight: bold;
+            line-height: 1.3;
         }
 
         .release-item {
@@ -71,16 +75,18 @@
 
         .product-image {
             grid-column: 2;
-            grid-row: 2;
+            grid-row: 1 / 3;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
         .product-image img {
-            max-width: 100%;
-            max-height: 70vh;
+            max-width: 90%;
+            max-height: 80vh;
             object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.1));
         }
 
         .sidebar-right {
@@ -90,93 +96,141 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: flex-end;
-            padding-top: 80px;
+            padding-top: 100px;
         }
 
-        .labs, .fabs-favs {
+        .labs {
             font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 150px;
+        }
+
+        .fabs-favs {
+            font-size: 18px;
+            line-height: 1.6;
             text-align: right;
+            margin-bottom: 150px;
         }
 
-        .appointment-btn {
-            background: linear-gradient(to right, #ff6b6b 50%, #4ecdc4 50%);
-            border: none;
-            padding: 15px 30px;
+        .appointment {
+            background: linear-gradient(90deg, #ff6b6b 0%, #4ecdc4 100%);
+            padding: 15px 40px;
+            border-radius: 30px;
             font-size: 20px;
             font-weight: bold;
-            font-family: 'Courier New', monospace;
             cursor: pointer;
-            border-radius: 5px;
-            margin-top: auto;
+            border: none;
+            color: black;
+            transition: transform 0.3s;
+        }
+
+        .appointment:hover {
+            transform: scale(1.05);
         }
 
         .footer {
-            grid-column: 1;
+            grid-column: 1 / 2;
             grid-row: 3;
             display: flex;
             flex-direction: column;
             gap: 10px;
+        }
+
+        .footer-item {
             font-size: 18px;
-            font-weight: bold;
+            line-height: 1.4;
         }
 
         .news {
             grid-column: 3;
             grid-row: 3;
-            text-align: right;
+            justify-self: end;
+            align-self: end;
             font-size: 20px;
-            font-weight: bold;
         }
 
-        .spacer {
-            margin-top: 15px;
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto auto;
+                padding: 20px;
+            }
+
+            .logo {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .shop-btn {
+                grid-column: 1;
+                grid-row: 2;
+                justify-self: start;
+                margin-top: 20px;
+            }
+
+            .releases {
+                grid-column: 1;
+                grid-row: 3;
+                padding-top: 40px;
+            }
+
+            .product-image {
+                grid-column: 1;
+                grid-row: 4;
+            }
+
+            .sidebar-right {
+                grid-column: 1;
+                grid-row: 5;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
+            .fabs-favs {
+                text-align: left;
+            }
+
+            .footer {
+                grid-column: 1;
+                grid-row: 6;
+            }
+
+            .news {
+                grid-column: 1;
+                grid-row: 7;
+                justify-self: start;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            Ab[Screen-<br>wear]
-        </div>
-
+        <div class="logo">Ab[Screen-<br>wear]</div>
+        
         <button class="shop-btn">Shop</button>
-
+        
         <div class="releases">
             <h2>Ab[Releas-<br>es:</h2>
-            <div class="release-item">
-                2:17<br>postmasters;
-            </div>
-            <div class="release-item">
-                1:17<br>kahn;
-            </div>
-            <div class="release-item">
-                1:16<br>marfa;
-            </div>
+            <div class="release-item">2:17<br>postmasters;</div>
+            <div class="release-item">1:17<br>kahn;</div>
+            <div class="release-item">1:16<br>marfa;</div>
         </div>
-
+        
         <div class="product-image">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Crect width='600' height='600' fill='%23f5f5f0'/%3E%3Cpath d='M200,150 Q250,150 300,200 L350,300 L300,400 Q250,450 200,450 L150,450 L150,150 Z' fill='%2387ceeb' opacity='0.7'/%3E%3Cpath d='M300,150 L450,150 L450,450 L300,450 Q350,400 350,300 Q350,200 300,150 Z' fill='%23add8e6' opacity='0.5'/%3E%3Cpath d='M250,200 L280,250 L250,300 L220,250 Z' fill='%23b0e0e6' opacity='0.6'/%3E%3Cpath d='M200,180 L380,180 L380,200 L200,200 Z' fill='%23ffd700' opacity='0.8'/%3E%3Cpath d='M200,430 L420,430 L420,450 L200,450 Z' fill='%23ffd700' opacity='0.8'/%3E%3Cpath d='M150,150 L180,150 L180,450 L150,450 Z' fill='%23808080' opacity='0.3'/%3E%3Cpath d='M420,150 L450,150 L450,450 L420,450 Z' fill='%23808080' opacity='0.3'/%3E%3Cpath d='M300,250 L320,270 L300,350 L280,270 Z' fill='%23ffffff' opacity='0.8'/%3E%3C/svg%3E" alt="Product">
+            <img src="data:image/svg+xml,%3Csvg width='600' height='700' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='600' height='700' fill='%23f5f0eb'/%3E%3Cpath d='M200 100 L400 100 L400 600 L200 600 Z' fill='%23d0e8f0' stroke='%234db8e8' stroke-width='3'/%3E%3Cpath d='M220 120 L380 120 L380 580 L220 580 Z' fill='%23ffffff' opacity='0.7'/%3E%3Cpath d='M250 150 L280 400 L350 200 L320 450' fill='none' stroke='%234db8e8' stroke-width='8'/%3E%3Crect x='150' y='100' width='50' height='500' fill='%23ffffff' opacity='0.8'/%3E%3Crect x='400' y='100' width='50' height='500' fill='%23ffffff' opacity='0.8'/%3E%3Cpath d='M200 95 L400 95 L410 85 L405 80 L395 82 L205 82 L195 80 L190 85 Z' fill='%23ffa500'/%3E%3Cline x1='200' y1='600' x2='400' y2='600' stroke='%23333' stroke-width='2'/%3E%3C/svg%3E" alt="Abstract colorful jacket">
         </div>
-
+        
         <div class="sidebar-right">
-            <div>
-                <div class="labs">ab:labs;</div>
-                <div class="spacer"></div>
-                <div class="fabs-favs">ab:fabs;<br>ab:favs;</div>
-            </div>
-            <button class="appointment-btn">Appointment;</button>
+            <div class="labs">ab:labs;</div>
+            <div class="fabs-favs">ab:fabs;<br>ab:favs;</div>
+            <button class="appointment">Appointment;</button>
         </div>
-
+        
         <div class="footer">
-            <div>About;</div>
-            <div>Press;</div>
+            <div class="footer-item">About;</div>
+            <div class="footer-item">Press;</div>
         </div>
-
-        <div class="news">
-            ab:news;
-        </div>
+        
+        <div class="news">ab:news;</div>
     </div>
 </body>
 </html>
