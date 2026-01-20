@@ -44,7 +44,6 @@
       gap: 6px;
       flex-shrink: 0;
     }
-
     .mode button {
       padding: 0 12px;
       font-size: 13px;
@@ -54,20 +53,15 @@
       align-items: center;
       justify-content: center;
     }
-
     /* Make buttons same height as input */
-    .mode button {
-      height: 100%;
-    }
+    .mode button {height: 100%;}
 
-    /* ===== Tags ===== */
     .tags {
       display: flex;
       gap: 6px;
       flex-wrap: wrap;
       margin-bottom: 18px;
     }
-
     .tag {
       border: 1px solid #ccc;
       padding: 4px 10px;
@@ -77,7 +71,6 @@
       font-size: 12px;
       background: rgba(255,255,255,0.8);
     }
-
     .tag.active {
       background: #333;
       color: #fff;
@@ -87,13 +80,13 @@
     /* ===== Grid ===== */
     .grid {
       display: grid;
-      gap: 16px;
+      gap: 5%;
       grid-template-columns: repeat(6, 1fr);
       max-width: 900px;
       width: 100%;
     }
     @media(max-width:500px){
-      .grid {grid-template-columns: repeat(3, 1fr);}
+      .grid {grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));}
     }
 
     /* ===== Item Card ===== */
