@@ -59,7 +59,6 @@ function renderIcons() {
         <svg viewBox="${icon.viewBox}" xmlns="http://www.w3.org/2000/svg">
           ${icon.svg}
         </svg>
-        <div>${icon.name}</div>
         <div class="actions">
           <button onclick="toggleFavorite('${icon.id}')">
             ${favs.has(icon.id) ? '★' : '☆'}
