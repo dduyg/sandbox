@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,10 +12,9 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
+            font-family: monospace;
             background-color: #f5f5f5;
             padding: 20px;
-            overflow-x: hidden;
         }
 
         main {
@@ -24,7 +22,7 @@
             grid-template-columns: 1fr 1fr 1fr;
             gap: 20px;
             max-width: 100%;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         .column {
@@ -34,78 +32,72 @@
 
         .column-left {
             justify-content: flex-start;
-            padding-top: 20px;
         }
 
         .column-middle {
             justify-content: flex-end;
             align-items: center;
-            padding-bottom: 40px;
         }
 
         .column-right {
             justify-content: space-between;
-            padding-top: 20px;
-            padding-bottom: 40px;
         }
 
-        h1 {
-            font-size: clamp(16px, 3vw, 32px);
-            font-weight: bold;
+        h2 {
+            font-size: clamp(16px, 3vw, 24px);
+            font-weight: normal;
             margin-bottom: 20px;
-            line-height: 1.2;
         }
 
-        .list-item {
-            margin-left: 40px;
+        .releases-list {
+            list-style: none;
+            font-size: clamp(14px, 2.5vw, 20px);
+            line-height: 1.6;
+        }
+
+        .releases-list li {
             margin-bottom: 15px;
-            font-size: clamp(14px, 2.5vw, 24px);
-            line-height: 1.3;
+        }
+
+        .releases-list li span {
+            display: block;
+            margin-left: 20px;
         }
 
         .jacket-image {
-            max-width: 100%;
+            width: 100%;
+            max-width: 400px;
             height: auto;
-            max-height: 70vh;
-            object-fit: contain;
+            margin-bottom: 20px;
         }
 
-        .text-element {
-            font-size: clamp(14px, 2.5vw, 24px);
-            font-weight: bold;
+        .right-text {
+            font-size: clamp(14px, 2.5vw, 20px);
+            white-space: nowrap;
         }
 
-        .text-top {
+        .top-text {
             align-self: flex-start;
         }
 
-        .text-middle {
-            align-self: center;
+        .middle-text {
+            align-self: flex-end;
         }
 
-        .text-bottom {
+        .bottom-text {
             align-self: flex-end;
-            background: linear-gradient(90deg, rgba(255,100,100,0.4), rgba(100,200,255,0.4));
+            color: #ff0000;
+            background: linear-gradient(90deg, rgba(255,0,0,0.3), rgba(0,255,255,0.3));
             padding: 5px 10px;
         }
 
-        /* Ensure three columns even on very small screens */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             main {
                 gap: 10px;
             }
-            
-            .list-item {
-                margin-left: 15px;
-                font-size: 12px;
-            }
-            
-            h1 {
-                font-size: 14px;
-            }
-            
-            .text-element {
-                font-size: 12px;
+
+            .releases-list li span {
+                margin-left: 10px;
             }
         }
     </style>
@@ -114,24 +106,33 @@
     <main>
         <!-- Left Column -->
         <div class="column column-left">
-            <h1>Ab[Releas-<br>es:</h1>
-            <div class="list-item">2:17<br>postmasters;</div>
-            <div class="list-item">1:17<br>kahn;</div>
-            <div class="list-item">1:16<br>marfa;</div>
+            <h2>Ab[Releas-<br>es:</h2>
+            <ul class="releases-list">
+                <li>
+                    2:17<br>
+                    <span>postmasters;</span>
+                </li>
+                <li>
+                    1:17<br>
+                    <span>kahn;</span>
+                </li>
+                <li>
+                    1:16<br>
+                    <span>marfa;</span>
+                </li>
+            </ul>
         </div>
 
         <!-- Middle Column -->
         <div class="column column-middle">
-            <img src="https://placeholder.svg?height=600&width=500&text=Jacket" 
-                 alt="Holographic jacket" 
-                 class="jacket-image">
+            <img src="https://placeholder.pics/svg/400x500/f0f0f0/0080ff/Jacket%20Image" alt="Jacket" class="jacket-image">
         </div>
 
         <!-- Right Column -->
         <div class="column column-right">
-            <div class="text-element text-top">ab:labs;</div>
-            <div class="text-element text-middle">ab:fabs;<br>ab:favs;</div>
-            <div class="text-element text-bottom">Appointment;</div>
+            <div class="right-text top-text">ab:labs;</div>
+            <div class="right-text middle-text">ab:fabs;<br>ab:favs;</div>
+            <div class="right-text bottom-text">Appointment;</div>
         </div>
     </main>
 </body>
