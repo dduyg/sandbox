@@ -6,7 +6,11 @@
   <title>SVG Catalog</title>
 
   <style>
-    /* ---------- PAGE ---------- */
+    /* ===== Global ===== */
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 20px;
@@ -15,30 +19,32 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     h1 {
+      color: #fff;
       margin-bottom: 16px;
     }
 
-    /* ---------- CONTROLS ROW ---------- */
+    /* ===== Controls Row ===== */
     .controls {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 12px;
       width: 100%;
+      max-width: 100%;
+      margin-bottom: 14px;
     }
 
     .controls input {
-      flex: 1;
+      flex: 1 1 auto;
       min-width: 0;
       padding: 8px 10px;
       font-size: 14px;
       border-radius: 6px;
-      border: none;
-      outline: none;
+      border: 1px solid #ccc;
     }
 
     .mode {
@@ -47,25 +53,21 @@
       flex-shrink: 0;
     }
 
-    button {
+    .mode button {
       padding: 6px 10px;
       font-size: 13px;
       border-radius: 6px;
-      border: none;
+      border: 1px solid #ccc;
+      background: rgba(255,255,255,0.9);
       cursor: pointer;
       white-space: nowrap;
     }
 
-    #favToggle {
-      background: gold;
-      color: #000;
-    }
-
-    /* ---------- TAGS ---------- */
+    /* ===== Tags ===== */
     .tags {
       display: flex;
+      gap: 6px;
       flex-wrap: wrap;
-      gap: 8px;
       margin-bottom: 18px;
     }
 
@@ -73,81 +75,81 @@
       padding: 4px 10px;
       font-size: 12px;
       border-radius: 999px;
-      background: rgba(0,0,0,0.45);
+      border: 1px solid #ccc;
+      background: rgba(255,255,255,0.85);
       cursor: pointer;
       user-select: none;
     }
 
     .tag.active {
-      background: #fff;
-      color: #000;
+      background: #000;
+      color: #fff;
+      border-color: #000;
     }
 
-    /* ---------- GRID ---------- */
+    /* ===== Grid ===== */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
       gap: 14px;
       width: 100%;
+      max-width: 100%;
     }
 
     @media (max-width: 1200px) {
-      .grid { grid-template-columns: repeat(5, 1fr); }
+      .grid {
+        grid-template-columns: repeat(5, 1fr);
+      }
     }
 
-    @media (max-width: 700px) {
-      .grid { grid-template-columns: repeat(4, 1fr); }
-    }
-
-    /* ---------- ITEM CARD ---------- */
+    /* ===== Item Card ===== */
     .item {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      background: rgba(0,0,0,0.45);
+      background: rgba(255,255,255,0.92);
       border-radius: 12px;
+      padding: 14px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease;
+      flex-direction: column;
+      justify-content: space-between;
+      aspect-ratio: 1 / 1;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
     .item:hover {
-      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
-    /* ---------- SVG ---------- */
+    /* ===== SVG ===== */
     .item svg {
-      width: 48px;
-      height: 48px;
-      fill: #ffffff;
-      transition: fill 0.2s ease, transform 0.2s ease;
+      width: 100%;
+      height: 100%;
+      max-height: 64px;
+      fill: #222;
+      transition: fill 0.2s ease;
     }
 
     .item:hover svg {
-      fill: #ffd54a; /* hover color */
-      transform: scale(1.05);
+      fill: #6a5cff; /* hover color */
     }
 
-    /* ---------- ACTION BUTTONS ---------- */
+    /* ===== Actions ===== */
     .actions {
-      position: absolute;
-      top: 8px;
-      right: 8px;
       display: flex;
+      justify-content: flex-end;
       gap: 6px;
+      margin-top: 8px;
     }
 
     .actions button {
-      padding: 4px 6px;
-      font-size: 14px;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      border-radius: 6px;
+      background: transparent;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 4px;
     }
 
     .actions button:hover {
-      background: #fff;
-      color: #000;
+      opacity: 0.7;
     }
   </style>
 </head>
@@ -157,7 +159,7 @@
 <h1>SVG Catalog</h1>
 
 <div class="controls">
-  <input id="search" placeholder="Search icons..." />
+  <input id="search" placeholder="Search icons…" />
   <div class="mode">
     <button id="orBtn">OR</button>
     <button id="andBtn">AND</button>
@@ -170,5 +172,6 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
