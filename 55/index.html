@@ -17,35 +17,33 @@
     h1 {
       text-align: center;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px rgba(0,0,0,0.5);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
     }
 
+    /* CONTROLS */
     .controls {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
       margin-bottom: 12px;
-      justify-content: center;
     }
 
     input {
       padding: 8px;
       font-size: 16px;
       flex: 1;
-      max-width: 400px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
+      border-radius: 6px;
+      border: 1px solid #ccc;
     }
 
     button {
-      padding: 6px 10px;
+      padding: 6px 12px;
       cursor: pointer;
-      border-radius: 8px;
+      border-radius: 6px;
       border: none;
       background: rgba(0,0,0,0.6);
       color: #fff;
-      transition: background 0.3s;
+      transition: background 0.2s;
     }
 
     button:hover {
@@ -57,7 +55,6 @@
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 20px;
-      justify-content: center;
     }
 
     .tag {
@@ -66,82 +63,87 @@
       border-radius: 999px;
       cursor: pointer;
       background: rgba(255,255,255,0.1);
-      transition: background 0.3s, color 0.3s;
+      transition: all 0.2s;
     }
 
     .tag.active {
-      background: black;
-      color: white;
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      border-color: #fff;
     }
 
+    /* GRID LAYOUT */
     .grid {
       display: grid;
       grid-template-columns: repeat(8, 1fr);
       gap: 16px;
-      justify-items: center;
     }
 
-    @media(max-width: 1200px) {
+    @media (max-width: 1200px) {
+      .grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
       .grid {
         grid-template-columns: repeat(5, 1fr);
       }
     }
 
-    @media(max-width: 800px) {
+    @media (max-width: 600px) {
       .grid {
         grid-template-columns: repeat(4, 1fr);
       }
     }
 
-    @media(max-width: 500px) {
+    @media (max-width: 400px) {
       .grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
+    /* ITEM CARD */
     .item {
+      border: 1px solid rgba(255,255,255,0.3);
       border-radius: 12px;
-      padding: 12px;
-      width: 100%;
+      padding: 16px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      background: rgba(0,0,0,0.3);
-      transition: transform 0.2s, background 0.3s;
+      background: rgba(0,0,0,0.25);
+      transition: transform 0.2s, background 0.2s;
     }
 
     .item:hover {
-      background: rgba(255,255,255,0.2);
       transform: translateY(-4px);
+      background: rgba(0,0,0,0.45);
     }
 
     svg {
       width: 48px;
       height: 48px;
       fill: #fff;
-      transition: fill 0.3s;
+      transition: fill 0.2s;
     }
 
     .item:hover svg {
-      fill: #f39c12; /* hover color */
+      fill: #ffcc00;
     }
 
+    /* ACTION BUTTONS RIGHT-ALIGNED */
     .actions {
       display: flex;
+      justify-content: flex-end;
       gap: 6px;
+      width: 100%;
+      margin-top: 12px;
     }
 
     .actions button {
-      padding: 4px 6px;
-      font-size: 16px;
-      background: rgba(0,0,0,0.5);
-      color: #fff;
-      border-radius: 6px;
-      border: none;
-    }
-
-    .actions button:hover {
-      background: rgba(0,0,0,0.8);
+      flex: none;
+      padding: 4px 8px;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -162,5 +164,6 @@
 <div class="grid" id="gallery"></div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
