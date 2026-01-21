@@ -27,7 +27,6 @@ from @shelf/06/BLOBs/blob-05.png to @shelf
      @shelf/06/partOfYou1.png to @shelf/0-6/backscapes/partOfYou1.png
      @shelf/06/partOfYou2.png to @shelf/0-6/backscapes/partOfYou2.png
      @shelf/06/popeye.png to @shelf/0-6/blobs/popeye.png
-     @shelf/06/register-4.jpg to @shelf/0-6/backscapes/register-4.jpg
      @shelf/06/satisfyingSetting.mp4 to @shelf/0-6/stream/satisfyingSetting.mp4
      @shelf/06/sharkTeeth.png to @shelf/0-6/blobs/sharkTeeth.png
      @shelf/06/signoftheTimes.png to @shelf/0-6/blobs/signoftheTimes.png
