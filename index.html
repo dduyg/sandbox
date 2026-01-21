@@ -105,31 +105,33 @@
     <main>
         <div class="releases">
             <h2>Dy[System.<br>log:</h2>
-            <div class="li">2:17<br><a href="#">postmasters;</a></div>
-            <div class="li">5:17<br><a href="#">kahn;</a></div>
-            <div class="li">1:16<br><a href="#">marfa;</a></div>
+            <div class="li">2:17<br><a href="#🧱">postmasters;</a></div>
+            <div class="li">5:17<br><a href="#🪀">kahn;</a></div>
+            <div class="li">1:16<br><a href="#🔘">marfa;</a></div>
         </div>
 
         <div class="main-middle"><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/waiting-around.png" alt="🪩"></div>
 
         <div class="main-right">
-            <div><a href="#">ab:labs;</a></div>
+            <div><a href="#🪩">ab:labs;</a></div>
             <div>ab:fabs;<br>ab:favs;</div>
-            <div><a href="#"><code>Svg.catalog;</code></a></div>
+            <div><a href="#🪩"><code>Svg.catalog;</code></a></div>
         </div>
     </main>
 
     <footer>
         <div class="footer-left">About;<br>Press;</div>
-        <div><a href="newsz">ab:news;</a></div>
+        <div><a href="newmgz">ab:news;</a></div>
     </footer>
 
 <script>
 const links = document.querySelectorAll('a');
+
 const visitedLinks = JSON.parse(localStorage.getItem('visitedLinks')) || [];
 
 links.forEach(link => {
   const href = link.href;
+
   if (visitedLinks.includes(href)) {
     link.classList.add('visited');
   }
