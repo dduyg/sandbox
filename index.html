@@ -28,7 +28,8 @@
         .badge {font-size: 24px;}
         a {color: inherit; text-decoration: none;}
         a:hover {font-style: italic;}
-        .visited {text-decoration: line-through; opacity: 0.5;}
+        .visited {text-decoration: line-through; opacity: 0.6;}
+        .yoksun div:nth-child(2) {padding-left: 20px;}
         code {
             background-color: #000;
             color: #FFD700;
@@ -36,7 +37,7 @@
             border-radius: 3px;
             font-family: "Azeret Mono", monospace;
         }
-
+        
         main {
             margin: 25vh 20px 0;
             display: grid;
@@ -94,9 +95,7 @@
             align-items: flex-end;
             padding: 20px;
         }
-        .footer-left {
-            margin-bottom: 55px;
-        }
+        footer .yoksun {margin-bottom: 55px;}
     </style>
 </head>
 <body>
@@ -117,13 +116,13 @@
 
         <div class="main-right">
             <div><a href="#🪩">ab:labs;</a></div>
-            <div>ab:fabs;<br>ab:favs;</div>
+            <div class="yoksun"><div>ab:fabs;</div><div>ab:favs;</div></div>
             <div><code><a href="#🪩">Svg.catalog;</a></code></div>
         </div>
     </main>
 
     <footer>
-        <div class="footer-left">About;<br>Press;</div>
+        <div class="yoksun"><div>About;</div><div>Press;</div></div>
         <div><a href="newmgz">ab:news;</a></div>
     </footer>
 
