@@ -267,10 +267,11 @@
         }    
         .search-color-btn:active { transform: translateY(0); }    
         .search-color-btn svg {    
-            width: 30px;    
-            height: 30px;    
-            fill: #E8F4F8;    
-        }    
+            width: 30px; height: 30px;    
+            fill: #E8F4F8;
+            transition: fill 0.3s;
+        }
+        .search-color-btn:hover svg {fill: #707070;}
     
         .tags {    
             display: flex;    
@@ -352,7 +353,7 @@
             min-height: 100vh;    
             display: grid;    
             grid-template-columns: 25% 75%;    
-            padding-top: 20vh;    
+            padding-top: 25vh;    
             padding-bottom: 75vh;    
         }    
     
@@ -442,7 +443,7 @@
     </style>    
 </head>    
 <body>    
-<div class="sidebar-overlay" id="sidebarOverlay"></div>    
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
     
     <header>    
         <div class="details">    
@@ -460,7 +461,8 @@
                     </div>    
                 </div>    
             </div>    
-        </div>    
+        </div>
+    </header>
     
         <div class="controls">    
             <div class="control-btn" id="colorControl">    
@@ -478,8 +480,7 @@
             <div class="control-btn" id="filterControl">
                 <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M8,6.2V26.3A6.2,6.2,0,0,0,4,32a6,6,0,0,0,4,5.6v4.2A2.1,2.1,0,0,0,10,44a2.1,2.1,0,0,0,2-2.2V37.6A6,6,0,0,0,16,32a6.2,6.2,0,0,0-4-5.7V6.2A2.1,2.1,0,0,0,10,4,2.1,2.1,0,0,0,8,6.2ZM12,32a2,2,0,1,1-2-2A2,2,0,0,1,12,32Z"></path><path d="M22,6.2v4.1A6.2,6.2,0,0,0,18,16a6,6,0,0,0,4,5.6V41.8a2,2,0,1,0,4,0V21.6A6,6,0,0,0,30,16a6.2,6.2,0,0,0-4-5.7V6.2a2,2,0,1,0-4,0ZM26,16a2,2,0,1,1-2-2A2,2,0,0,1,26,16Z"></path><path d="M36,6.2V23.3A6.2,6.2,0,0,0,32,29a6,6,0,0,0,4,5.6v7.2a2,2,0,1,0,4,0V34.6A6,6,0,0,0,44,29a6.2,6.2,0,0,0-4-5.7V6.2a2,2,0,1,0-4,0ZM40,29a2,2,0,1,1-2-2A2,2,0,0,1,40,29Z"></path></svg>
             </div>
-        </div>    
-    </header>    
+        </div>   
     
     <div class="sidebar" id="colorSidebar">    
         <svg class="clear-control" id="clearColorSidebar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)"><path d="M22,6V21a1,1,0,0,1-1,1H3a1,1,0,0,1-1-1V6A1,1,0,0,1,3,5H9.586L8.293,3.707A1,1,0,0,1,9.707,2.293l3,3a.99.99,0,0,1,.217.326,1,1,0,0,1,0,.764.99.99,0,0,1-.217.326l-3,3A1,1,0,0,1,8.293,8.293L9.586,7H4V20H20V7H16a1,1,0,0,1,0-2h5A1,1,0,0,1,22,6Z"></path></svg>  
