@@ -7,12 +7,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+    @font-face {
+      font-family: 'MicroSix';
+      src: url('Micro-Six.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
     /* Ensure the body covers the full screen */
     body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
+      margin: 0; padding: 0;
+      height: 100%; width: 100%;
     }
     body {        
       background: linear-gradient(to right, #00dbb6, #C0B7B9, #ff61bd);
@@ -80,6 +84,13 @@
     nav a:hover {
       animation: glitch 0.5s infinite;
     }
+
+    footer {
+      font-family: 'MicroSix', serif;
+      font-size: 1.6rem;
+      position: absolute;
+      bottom: 10vh; right: 10%;   
+    }
   </style>
 </head>
 <body>
@@ -90,5 +101,7 @@
     <a href="#" data-text="Analog Archive">Analog Archive</a>
     <a href="#" data-text="Cyber Plaza">Cyber Plaza</a>
   </nav>
+
+<footer>●⎌&nbsp;&nbsp;🌌  next</footer>
 </body>
 </html>
