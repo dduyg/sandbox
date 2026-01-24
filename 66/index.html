@@ -1,307 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liminal🏐Loop</title>
-<style>
-* { box-sizing: border-box; }
-:root {
-  --bg: #3A3A3C;
-  --main: #B8B9BE;
-  --accent: #F0F0F0;
-  --border: rgba(184,185,190,0.25);
-  --accent-color: #AC4E5E;
-}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liminal🏐Loop</title>
+    <style>
+        * { box-sizing: border-box; }
+        :root {
+            --bg: #3A3A3C;
+            --main: #B8B9BE;
+            --accent: #F0F0F0;
+            --border: rgba(184,185,190,0.25);
+            --item-bg: rgba(255,255,255,0.04);
+            --hover-red: #AC4E5E;
+        }
 
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: system-ui, sans-serif;
-  background-color: var(--bg);
-  color: var(--main);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--main);
+            min-height: 100vh;
+        }
 
-/* ===== Header ===== */
-h1 {
-  margin-bottom: 16px;
-  font-weight: 500;
-  color: var(--accent);
-}
+        h1 { margin-bottom: 16px; font-weight: 500; color: var(--accent); }
 
-/* ===== Controls ===== */
-.controls {
-  display: flex;
-  align-items: stretch;
-  gap: 8px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-  max-width: 900px;
-}
+        /* ===== New Controls Layout ===== */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            z-index: 1000;
+            position: relative;
+        }
 
-/* Toggle Button */
-.toggleBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #2f2f31;
-  color: var(--accent);
-  padding: 8px 15px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.15s ease;
-  height: 44px;
-}
+        /* Toggle Button */
+        .toggleBtn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #2f2f31;
+            color: var(--main);
+            padding: 0 12px;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+            font-size: 13px;
+        }
 
-.toggleBtn:hover {
-  background: rgba(255,255,255,0.08);
-}
+        .toggle-switch {
+            position: relative;
+            width: 34px;
+            height: 18px;
+            background: #444;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
 
-.toggle-switch {
-  position: relative;
-  width: 40px;
-  height: 20px;
-  background: #444;
-  border-radius: 10px;
-  transition: 0.3s;
-}
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px; left: 2px;
+            width: 14px; height: 14px;
+            background: var(--main);
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        .toggle-switch.and-mode { background: var(--hover-red); }
+        .toggle-switch.and-mode::after { left: 18px; background: white; }
 
-.toggle-switch::after {
-  content: '';
-  position: absolute;
-  top: 2px; left: 2px;
-  width: 16px; height: 16px;
-  background: var(--accent);
-  border-radius: 50%;
-  transition: 0.3s;
-}
+        /* Dropdown Styling */
+        .dropdown-container {
+            position: relative;
+            flex-grow: 1;
+            max-width: 400px;
+        }
 
-.toggle-switch.and-mode { 
-  background: var(--accent-color); 
-}
+        .dropdown-search {
+            width: 100%;
+            height: 40px;
+            padding: 0 12px;
+            border: 1px solid var(--border);
+            background: #2f2f31;
+            color: var(--accent);
+            outline: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
 
-.toggle-switch.and-mode::after { 
-  left: 22px; 
-}
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0; right: 0;
+            background: #2f2f31;
+            border: 1px solid var(--border);
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            z-index: 1010;
+            margin-top: 4px;
+        }
 
-/* Favorites Toggle */
-.favToggle {
-  height: 44px;
-  padding: 0 15px;
-  font-size: 16px;
-  cursor: pointer;
-  background: #2f2f31;
-  border: 1px solid var(--border);
-  color: var(--main);
-  border-radius: 4px;
-  transition: background 0.15s ease, color 0.15s ease;
-}
+        .dropdown-list.show { display: block; }
 
-.favToggle:hover {
-  background: rgba(240,240,240,0.08);
-  color: var(--accent);
-}
+        .dropdown-item {
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--main);
+            display: flex;
+            justify-content: space-between;
+        }
+        .dropdown-item:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
+        .dropdown-item.selected {
+            background: rgba(172, 78, 94, 0.2);
+            color: #fff;
+            font-weight: bold;
+        }
 
-.favToggle.active {
-  background: var(--accent-color);
-  color: var(--accent);
-  border-color: var(--accent-color);
-}
+        .fav-btn {
+            height: 40px;
+            padding: 0 15px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--main);
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .fav-btn.active { color: gold; border-color: gold; }
 
-/* Custom Dropdown Styling */
-.dropdown-container {
-  position: relative;
-  flex: 1;
-  max-width: 400px;
-  min-width: 200px;
-}
+        /* ===== Grid & Items ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 16px;
+        }
 
-.dropdown-search {
-  width: 100%;
-  height: 44px;
-  padding: 0 12px;
-  border: 1px solid var(--border);
-  background: #2f2f31;
-  color: var(--accent);
-  font-family: inherit;
-  font-size: 14px;
-  outline: none;
-  border-radius: 4px;
-  transition: border-color 0.15s ease;
-}
+        .item {
+            border: 1px solid rgba(255,255,255,0.12);
+            background: var(--item-bg);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            aspect-ratio: 1 / 1;
+            transition: transform 0.2s;
+        }
 
-.dropdown-search:focus {
-  border-color: var(--accent-color);
-}
+        .item svg { width: 100%; height: 100%; fill: var(--main); transition: fill 0.2s; }
+        .item:hover svg { fill: var(--hover-red); }
 
-.dropdown-search::placeholder {
-  color: rgba(240,240,240,0.5);
-}
-
-.dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0; 
-  right: 0;
-  background: #2f2f31;
-  border: 1px solid var(--border);
-  border-top: none;
-  max-height: 250px;
-  overflow-y: auto;
-  display: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  z-index: 1000;
-  margin-top: -1px;
-  border-radius: 0 0 4px 4px;
-}
-
-.dropdown-list.show { 
-  display: block; 
-}
-
-.dropdown-item {
-  padding: 10px 12px;
-  cursor: pointer;
-  color: var(--main);
-  transition: background 0.1s ease;
-}
-
-.dropdown-item:hover { 
-  background: rgba(255,255,255,0.08);
-}
-
-.dropdown-item.selected {
-  background: var(--accent-color);
-  color: var(--accent);
-  font-weight: 500;
-}
-
-/* Scrollbar styling for dropdown */
-.dropdown-list::-webkit-scrollbar {
-  width: 8px;
-}
-
-.dropdown-list::-webkit-scrollbar-track {
-  background: #1f1f21;
-}
-
-.dropdown-list::-webkit-scrollbar-thumb {
-  background: #555;
-  border-radius: 4px;
-}
-
-.dropdown-list::-webkit-scrollbar-thumb:hover {
-  background: #666;
-}
-
-/* ===== Grid ===== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 16px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-@media (max-width: 400px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  }
-}
-
-/* ===== Item ===== */
-.item {
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.04);
-  border-radius: 10px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  aspect-ratio: 1 / 1;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
-}
-
-.item:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
-}
-
-.item svg {
-  width: 100%; 
-  height: 100%;
-  max-height: 64px;
-  fill: var(--main);
-  transition: fill 0.2s ease, transform 0.2s ease;
-}
-
-.item:hover svg {
-  fill: var(--accent-color);
-  transform: scale(1.08);
-}
-
-/* ===== Actions ===== */
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.actions button {
-  background: transparent;
-  border: none;
-  color: var(--main);
-  cursor: pointer;
-  padding: 2px;
-  font-size: 14px;
-  transition: color 0.15s ease;
-}
-
-.actions button:hover {
-  color: var(--accent);
-}
-
-/* Smaller actions on small screens */
-@media (max-width: 480px) {
-  .actions button {
-    font-size: 12px;
-  }
-  
-  .controls {
-    gap: 6px;
-  }
-  
-  .toggleBtn {
-    font-size: 13px;
-    padding: 6px 12px;
-  }
-}
-</style>
+        .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+        .actions button { background: none; border: none; color: var(--main); cursor: pointer; font-size: 16px; }
+        .actions button:hover { color: var(--accent); }
+    </style>
 </head>
 <body>
-<h1>SVG Catalog</h1>
 
-<div class="controls">
-  <div class="toggleBtn" id="toggleBtn">
-    <span>//</span>
-    <div class="toggle-switch" id="toggleSwitch"></div>
-    <span>&</span>
-  </div>
-  
-  <div class="dropdown-container">
-    <input type="text" class="dropdown-search" id="dropdownSearch" placeholder="Search tags..." />
-    <div id="tagList" class="dropdown-list"></div>
-  </div>
-  
-  <button class="favToggle" id="favToggle">☆</button>
-</div>
+    <h1>Liminal🏐Loop</h1>
 
-<div class="grid" id="gallery"></div>
+    <div class="controls">
+        <div class="toggleBtn" onclick="toggleMode()">
+            <span>OR</span>
+            <div class="toggle-switch" id="modeSwitch"></div>
+            <span>AND</span>
+        </div>
+            
+        <div class="dropdown-container">
+            <input type="text" id="dropdownInput" class="dropdown-search" placeholder="Search tags..." onfocus="showDropdown()" oninput="filterDropdown()">
+            <div id="tagList" class="dropdown-list"></div>
+        </div>
 
-<script src="app.js"></script>
+        <button id="favToggle" class="fav-btn">☆</button>
+    </div>
+
+    <div class="grid" id="gallery"></div>
+
+    <script src="app.js"></script>
 </body>
 </html>
