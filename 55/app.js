@@ -14,7 +14,7 @@ const favToggle = document.getElementById('favToggle');
 const FAVORITES_KEY = 'svg-favorites';
 
 // Load JSON
-fetch('catalog.svgs.json')
+fetch('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/catalog.svgs.json')
   .then(res => res.json())
   .then(data => {
     svgs = data;
