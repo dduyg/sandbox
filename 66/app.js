@@ -1,234 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liminal🏐Loop</title>
+let svgs = [];
+let selectedTags = new Set();
+let filterMode = 'OR';
 
-<style>
-* { box-sizing: border-box; }
+const gallery = document.getElementById('gallery');
+const searchInput = document.getElementById('search');
+const tagSearch = document.getElementById('tagSearch');
+const tagList = document.getElementById('tagList');
+const toggleSwitch = document.getElementById('toggleSwitch');
+const modeToggle = document.getElementById('modeToggle');
 
-:root {
-  --bg: #3A3A3C;
-  --main: #B8B9BE;
-  --accent: #F0F0F0;
-  --border: rgba(184,185,190,0.25);
+fetch('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/catalog.svgs.json')
+  .then(r => r.json())
+  .then(data => {
+    svgs = data;
+    renderTags();
+    renderIcons();
+  });
+
+/* ===== Rendering ===== */
+function renderIcons() {
+  const query = searchInput.value.toLowerCase();
+  gallery.innerHTML = '';
+
+  svgs
+    .filter(svg => {
+      if (query && !svg.tags.some(t => t.includes(query))) return false;
+
+      if (selectedTags.size === 0) return true;
+
+      return filterMode === 'AND'
+        ? [...selectedTags].every(t => svg.tags.includes(t))
+        : [...selectedTags].some(t => svg.tags.includes(t));
+    })
+    .forEach(svg => {
+      const el = document.createElement('div');
+      el.className = 'item';
+      el.innerHTML = `
+        <svg viewBox="${svg.viewBox}" xmlns="http://www.w3.org/2000/svg">
+          ${svg.svg}
+        </svg>
+        <div class="actions">
+          <button onclick="copySVG(${JSON.stringify(svg)})">⿻</button>
+        </div>
+      `;
+      gallery.appendChild(el);
+    });
 }
 
-body {
-  margin: 0;
-  padding: 20px;
-  font-family: system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--main);
-  min-height: 100vh;
+/* ===== Tags ===== */
+function renderTags() {
+  const tags = [...new Set(svgs.flatMap(s => s.tags))].sort();
+  tagList.innerHTML = '';
+
+  tags.forEach(tag => {
+    const el = document.createElement('div');
+    el.className = 'dropdown-item';
+    el.textContent = tag;
+    el.onclick = () => toggleTag(tag, el);
+    tagList.appendChild(el);
+  });
 }
 
-/* ===== Header ===== */
-h1 {
-  margin-bottom: 16px;
-  color: var(--accent);
-  font-weight: 500;
+function toggleTag(tag, el) {
+  selectedTags.has(tag) ? selectedTags.delete(tag) : selectedTags.add(tag);
+  el.classList.toggle('selected');
+  tagSearch.placeholder = selectedTags.size
+    ? [...selectedTags].join(', ')
+    : 'Search tags…';
+  renderIcons();
 }
 
-/* ===== Controls ===== */
-.controls {
-  display: flex;
-  align-items: stretch;
-  gap: 6px;
-  max-width: 900px;
-  margin-bottom: 16px;
-}
-
-.controls input {
-  height: 38px;
-  padding: 0 12px;
-  font-size: 14px;
-  flex: 1;
-  background: #2f2f31;
-  border: 1px solid var(--border);
-  color: var(--accent);
-}
-
-.controls input::placeholder {
-  color: rgba(240,240,240,0.45);
-}
-
-/* ===== Toggle (OR / AND) ===== */
-.toggleBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 12px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  user-select: none;
-  background: rgba(255,255,255,0.04);
-}
-
-.toggleBtn span {
-  font-size: 13px;
-  opacity: 0.8;
-}
-
-.toggle-switch {
-  width: 36px;
-  height: 18px;
-  background: #555;
-  border-radius: 9px;
-  position: relative;
-  transition: 0.2s;
-}
-
-.toggle-switch::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 14px;
-  height: 14px;
-  background: var(--bg);
-  border-radius: 50%;
-  transition: 0.2s;
-}
-
-.toggle-switch.and {
-  background: var(--accent);
-}
-.toggle-switch.and::after {
-  left: 20px;
-}
+/* ===== Toggle Mode ===== */
+modeToggle.onclick = () => {
+  filterMode = filterMode === 'OR' ? 'AND' : 'OR';
+  toggleSwitch.classList.toggle('and', filterMode === 'AND');
+  renderIcons();
+};
 
 /* ===== Dropdown ===== */
-.dropdown {
-  position: relative;
-  width: 260px;
+tagSearch.onfocus = () => tagList.classList.add('show');
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dropdown')) tagList.classList.remove('show');
+});
+
+tagSearch.oninput = () => {
+  const q = tagSearch.value.toLowerCase();
+  [...tagList.children].forEach(i => {
+    i.style.display = i.textContent.includes(q) ? 'block' : 'none';
+  });
+};
+
+/* ===== Search ===== */
+searchInput.oninput = renderIcons;
+
+/* ===== Copy ===== */
+function copySVG(svg) {
+  const code = `<svg viewBox="${svg.viewBox}" xmlns="http://www.w3.org/2000/svg">${svg.svg}</svg>`;
+  navigator.clipboard.writeText(code);
 }
-
-.dropdown input {
-  width: 100%;
-  height: 38px;
-  padding: 0 12px;
-  background: #2f2f31;
-  border: 1px solid var(--border);
-  color: var(--accent);
-}
-
-.dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0; right: 0;
-  background: #2f2f31;
-  border: 1px solid var(--border);
-  border-top: none;
-  max-height: 220px;
-  overflow-y: auto;
-  display: none;
-  z-index: 1000;
-}
-
-.dropdown-list.show {
-  display: block;
-}
-
-.dropdown-item {
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.dropdown-item:hover {
-  background: rgba(255,255,255,0.06);
-}
-
-.dropdown-item.selected {
-  background: var(--accent);
-  color: var(--bg);
-  font-weight: 500;
-}
-
-/* ===== Grid ===== */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 16px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-@media (max-width: 400px) {
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  }
-}
-
-/* ===== Item ===== */
-.item {
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.04);
-  border-radius: 10px;
-  padding: 12px;
-  aspect-ratio: 1 / 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.item svg {
-  width: 100%;
-  height: 100%;
-  max-height: 64px;
-  fill: var(--main);
-  transition: 0.2s;
-}
-
-.item:hover svg {
-  fill: var(--accent);
-  transform: scale(1.08);
-}
-
-/* ===== Actions ===== */
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-}
-
-.actions button {
-  background: none;
-  border: none;
-  font-size: 14px;
-  color: var(--main);
-  cursor: pointer;
-}
-
-.actions button:hover {
-  color: var(--accent);
-}
-</style>
-</head>
-
-<body>
-
-<h1>SVG Catalog</h1>
-
-<div class="controls">
-  <input id="search" placeholder="Search icons…" />
-
-  <div class="toggleBtn" id="modeToggle">
-    <span>OR</span>
-    <div class="toggle-switch" id="toggleSwitch"></div>
-    <span>AND</span>
-  </div>
-
-  <div class="dropdown">
-    <input id="tagSearch" placeholder="Search tags…" />
-    <div id="tagList" class="dropdown-list"></div>
-  </div>
-</div>
-
-<div class="grid" id="gallery"></div>
-
-<script src="app.js"></script>
-</body>
-</html>
