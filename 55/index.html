@@ -45,61 +45,65 @@ h1 {
 .toggleBtn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   background: #2f2f31;
-  color: var(--accent);
-  padding: 8px;
-  border-radius: 2px;
+  border-radius: 4px;
   cursor: pointer;
   user-select: none;
   border: 1px solid var(--border);
   transition: background 0.15s ease;
   height: 42px;
-  width: 42px;
+  padding: 4px;
   position: relative;
+  width: 90px;
 }
 
 .toggleBtn:hover {
   background: rgba(255,255,255,0.08);
 }
 
-.toggle-switch {
+.toggle-track {
   position: relative;
-  width: 42px;
-  height: 42px;
-  background: #444;
-  border-radius: 2px;
-  transition: background 0.3s ease;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.toggle-option {
+  position: relative;
+  z-index: 2;
+  font-size: 16px;
+  color: var(--main);
+  transition: color 0.3s ease;
+  width: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.toggle-icon {
-  font-size: 18px;
-  color: var(--accent);
-  transition: opacity 0.3s ease;
+.toggle-option.active {
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.toggle-switch {
   position: absolute;
-}
-
-.toggle-icon.or {
-  opacity: 1;
-}
-
-.toggle-icon.and {
-  opacity: 0;
+  width: 40px;
+  height: 34px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: transform 0.3s ease, background 0.3s ease;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
 }
 
 .toggle-switch.and-mode {
   background: var(--accent-color);
-}
-
-.toggle-switch.and-mode .toggle-icon.or {
-  opacity: 0;
-}
-
-.toggle-switch.and-mode .toggle-icon.and {
-  opacity: 1;
+  transform: translate(42px, -50%);
 }
 
 /* Custom Dropdown Styling */
@@ -336,9 +340,10 @@ h1 {
 
 <div class="controls">
   <div class="toggleBtn" onclick="toggleMode()">
-    <div class="toggle-switch">
-      <span class="toggle-icon or">⸝⸝</span>
-      <span class="toggle-icon and">ℰ</span>
+    <div class="toggle-track">
+      <div class="toggle-switch"></div>
+      <span class="toggle-option or-option active">⸝⸝</span>
+      <span class="toggle-option and-option">ℰ</span>
     </div>
   </div>
   
@@ -347,7 +352,7 @@ h1 {
     <div id="tagList" class="dropdown-list"></div>
   </div>
 
-  <button id="favToggle" class="favToggle">✰</button>
+  <button id="favToggle" class="favToggle">☆</button>
 </div>
 
 <div class="grid" id="gallery"></div>
