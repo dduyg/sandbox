@@ -1,27 +1,26 @@
 let svgs = [];
-let selectedTags = new Set();
-let filterMode = 'OR';
+let selectedTags = [];
+let tagMode = 'OR';
 let favoritesOnly = false;
 
 const gallery = document.getElementById('gallery');
+const tagList = document.getElementById('tagList');
 const searchInput = document.getElementById('search');
-const tagSearch = document.getElementById('tagSearch');
-const tagDropdown = document.getElementById('tagDropdown');
-const toggleSwitch = document.getElementById('toggleSwitch');
+const dropdownSearch = document.getElementById('dropdownSearch');
 const modeToggle = document.getElementById('modeToggle');
+const favToggle = document.getElementById('favToggle');
 
 const FAVORITES_KEY = 'svg-favorites';
 
-/* ===== Load Data ===== */
+// Load JSON
 fetch('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/catalog.svgs.json')
   .then(res => res.json())
   .then(data => {
     svgs = data;
-    renderDropdownTags();
+    generateTagList();
     renderIcons();
   });
 
-/* ===== Favorites ===== */
 function getFavorites() {
   return new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]'));
 }
@@ -33,16 +32,13 @@ function toggleFavorite(id) {
   renderIcons();
 }
 
-/* ===== Filtering ===== */
 function matchesTags(svg) {
-  if (selectedTags.size === 0) return true;
-
-  return filterMode === 'AND'
-    ? [...selectedTags].every(t => svg.tags.includes(t))
-    : [...selectedTags].some(t => svg.tags.includes(t));
+  if (selectedTags.length === 0) return true;
+  return tagMode === 'AND'
+    ? selectedTags.every(t => svg.tags.includes(t))
+    : selectedTags.some(t => svg.tags.includes(t));
 }
 
-/* ===== Render Icons ===== */
 function renderIcons() {
   const search = searchInput.value.toLowerCase();
   const favs = getFavorites();
@@ -67,75 +63,118 @@ function renderIcons() {
           <button onclick="toggleFavorite('${svg.id}')">
             ${favs.has(svg.id) ? '★' : '☆'}
           </button>
-          <button onclick='copySVG(${JSON.stringify(svg)})'>⿻</button>
+          <button onclick='copySVG(${JSON.stringify(svg).replace(/'/g, "&apos;")})'>⿻</button>
         </div>
       `;
       gallery.appendChild(div);
     });
 }
 
-/* ===== Dropdown Tags ===== */
-function renderDropdownTags() {
-  const allTags = [...new Set(svgs.flatMap(svg => svg.tags))].sort();
-  tagDropdown.innerHTML = '';
+function generateTagList() {
+  const tagCounts = {};
+  svgs.forEach(svg => svg.tags.forEach(t => tagCounts[t] = (tagCounts[t] || 0) + 1));
+  const sortedTags = Object.keys(tagCounts).sort();
 
-  allTags.forEach(tag => {
+  tagList.innerHTML = '';
+  
+  sortedTags.forEach(tag => {
     const div = document.createElement('div');
     div.className = 'dropdown-item';
     div.textContent = tag;
-
-    div.onclick = () => {
-      selectedTags.has(tag)
-        ? selectedTags.delete(tag)
-        : selectedTags.add(tag);
-
-      div.classList.toggle('selected');
-      updateTagPlaceholder();
-      renderIcons();
-    };
-
-    tagDropdown.appendChild(div);
+    div.onclick = () => toggleTag(tag, div);
+    tagList.appendChild(div);
   });
 }
 
-function updateTagPlaceholder() {
-  tagSearch.placeholder = selectedTags.size
-    ? [...selectedTags].join(', ')
-    : 'Search tags…';
+function showDropdown() {
+  tagList.classList.add('show');
 }
 
-/* ===== Dropdown Behavior ===== */
-tagSearch.addEventListener('focus', () => {
-  tagDropdown.classList.add('show');
-});
+function hideDropdown() {
+  tagList.classList.remove('show');
+}
 
-document.addEventListener('click', e => {
-  if (!e.target.closest('.dropdown-container')) {
-    tagDropdown.classList.remove('show');
+function filterDropdown() {
+  const input = dropdownSearch.value.toLowerCase();
+  const items = tagList.querySelectorAll('.dropdown-item');
+  
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(input)) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+}
+
+function toggleTag(tag, element) {
+  const index = selectedTags.indexOf(tag);
+  
+  if (index > -1) {
+    selectedTags.splice(index, 1);
+    element.classList.remove('selected');
+  } else {
+    selectedTags.push(tag);
+    element.classList.add('selected');
   }
-});
 
-tagSearch.addEventListener('input', () => {
-  const q = tagSearch.value.toLowerCase();
-  [...tagDropdown.children].forEach(item => {
-    item.style.display = item.textContent.toLowerCase().includes(q)
-      ? 'block'
-      : 'none';
-  });
-});
-
-/* ===== Toggle AND / OR ===== */
-modeToggle.onclick = () => {
-  filterMode = filterMode === 'OR' ? 'AND' : 'OR';
-  toggleSwitch.classList.toggle('and');
+  updateDropdownPlaceholder();
   renderIcons();
-};
+}
 
-/* ===== Copy SVG ===== */
+function updateDropdownPlaceholder() {
+  dropdownSearch.placeholder = selectedTags.length > 0 
+    ? selectedTags.join(', ') 
+    : 'Search tags...';
+}
+
+function toggleMode() {
+  const toggleSwitch = modeToggle.querySelector('.toggle-switch');
+  tagMode = tagMode === 'OR' ? 'AND' : 'OR';
+  toggleSwitch.classList.toggle('and-mode');
+  renderIcons();
+}
+
 function copySVG(svg) {
   const code = `<svg viewBox="${svg.viewBox}" xmlns="http://www.w3.org/2000/svg">${svg.svg}</svg>`;
   navigator.clipboard.writeText(code);
 }
 
-/* ===== Search ===== */
+// Event listeners
 searchInput.addEventListener('input', renderIcons);
+
+dropdownSearch.addEventListener('click', (e) => {
+  e.stopPropagation();
+  showDropdown();
+});
+
+dropdownSearch.addEventListener('input', filterDropdown);
+
+// Allow typing in dropdown search
+dropdownSearch.addEventListener('focus', () => {
+  dropdownSearch.removeAttribute('readonly');
+  showDropdown();
+});
+
+dropdownSearch.addEventListener('blur', () => {
+  setTimeout(() => {
+    dropdownSearch.setAttribute('readonly', true);
+    updateDropdownPlaceholder();
+  }, 200);
+});
+
+window.addEventListener('click', (event) => {
+  if (!event.target.matches('.dropdown-search') && !event.target.closest('.dropdown-container')) {
+    hideDropdown();
+  }
+});
+
+modeToggle.addEventListener('click', toggleMode);
+
+favToggle.addEventListener('click', () => {
+  favoritesOnly = !favoritesOnly;
+  favToggle.classList.toggle('active', favoritesOnly);
+  favToggle.textContent = favoritesOnly ? '★' : '☆';
+  renderIcons();
+});
