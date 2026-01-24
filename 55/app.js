@@ -198,8 +198,16 @@ function toggleTag(tag) {
 
 function toggleMode() {
   const toggleSwitch = document.querySelector('.toggle-switch');
+  const orOption = document.querySelector('.or-option');
+  const andOption = document.querySelector('.and-option');
+  
   tagMode = tagMode === 'OR' ? 'AND' : 'OR';
   toggleSwitch.classList.toggle('and-mode');
+  
+  // Toggle active states
+  orOption.classList.toggle('active');
+  andOption.classList.toggle('active');
+  
   renderSVGs();
 }
 
