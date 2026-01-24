@@ -54,7 +54,7 @@ h1 {
   color: rgba(240,240,240,0.45);
 }
 
-/* ===== Toggle ===== */
+/* ===== Toggle (OR / AND) ===== */
 .toggleBtn {
   display: inline-flex;
   align-items: center;
@@ -62,13 +62,13 @@ h1 {
   padding: 0 12px;
   border: 1px solid var(--border);
   cursor: pointer;
-  background: rgba(255,255,255,0.04);
   user-select: none;
+  background: rgba(255,255,255,0.04);
 }
 
 .toggleBtn span {
   font-size: 13px;
-  opacity: 0.85;
+  opacity: 0.8;
 }
 
 .toggle-switch {
@@ -102,7 +102,7 @@ h1 {
 /* ===== Dropdown ===== */
 .dropdown {
   position: relative;
-  width: 280px;
+  width: 260px;
 }
 
 .dropdown input {
@@ -117,12 +117,11 @@ h1 {
 .dropdown-list {
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;
+  left: 0; right: 0;
   background: #2f2f31;
   border: 1px solid var(--border);
   border-top: none;
-  max-height: 240px;
+  max-height: 220px;
   overflow-y: auto;
   display: none;
   z-index: 1000;
@@ -133,9 +132,6 @@ h1 {
 }
 
 .dropdown-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 8px 12px;
   cursor: pointer;
   font-size: 13px;
@@ -149,11 +145,6 @@ h1 {
   background: var(--accent);
   color: var(--bg);
   font-weight: 500;
-}
-
-.tag-count {
-  font-size: 11px;
-  opacity: 0.7;
 }
 
 /* ===== Grid ===== */
@@ -200,6 +191,7 @@ h1 {
 .actions {
   display: flex;
   justify-content: flex-end;
+  gap: 6px;
 }
 
 .actions button {
