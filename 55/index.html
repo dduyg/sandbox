@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Liminal🏐Loop</title>
+<title>SVG Catalog</title>
+
 <style>
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   padding: 20px;
@@ -37,16 +39,17 @@ h1 {
   padding: 0 12px;
   font-size: 14px;
   width: 100%;
-  max-width: 360px;
+  max-width: 340px;
   background: #2f2f31;
-  border: 1px solid #4a4a4d;
+  border: 1px solid #555;
   color: #f0f0f0;
 }
 
 .controls input::placeholder {
-  color: #9a9a9f;
+  color: #9a9aa0;
 }
 
+/* ===== Mode Buttons ===== */
 .mode {
   display: flex;
   gap: 6px;
@@ -57,11 +60,11 @@ h1 {
   height: 36px;
   padding: 0 12px;
   font-size: 13px;
-  cursor: pointer;
   background: #2f2f31;
-  border: 1px solid #4a4a4d;
+  border: 1px solid #555;
   color: #B8B9BE;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border 0.15s ease;
 }
 
 .mode button:hover {
@@ -71,7 +74,7 @@ h1 {
 
 .mode button.active {
   background: #B8B9BE;
-  color: #2b2b2d;
+  color: #2a2a2c;
   border-color: #B8B9BE;
 }
 
@@ -84,7 +87,7 @@ h1 {
 }
 
 .tag {
-  border: 1px solid #4a4a4d;
+  border: 1px solid #555;
   padding: 4px 10px;
   border-radius: 999px;
   cursor: pointer;
@@ -92,16 +95,16 @@ h1 {
   font-size: 12px;
   background: #2f2f31;
   color: #B8B9BE;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .tag:hover {
-  background: #3f3f42;
+  color: #f0f0f0;
 }
 
 .tag.active {
   background: #B8B9BE;
-  color: #2b2b2d;
+  color: #2a2a2c;
   border-color: #B8B9BE;
 }
 
@@ -122,7 +125,7 @@ h1 {
 
 /* ===== Item Card ===== */
 .item {
-  border: 1px solid #4a4a4d;
+  border: 1px solid #555;
   background: #2f2f31;
   border-radius: 8px;
   padding: 12px;
@@ -134,7 +137,7 @@ h1 {
 }
 
 .item:hover {
-  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
 }
 
 /* SVG */
@@ -155,7 +158,7 @@ h1 {
 .actions {
   display: flex;
   justify-content: flex-end;
-  gap: 6px;
+  gap: 8px;
   margin-top: 6px;
 }
 
@@ -165,30 +168,31 @@ h1 {
   font-size: 15px;
   color: #B8B9BE;
   cursor: pointer;
-  padding: 2px;
-  transition: color 0.15s;
+  padding: 4px;
+  transition: color 0.15s ease;
 }
 
 .actions button:hover {
   color: #f0f0f0;
 }
 
-/* Smaller buttons/text on small screens */
+/* Smaller controls on small screens */
 @media (max-width: 480px) {
-  .actions button {
-    font-size: 13px;
-  }
+  .controls input,
   .mode button {
+    height: 32px;
     font-size: 12px;
-    padding: 0 8px;
   }
-  .controls input {
+
+  .actions button {
     font-size: 13px;
   }
 }
 </style>
 </head>
+
 <body>
+
 <h1>SVG Catalog</h1>
 
 <div class="controls">
