@@ -4,27 +4,27 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Liminal🏐Loop</title>
-
 <style>
 * { box-sizing: border-box; }
-
 :root {
   --bg: #3A3A3C;
   --main: #B8B9BE;
   --accent: #F0F0F0;
   --border: rgba(184,185,190,0.25);
+  --accent-color: #AC4E5E;
 }
 
 body {
   margin: 0;
   padding: 20px;
   font-family: system-ui, sans-serif;
-  background: var(--bg);
+  background-color: var(--bg);
   color: var(--main);
   min-height: 100vh;
   overflow-x: hidden;
 }
 
+/* ===== Header ===== */
 h1 {
   margin-bottom: 16px;
   font-weight: 500;
@@ -36,108 +36,125 @@ h1 {
   display: flex;
   align-items: stretch;
   gap: 8px;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
+  max-width: 900px;
 }
 
-/* Search */
-.controls input#search {
-  height: 38px;
+.controls input {
+  height: 36px;
   padding: 0 12px;
   font-size: 14px;
-  width: 100%;
-  max-width: 280px;
+  flex: 1;
+  min-width: 200px;
   background: #2f2f31;
   border: 1px solid var(--border);
   color: var(--accent);
 }
-
 .controls input::placeholder {
   color: rgba(240,240,240,0.5);
 }
 
-/* ===== Toggle AND / OR ===== */
+/* Toggle Button */
 .toggleBtn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 0 14px;
-  height: 38px;
-  border: 1px solid var(--border);
-  background: transparent;
+  gap: 8px;
+  background: #000;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  color: var(--main);
+  height: 36px;
+  border: 1px solid var(--border);
+  transition: background 0.15s ease;
 }
 
-.toggleBtn span {
-  font-size: 13px;
+.toggleBtn:hover {
+  background: #1a1a1a;
 }
 
 .toggle-switch {
   position: relative;
-  width: 38px;
-  height: 18px;
-  background: #555;
-  border-radius: 999px;
-  transition: 0.25s;
+  width: 40px;
+  height: 20px;
+  background: #444;
+  border-radius: 10px;
+  transition: 0.3s;
 }
 
 .toggle-switch::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   background: var(--bg);
   border-radius: 50%;
-  transition: 0.25s;
+  transition: 0.3s;
 }
 
-.toggle-switch.and {
-  background: var(--accent);
+.toggle-switch.and-mode {
+  background: var(--accent-color);
 }
 
-.toggle-switch.and::after {
+.toggle-switch.and-mode::after {
   left: 22px;
 }
 
-/* ===== Dropdown ===== */
+/* Dropdown Container */
 .dropdown-container {
   position: relative;
-  width: 240px;
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
 }
 
 .dropdown-search {
   width: 100%;
-  height: 38px;
+  height: 36px;
   padding: 0 12px;
-  font-size: 13px;
-  background: #2f2f31;
   border: 1px solid var(--border);
+  background: #2f2f31;
   color: var(--accent);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdown-search::placeholder {
+  color: rgba(240,240,240,0.5);
 }
 
 .dropdown-list {
   position: absolute;
   top: 100%;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   background: #2f2f31;
   border: 1px solid var(--border);
   border-top: none;
-  max-height: 220px;
+  max-height: 250px;
   overflow-y: auto;
   display: none;
-  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 1000;
+  border-radius: 0 0 4px 4px;
 }
 
-.dropdown-list.show { display: block; }
+.dropdown-list.show {
+  display: block;
+}
 
 .dropdown-item {
-  padding: 8px 12px;
-  font-size: 13px;
+  padding: 10px 12px;
   cursor: pointer;
+  color: var(--main);
+  transition: background 0.15s ease;
 }
 
 .dropdown-item:hover {
@@ -145,9 +162,37 @@ h1 {
 }
 
 .dropdown-item.selected {
-  background: var(--accent);
+  background: var(--accent-color);
   color: var(--bg);
   font-weight: 500;
+}
+
+.dropdown-item.hidden {
+  display: none;
+}
+
+/* Favorites button */
+.favToggle {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 16px;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--main);
+  transition: background 0.15s ease, color 0.15s ease;
+  border-radius: 4px;
+}
+
+.favToggle:hover {
+  background: rgba(240,240,240,0.08);
+  color: var(--accent);
+}
+
+.favToggle.active {
+  background: var(--accent-color);
+  color: var(--accent);
+  border-color: var(--accent-color);
 }
 
 /* ===== Grid ===== */
@@ -175,17 +220,23 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   aspect-ratio: 1 / 1;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.item:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
 }
 
 .item svg {
   width: 100%;
+  height: 100%;
   max-height: 64px;
   fill: var(--main);
-  transition: transform 0.2s, fill 0.2s;
+  transition: fill 0.2s ease, transform 0.2s ease;
 }
 
 .item:hover svg {
-  fill: var(--accent);
+  fill: var(--accent-color);
   transform: scale(1.08);
 }
 
@@ -194,47 +245,52 @@ h1 {
   display: flex;
   justify-content: flex-end;
   gap: 6px;
+  margin-top: 6px;
 }
 
 .actions button {
-  background: none;
+  background: transparent;
   border: none;
   color: var(--main);
-  font-size: 14px;
   cursor: pointer;
+  padding: 2px;
+  font-size: 14px;
+  transition: color 0.15s ease;
 }
 
 .actions button:hover {
   color: var(--accent);
 }
 
+/* Smaller actions on small screens */
 @media (max-width: 480px) {
-  .actions button { font-size: 12px; }
+  .actions button {
+    font-size: 12px;
+  }
 }
 </style>
 </head>
-
 <body>
-
 <h1>SVG Catalog</h1>
 
 <div class="controls">
   <input id="search" placeholder="Search icons…" />
-
+  
   <div class="toggleBtn" id="modeToggle">
     <span>OR</span>
-    <div class="toggle-switch" id="toggleSwitch"></div>
+    <div class="toggle-switch"></div>
     <span>AND</span>
   </div>
-
+  
   <div class="dropdown-container">
-    <input class="dropdown-search" id="tagSearch" placeholder="Search tags…" />
-    <div id="tagDropdown" class="dropdown-list"></div>
+    <input type="text" class="dropdown-search" id="dropdownSearch" placeholder="Search tags..." readonly />
+    <div id="tagList" class="dropdown-list"></div>
   </div>
+  
+  <button id="favToggle" class="favToggle">☆</button>
 </div>
 
 <div class="grid" id="gallery"></div>
-
 <script src="app.js"></script>
 </body>
 </html>
