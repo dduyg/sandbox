@@ -2,37 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Future Being</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>LimimalLoop</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Space+Mono&display=swap" rel="stylesheet">
-
   <style>
-    /* =====================
-       THEME VARIABLES
-    ====================== */
     :root {
       --bg: #ffffff;
       --text: #000000;
       --border: #000000;
     }
-
     body.dark {
       --bg: #0e0e0e;
       --text: #ffffff;
       --border: #ffffff;
     }
-
-    /* =====================
-       BASE RESET
-    ====================== */
-    * {
-      box-sizing: border-box;
-    }
-
+    * {box-sizing: border-box;}
     body {
       margin: 0;
       background: var(--bg);
@@ -40,19 +24,12 @@
       font-family: 'Inter', sans-serif;
       transition: background 0.3s ease, color 0.3s ease;
     }
-
-    /* =====================
-       PAGE WRAPPER
-    ====================== */
     .page {
       padding: 40px 48px;
-      max-width: 1400px;
+      max-width: 950px;
     }
 
-    /* =====================
-       HEADER
-    ====================== */
-    .header {
+    header {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -62,50 +39,39 @@
     .collapse {
       font-family: 'Space Mono', monospace;
       font-size: 14px;
-      letter-spacing: 0.15em;
       opacity: 0.7;
     }
 
-    .logo {
+    .title {
       font-size: 42px;
       font-weight: 300;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      text-align: center;
     }
 
-    /* =====================
-       TOGGLE
-    ====================== */
     .toggle {
-      width: 44px;
-      height: 24px;
+      width: 44px; height: 24px;
       border: 2px solid var(--border);
       border-radius: 999px;
       position: relative;
       cursor: pointer;
       transition: border-color 0.3s ease;
     }
-
     .toggle::after {
       content: "";
       position: absolute;
-      top: 3px;
-      left: 3px;
-      width: 14px;
-      height: 14px;
+      top: 3px; left: 3px;
+      width: 14px; height: 14px;
       background: var(--text);
       border-radius: 50%;
       transition: transform 0.3s ease, background 0.3s ease;
     }
-
     body.dark .toggle::after {
-      transform: translateX(20px);
+      transform: translateX(19px);
     }
 
-    /* =====================
-       SECTIONS
-    ====================== */
-    .section {
+    section {
       display: grid;
       grid-template-columns: 120px 1fr;
       column-gap: 48px;
@@ -122,77 +88,26 @@
 
     .content {
       max-width: 760px;
-      font-size: 18px;
+      font-size: 17px;
       line-height: 1.8;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
       font-weight: 300;
     }
 
-    /* =====================
-       CAMPAIGN
-    ====================== */
-    .campaign {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      column-gap: 48px;
-      align-items: baseline;
-    }
-
-    .campaign-line {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .campaign-title,
-    .campaign-meta {
-      font-family: 'Space Mono', monospace;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-size: 14px;
-    }
-
-    .campaign-meta {
-      opacity: 0.7;
-    }
-
-    /* =====================
-       RESPONSIVE
-    ====================== */
     @media (max-width: 768px) {
-      .section,
-      .campaign {
-        grid-template-columns: 1fr;
-      }
-
-      .label {
-        margin-bottom: 16px;
-      }
-
-      .logo {
-        font-size: 28px;
-      }
-
-      .page {
-        padding: 32px 24px;
-      }
+      .title {font-size: 24px;}
+      .page {padding: 32px 24px;}
     }
   </style>
 </head>
-
 <body>
   <div class="page">
-
-    <!-- HEADER -->
-    <header class="header">
+    <header>
       <div class="collapse">[ – ]</div>
-      <div class="logo">Future Being</div>
-      <div class="toggle" aria-label="Toggle dark mode"></div>
+      <div class="title">Future 687</div</div>
+      <div class="toggle"></div>
     </header>
 
-    <!-- INFO -->
-    <section class="section">
+    <section>
       <div class="label">[INFO]</div>
       <div class="content">
         Through collaborations, Future Being partners with nonprofit organization
@@ -201,27 +116,21 @@
         expand their reach and deepen their impact.
       </div>
     </section>
-
-    <!-- CAMPAIGN -->
+  
     <section class="campaign">
-      <div class="label">[C]</div>
-      <div class="campaign-line">
-        <div class="campaign-title">Future Being x The Or:</div>
-        <div class="campaign-meta">[ + ] Nov 2024</div>
-        <div class="campaign-title">Speak Volumes Campaign</div>
+      <div class="label">[C ]</div>
+      <div class="content">
+        <div>Future Being x The Or:</div>
+        <div>[ + ] Nov 2024</div>
+        <div>Speak Volumes Campaign</div>
       </div>
     </section>
-
   </div>
 
-  <!-- =====================
-       DARK MODE SCRIPT
-  ====================== -->
   <script>
     const toggle = document.querySelector('.toggle');
     const body = document.body;
 
-    // Load saved theme
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       body.classList.add('dark');
