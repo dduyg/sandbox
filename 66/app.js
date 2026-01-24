@@ -5,9 +5,9 @@ let favoritesOnly = false;
 
 const gallery = document.getElementById('gallery');
 const tagList = document.getElementById('tagList');
-const searchInput = document.getElementById('search');
 const dropdownSearch = document.getElementById('dropdownSearch');
-const modeToggle = document.getElementById('modeToggle');
+const toggleBtn = document.getElementById('toggleBtn');
+const toggleSwitch = document.getElementById('toggleSwitch');
 const favToggle = document.getElementById('favToggle');
 
 const FAVORITES_KEY = 'svg-favorites';
@@ -40,16 +40,13 @@ function matchesTags(svg) {
 }
 
 function renderIcons() {
-  const search = searchInput.value.toLowerCase();
   const favs = getFavorites();
-
   gallery.innerHTML = '';
 
   svgs
     .filter(svg => {
       if (favoritesOnly && !favs.has(svg.id)) return false;
       if (!matchesTags(svg)) return false;
-      if (search && !svg.tags.some(t => t.includes(search))) return false;
       return true;
     })
     .forEach(svg => {
@@ -63,7 +60,7 @@ function renderIcons() {
           <button onclick="toggleFavorite('${svg.id}')">
             ${favs.has(svg.id) ? '★' : '☆'}
           </button>
-          <button onclick='copySVG(${JSON.stringify(svg).replace(/'/g, "&apos;")})'>⿻</button>
+          <button onclick='copySVG(${JSON.stringify(svg)})'>⿻</button>
         </div>
       `;
       gallery.appendChild(div);
@@ -73,7 +70,7 @@ function renderIcons() {
 function generateTagList() {
   const tagCounts = {};
   svgs.forEach(svg => svg.tags.forEach(t => tagCounts[t] = (tagCounts[t] || 0) + 1));
-  const sortedTags = Object.keys(tagCounts).sort();
+  const sortedTags = Object.keys(tagCounts).sort((a, b) => a.localeCompare(b));
 
   tagList.innerHTML = '';
   
@@ -84,6 +81,27 @@ function generateTagList() {
     div.onclick = () => toggleTag(tag, div);
     tagList.appendChild(div);
   });
+}
+
+function toggleTag(tag, element) {
+  const index = selectedTags.indexOf(tag);
+  
+  if (index > -1) {
+    selectedTags.splice(index, 1);
+    element.classList.remove('selected');
+  } else {
+    selectedTags.push(tag);
+    element.classList.add('selected');
+  }
+
+  updatePlaceholder();
+  renderIcons();
+}
+
+function updatePlaceholder() {
+  dropdownSearch.placeholder = selectedTags.length > 0 
+    ? selectedTags.join(', ') 
+    : 'Search tags...';
 }
 
 function showDropdown() {
@@ -100,37 +118,11 @@ function filterDropdown() {
   
   items.forEach(item => {
     const text = item.textContent.toLowerCase();
-    if (text.includes(input)) {
-      item.classList.remove('hidden');
-    } else {
-      item.classList.add('hidden');
-    }
+    item.style.display = text.includes(input) ? 'block' : 'none';
   });
 }
 
-function toggleTag(tag, element) {
-  const index = selectedTags.indexOf(tag);
-  
-  if (index > -1) {
-    selectedTags.splice(index, 1);
-    element.classList.remove('selected');
-  } else {
-    selectedTags.push(tag);
-    element.classList.add('selected');
-  }
-
-  updateDropdownPlaceholder();
-  renderIcons();
-}
-
-function updateDropdownPlaceholder() {
-  dropdownSearch.placeholder = selectedTags.length > 0 
-    ? selectedTags.join(', ') 
-    : 'Search tags...';
-}
-
 function toggleMode() {
-  const toggleSwitch = modeToggle.querySelector('.toggle-switch');
   tagMode = tagMode === 'OR' ? 'AND' : 'OR';
   toggleSwitch.classList.toggle('and-mode');
   renderIcons();
@@ -142,35 +134,16 @@ function copySVG(svg) {
 }
 
 // Event listeners
-searchInput.addEventListener('input', renderIcons);
-
-dropdownSearch.addEventListener('click', (e) => {
-  e.stopPropagation();
-  showDropdown();
-});
-
+dropdownSearch.addEventListener('focus', showDropdown);
 dropdownSearch.addEventListener('input', filterDropdown);
 
-// Allow typing in dropdown search
-dropdownSearch.addEventListener('focus', () => {
-  dropdownSearch.removeAttribute('readonly');
-  showDropdown();
-});
-
-dropdownSearch.addEventListener('blur', () => {
-  setTimeout(() => {
-    dropdownSearch.setAttribute('readonly', true);
-    updateDropdownPlaceholder();
-  }, 200);
-});
-
 window.addEventListener('click', (event) => {
-  if (!event.target.matches('.dropdown-search') && !event.target.closest('.dropdown-container')) {
+  if (!event.target.matches('.dropdown-search') && !event.target.closest('.dropdown-list')) {
     hideDropdown();
   }
 });
 
-modeToggle.addEventListener('click', toggleMode);
+toggleBtn.addEventListener('click', toggleMode);
 
 favToggle.addEventListener('click', () => {
   favoritesOnly = !favoritesOnly;
