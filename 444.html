@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liminal🏐Loop</title>
+<style>
+* { box-sizing: border-box; }
+:root {
+  --bg: #3A3A3C;
+  --main: #B8B9BE;
+  --accent: #F0F0F0;
+  --border: rgba(184,185,190,0.25);
+  --accent-color: #AC4E5E;
+}
+
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: system-ui, sans-serif;
+  background-color: var(--bg);
+  color: var(--main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== Header ===== */
+h1 {
+  margin-bottom: 16px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+/* ===== Controls ===== */
+.controls {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  max-width: 900px;
+}
+
+/* Toggle Button */
+.toggleBtn {
+  position: relative;
+  width: 70px;
+  height: 42px;
+  background: #2f2f31;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggleBtn:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.toggle-switch {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+.toggle-icon {
+  font-size: 16px;
+  color: rgba(240,240,240,0.4);
+  z-index: 1;
+  transition: color 0.3s ease;
+  pointer-events: none;
+}
+
+.toggle-icon.active {
+  color: #fff;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+  background: var(--accent-color);
+  transition: transform 0.3s ease;
+  border-radius: 1px;
+}
+
+.toggle-switch.and-mode .toggle-slider {
+  transform: translateX(calc(100% + 4px));
+}
+
+/* Custom Dropdown Styling */
+.dropdown-container {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 400px;
+  text-align: left;
+}
+
+.dropdown-search {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  background: #2f2f31;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  border-radius: 2px;
+  height: 42px;
+}
+
+.dropdown-search::placeholder {
+  color: rgba(240,240,240,0.5);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #2f2f31;
+  border: 1px solid var(--border);
+  border-top: none;
+  max-height: 250px;
+  overflow-y: auto;
+  display: none;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  z-index: 1000;
+  border-radius: 0 0 2px 2px;
+}
+
+.dropdown-list.show {
+  display: block;
+}
+
+.dropdown-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  color: var(--main);
+  transition: background 0.15s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.dropdown-item.selected {
+  background: var(--accent-color);
+  color: #fff;
+  font-weight: 500;
+}
+
+.dropdown-item.selected .tag-count {
+  color: rgba(255,255,255,0.9);
+}
+
+.tag-count {
+  font-size: 12px;
+  color: rgba(184,185,190,0.6);
+  font-weight: normal;
+  margin-left: 8px;
+}
+
+/* Favorites Toggle */
+.favToggle {
+  height: 42px;
+  padding: 0 16px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #2f2f31;
+  border: 1px solid var(--border);
+  color: var(--main);
+  border-radius: 2px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.favToggle:hover {
+  background: rgba(255,255,255,0.08);
+  color: var(--accent);
+}
+
+.favToggle.active {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: var(--accent-color);
+}
+
+/* ===== Grid ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 400px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  }
+}
+
+/* ===== Item ===== */
+.item {
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  border-radius: 2px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  aspect-ratio: 1 / 1;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  position: relative;
+}
+
+.item:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+}
+
+.item svg {
+  width: 100%;
+  height: 100%;
+  max-height: 64px;
+  fill: var(--main);
+  transition: fill 0.2s ease, transform 0.2s ease;
+}
+
+.item:hover svg {
+  fill: var(--accent-color);
+  transform: scale(1.08);
+}
+
+/* ===== Actions ===== */
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.actions button {
+  background: transparent;
+  border: none;
+  color: var(--main);
+  cursor: pointer;
+  padding: 2px;
+  font-size: 14px;
+  transition: color 0.15s ease;
+}
+
+.actions button:hover {
+  color: var(--accent);
+}
+
+/* ===== Tag Panel Popup ===== */
+.tag-panel {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: #2f2f31;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  z-index: 100;
+  min-width: 150px;
+  display: none;
+}
+
+.tag-panel.show {
+  display: block;
+}
+
+.tag-panel::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 12px;
+  border: 6px solid transparent;
+  border-top-color: #2f2f31;
+}
+
+.tag-panel-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: rgba(184,185,190,0.6);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.tag-panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tag-panel-tag {
+  font-size: 12px;
+  padding: 3px 8px;
+  background: rgba(172,78,94,0.2);
+  color: var(--accent);
+  border-radius: 1px;
+  border: 1px solid rgba(172,78,94,0.3);
+}
+
+/* Smaller actions on small screens */
+@media (max-width: 480px) {
+  .actions button {
+    font-size: 12px;
+  }
+}
+</style>
+</head>
+<body>
+<h1>SVG Catalog</h1>
+
+<div class="controls">
+  <div class="toggleBtn" onclick="toggleMode()">
+    <div class="toggle-switch">
+      <span class="toggle-icon or-icon active">⸝⸝</span>
+      <div class="toggle-slider"></div>
+      <span class="toggle-icon and-icon">ℰ</span>
+    </div>
+  </div>
+  
+  <div class="dropdown-container">
+    <input type="text" class="dropdown-search" placeholder="Search to filter by tags..." />
+    <div id="tagList" class="dropdown-list"></div>
+  </div>
+
+  <button id="favToggle" class="favToggle">☆</button>
+</div>
+
+<div class="grid" id="gallery"></div>
+
+<script>
+let svgs = [];
+let selectedTags = [];
+let tagMode = 'OR';
+let favoritesOnly = false;
+
+const gallery = document.getElementById('gallery');
+const tagList = document.getElementById('tagList');
+const dropdownSearch = document.querySelector('.dropdown-search');
+const favToggle = document.getElementById('favToggle');
+
+const FAVORITES_KEY = 'svg-favorites';
+
+// Load JSON
+fetch('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/catalog.svgs.json')
+  .then(res => res.json())
+  .then(data => {
+    svgs = data;
+    generateTagList();
+    renderSVGs();
+  });
+
+function getFavorites() {
+  return new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]'));
+}
+
+function toggleFavorite(id) {
+  const favs = getFavorites();
+  favs.has(id) ? favs.delete(id) : favs.add(id);
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favs]));
+  renderSVGs();
+}
+
+function matchesTags(svg) {
+  if (selectedTags.length === 0) return true;
+  return tagMode === 'AND'
+    ? selectedTags.every(t => svg.tags.includes(t))
+    : selectedTags.some(t => svg.tags.includes(t));
+}
+
+function showTagPanel(event, tags) {
+  event.stopPropagation();
+  
+  // Close any open panels
+  document.querySelectorAll('.tag-panel').forEach(panel => {
+    panel.classList.remove('show');
+  });
+  
+  // Find the panel in this item
+  const button = event.currentTarget;
+  const item = button.closest('.item');
+  const panel = item.querySelector('.tag-panel');
+  
+  panel.classList.add('show');
+  
+  // Close panel when clicking outside
+  setTimeout(() => {
+    const closePanel = (e) => {
+      if (!panel.contains(e.target) && e.target !== button) {
+        panel.classList.remove('show');
+        document.removeEventListener('click', closePanel);
+      }
+    };
+    document.addEventListener('click', closePanel);
+  }, 0);
+}
+
+function renderSVGs() {
+  const favs = getFavorites();
+  gallery.innerHTML = '';
+
+  svgs
+    .filter(svg => {
+      if (favoritesOnly && !favs.has(svg.id)) return false;
+      if (!matchesTags(svg)) return false;
+      return true;
+    })
+    .forEach(svg => {
+      const div = document.createElement('div');
+      div.className = 'item';
+      
+      const tagsHTML = svg.tags.map(tag => 
+        `<span class="tag-panel-tag">${tag}</span>`
+      ).join('');
+      
+      div.innerHTML = `
+        <svg viewBox="${svg.viewBox}" xmlns="http://www.w3.org/2000/svg">
+          ${svg.svg}
+        </svg>
+        <div class="actions">
+          <button onclick="showTagPanel(event, ${JSON.stringify(svg.tags).replace(/"/g, '&quot;')})">꒰ ꒱</button>
+          <button onclick='copySVG(${JSON.stringify(svg)})'>⿻</button>
+          <button onclick="toggleFavorite('${svg.id}')">
+            ${favs.has(svg.id) ? '★' : '☆'}
+          </button>
+        </div>
+        <div class="tag-panel">
+          <div class="tag-panel-title">Tags</div>
+          <div class="tag-panel-tags">
+            ${tagsHTML}
+          </div>
+        </div>
+      `;
+      gallery.appendChild(div);
+    });
+  
+  updateTagCounts();
+}
+
+function getTagCounts() {
+  const tagCounts = {};
+  
+  svgs.forEach(svg => {
+    svg.tags.forEach(tag => {
+      tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+    });
+  });
+  
+  return tagCounts;
+}
+
+function updateTagCounts() {
+  const tagCounts = getTagCounts();
+  const items = tagList.querySelectorAll('.dropdown-item');
+  
+  items.forEach(item => {
+    const tagName = item.querySelector('.tag-name').textContent;
+    const countSpan = item.querySelector('.tag-count');
+    const count = tagCounts[tagName] || 0;
+    countSpan.textContent = `(${count})`;
+  });
+}
+
+function generateTagList() {
+  const tagCounts = getTagCounts();
+  const sortedTags = Object.keys(tagCounts).sort();
+
+  tagList.innerHTML = '';
+  
+  sortedTags.forEach(tag => {
+    const div = document.createElement('div');
+    div.className = 'dropdown-item';
+    
+    const tagName = document.createElement('span');
+    tagName.className = 'tag-name';
+    tagName.textContent = tag;
+    
+    const tagCount = document.createElement('span');
+    tagCount.className = 'tag-count';
+    tagCount.textContent = `(${tagCounts[tag]})`;
+    
+    div.appendChild(tagName);
+    div.appendChild(tagCount);
+    
+    div.onclick = () => toggleTag(tag);
+    tagList.appendChild(div);
+  });
+}
+
+function showDropdown() {
+  tagList.classList.add('show');
+}
+
+function filterDropdown() {
+  const input = dropdownSearch.value.toLowerCase();
+  const items = tagList.querySelectorAll('.dropdown-item');
+  
+  items.forEach(item => {
+    const text = item.querySelector('.tag-name').textContent.toLowerCase();
+    item.style.display = text.includes(input) ? 'flex' : 'none';
+  });
+}
+
+function toggleTag(tag) {
+  const index = selectedTags.indexOf(tag);
+  const items = tagList.querySelectorAll('.dropdown-item');
+  
+  if (index > -1) {
+    selectedTags.splice(index, 1);
+  } else {
+    selectedTags.push(tag);
+  }
+
+  items.forEach(item => {
+    const tagName = item.querySelector('.tag-name').textContent;
+    if (tagName === tag) {
+      item.classList.toggle('selected');
+    }
+  });
+
+  dropdownSearch.placeholder = selectedTags.length > 0 
+    ? selectedTags.join(', ') 
+    : "Search to filter by tags...";
+  
+  renderSVGs();
+}
+
+function toggleMode() {
+  const toggleSwitch = document.querySelector('.toggle-switch');
+  const orIcon = document.querySelector('.or-icon');
+  const andIcon = document.querySelector('.and-icon');
+  
+  tagMode = tagMode === 'OR' ? 'AND' : 'OR';
+  toggleSwitch.classList.toggle('and-mode');
+  
+  // Toggle active state on icons
+  orIcon.classList.toggle('active');
+  andIcon.classList.toggle('active');
+  
+  renderSVGs();
+}
+
+function copySVG(svg) {
+  const code = `<svg viewBox="${svg.viewBox}" xmlns="http://www.w3.org/2000/svg">${svg.svg}</svg>`;
+  navigator.clipboard.writeText(code);
+}
+
+// Event listeners
+dropdownSearch.addEventListener('focus', showDropdown);
+dropdownSearch.addEventListener('input', filterDropdown);
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropdown-search')) {
+    tagList.classList.remove('show');
+  }
+};
+
+favToggle.onclick = () => {
+  favoritesOnly = !favoritesOnly;
+  favToggle.classList.toggle('active', favoritesOnly);
+  renderSVGs();
+};
+</script>
+</body>
+</html>
