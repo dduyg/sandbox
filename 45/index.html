@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/favicons/RGB-purpleGold.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <title>ᒪĮＭᎥＮคＬ ⓛσσｱ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #b1acb9;
+            color: #171321;
+            font-size: clamp(15px, 2.5vw, 19px);
+            line-height: 1.2;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        header {position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; padding: 20px;}
+        h2 {font-family: "Azeret Mono", monospace;}
+        .badge {font-size: 24px; font-weight: 600;}
+        a {color: inherit; text-decoration: none;}
+        a:hover {font-style: italic;}
+        .visited {text-decoration: line-through; opacity: 0.6;}
+        .robustness div:nth-child(1) {padding-right: 23px;}
+        code {white-space: nowrap; background-color: #000; color: #FFD700; padding: 3px 5px; border-radius: 3px; font-family: "Azeret Mono", monospace;}
+        
+        main {
+            margin: 25vh 20px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            min-height: 50vh;
+            max-height: 65vh;
+        }
+        .releases {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+        .releases h2 {
+            margin: 40px 0 10px;
+            color: #87fffb;
+        }
+        .li {
+            margin-left: 40px;
+            margin-bottom: 15px;
+        }
+        @media (max-width: 600px) {    
+            .li {margin-left: 15px;}
+            code {font-size: 9px;}
+        }
+
+        .main-middle {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            min-width: 110px;
+        }
+        .main-middle img {
+            width: 100%;
+            min-width: 110px;
+            height: auto;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .main-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            text-align: right;
+            min-width: 0;
+        } 
+       
+        footer {
+            position: fixed;    
+            bottom: 0; left: 0; right: 0;    
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 20px;
+        }
+        .yoksun {margin-bottom: 55px;}
+        .yoksun div:nth-child(2) {padding-left: 25px;}
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Dy[person_<br>online]</h2>
+        <div class="badge">🀢🀣🀦🀤</div>
+    </header>
+   
+    <main>
+        <div class="releases">
+            <h2>Dy[System.<br>log:</h2>
+            <div class="li">2:17<br><a href="witnessed">glitche<i>s</i>anim;</a></div>
+            <div class="li">5:17<br><a href="gyeongseong-creature">gyeongseong𖡎creature;</a></div>
+            <div class="li">1:16<br><a href="#🔘">marfa;</a></div>
+        </div>
+
+        <div class="main-middle"><img src="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/blobs/waiting-around.png" alt="🪩"></div>
+
+        <div class="main-right">
+            <div><a href="#🪩">ab:labs;</a></div>
+            <div class="robustness"><div>ab:fabs;</div><div>ab:favs;</div></div>
+            <div><code>"His Black Card;</code></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="yoksun"><div>About;</div><div><a href="Yuna_and_Joonwoo">Plot;</a></div></div>
+        <div><a href="svg-library">svg.library;</a></div>
+    </footer>
+
+<script>
+// In-memory Set to track visited links during current session
+const visitedLinks = new Set();
+
+const links = document.querySelectorAll('a');
+
+links.forEach(link => {
+  const href = link.href;
+
+  link.addEventListener('click', () => {
+    visitedLinks.add(href);
+    link.classList.add('visited');
+  });
+});
+</script>
+</body>
+</html>
