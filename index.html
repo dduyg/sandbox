@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Future Being</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #777777;
+      --border: #e5e5e5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 32px 40px;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+
+    .top-bar span {
+      color: var(--muted);
+    }
+
+    /* Logo */
+    .logo {
+      text-align: center;
+      font-size: 48px;
+      letter-spacing: 2px;
+      margin-bottom: 64px;
+    }
+
+    .logo span {
+      display: inline-block;
+      transform: translateY(-4px);
+    }
+
+    /* Main Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 2fr;
+      gap: 48px;
+    }
+
+    /* Info Block */
+    .info-block h4 {
+      margin: 0 0 16px 0;
+      font-weight: normal;
+      color: var(--muted);
+    }
+
+    .info-block p {
+      margin: 0 0 16px 0;
+      max-width: 520px;
+    }
+
+    /* Recent List */
+    .recent h4 {
+      margin: 0 0 16px 0;
+      font-weight: normal;
+      color: var(--muted);
+    }
+
+    .recent-list {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .recent-list tr {
+      border-bottom: 1px solid transparent;
+    }
+
+    .recent-list td {
+      padding: 4px 0;
+      vertical-align: top;
+    }
+
+    .col-tag {
+      width: 56px;
+      color: var(--muted);
+    }
+
+    .col-title {
+      width: 360px;
+    }
+
+    .col-meta {
+      width: 240px;
+      color: var(--muted);
+    }
+
+    .col-year {
+      text-align: right;
+      color: var(--muted);
+    }
+
+    /* Menu */
+    .menu {
+      margin-top: 96px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 24px;
+      color: var(--muted);
+    }
+
+    .menu span {
+      cursor: default;
+    }
+
+    .menu span.active {
+      color: var(--fg);
+    }
+
+    /* Footer Item */
+    .footer-item {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      body {
+        padding: 24px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .logo {
+        font-size: 36px;
+      }
+
+      .col-title {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top UI -->
+  <div class="top-bar">
+    <span>[–]</span>
+    <span>◉</span>
+  </div>
+
+  <!-- Logo -->
+  <div class="logo">
+    FUTURE<span>⟲</span>BEING
+  </div>
+
+  <!-- Main Content -->
+  <div class="grid">
+
+    <!-- Info -->
+    <div class="info-block">
+      <h4>[INFO]</h4>
+      <p>
+        FUTURE BEING IS A STUDIO DEDICATED TO NURTURING IDEAS AND SHARING
+        RESOURCES THAT SUPPORT THE HEALING OF OUR PLANET AND THE
+        SAFEGUARDING OF BIOLOGICAL AND CULTURAL DIVERSITY. OUR WORK
+        ENCOMPASSES GRANTS, STORYTELLING, EVENTS, AND COLLABORATIONS.
+      </p>
+      <p>
+        RATHER THAN ACCEPTING UNSOLICITED PROPOSALS, OUR GRANTS ARE
+        OFFERED THROUGH RELATIONSHIPS THAT GROW ORGANICALLY WITHIN OUR
+        COMMUNITY AND ECOSYSTEM.
+      </p>
+    </div>
+
+    <!-- Recent -->
+    <div class="recent">
+      <h4>[RECENT]</h4>
+
+      <table class="recent-list">
+        <tr>
+          <td class="col-tag">[CG]</td>
+          <td class="col-title">CAMILA FALQUEZ – ATMOS JUNE 2025</td>
+          <td class="col-meta">LGBTQ+, MEDIA</td>
+          <td class="col-year">2025</td>
+        </tr>
+
+        <tr>
+          <td class="col-tag">[FG]</td>
+          <td class="col-title">ATMOS</td>
+          <td class="col-meta">ENVIRONMENT, MEDIA</td>
+          <td class="col-year">2024</td>
+        </tr>
+
+        <tr>
+          <td class="col-tag">[FG]</td>
+          <td class="col-title">MORE OR LESS MAGAZINE – VOL 8</td>
+          <td class="col-meta">ETHICAL FASHION</td>
+          <td class="col-year">2024</td>
+        </tr>
+
+        <tr>
+          <td class="col-tag">[FG]</td>
+          <td class="col-title">SEALEGACY</td>
+          <td class="col-meta">ENVIRONMENT, MEDIA</td>
+          <td class="col-year">2024</td>
+        </tr>
+
+        <tr>
+          <td class="col-tag">[CG]</td>
+          <td class="col-title">CAMILA FALQUEZ – COMPAÑERX</td>
+          <td class="col-meta">LGBTQ+</td>
+          <td class="col-year">2024</td>
+        </tr>
+
+        <tr>
+          <td class="col-tag">[CG]</td>
+          <td class="col-title">LENA C. EMERY – SVALBARD</td>
+          <td class="col-meta">ENVIRONMENT</td>
+          <td class="col-year">2024</td>
+        </tr>
+
+        <tr>
+          <td class="col-tag">[C]</td>
+          <td class="col-title">FUTURE BEING × THE OR: SPEAK VOLUMES CAMPAIGN</td>
+          <td class="col-meta">ENVIRONMENT, TEXTILE WASTE, ETHICAL FASHION</td>
+          <td class="col-year">2024</td>
+        </tr>
+
+        <tr>
+          <td class="col-tag">[FG]</td>
+          <td class="col-title">BUZIGAHILL – RETURN TO SENDER</td>
+          <td class="col-meta">ETHICAL FASHION</td>
+          <td class="col-year">2024</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Menu -->
+  <div class="menu">
+    <span>[MENU]</span>
+    <span class="active">ALL</span>
+    <span>FEATURED GRANTS</span>
+    <span>CREATIVE GRANTS</span>
+    <span>COLLABORATIONS</span>
+  </div>
+
+  <!-- Footer Item -->
+  <div class="footer-item">
+    <span>[CG] CAMILA FALQUEZ – ATMOS JUNE 2025 [+]</span>
+    <span>JUN 2025</span>
+  </div>
+
+</body>
+</html>
