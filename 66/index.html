@@ -36,23 +36,9 @@ h1 {
   display: flex;
   align-items: stretch;
   gap: 8px;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   flex-wrap: wrap;
   max-width: 900px;
-}
-
-.controls input {
-  height: 36px;
-  padding: 0 12px;
-  font-size: 14px;
-  flex: 1;
-  min-width: 200px;
-  background: #2f2f31;
-  border: 1px solid var(--border);
-  color: var(--accent);
-}
-.controls input::placeholder {
-  color: rgba(240,240,240,0.5);
 }
 
 /* Toggle Button */
@@ -60,19 +46,19 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #000;
-  color: #fff;
+  background: #2f2f31;
+  color: var(--accent);
   padding: 8px 15px;
+  border: 1px solid var(--border);
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  height: 36px;
-  border: 1px solid var(--border);
   transition: background 0.15s ease;
+  height: 44px;
 }
 
 .toggleBtn:hover {
-  background: #1a1a1a;
+  background: rgba(255,255,255,0.08);
 }
 
 .toggle-switch {
@@ -87,101 +73,32 @@ h1 {
 .toggle-switch::after {
   content: '';
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
-  background: var(--bg);
+  top: 2px; left: 2px;
+  width: 16px; height: 16px;
+  background: var(--accent);
   border-radius: 50%;
   transition: 0.3s;
 }
 
-.toggle-switch.and-mode {
-  background: var(--accent-color);
+.toggle-switch.and-mode { 
+  background: var(--accent-color); 
 }
 
-.toggle-switch.and-mode::after {
-  left: 22px;
+.toggle-switch.and-mode::after { 
+  left: 22px; 
 }
 
-/* Dropdown Container */
-.dropdown-container {
-  position: relative;
-  flex: 1;
-  min-width: 200px;
-  max-width: 300px;
-}
-
-.dropdown-search {
-  width: 100%;
-  height: 36px;
-  padding: 0 12px;
-  border: 1px solid var(--border);
-  background: #2f2f31;
-  color: var(--accent);
-  font-family: inherit;
-  font-size: 14px;
-  outline: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.dropdown-search::placeholder {
-  color: rgba(240,240,240,0.5);
-}
-
-.dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #2f2f31;
-  border: 1px solid var(--border);
-  border-top: none;
-  max-height: 250px;
-  overflow-y: auto;
-  display: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 1000;
-  border-radius: 0 0 4px 4px;
-}
-
-.dropdown-list.show {
-  display: block;
-}
-
-.dropdown-item {
-  padding: 10px 12px;
-  cursor: pointer;
-  color: var(--main);
-  transition: background 0.15s ease;
-}
-
-.dropdown-item:hover {
-  background: rgba(240,240,240,0.08);
-}
-
-.dropdown-item.selected {
-  background: var(--accent-color);
-  color: var(--bg);
-  font-weight: 500;
-}
-
-.dropdown-item.hidden {
-  display: none;
-}
-
-/* Favorites button */
+/* Favorites Toggle */
 .favToggle {
-  height: 36px;
-  padding: 0 12px;
+  height: 44px;
+  padding: 0 15px;
   font-size: 16px;
   cursor: pointer;
-  background: transparent;
+  background: #2f2f31;
   border: 1px solid var(--border);
   color: var(--main);
-  transition: background 0.15s ease, color 0.15s ease;
   border-radius: 4px;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .favToggle:hover {
@@ -193,6 +110,92 @@ h1 {
   background: var(--accent-color);
   color: var(--accent);
   border-color: var(--accent-color);
+}
+
+/* Custom Dropdown Styling */
+.dropdown-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+  min-width: 200px;
+}
+
+.dropdown-search {
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  background: #2f2f31;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  border-radius: 4px;
+  transition: border-color 0.15s ease;
+}
+
+.dropdown-search:focus {
+  border-color: var(--accent-color);
+}
+
+.dropdown-search::placeholder {
+  color: rgba(240,240,240,0.5);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0; 
+  right: 0;
+  background: #2f2f31;
+  border: 1px solid var(--border);
+  border-top: none;
+  max-height: 250px;
+  overflow-y: auto;
+  display: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  z-index: 1000;
+  margin-top: -1px;
+  border-radius: 0 0 4px 4px;
+}
+
+.dropdown-list.show { 
+  display: block; 
+}
+
+.dropdown-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  color: var(--main);
+  transition: background 0.1s ease;
+}
+
+.dropdown-item:hover { 
+  background: rgba(255,255,255,0.08);
+}
+
+.dropdown-item.selected {
+  background: var(--accent-color);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Scrollbar styling for dropdown */
+.dropdown-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdown-list::-webkit-scrollbar-track {
+  background: #1f1f21;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb:hover {
+  background: #666;
 }
 
 /* ===== Grid ===== */
@@ -228,7 +231,7 @@ h1 {
 }
 
 .item svg {
-  width: 100%;
+  width: 100%; 
   height: 100%;
   max-height: 64px;
   fill: var(--main);
@@ -267,6 +270,15 @@ h1 {
   .actions button {
     font-size: 12px;
   }
+  
+  .controls {
+    gap: 6px;
+  }
+  
+  .toggleBtn {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
 }
 </style>
 </head>
@@ -274,23 +286,22 @@ h1 {
 <h1>SVG Catalog</h1>
 
 <div class="controls">
-  <input id="search" placeholder="Search icons…" />
-  
-  <div class="toggleBtn" id="modeToggle">
-    <span>OR</span>
-    <div class="toggle-switch"></div>
-    <span>AND</span>
+  <div class="toggleBtn" id="toggleBtn">
+    <span>//</span>
+    <div class="toggle-switch" id="toggleSwitch"></div>
+    <span>&</span>
   </div>
   
   <div class="dropdown-container">
-    <input type="text" class="dropdown-search" id="dropdownSearch" placeholder="Search tags..." readonly />
+    <input type="text" class="dropdown-search" id="dropdownSearch" placeholder="Search tags..." />
     <div id="tagList" class="dropdown-list"></div>
   </div>
   
-  <button id="favToggle" class="favToggle">☆</button>
+  <button class="favToggle" id="favToggle">☆</button>
 </div>
 
 <div class="grid" id="gallery"></div>
+
 <script src="app.js"></script>
 </body>
 </html>
