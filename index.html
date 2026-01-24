@@ -5,12 +5,15 @@
   <title>Future Being</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --bg: #ffffff;
-      --fg: #111111;
-      --muted: #777777;
-      --border: #e5e5e5;
+      --bg: #f7f7f5;
+      --text: #111;
+      --muted: #777;
+      --line: #d6d6d2;
     }
 
     * {
@@ -19,256 +22,234 @@
 
     body {
       margin: 0;
-      padding: 32px 40px;
       background: var(--bg);
-      color: var(--fg);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      color: var(--text);
+      font-family: "IBM Plex Mono", monospace;
       font-size: 13px;
-      line-height: 1.45;
+      line-height: 1.55;
     }
 
-    /* Top Bar */
-    .top-bar {
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 48px 24px;
+    }
+
+    /* Header */
+    header {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 56px;
+      justify-content: center;
+      margin-bottom: 48px;
     }
 
-    .top-bar span {
-      color: var(--muted);
-    }
-
-    /* Logo */
     .logo {
-      text-align: center;
+      font-family: "Playfair Display", serif;
       font-size: 48px;
-      letter-spacing: 2px;
-      margin-bottom: 64px;
+      letter-spacing: 0.5px;
     }
 
     .logo span {
-      display: inline-block;
-      transform: translateY(-4px);
+      font-style: italic;
     }
 
-    /* Main Grid */
+    /* Main layout */
     .grid {
       display: grid;
-      grid-template-columns: 1.2fr 2fr;
-      gap: 48px;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
     }
 
-    /* Info Block */
-    .info-block h4 {
-      margin: 0 0 16px 0;
-      font-weight: normal;
+    /* Left column */
+    .label {
       color: var(--muted);
+      margin-bottom: 8px;
     }
 
-    .info-block p {
-      margin: 0 0 16px 0;
-      max-width: 520px;
+    .info p {
+      margin: 0 0 16px;
+      max-width: 420px;
     }
 
-    /* Recent List */
-    .recent h4 {
-      margin: 0 0 16px 0;
-      font-weight: normal;
-      color: var(--muted);
+    /* Right column */
+    .recent {
+      width: 100%;
     }
 
     .recent-list {
-      width: 100%;
-      border-collapse: collapse;
+      margin-top: 8px;
     }
 
-    .recent-list tr {
-      border-bottom: 1px solid transparent;
+    .row {
+      display: grid;
+      grid-template-columns: 60px 1fr 160px 60px;
+      gap: 16px;
+      padding: 6px 0;
+      align-items: baseline;
     }
 
-    .recent-list td {
-      padding: 4px 0;
-      vertical-align: top;
+    .row span {
+      white-space: nowrap;
     }
 
-    .col-tag {
-      width: 56px;
-      color: var(--muted);
-    }
-
-    .col-title {
-      width: 360px;
-    }
-
-    .col-meta {
-      width: 240px;
-      color: var(--muted);
-    }
-
-    .col-year {
-      text-align: right;
+    .row .muted {
       color: var(--muted);
     }
 
     /* Menu */
     .menu {
-      margin-top: 96px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
+      margin-top: 56px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
       display: flex;
       gap: 24px;
+      font-size: 12px;
+    }
+
+    .menu .muted {
       color: var(--muted);
     }
 
-    .menu span {
-      cursor: default;
-    }
-
-    .menu span.active {
-      color: var(--fg);
-    }
-
-    /* Footer Item */
-    .footer-item {
+    /* Footer expandable row */
+    .footer-row {
       margin-top: 32px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
+      font-size: 12px;
     }
 
     /* Responsive */
     @media (max-width: 900px) {
-      body {
-        padding: 24px;
-      }
-
       .grid {
         grid-template-columns: 1fr;
+        gap: 40px;
       }
 
-      .logo {
-        font-size: 36px;
+      .row {
+        grid-template-columns: 50px 1fr;
+        gap: 8px;
       }
 
-      .col-title {
-        width: auto;
+      .row span:nth-child(3),
+      .row span:nth-child(4) {
+        display: none;
       }
     }
   </style>
 </head>
+
 <body>
+  <div class="page">
 
-  <!-- Top UI -->
-  <div class="top-bar">
-    <span>[–]</span>
-    <span>◉</span>
-  </div>
+    <header>
+      <div class="logo">Future <span>Being</span></div>
+    </header>
 
-  <!-- Logo -->
-  <div class="logo">
-    FUTURE<span>⟲</span>BEING
-  </div>
+    <main class="grid">
 
-  <!-- Main Content -->
-  <div class="grid">
+      <!-- INFO -->
+      <section class="info">
+        <div class="label">[INFO]</div>
+        <p>
+          FUTURE BEING IS A STUDIO DEDICATED TO NURTURING IDEAS AND SHARING
+          RESOURCES THAT SUPPORT THE HEALING OF OUR PLANET AND THE SAFEGUARDING
+          OF BIOLOGICAL AND CULTURAL DIVERSITY. OUR WORK ENCOMPASSES GRANTS,
+          STORYTELLING, EVENTS, AND COLLABORATIONS.
+        </p>
+        <p>
+          RATHER THAN ACCEPTING UNSOLICITED PROPOSALS, OUR GRANTS ARE OFFERED
+          THROUGH RELATIONSHIPS THAT GROW ORGANICALLY WITHIN OUR COMMUNITY AND
+          ECOSYSTEM.
+        </p>
+      </section>
 
-    <!-- Info -->
-    <div class="info-block">
-      <h4>[INFO]</h4>
-      <p>
-        FUTURE BEING IS A STUDIO DEDICATED TO NURTURING IDEAS AND SHARING
-        RESOURCES THAT SUPPORT THE HEALING OF OUR PLANET AND THE
-        SAFEGUARDING OF BIOLOGICAL AND CULTURAL DIVERSITY. OUR WORK
-        ENCOMPASSES GRANTS, STORYTELLING, EVENTS, AND COLLABORATIONS.
-      </p>
-      <p>
-        RATHER THAN ACCEPTING UNSOLICITED PROPOSALS, OUR GRANTS ARE
-        OFFERED THROUGH RELATIONSHIPS THAT GROW ORGANICALLY WITHIN OUR
-        COMMUNITY AND ECOSYSTEM.
-      </p>
+      <!-- RECENT -->
+      <section class="recent">
+        <div class="label">[RECENT]</div>
+
+        <div class="recent-list">
+
+          <div class="row">
+            <span class="muted">[CG]</span>
+            <span>CAMILA FALQUEZ – ATMOS JUNE 2025</span>
+            <span class="muted">LGBTQ+, MEDIA</span>
+            <span class="muted">2025</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">[FG]</span>
+            <span>ATMOS</span>
+            <span class="muted">ENVIRONMENT, MEDIA</span>
+            <span class="muted">2024</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">[FG]</span>
+            <span>MORE OR LESS MAGAZINE – VOL 8</span>
+            <span class="muted">ETHICAL FASHION</span>
+            <span class="muted">2024</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">[FG]</span>
+            <span>SEALEGACY</span>
+            <span class="muted">ENVIRONMENT, MEDIA</span>
+            <span class="muted">2024</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">[CG]</span>
+            <span>CAMILA FALQUEZ – COMPAÑERX</span>
+            <span class="muted">LGBTQ+</span>
+            <span class="muted">2024</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">[CG]</span>
+            <span>LENA C. EMERY – SVALBARD</span>
+            <span class="muted">ENVIRONMENT</span>
+            <span class="muted">2024</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">[C]</span>
+            <span>FUTURE BEING × THE OR: SPEAK VOLUMES CAMPAIGN</span>
+            <span class="muted">ENVIRONMENT, TEXTILE WASTE, ETHICAL FASHION</span>
+            <span class="muted">2024</span>
+          </div>
+
+          <div class="row">
+            <span class="muted">[FG]</span>
+            <span>BUZIGAHILL – RETURN TO SENDER</span>
+            <span class="muted">ETHICAL FASHION</span>
+            <span class="muted">2024</span>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- MENU -->
+    <nav class="menu">
+      <span class="muted">[MENU]</span>
+      <a href="#">ALL</a>
+      <a href="#">FEATURED GRANTS</a>
+      <a href="#">CREATIVE GRANTS</a>
+      <a href="#">COLLABORATIONS</a>
+    </nav>
+
+    <!-- FOOTER ROW -->
+    <div class="footer-row">
+      <span>[CG] CAMILA FALQUEZ – ATMOS JUNE 2025 [+]</span>
+      <span class="muted">JUN 2025</span>
     </div>
 
-    <!-- Recent -->
-    <div class="recent">
-      <h4>[RECENT]</h4>
-
-      <table class="recent-list">
-        <tr>
-          <td class="col-tag">[CG]</td>
-          <td class="col-title">CAMILA FALQUEZ – ATMOS JUNE 2025</td>
-          <td class="col-meta">LGBTQ+, MEDIA</td>
-          <td class="col-year">2025</td>
-        </tr>
-
-        <tr>
-          <td class="col-tag">[FG]</td>
-          <td class="col-title">ATMOS</td>
-          <td class="col-meta">ENVIRONMENT, MEDIA</td>
-          <td class="col-year">2024</td>
-        </tr>
-
-        <tr>
-          <td class="col-tag">[FG]</td>
-          <td class="col-title">MORE OR LESS MAGAZINE – VOL 8</td>
-          <td class="col-meta">ETHICAL FASHION</td>
-          <td class="col-year">2024</td>
-        </tr>
-
-        <tr>
-          <td class="col-tag">[FG]</td>
-          <td class="col-title">SEALEGACY</td>
-          <td class="col-meta">ENVIRONMENT, MEDIA</td>
-          <td class="col-year">2024</td>
-        </tr>
-
-        <tr>
-          <td class="col-tag">[CG]</td>
-          <td class="col-title">CAMILA FALQUEZ – COMPAÑERX</td>
-          <td class="col-meta">LGBTQ+</td>
-          <td class="col-year">2024</td>
-        </tr>
-
-        <tr>
-          <td class="col-tag">[CG]</td>
-          <td class="col-title">LENA C. EMERY – SVALBARD</td>
-          <td class="col-meta">ENVIRONMENT</td>
-          <td class="col-year">2024</td>
-        </tr>
-
-        <tr>
-          <td class="col-tag">[C]</td>
-          <td class="col-title">FUTURE BEING × THE OR: SPEAK VOLUMES CAMPAIGN</td>
-          <td class="col-meta">ENVIRONMENT, TEXTILE WASTE, ETHICAL FASHION</td>
-          <td class="col-year">2024</td>
-        </tr>
-
-        <tr>
-          <td class="col-tag">[FG]</td>
-          <td class="col-title">BUZIGAHILL – RETURN TO SENDER</td>
-          <td class="col-meta">ETHICAL FASHION</td>
-          <td class="col-year">2024</td>
-        </tr>
-      </table>
-    </div>
-
   </div>
-
-  <!-- Menu -->
-  <div class="menu">
-    <span>[MENU]</span>
-    <span class="active">ALL</span>
-    <span>FEATURED GRANTS</span>
-    <span>CREATIVE GRANTS</span>
-    <span>COLLABORATIONS</span>
-  </div>
-
-  <!-- Footer Item -->
-  <div class="footer-item">
-    <span>[CG] CAMILA FALQUEZ – ATMOS JUNE 2025 [+]</span>
-    <span>JUN 2025</span>
-  </div>
-
 </body>
 </html>
