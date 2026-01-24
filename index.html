@@ -8,16 +8,27 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Space+Mono&display=swap" rel="stylesheet">
 
   <style>
+    /* =====================
+       THEME VARIABLES
+    ====================== */
     :root {
-      --text: #000;
-      --bg: #fff;
-      --mono: 'Space Mono', monospace;
-      --sans: 'Inter', sans-serif;
+      --bg: #ffffff;
+      --text: #000000;
+      --border: #000000;
     }
 
+    body.dark {
+      --bg: #0e0e0e;
+      --text: #ffffff;
+      --border: #ffffff;
+    }
+
+    /* =====================
+       BASE RESET
+    ====================== */
     * {
       box-sizing: border-box;
     }
@@ -26,16 +37,21 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: var(--sans);
+      font-family: 'Inter', sans-serif;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
-    /* Page container */
+    /* =====================
+       PAGE WRAPPER
+    ====================== */
     .page {
       padding: 40px 48px;
       max-width: 1400px;
     }
 
-    /* Header */
+    /* =====================
+       HEADER
+    ====================== */
     .header {
       display: flex;
       align-items: center;
@@ -44,7 +60,7 @@
     }
 
     .collapse {
-      font-family: var(--mono);
+      font-family: 'Space Mono', monospace;
       font-size: 14px;
       letter-spacing: 0.15em;
       opacity: 0.7;
@@ -57,26 +73,38 @@
       text-transform: uppercase;
     }
 
+    /* =====================
+       TOGGLE
+    ====================== */
     .toggle {
       width: 44px;
       height: 24px;
-      border: 2px solid #000;
+      border: 2px solid var(--border);
       border-radius: 999px;
       position: relative;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
     }
 
     .toggle::after {
       content: "";
       position: absolute;
       top: 3px;
-      right: 3px;
+      left: 3px;
       width: 14px;
       height: 14px;
-      background: #000;
+      background: var(--text);
       border-radius: 50%;
+      transition: transform 0.3s ease, background 0.3s ease;
     }
 
-    /* Content layout */
+    body.dark .toggle::after {
+      transform: translateX(20px);
+    }
+
+    /* =====================
+       SECTIONS
+    ====================== */
     .section {
       display: grid;
       grid-template-columns: 120px 1fr;
@@ -85,7 +113,7 @@
     }
 
     .label {
-      font-family: var(--mono);
+      font-family: 'Space Mono', monospace;
       font-size: 14px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -101,7 +129,9 @@
       font-weight: 300;
     }
 
-    /* Campaign section */
+    /* =====================
+       CAMPAIGN
+    ====================== */
     .campaign {
       display: grid;
       grid-template-columns: 120px 1fr;
@@ -109,29 +139,27 @@
       align-items: baseline;
     }
 
-    .campaign-title {
-      font-family: var(--mono);
-      font-size: 16px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .campaign-meta {
-      font-family: var(--mono);
-      font-size: 14px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-left: 12px;
-      opacity: 0.7;
-    }
-
     .campaign-line {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
       gap: 12px;
     }
 
+    .campaign-title,
+    .campaign-meta {
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .campaign-meta {
+      opacity: 0.7;
+    }
+
+    /* =====================
+       RESPONSIVE
+    ====================== */
     @media (max-width: 768px) {
       .section,
       .campaign {
@@ -152,17 +180,18 @@
     }
   </style>
 </head>
+
 <body>
   <div class="page">
 
-    <!-- Header -->
+    <!-- HEADER -->
     <header class="header">
       <div class="collapse">[ – ]</div>
       <div class="logo">Future Being</div>
-      <div class="toggle"></div>
+      <div class="toggle" aria-label="Toggle dark mode"></div>
     </header>
 
-    <!-- INFO Section -->
+    <!-- INFO -->
     <section class="section">
       <div class="label">[INFO]</div>
       <div class="content">
@@ -173,22 +202,38 @@
       </div>
     </section>
 
-    <!-- Campaign Section -->
+    <!-- CAMPAIGN -->
     <section class="campaign">
       <div class="label">[C]</div>
       <div class="campaign-line">
-        <div class="campaign-title">
-          Future Being x The Or:
-        </div>
-        <div class="campaign-meta">
-          [ + ] Nov 2024
-        </div>
-        <div class="campaign-title">
-          Speak Volumes Campaign
-        </div>
+        <div class="campaign-title">Future Being x The Or:</div>
+        <div class="campaign-meta">[ + ] Nov 2024</div>
+        <div class="campaign-title">Speak Volumes Campaign</div>
       </div>
     </section>
 
   </div>
+
+  <!-- =====================
+       DARK MODE SCRIPT
+  ====================== -->
+  <script>
+    const toggle = document.querySelector('.toggle');
+    const body = document.body;
+
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      body.classList.add('dark');
+    }
+
+    toggle.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      localStorage.setItem(
+        'theme',
+        body.classList.contains('dark') ? 'dark' : 'light'
+      );
+    });
+  </script>
 </body>
 </html>
