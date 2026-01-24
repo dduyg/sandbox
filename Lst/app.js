@@ -103,14 +103,12 @@ function renderSVGs() {
       gallery.appendChild(div);
     });
   
-  // Update tag counts after rendering
   updateTagCounts();
 }
 
 function getTagCounts() {
   const tagCounts = {};
   
-  // Count tags from full dataset
   svgs.forEach(svg => {
     svg.tags.forEach(tag => {
       tagCounts[tag] = (tagCounts[tag] || 0) + 1;
@@ -191,7 +189,7 @@ function toggleTag(tag) {
 
   dropdownSearch.placeholder = selectedTags.length > 0 
     ? selectedTags.join(', ') 
-    : "Search & filter by tags...";
+    : "Search to filter by tags...";
   
   renderSVGs();
 }
