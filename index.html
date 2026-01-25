@@ -17,17 +17,29 @@
       --border: #ffffff;
     }
     * {box-sizing: border-box;}
-  @font-face {
-    font-family: 'Sinopia';
-    src: url('https://off-type.com/cdn/shop/t/12/assets/Sinopia-Regular.otf?v=176993110263018793381762199780') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-  }
+    @font-face {
+      font-family: 'MarfaMono';
+      src: url('MarfaMono-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'JubileePlatinum';
+      src: url('Jubilee-Platinum.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: 'Sinopia';
+      src: url('Sinopia.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Sinopia', sans-serif;
+      font-family: 'MarfaMono', monospace;
       transition: background 0.3s ease, color 0.3s ease;
     }
     .page {
