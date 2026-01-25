@@ -18,69 +18,22 @@
     }
     * {box-sizing: border-box;}
     @font-face {
-      font-family: 'EK Roumald';
-      src: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/EKRoumald.woff2') format('woff2');
-      font-weight: normal;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'MarfaMono';
+      font-family: 'Marfa Mono';
       src: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/MarfaMono.woff2') format('woff2');
       font-weight: normal;
       font-style: normal;
     }
-    .f1 {font-family: 'MarfaMono', monospace;}
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: 'EK Roumald', serif;
+      font-family: 'Marfa Mono', monospace;
       transition: background 0.3s ease, color 0.3s ease;
     }
     .page {
       padding: 40px 48px;
       max-width: 950px;
     }
-
-    .glitch-text {
-  position: relative;
-  color: inherit;
-  text-decoration: none;
-}
-.glitch-text::before, .glitch-text::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  opacity: 0.8;
-}
-
-/* Color offset layers */
-.glitch-text::before {
-  color: #0ff; /* Cyan */
-  z-index: -1;
-}
-.glitch-text::after {
-  color: #f0f; /* Magenta */
-  z-index: -2;
-}
-.glitch-text:hover::before {
-  animation: glitch-top 0.4s infinite linear alternate-reverse;
-}
-.glitch-text:hover::after {
-  animation: glitch-bottom 0.4s infinite linear alternate-reverse;
-}
-@keyframes glitch-top {
-  0% {transform: translate(2px, -2px); clip-path: inset(0 0 66% 0);}
-  50% {transform: translate(-2px, 2px); clip-path: inset(0 0 66% 0);}
-  100% {transform: translate(2px, -2px); clip-path: inset(0 0 66% 0);}
-}
-@keyframes glitch-bottom {
-  0% {transform: translate(-2px, 2px); clip-path: inset(66% 0 0 0);}
-  50% {transform: translate(2px, -2px); clip-path: inset(66% 0 0 0);}
-  100% {transform: translate(-2px, 2px); clip-path: inset(66% 0 0 0);}
-}
-
 
     header {
       display: flex;
@@ -129,7 +82,6 @@
     }
 
     .label {
-      font-family: 'Space Mono', monospace;
       font-size: 14px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
