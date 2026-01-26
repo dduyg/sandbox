@@ -1,5 +1,5 @@
-from @shelf/06/BLOBs/blob-05.png to @shelf
-     @shelf/06/BLOBs/blob-06.png to @shelf
+from @shelf/06/BLOBs/blob-05.png to https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/62284a_b8a084_e020b2a7.png
+     @shelf/06/BLOBs/blob-06.png to https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/b7aac1_8b86ae_bd21af83.png
      @shelf/06/BLOBs/blob-07.png to @shelf
      @shelf/06/BLOBs/blob-08.png to @shelf
      @shelf/06/BLOBs/blob-10.png to @shelf
