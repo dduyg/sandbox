@@ -2,9 +2,9 @@ from @shelf/06/BLOBs/blob-05.png to https://cdn.jsdelivr.net/gh/dduyg/glyph-data
      @shelf/06/BLOBs/blob-06.png to https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/b7aac1_8b86ae_bd21af83.png
      @shelf/06/BLOBs/blob-07.png to https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/958482_b4afd6_00bdabd5.png
      @shelf/06/BLOBs/blob-08.png to https://cdn.jsdelivr.net/gh/dduyg/glyph-data-library@main/glyphs/ad8599_cdc8d1_ba478238.png
-     @shelf/06/BLOBs/blob-10.png to @shelf
+     @shelf/06/BLOBs/blob-10.png to @shelf/0-6/blobs/blob-10.png
      @shelf/06/BLOBs/blob-16.gif to @shelf/0-6/blobs/blob-16.gif
-     @shelf/06/BLOBs/blob-35.png to @shelf
+     @shelf/06/BLOBs/blob-35.png to @shelf/0-6/blobs/blob-35.png
      @shelf/06/DolphinDatabase.png to @shelf/0-6/blobs/DolphinDatabase.png
      @shelf/06/GeometricAir.jpg to @shelf/0-6/backscapes/GeometricAir.jpg
      @shelf/06/MountFujiLoading.png to @shelf/0-6/backscapes/MountFujiLoading.png
