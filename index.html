@@ -1,151 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LimimalLoop</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Space+Mono&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #ffffff;
-      --text: #000000;
-      --border: #000000;
-    }
-    body.dark {
-      --bg: #0e0e0e;
-      --text: #ffffff;
-      --border: #ffffff;
-    }
-    * {box-sizing: border-box;}
-    @font-face {
-      font-family: 'Marfa Mono';
-      src: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/MarfaMono.woff2') format('woff2');
-      font-weight: normal;
-      font-style: normal;
-    }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'Marfa Mono', monospace;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    .page {
-      padding: 40px 48px;
-      max-width: 950px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hi i'm Ofri Colqda - Visual Artist</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 80px;
-    }
+        body {
+            background-color: #f5f5f0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #000;
+            overflow-x: hidden;
+        }
 
-    .collapse {
-      font-family: monospace;
-      font-size: 12px;
-      opacity: 0.7;
-    }
+        /* Navigation Bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 30px 50px;
+            position: relative;
+        }
 
-    .title {
-      font-size: 42px;
-      text-transform: uppercase;
-    }
+        .nav-left {
+            font-size: 24px;
+            font-weight: normal;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
 
-    .toggle {
-      width: 44px; height: 24px;
-      border: 2px solid var(--border);
-      border-radius: 999px;
-      position: relative;
-      cursor: pointer;
-      transition: border-color 0.3s ease;
-    }
-    .toggle::after {
-      content: "";
-      position: absolute;
-      top: 3px; left: 3px;
-      width: 14px; height: 14px;
-      background: var(--text);
-      border-radius: 50%;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    body.dark .toggle::after {
-      transform: translateX(19px);
-    }
+        .nav-left:hover {
+            opacity: 0.7;
+        }
 
-    section {
-      display: grid;
-      grid-template-columns: 120px 1fr;
-      column-gap: 48px;
-      margin-bottom: 120px;
-    }
+        .nav-center {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
-    .label {
-      font-size: 14px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      opacity: 0.8;
-    }
+        .logo {
+            width: 50px;
+            height: auto;
+            filter: brightness(0);
+        }
 
-    .content {
-      max-width: 760px;
-      font-size: 16px;
-      line-height: 1.6;
-      font-weight: 300;
-    }
+        .nav-right {
+            font-size: 24px;
+            font-weight: normal;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
 
-    @media (max-width: 768px) {
-      .title {font-size: 20px;}
-      .page {padding: 32px 24px;}
-       section {grid-template-columns: 90px 1fr; column-gap: 20px;}
-    }
-  </style>
+        .nav-right:hover {
+            opacity: 0.7;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 120px);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: clamp(60px, 12vw, 140px);
+            line-height: 1.1;
+            font-weight: normal;
+            margin-bottom: 20px;
+        }
+
+        .title .hi {
+            font-family: 'Georgia', serif;
+            font-style: normal;
+        }
+
+        .title .ofri {
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .subtitle {
+            font-size: clamp(50px, 10vw, 120px);
+            line-height: 1.2;
+            font-weight: normal;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+        }
+
+        .description {
+            font-size: clamp(60px, 12vw, 140px);
+            line-height: 1.1;
+            font-weight: normal;
+            margin-top: -10px;
+        }
+
+        .myworld {
+            font-size: clamp(70px, 14vw, 160px);
+            line-height: 1;
+            font-weight: normal;
+            margin-top: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .nav-left, .nav-right {
+                font-size: 18px;
+            }
+
+            .logo {
+                width: 40px;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            .nav-left, .nav-right {
+                font-size: 16px;
+                letter-spacing: 1px;
+            }
+
+            .logo {
+                width: 35px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div class="collapse">[ – ]</div>
-      <div class="title">Distort</div</div>
-      <div class="toggle"></div>
-    </header>
+    <nav>
+        <div class="nav-left">ABOUT</div>
+        <div class="nav-center">
+            <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                <!-- Simple donkey/horse silhouette -->
+                <path d="M70,30 L75,25 L78,30 L75,35 Z M65,35 C65,35 70,30 70,30 L70,45 C70,50 68,52 65,52 L60,52 C58,52 55,50 55,48 L55,40 L50,40 L50,50 C50,55 45,60 40,60 L35,60 L35,70 L32,70 L32,60 L28,60 L28,70 L25,70 L25,58 C25,58 22,55 22,50 L22,45 C22,40 25,38 30,38 L45,38 L45,42 L40,42 C38,42 37,43 37,45 L37,48 L55,48 L55,35 L60,35 C62,35 65,35 65,35 Z" fill="black"/>
+                <!-- Arrows -->
+                <path d="M82,45 L85,48 L82,51 M15,45 L12,48 L15,51" stroke="black" stroke-width="2" fill="none"/>
+            </svg>
+        </div>
+        <div class="nav-right">INDEX</div>
+    </nav>
 
-    <section>
-      <div class="label">[INFO]</div>
-      <div class="content">
-        Through <a href="#" class="glitch-text" data-text="CYBER">CYBER</a>, Future Being partners with nonprofit organization
-        to sponsor campaigns, marketing initiatives, and events that resonate with
-        our mission. These efforts amplify the work of our partners, helping to
-        expand their reach and deepen their impact.
-      </div>
-    </section>
-  
-    <section>
-      <div class="label">[TYPE]</div>
-      <div class="content">
-        <div>Future Later x The Or:</div>
-        <div>[ + ] Nov 2034</div>
-        <div>Start Volumes Citrus</div>
-      </div>
-    </section>
-  </div>
-
-  <script>
-    const toggle = document.querySelector('.toggle');
-    const body = document.body;
-
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      body.classList.add('dark');
-    }
-
-    toggle.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      localStorage.setItem(
-        'theme',
-        body.classList.contains('dark') ? 'dark' : 'light'
-      );
-    });
-  </script>
+    <main class="main-content">
+        <h1 class="title">
+            <span class="hi">Hi i'm</span><span class="ofri">Ofri</span>
+        </h1>
+        <h2 class="subtitle">Colqda</h2>
+        <p class="description">a visual artist</p>
+        <p class="myworld">welcome to<br>my world</p>
+    </main>
 </body>
 </html>
