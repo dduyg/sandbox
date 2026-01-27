@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LïmïñåL🧾Loop</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {margin: 0; padding: 0; box-sizing: border-box;}
         body {
             font-family: 'Georgia', serif;
             background-color: #e8e8e3;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 40px 20px 100px 20px;
         }
 
         .content {
             text-align: center;
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             max-width: 900px;
             font-size: 65px;
             line-height: 1.4;
+            padding-bottom: 100px;
         }
-    
+
         .word {
             display: inline;
             transition: opacity 0.3s ease;
@@ -56,12 +56,19 @@
         }
         .space {display: inline;}
 
+        footer {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
         .toggle-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin-top: 60px;
         }
         .toggle-switch {
             position: relative;
@@ -69,7 +76,6 @@
             height: 40px;
             cursor: pointer;
             display: flex;
-            border: 2px solid;
         }
         .toggle-option {
             flex: 1;
@@ -79,19 +85,42 @@
             font-size: 12px;
             font-family: 'Arial', sans-serif;
             letter-spacing: 2px;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
             user-select: none;
+            border: 2px solid;
         }
-        .toggle-option.left {background-color: #fff; border-color: #616161;}
-        .toggle-option.right {background-color: #C2C2C2; border-color: #616161;}
-        .toggle-switch.icon-active .toggle-option.left {background-color: #3D3D47; border-color: #1B1B1B;}
-        .toggle-switch.icon-active .toggle-option.right {background-color: #C2C2C2; border-color: #3D3D45;}
+        .toggle-option.left {
+            background-color: #fff;
+            border-color: #616161;
+            color: #000;
+            border-right: none;
+        }
+        .toggle-option.right {
+            background-color: #C2C2C2;
+            border-color: #616161;
+            border-left: none;
+            color: #000;
+        }
+        .toggle-switch.icon-active .toggle-option.left {
+            background-color: #3D3D47;
+            border-color: #1B1B1B;
+            color: #fff;
+            border-right: none;
+        }
+        .toggle-switch.icon-active .toggle-option.right {
+            background-color: #C2C2C2;
+            border-color: #3D3D45;
+            border-left: none;
+            color: #000;
+        }
+        .toggle-label {
+            font-family: 'Arial', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            color: #000;
+        }
 
-        footer {
-            position: fixed;
-            bottom: 5vh; left: 50vw;
-        }
-        
         @media (max-width: 768px) {
             .content {font-size: 40px;}
         }
@@ -143,9 +172,15 @@
             <span class="word icon-mode" data-word="it."><img src="0523.png" class="icon-image" alt="icon"></span>
         </div>
     </div>
+
     <footer>
-        <div class="toggle-container"><div class="toggle-switch" id="toggleSwitch"><div class="toggle-option left"></div><div class="toggle-option right"></div></div></div>
-        <div style="font-family: monospace; font-size: 14px; letter-spacing: 2px; margin-top: 10px;">ICON MOOD</div>
+        <div class="toggle-container">
+            <div class="toggle-switch" id="toggleSwitch">
+                <div class="toggle-option left"></div>
+                <div class="toggle-option right"></div>
+            </div>
+        </div>
+        <div class="toggle-label">ICON MOOD</div>
     </footer>
 
     <script>
