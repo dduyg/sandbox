@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>LiminalLoop</title>
+<style>
+@font-face {
+  font-family: "DisplaySerif";
+  src: local("Times New Roman");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #ffffff;
+  color: #000;
+  font-family: "DisplaySerif", serif;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 80px 60px 40px;
+}
+
+.text {
+  max-width: 720px;
+  line-height: 1.15;
+}
+
+.line {
+  font-size: 72px;
+  margin-bottom: 20px;
+}
+
+.small {
+  font-size: 64px;
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.25em;
+  vertical-align: middle;
+}
+
+.icon-word {
+  display: inline-flex;
+  gap: 6px;
+  vertical-align: middle;
+}
+
+.icon-word img {
+  height: 72px;
+  object-fit: contain;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.toggle {
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+}
+
+.switch {
+  width: 120px;
+  height: 28px;
+  border: 2px solid #666;
+  display: flex;
+  margin: 0 auto 8px;
+}
+
+.switch span {
+  flex: 1;
+  background: #fff;
+  transition: background 0.3s;
+}
+
+.switch.on span:first-child {
+  background: #444;
+}
+
+.switch.on span:last-child {
+  background: #ccc;
+}
+
+.label {
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="page">
+  <div class="text" id="text">
+    <div class="line">
+      <span class="word">Hi</span>
+      <span class="word">i’m</span>
+      <span class="word">Ofri</span>
+    </div>
+
+    <div class="line">
+      <span class="word">Colada</span>
+    </div>
+
+    <div class="line small">
+      <span class="word">a</span>
+      <span class="word">visual</span>
+      <span class="word">artist</span>
+    </div>
+
+    <div class="line small">
+      <span class="word">welcome</span>
+      <span class="word">to</span>
+    </div>
+
+    <div class="line small">
+      <span class="word">my</span>
+      <span class="word">world</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="toggle" id="toggle">
+      <div class="switch" id="switch">
+        <span></span><span></span>
+      </div>
+      <div class="label">ICON&nbsp;&nbsp;MOOD</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const icons = [
+  { file: "0520.png", w: 66 },
+  { file: "0523.png", w: 138 },
+  { file: "0517.png", w: 124 },
+  { file: "0516.png", w: 148 },
+  { file: "0522.png", w: 172 },
+  { file: "0524.png", w: 266 },
+  { file: "0519.png", w: 266 },
+  { file: "0518.png", w: 246 },
+  { file: "0521.png", w: 346 },
+  { file: "0525.png", w: 424 },
+  { file: "0526.png", w: 138 }
+];
+
+const words = document.querySelectorAll(".word");
+const toggle = document.getElementById("toggle");
+const switchEl = document.getElementById("switch");
+
+let iconMode = false;
+
+function pickIcons(wordLength) {
+  const chosen = [];
+  let remaining = wordLength * 40;
+
+  while (remaining > 0) {
+    const suitable = icons.filter(i => i.w <= remaining + 40);
+    const icon = suitable[Math.floor(Math.random() * suitable.length)];
+    chosen.push(icon);
+    remaining -= icon.w;
+    if (chosen.length > 3) break;
+  }
+  return chosen;
+}
+
+toggle.addEventListener("click", () => {
+  iconMode = !iconMode;
+  switchEl.classList.toggle("on", iconMode);
+
+  words.forEach(word => {
+    if (iconMode) {
+      const text = word.textContent;
+      const iconsForWord = pickIcons(text.length);
+
+      const wrapper = document.createElement("span");
+      wrapper.className = "icon-word";
+
+      iconsForWord.forEach(icon => {
+        const img = document.createElement("img");
+        img.src = "icons/" + icon.file;
+        wrapper.appendChild(img);
+      });
+
+      word.dataset.text = text;
+      word.textContent = "";
+      word.appendChild(wrapper);
+    } else {
+      word.textContent = word.dataset.text;
+    }
+  });
+});
+</script>
+</body>
+</html>
