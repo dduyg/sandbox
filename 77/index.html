@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiminalLoop</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * {margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Georgia', serif;
             background-color: #e8e8e3;
@@ -21,42 +16,36 @@
             min-height: 100vh;
             padding: 40px 20px;
         }
-
         .content {
             text-align: center;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            max-width: 800px;
+            max-width: 900px;
         }
 
         .text-line {
             margin: 5px 0;
-            line-height: 1.2;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
+            line-height: 1.3;
+            display: block;
+            white-space: normal;
         }
-
         .word {
             display: inline-block;
             transition: opacity 0.3s ease;
-            margin: 0 5px;
+            margin: 0 8px;
+            vertical-align: baseline;
+            position: relative;
         }
-
         .word.text-mode {
             font-size: 72px;
             color: #000;
         }
-
         .word.text-mode.serif {
             font-family: 'Georgia', serif;
             font-style: italic;
         }
-
         .word.text-mode.sans {
             font-family: 'Arial', sans-serif;
             font-style: normal;
@@ -64,6 +53,7 @@
 
         .word.icon-mode {
             display: none;
+            font-size: 72px;
         }
 
         .word.icon-mode.active {
@@ -75,9 +65,13 @@
         }
 
         .icon-image {
-            height: auto;
-            vertical-align: middle;
+            height: 1em;
+            width: auto;
+            vertical-align: baseline;
             filter: contrast(1.2);
+            display: inline-block;
+            position: relative;
+            top: 0.1em;
         }
 
         .toggle-container {
@@ -136,12 +130,9 @@
         }
 
         @media (max-width: 768px) {
-            .word.text-mode {
+            .word.text-mode,
+            .word.icon-mode {
                 font-size: 48px;
-            }
-            
-            .text-line {
-                min-height: 40px;
             }
         }
     </style>
@@ -190,6 +181,82 @@
     </div>
 
     <script>
+        // Icon pool with size categories
+        const iconPool = [
+            { file: '0520.png', size: 'tiny' },     // 66x88
+            { file: '0517.png', size: 'small' },    // 124x84
+            { file: '0523.png', size: 'small' },    // 138x92
+            { file: '0516.png', size: 'small' },    // 148x100
+            { file: '0522.png', size: 'medium' },   // 172x88
+            { file: '0518.png', size: 'medium' },   // 246x76
+            { file: '0524.png', size: 'medium' },   // 266x96
+            { file: '0519.png', size: 'large' },    // 266x80
+            { file: '0521.png', size: 'xlarge' },   // 346x94
+            { file: '0525.png', size: 'xlarge' },   // 424x94
+            { file: '0526.png', size: 'small' }     // 138x104
+        ];
+
+        // Function to get appropriate icon based on word length
+        function getIconForWord(word, usedIcons) {
+            const length = word.length;
+            let sizeCategory;
+            
+            if (length <= 2) {
+                sizeCategory = 'tiny';
+            } else if (length <= 4) {
+                sizeCategory = 'small';
+            } else if (length <= 6) {
+                sizeCategory = 'medium';
+            } else if (length <= 9) {
+                sizeCategory = 'large';
+            } else {
+                sizeCategory = 'xlarge';
+            }
+            
+            // Get available icons from the category
+            let availableIcons = iconPool.filter(icon => 
+                icon.size === sizeCategory && !usedIcons.has(icon.file)
+            );
+            
+            // If no icons available in category, try adjacent categories
+            if (availableIcons.length === 0) {
+                availableIcons = iconPool.filter(icon => !usedIcons.has(icon.file));
+            }
+            
+            // Pick a random icon from available ones
+            if (availableIcons.length > 0) {
+                const randomIndex = Math.floor(Math.random() * availableIcons.length);
+                const selectedIcon = availableIcons[randomIndex];
+                usedIcons.add(selectedIcon.file);
+                return selectedIcon.file;
+            }
+            
+            // If all icons used, reset and pick any
+            const randomIndex = Math.floor(Math.random() * iconPool.length);
+            return iconPool[randomIndex].file;
+        }
+
+        // Initialize icon assignments
+        function initializeIcons() {
+            const usedIcons = new Set();
+            const textWords = document.querySelectorAll('.word.text-mode');
+            
+            textWords.forEach(textWord => {
+                const wordText = textWord.textContent.trim();
+                const iconFile = getIconForWord(wordText, usedIcons);
+                
+                // Find corresponding icon word element
+                const iconWord = textWord.nextElementSibling;
+                if (iconWord && iconWord.classList.contains('icon-mode')) {
+                    const img = iconWord.querySelector('.icon-image');
+                    if (img) {
+                        img.src = iconFile;
+                    }
+                }
+            });
+        }
+
+        // Toggle functionality
         const toggleSwitch = document.getElementById('toggleSwitch');
         let isIconMode = false;
 
@@ -217,15 +284,19 @@
             }
         });
 
-        // Handle image loading errors by using placeholder
+        // Handle image loading errors
         document.querySelectorAll('.icon-image').forEach(img => {
             img.addEventListener('error', function() {
-                // Create a placeholder SVG if image fails to load
-                const width = parseInt(this.src.match(/\d+/)[0]) || 100;
-                const height = Math.floor(width * 0.7);
-                this.src = `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="${width}" height="${height}" fill="%23333"/><text x="50%" y="50%" fill="%23fff" font-size="12" text-anchor="middle" dominant-baseline="middle">Icon</text></svg>`;
+                console.warn('Failed to load:', this.src);
+                // Use a simple placeholder
+                this.style.backgroundColor = '#333';
+                this.style.minWidth = '60px';
+                this.style.minHeight = '60px';
             });
         });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', initializeIcons);
     </script>
 </body>
 </html>
