@@ -19,13 +19,13 @@
   font-style: normal;
   font-weight: 500;
 }
-
 @font-face {
   font-family: "Scout RE";
   src: url("https://c-p.rmcdn1.net/hosted-fonts/webtype-fallback/Scout RE/NotoSansDisplay-Regular.woff2") format("woff2");
   font-style: normal;
   font-weight: 400;
 }
+    
 @font-face {
   font-family: "Sweet Sans";
   src: url("https://c-p.rmcdn1.net/hosted-fonts/webtype-fallback/Sweet Sans/Raleway-Regular.woff2") format("woff2");
@@ -172,10 +172,10 @@
     
     html, body {
       height: 100%;
-      font-family: 'Scout RE', sans-serif;
+      font-family: 'Sweet Sans', sans-serif;
       background-color: #000;
     }
-    body {overflow: hidden;}
+    body {height: 100vh; overflow: hidden;}
 
     .hero {
       position: relative;
@@ -208,6 +208,7 @@
     .label.top {
       top: 24px; left: 50%;
       transform: translateX(-50%);
+text-transform: lowercase;
     }
     .label.center {
       top: 50%; left: 50%;
@@ -223,22 +224,11 @@
 
     /* Optional subtle grain effect */
     .grain {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image: url("https://grainy-gradients.vercel.app/noise.svg");
       opacity: 0.12;
       pointer-events: none;
       mix-blend-mode: overlay;
-    }
-
-    @media (max-width: 768px) {
-      .label {
-        font-size: 12px;
-      }
-
-      .label.center {
-        font-size: 14px;
-      }
     }
   </style>
 </head>
