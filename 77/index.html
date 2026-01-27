@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LiminalLoop</title>
     <style>
-        * {margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Georgia', serif;
             background-color: #e8e8e3;
@@ -16,6 +16,7 @@
             min-height: 100vh;
             padding: 40px 20px;
         }
+
         .content {
             text-align: center;
             flex-grow: 1;
@@ -23,29 +24,22 @@
             flex-direction: column;
             justify-content: center;
             max-width: 900px;
+            font-size: 72px;
+            line-height: 1.3;
         }
 
-        .text-line {
-            margin: 5px 0;
-            line-height: 1.3;
-            display: block;
-            white-space: normal;
-        }
         .word {
-            display: inline-block;
+            display: inline;
             transition: opacity 0.3s ease;
-            margin: 0 8px;
-            vertical-align: baseline;
-            position: relative;
-        }
-        .word.text-mode {
-            font-size: 72px;
+            white-space: nowrap;
             color: #000;
         }
+
         .word.text-mode.serif {
             font-family: 'Georgia', serif;
             font-style: italic;
         }
+
         .word.text-mode.sans {
             font-family: 'Arial', sans-serif;
             font-style: normal;
@@ -53,11 +47,10 @@
 
         .word.icon-mode {
             display: none;
-            font-size: 72px;
         }
 
         .word.icon-mode.active {
-            display: inline-block;
+            display: inline;
         }
 
         .word.text-mode.hidden {
@@ -69,9 +62,12 @@
             width: auto;
             vertical-align: baseline;
             filter: contrast(1.2);
-            display: inline-block;
-            position: relative;
-            top: 0.1em;
+            display: inline;
+            margin: 0 4px;
+        }
+
+        .space {
+            display: inline;
         }
 
         .toggle-container {
@@ -123,15 +119,8 @@
             color: #000;
         }
 
-        .toggle-label {
-            font-size: 14px;
-            font-family: 'Arial', sans-serif;
-            letter-spacing: 2px;
-        }
-
         @media (max-width: 768px) {
-            .word.text-mode,
-            .word.icon-mode {
+            .content {
                 font-size: 48px;
             }
         }
@@ -139,36 +128,38 @@
 </head>
 <body>
     <div class="content">
-        <div class="text-line" id="line1">
+        <div id="textContainer">
             <span class="word text-mode sans" data-word="hi">Hi</span>
-            <span class="word text-mode sans" data-word="im">i'm</span>
-            <span class="word text-mode serif" data-word="ofri">Ofri</span>
             <span class="word icon-mode" data-word="hi"><img src="0520.png" class="icon-image" alt="icon"></span>
+            <span class="space"> </span>
+            <span class="word text-mode sans" data-word="im">i'm</span>
             <span class="word icon-mode" data-word="im"><img src="0525.png" class="icon-image" alt="icon"></span>
+            <span class="space"> </span>
+            <span class="word text-mode serif" data-word="ofri">Ofri</span>
             <span class="word icon-mode" data-word="ofri"><img src="0523.png" class="icon-image" alt="icon"></span>
-        </div>
-        <div class="text-line" id="line2">
+            <span class="space"> </span>
             <span class="word text-mode serif" data-word="colada">Colada</span>
             <span class="word icon-mode" data-word="colada"><img src="0521.png" class="icon-image" alt="icon"></span>
-        </div>
-        <div class="text-line" id="line3">
+            <span class="space"> </span>
             <span class="word text-mode sans" data-word="a">a</span>
-            <span class="word text-mode sans" data-word="visual">visual</span>
-            <span class="word text-mode sans" data-word="artist">artist</span>
             <span class="word icon-mode" data-word="a"><img src="0520.png" class="icon-image" alt="icon"></span>
+            <span class="space"> </span>
+            <span class="word text-mode sans" data-word="visual">visual</span>
             <span class="word icon-mode" data-word="visual"><img src="0524.png" class="icon-image" alt="icon"></span>
+            <span class="space"> </span>
+            <span class="word text-mode sans" data-word="artist">artist</span>
             <span class="word icon-mode" data-word="artist"><img src="0522.png" class="icon-image" alt="icon"></span>
-        </div>
-        <div class="text-line" id="line4">
+            <span class="space"> </span>
             <span class="word text-mode sans" data-word="welcome">welcome</span>
-            <span class="word text-mode sans" data-word="to">to</span>
             <span class="word icon-mode" data-word="welcome"><img src="0519.png" class="icon-image" alt="icon"></span>
+            <span class="space"> </span>
+            <span class="word text-mode sans" data-word="to">to</span>
             <span class="word icon-mode" data-word="to"><img src="0518.png" class="icon-image" alt="icon"></span>
-        </div>
-        <div class="text-line" id="line5">
+            <span class="space"> </span>
             <span class="word text-mode sans" data-word="my">my</span>
-            <span class="word text-mode sans" data-word="world">world</span>
             <span class="word icon-mode" data-word="my"><img src="0517.png" class="icon-image" alt="icon"></span>
+            <span class="space"> </span>
+            <span class="word text-mode sans" data-word="world">world</span>
             <span class="word icon-mode" data-word="world"><img src="0516.png" class="icon-image" alt="icon"></span>
         </div>
 
