@@ -87,6 +87,11 @@
         .toggle-switch.icon-active .toggle-option.left {background-color: #3D3D47; border-color: #1B1B1B;}
         .toggle-switch.icon-active .toggle-option.right {background-color: #C2C2C2; border-color: #3D3D45;}
 
+        footer {
+            position: fixed;
+            bottom: 10vh; left: 50%;
+        }
+        
         @media (max-width: 768px) {
             .content {font-size: 40px;}
         }
@@ -137,15 +142,11 @@
             <span class="word text-mode sans" data-word="it.">it.</span>
             <span class="word icon-mode" data-word="it."><img src="0523.png" class="icon-image" alt="icon"></span>
         </div>
-
-        <div class="toggle-container">
-            <div class="toggle-switch" id="toggleSwitch">
-                <div class="toggle-option left"></div>
-                <div class="toggle-option right"></div>
-            </div>
-        </div>
-        <div style="font-family: 'Arial', sans-serif; font-size: 14px; letter-spacing: 2px; margin-top: 10px;">ICON MOOD</div>
     </div>
+    <footer>
+        <div class="toggle-container"><div class="toggle-switch" id="toggleSwitch"><div class="toggle-option left"></div><div class="toggle-option right"></div></div></div>
+        <div style="font-family: monospace; font-size: 14px; letter-spacing: 2px; margin-top: 10px;">ICON MOOD</div>
+    </footer>
 
     <script>
         // Icon pool with size categories
