@@ -19,7 +19,7 @@
 
 /* Keywords (def, let, for, etc.) */
 .hljs-keyword {
-  color: #7C695A;
+  color: #745E47;
   font-weight: 700;
 }
 
@@ -33,7 +33,8 @@
 /* Strings */
 .hljs-string,
 .hljs-attr {
-  color: #557921; /* matches your Prism string color */
+  color: #557921;
+  font-weight: 700;
 }
 
 /* Numbers */
