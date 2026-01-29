@@ -1,111 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Shiki Code Highlight</title>
+<meta charset="UTF-8" />
+<title>Rouge Code Theme</title>
 
-  <style>
-    body {
-      margin: 0;
-      padding: 40px;
-      background: #eeeeee;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont,
-                   "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
+<style>
+/* ===== Page ===== */
+body {
+  margin: 0;
+  padding: 40px;
+  background: #eeeeee;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-    }
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
 
-    .code {
-      background: #FBFBFB;
-      color: #383838;
-      border-radius: 6px;
-      padding: 20px;
-      overflow-x: auto;
-      font-size: 15px;
-      line-height: 1.6;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-    }
+/* ===== Code wrapper ===== */
+.highlight {
+  background: #FBFBFB;
+  color: #383838;
+  border-radius: 6px;
+  overflow-x: auto;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
 
-    /* ===== SHIKI THEME ===== */
+.highlight pre {
+  margin: 0;
+  padding: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+}
 
-    .shiki {
-      background-color: #FBFBFB !important;
-      color: #383838;
-    }
+/* ===== Base ===== */
+.highlight,
+.highlight .w {
+  color: #383838;
+  background-color: #FBFBFB;
+}
 
-    /* Base text */
-    .shiki span {
-      color: #383838;
-    }
+/* ===== Comments ===== */
+.highlight .c,
+.highlight .cm,
+.highlight .c1,
+.highlight .cs {
+  color: #898989;
+  font-style: italic;
+}
 
-    /* Keywords */
-    .shiki .token-keyword {
-      color: #7C695A;
-      font-weight: 500;
-    }
+/* ===== Keywords (def, for, import, from, etc.) ===== */
+.highlight .k,
+.highlight .kn,
+.highlight .kp,
+.highlight .kr,
+.highlight .kv {
+  color: #7C695A;
+  font-weight: 500;
+}
 
-    /* Functions */
-    .shiki .token-function {
-      color: #2A8099;
-    }
+/* ===== Function names ===== */
+.highlight .nf {
+  color: #2A8099;
+}
 
-    /* Strings */
-    .shiki .token-string {
-      color: #668B3E;
-    }
+/* ===== Built-ins / modules ===== */
+.highlight .nb,
+.highlight .nn {
+  color: #2A8099;
+}
 
-    /* Numbers */
-    .shiki .token-number {
-      color: #BF5998;
-    }
+/* ===== Numbers ===== */
+.highlight .m,
+.highlight .mi,
+.highlight .mf {
+  color: #BF5998;
+}
 
-    /* Comments */
-    .shiki .token-comment {
-      color: #898989;
-      font-style: italic;
-    }
+/* ===== Strings ===== */
+.highlight .s,
+.highlight .s1,
+.highlight .s2,
+.highlight .sd {
+  color: #668B3E;
+}
 
-    /* Imports / builtins */
-    .shiki .token-builtin {
-      color: #2A8099;
-    }
-  </style>
+/* ===== Variables / identifiers ===== */
+.highlight .n,
+.highlight .nv {
+  color: #383838;
+}
+
+/* ===== Operators & punctuation ===== */
+.highlight .o,
+.highlight .p {
+  color: #383838;
+}
+
+/* ===== Errors ===== */
+.highlight .err {
+  color: #ffffff;
+  background-color: #BF5998;
+  font-weight: bold;
+}
+</style>
 </head>
 
 <body>
   <div class="container">
-    <div id="output" class="code">Loading…</div>
+    <div class="highlight">
+      <pre>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">ydata_profiling</span> <span class="kn">import</span> <span class="nn">ProfileReport</span>
+
+<span class="c1"># Load your messy data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="nn">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="s2">"raw_data.csv"</span><span class="p">)</span>
+
+<span class="c1"># Generate a deep-dive report in one line</span>
+<span class="n">profile</span> <span class="o">=</span> <span class="nn">ProfileReport</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Data Health Check"</span><span class="p">)</span>
+<span class="n">profile</span><span class="p">.</span><span class="nf">to_file</span><span class="p">(</span><span class="s2">"report.html"</span><span class="p">)</span>
+      </pre>
+    </div>
   </div>
-
-  <script type="module">
-    import { getHighlighter } from "https://esm.sh/shiki@1.0.0";
-
-    const code = `
-import pandas as pd
-from ydata_profiling import ProfileReport
-
-# Load your messy data
-df = pd.read_csv("raw_data.csv")
-
-# Generate a deep-dive report in one line
-profile = ProfileReport(df, title="Data Health Check")
-profile.to_file("report.html")
-`.trim();
-
-    const highlighter = await getHighlighter({
-      themes: ["light-plus"],
-      langs: ["python"]
-    });
-
-    const html = highlighter.codeToHtml(code, {
-      lang: "python",
-      theme: "light-plus"
-    });
-
-    document.getElementById("output").innerHTML = html;
-  </script>
 </body>
 </html>
