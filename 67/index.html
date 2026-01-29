@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Python Code Highlight – Prism.js</title>
+  <title>Python Code Highlight – Prism.js Theme</title>
 
   <!-- Prism.js core -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+
+  <!-- Custom theme -->
+  <link rel="stylesheet" href="my-theme.css" />
 
   <style>
     /* ===== Editor container ===== */
@@ -22,77 +25,6 @@
     .container {
       max-width: 900px;
       margin: 0 auto;
-    }
-
-    pre[class*="language-"] {
-      background: #FBFBFB;
-      color: #383838;
-      padding: 20px;
-      border-radius: 6px;
-      overflow-x: auto;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    /* ===== Prism theme overrides ===== */
-    /* Base text */
-    .token {
-      color: #383838;
-    }
-
-    /* Comments */
-    .token.comment,
-    .token.prolog,
-    .token.doctype,
-    .token.cdata {
-      color: #898989;
-      font-style: italic;
-    }
-
-    /* Keywords (def, let, for, etc.) */
-    .token.keyword {
-      color: #7C695A;
-      font-weight: 500;
-    }
-
-    /* Functions */
-    .token.function {
-      color: #2A8099;
-    }
-
-    /* Strings */
-    .token.string,
-    .token.attr-value {
-      color: #668B3E;
-    }
-
-    /* Numbers */
-    .token.number {
-      color: #BF5998;
-    }
-
-    /* Operators & punctuation */
-    .token.operator,
-    .token.punctuation {
-      color: #383838;
-    }
-
-    /* Built-ins / constants */
-    .token.builtin {
-      color: #2A8099;
-    }
-
-    /* Variables / identifiers */
-    .token.variable {
-      color: #383838;
-    }
-
-    /* Errors */
-    .token.error {
-      color: #ffffff;
-      background-color: #BF5998;
-      font-weight: bold;
     }
   </style>
 </head>
