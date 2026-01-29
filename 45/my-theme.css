@@ -1,7 +1,7 @@
 /* Base styling for code block */
 .hljs {
   background: #FBFBFB;
-  color: #383838;
+  color: #333333;
   padding: 20px;
   border-radius: 6px;
   overflow-x: auto;
@@ -12,60 +12,60 @@
 /* Comments */
 .hljs-comment,
 .hljs-quote {
-  color: #898989;
+  color: #797979;
   font-style: italic;
 }
 
 /* Keywords (def, let, for, etc.) */
 .hljs-keyword {
-  color: #745E47;
+  color: #7A5A3B;
   font-weight: 700;
 }
 
 /* Functions */
 .hljs-title,
 .hljs-function {
-  color: #1F7397;
+  color: #2A8099;
   font-weight: 700;
 }
 
 /* Strings */
 .hljs-string,
 .hljs-attr {
-  color: #557921;
+  color: #478309;
   font-weight: 700;
 }
 
 /* Numbers */
 .hljs-number,
 .hljs-literal {
-  color: #BF5998;
+  color: #D62888;
   font-weight: 700;
 }
 
 /* Operators & punctuation */
 .hljs-operator,
 .hljs-punctuation {
-  color: #383838;
+  color: #333333;
 }
 
 /* Built-ins / constants */
 .hljs-built_in,
 .hljs-builtin-name {
-  color: #1F7397;
+  color: #0B7BA9;
   font-weight: 700;
 }
 
 /* Variables / identifiers */
 .hljs-variable,
 .hljs-name {
-  color: #383838;
+  color: #333333;
 }
 
 /* Errors */
 .hljs-deletion,
 .hljs-error {
   color: #ffffff;
-  background-color: #BF5998;
+  background-color: #D62888;
   font-weight: bold;
 }
