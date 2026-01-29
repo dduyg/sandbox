@@ -2,97 +2,193 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Python Code Highlight Example</title>
+  <title>Code Highlight Demo</title>
 
   <!-- Highlight.js core -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
-  />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-
   <script>
-    hljs.highlightAll();
+    document.addEventListener("DOMContentLoaded", () => {
+      hljs.highlightAll();
+    });
   </script>
-
-  <!-- ===== Creative Light Theme (image-inspired) ===== -->
   <style>
-    pre {
-      padding: 16px;
-      border-radius: 10px;
-      overflow-x: auto;
+    /* ===== Layout ===== */
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #eeeeee;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
     }
 
-    .highlight,
-    pre code {
-      background-color: #f7f7f7;
-      color: #2e3440;
-      font-family: "JetBrains Mono", "Fira Code", monospace;
-      font-size: 14px;
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ===== Code block wrapper ===== */
+    .highlight {
+      border-radius: 8px;
+      overflow-x: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .highlight pre {
+      padding: 20px;
+      margin: 0;
+      font-size: 15px;
       line-height: 1.6;
     }
 
-    /* Comments */
-    .hljs-comment {
+    /* ===== MY THEME ===== */
+
+    .highlight table td {
+      padding: 5px;
+    }
+    .highlight table pre {
+      margin: 0;
+    }
+
+    .highlight,
+    .highlight .w {
+      color: #2e3440;
+      background-color: #f7f7f7;
+    }
+
+    .highlight .err {
+      color: #ffffff;
+      background-color: #d32f2f;
+      font-weight: bold;
+    }
+
+    .highlight .c,
+    .highlight .cd,
+    .highlight .cm,
+    .highlight .c1,
+    .highlight .cs {
       color: #9aa0a6;
       font-style: italic;
     }
 
-    /* Keywords */
-    .hljs-keyword {
+    .highlight .k,
+    .highlight .kn,
+    .highlight .kp,
+    .highlight .kr,
+    .highlight .kv {
       color: #1e88e5;
       font-weight: 500;
     }
 
-    /* Built-ins / imports */
-    .hljs-built_in,
-    .hljs-meta {
+    .highlight .kc {
+      color: #7b1fa2;
+    }
+    .highlight .kd {
+      color: #1e88e5;
+    }
+    .highlight .kt {
+      color: #00897b;
+    }
+
+    .highlight .nf {
       color: #1565c0;
     }
 
-    /* Function names */
-    .hljs-title.function_ {
-      color: #1565c0;
-    }
-
-    /* Class names */
-    .hljs-title.class_ {
+    .highlight .nc,
+    .highlight .nn {
       color: #00695c;
     }
 
-    /* Strings */
-    .hljs-string {
-      color: #2e7d32;
-    }
-
-    /* Numbers */
-    .hljs-number {
+    .highlight .m,
+    .highlight .mf,
+    .highlight .mh,
+    .highlight .mi,
+    .highlight .il,
+    .highlight .mo,
+    .highlight .mb,
+    .highlight .mx {
       color: #6a1b9a;
     }
 
-    /* Variables */
-    .hljs-variable,
-    .hljs-params {
+    .highlight .s,
+    .highlight .sb,
+    .highlight .sc,
+    .highlight .sd,
+    .highlight .s1,
+    .highlight .s2,
+    .highlight .sh,
+    .highlight .sx,
+    .highlight .sr {
+      color: #2e7d32;
+    }
+
+    .highlight .si {
+      color: #2e7d32;
+      font-style: italic;
+    }
+
+    .highlight .se {
+      color: #ef6c00;
+    }
+
+    .highlight .o,
+    .highlight .ow {
+      color: #37474f;
+    }
+
+    .highlight .p,
+    .highlight .pi {
+      color: #37474f;
+    }
+
+    .highlight .na {
+      color: #2e7d32;
+    }
+
+    .highlight .n,
+    .highlight .nv {
       color: #5d4037;
     }
 
-    /* Operators */
-    .hljs-operator {
-      color: #37474f;
+    .highlight .nt {
+      color: #d32f2f;
     }
 
-    /* Punctuation */
-    .hljs-punctuation {
-      color: #37474f;
+    .highlight .gh {
+      color: #2e7d32;
+      font-weight: bold;
     }
+
+    .highlight .gi {
+      color: #2e7d32;
+      background-color: #e8f5e9;
+    }
+    .highlight .gd {
+      color: #c62828;
+      background-color: #fdecea;
+    }
+
+    .highlight .ss {
+      color: #0277bd;
+    }
+
+    /* ===== Highlight.js token mapping ===== */
+    .highlight .hljs-keyword { color: #1e88e5; font-weight: 500; }
+    .highlight .hljs-string { color: #2e7d32; }
+    .highlight .hljs-comment { color: #9aa0a6; font-style: italic; }
+    .highlight .hljs-number { color: #6a1b9a; }
+    .highlight .hljs-title { color: #1565c0; }
+    .highlight .hljs-built_in { color: #7b1fa2; }
+    .highlight .hljs-operator { color: #37474f; }
+    .highlight .hljs-variable { color: #5d4037; }
   </style>
 </head>
 
 <body>
-  <h1>Python Example</h1>
-
-  <pre><code class="language-python">
+  <div class="container">
+    <div class="highlight">
+      <pre><code class="language-python">
 import pandas as pd
 from ydata_profiling import ProfileReport
 
@@ -102,6 +198,8 @@ df = pd.read_csv("raw_data.csv")
 # Generate a deep-dive report in one line
 profile = ProfileReport(df, title="Data Health Check")
 profile.to_file("report.html")
-  </code></pre>
+      </code></pre>
+    </div>
+  </div>
 </body>
 </html>
