@@ -2,24 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Code Highlight – Image Theme</title>
-
-  <!-- Highlight.js -->
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
-  />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      hljs.highlightAll();
-    });
-  </script>
+  <title>Shiki Code Highlight</title>
 
   <style>
-    /* ===== Page ===== */
     body {
       margin: 0;
       padding: 40px;
@@ -33,118 +18,72 @@
       margin: 0 auto;
     }
 
-    /* ===== Code wrapper ===== */
-    .highlight {
+    .code {
       background: #FBFBFB;
       color: #383838;
       border-radius: 6px;
+      padding: 20px;
       overflow-x: auto;
+      font-size: 15px;
+      line-height: 1.6;
       box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     }
 
-    .highlight pre {
-      margin: 0;
-      padding: 20px;
-      font-size: 15px;
-      line-height: 1.6;
-    }
+    /* ===== SHIKI THEME ===== */
 
-    /* ===== Base ===== */
-    .highlight,
-    .highlight .w {
+    .shiki {
+      background-color: #FBFBFB !important;
       color: #383838;
-      background-color: #FBFBFB;
     }
 
-    /* ===== Comments ===== */
-    .highlight .c,
-    .highlight .cd,
-    .highlight .cm,
-    .highlight .c1,
-    .highlight .cs,
-    .highlight .hljs-comment {
-      color: #898989;
-      font-style: italic;
+    /* Base text */
+    .shiki span {
+      color: #383838;
     }
 
-    /* ===== Keywords (function, let, for, def, etc.) ===== */
-    .highlight .k,
-    .highlight .kn,
-    .highlight .kp,
-    .highlight .kr,
-    .highlight .kv,
-    .highlight .hljs-keyword {
+    /* Keywords */
+    .shiki .token-keyword {
       color: #7C695A;
       font-weight: 500;
     }
 
-    /* ===== Function names ===== */
-    .highlight .nf,
-    .highlight .hljs-title {
+    /* Functions */
+    .shiki .token-function {
       color: #2A8099;
     }
 
-    /* ===== Numbers ===== */
-    .highlight .m,
-    .highlight .mf,
-    .highlight .mh,
-    .highlight .mi,
-    .highlight .il,
-    .highlight .mo,
-    .highlight .mb,
-    .highlight .mx,
-    .highlight .hljs-number {
-      color: #BF5998;
-    }
-
-    /* ===== Strings ===== */
-    .highlight .s,
-    .highlight .sb,
-    .highlight .sc,
-    .highlight .sd,
-    .highlight .s1,
-    .highlight .s2,
-    .highlight .sh,
-    .highlight .sx,
-    .highlight .sr,
-    .highlight .hljs-string {
+    /* Strings */
+    .shiki .token-string {
       color: #668B3E;
     }
 
-    /* ===== Built-ins / imports ===== */
-    .highlight .hljs-built_in {
+    /* Numbers */
+    .shiki .token-number {
+      color: #BF5998;
+    }
+
+    /* Comments */
+    .shiki .token-comment {
+      color: #898989;
+      font-style: italic;
+    }
+
+    /* Imports / builtins */
+    .shiki .token-builtin {
       color: #2A8099;
-    }
-
-    /* ===== Variables / identifiers ===== */
-    .highlight .n,
-    .highlight .nv,
-    .highlight .hljs-variable {
-      color: #383838;
-    }
-
-    /* ===== Operators & punctuation ===== */
-    .highlight .o,
-    .highlight .ow,
-    .highlight .p,
-    .highlight .pi,
-    .highlight .hljs-operator {
-      color: #383838;
-    }
-
-    /* ===== Errors ===== */
-    .highlight .err {
-      color: #ffffff;
-      background-color: #BF5998;
-      font-weight: bold;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <div class="highlight">
-      <pre><code class="language-python">
+    <div id="output" class="code">Loading…</div>
+  </div>
+
+  <script type="module">
+    import { getHighlighter } from "https://esm.sh/shiki@1.0.0";
+
+    const code = `
 import pandas as pd
 from ydata_profiling import ProfileReport
 
@@ -154,8 +93,19 @@ df = pd.read_csv("raw_data.csv")
 # Generate a deep-dive report in one line
 profile = ProfileReport(df, title="Data Health Check")
 profile.to_file("report.html")
-      </code></pre>
-    </div>
-  </div>
+`.trim();
+
+    const highlighter = await getHighlighter({
+      themes: ["light-plus"],
+      langs: ["python"]
+    });
+
+    const html = highlighter.codeToHtml(code, {
+      lang: "python",
+      theme: "light-plus"
+    });
+
+    document.getElementById("output").innerHTML = html;
+  </script>
 </body>
 </html>
