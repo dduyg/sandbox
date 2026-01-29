@@ -1,0 +1,71 @@
+/* Base styling for code block */
+.hljs {
+  background: #FBFBFB;
+  color: #383838;
+  padding: 20px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 15px;
+  line-height: 1.6;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Comments */
+.hljs-comment,
+.hljs-quote {
+  color: #898989;
+  font-style: italic;
+}
+
+/* Keywords (def, let, for, etc.) */
+.hljs-keyword {
+  color: #7C695A;
+  font-weight: 700;
+}
+
+/* Functions */
+.hljs-title,
+.hljs-function {
+  color: #2A8099;
+  font-weight: 700;
+}
+
+/* Strings */
+.hljs-string,
+.hljs-attr {
+  color: #557921; /* matches your Prism string color */
+}
+
+/* Numbers */
+.hljs-number,
+.hljs-literal {
+  color: #BF5998;
+  font-weight: 700;
+}
+
+/* Operators & punctuation */
+.hljs-operator,
+.hljs-punctuation {
+  color: #383838;
+}
+
+/* Built-ins / constants */
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #2A8099;
+  font-weight: 700;
+}
+
+/* Variables / identifiers */
+.hljs-variable,
+.hljs-name {
+  color: #383838;
+}
+
+/* Errors */
+.hljs-deletion,
+.hljs-error {
+  color: #ffffff;
+  background-color: #BF5998;
+  font-weight: bold;
+}
