@@ -1,128 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Rouge Code Theme</title>
+  <meta charset="UTF-8">
+  <title>Python Code Highlight – Prism.js</title>
 
-<style>
-/* ===== Page ===== */
-body {
-  margin: 0;
-  padding: 40px;
-  background: #eeeeee;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont,
-               "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
+  <!-- Prism.js core -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-}
+  <style>
+    /* ===== Editor container ===== */
+    body {
+      margin: 0;
+      padding: 40px;
+      background: #eeeeee;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-/* ===== Code wrapper ===== */
-.highlight {
-  background: #FBFBFB;
-  color: #383838;
-  border-radius: 6px;
-  overflow-x: auto;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-}
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-.highlight pre {
-  margin: 0;
-  padding: 20px;
-  font-size: 15px;
-  line-height: 1.6;
-}
+    pre[class*="language-"] {
+      background: #FBFBFB;
+      color: #383838;
+      padding: 20px;
+      border-radius: 6px;
+      overflow-x: auto;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      font-size: 15px;
+      line-height: 1.6;
+    }
 
-/* ===== Base ===== */
-.highlight,
-.highlight .w {
-  color: #383838;
-  background-color: #FBFBFB;
-}
+    /* ===== Prism theme overrides ===== */
+    /* Base text */
+    .token {
+      color: #383838;
+    }
 
-/* ===== Comments ===== */
-.highlight .c,
-.highlight .cm,
-.highlight .c1,
-.highlight .cs {
-  color: #898989;
-  font-style: italic;
-}
+    /* Comments */
+    .token.comment,
+    .token.prolog,
+    .token.doctype,
+    .token.cdata {
+      color: #898989;
+      font-style: italic;
+    }
 
-/* ===== Keywords (def, for, import, from, etc.) ===== */
-.highlight .k,
-.highlight .kn,
-.highlight .kp,
-.highlight .kr,
-.highlight .kv {
-  color: #7C695A;
-  font-weight: 500;
-}
+    /* Keywords (def, let, for, etc.) */
+    .token.keyword {
+      color: #7C695A;
+      font-weight: 500;
+    }
 
-/* ===== Function names ===== */
-.highlight .nf {
-  color: #2A8099;
-}
+    /* Functions */
+    .token.function {
+      color: #2A8099;
+    }
 
-/* ===== Built-ins / modules ===== */
-.highlight .nb,
-.highlight .nn {
-  color: #2A8099;
-}
+    /* Strings */
+    .token.string,
+    .token.attr-value {
+      color: #668B3E;
+    }
 
-/* ===== Numbers ===== */
-.highlight .m,
-.highlight .mi,
-.highlight .mf {
-  color: #BF5998;
-}
+    /* Numbers */
+    .token.number {
+      color: #BF5998;
+    }
 
-/* ===== Strings ===== */
-.highlight .s,
-.highlight .s1,
-.highlight .s2,
-.highlight .sd {
-  color: #668B3E;
-}
+    /* Operators & punctuation */
+    .token.operator,
+    .token.punctuation {
+      color: #383838;
+    }
 
-/* ===== Variables / identifiers ===== */
-.highlight .n,
-.highlight .nv {
-  color: #383838;
-}
+    /* Built-ins / constants */
+    .token.builtin {
+      color: #2A8099;
+    }
 
-/* ===== Operators & punctuation ===== */
-.highlight .o,
-.highlight .p {
-  color: #383838;
-}
+    /* Variables / identifiers */
+    .token.variable {
+      color: #383838;
+    }
 
-/* ===== Errors ===== */
-.highlight .err {
-  color: #ffffff;
-  background-color: #BF5998;
-  font-weight: bold;
-}
-</style>
+    /* Errors */
+    .token.error {
+      color: #ffffff;
+      background-color: #BF5998;
+      font-weight: bold;
+    }
+  </style>
 </head>
-
 <body>
   <div class="container">
-    <div class="highlight">
-      <pre>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">ydata_profiling</span> <span class="kn">import</span> <span class="nn">ProfileReport</span>
+    <pre><code class="language-python">
+import pandas as pd
+from ydata_profiling import ProfileReport
 
-<span class="c1"># Load your messy data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="nn">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="s2">"raw_data.csv"</span><span class="p">)</span>
+# Load your messy data
+df = pd.read_csv("raw_data.csv")
 
-<span class="c1"># Generate a deep-dive report in one line</span>
-<span class="n">profile</span> <span class="o">=</span> <span class="nn">ProfileReport</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Data Health Check"</span><span class="p">)</span>
-<span class="n">profile</span><span class="p">.</span><span class="nf">to_file</span><span class="p">(</span><span class="s2">"report.html"</span><span class="p">)</span>
-      </pre>
-    </div>
+# Generate a deep-dive report in one line
+profile = ProfileReport(df, title="Data Health Check")
+profile.to_file("report.html")
+    </code></pre>
   </div>
 </body>
 </html>
