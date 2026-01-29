@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Code Highlight Example</title>
+
+  <!-- Highlight.js core -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+  />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+
+  <script>
+    hljs.highlightAll();
+  </script>
+
+  <!-- ===== Creative Light Theme (image-inspired) ===== -->
+  <style>
+    pre {
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+    }
+
+    .highlight,
+    pre code {
+      background-color: #f7f7f7;
+      color: #2e3440;
+      font-family: "JetBrains Mono", "Fira Code", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Comments */
+    .hljs-comment {
+      color: #9aa0a6;
+      font-style: italic;
+    }
+
+    /* Keywords */
+    .hljs-keyword {
+      color: #1e88e5;
+      font-weight: 500;
+    }
+
+    /* Built-ins / imports */
+    .hljs-built_in,
+    .hljs-meta {
+      color: #1565c0;
+    }
+
+    /* Function names */
+    .hljs-title.function_ {
+      color: #1565c0;
+    }
+
+    /* Class names */
+    .hljs-title.class_ {
+      color: #00695c;
+    }
+
+    /* Strings */
+    .hljs-string {
+      color: #2e7d32;
+    }
+
+    /* Numbers */
+    .hljs-number {
+      color: #6a1b9a;
+    }
+
+    /* Variables */
+    .hljs-variable,
+    .hljs-params {
+      color: #5d4037;
+    }
+
+    /* Operators */
+    .hljs-operator {
+      color: #37474f;
+    }
+
+    /* Punctuation */
+    .hljs-punctuation {
+      color: #37474f;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Python Example</h1>
+
+  <pre><code class="language-python">
+import pandas as pd
+from ydata_profiling import ProfileReport
+
+# Load your messy data
+df = pd.read_csv("raw_data.csv")
+
+# Generate a deep-dive report in one line
+profile = ProfileReport(df, title="Data Health Check")
+profile.to_file("report.html")
+  </code></pre>
+</body>
+</html>
