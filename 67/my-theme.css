@@ -26,25 +26,25 @@ pre[class*="language-"] {
 /* Keywords (def, let, for, etc.) */
 .token.keyword {
   color: #7C695A;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /* Functions */
 .token.function {
   color: #2A8099;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /* Strings */
 .token.string,
 .token.attr-value {
-  color: #668B3E;
+  color: #557921;
 }
 
 /* Numbers */
 .token.number {
   color: #BF5998;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /* Operators & punctuation */
@@ -56,7 +56,7 @@ pre[class*="language-"] {
 /* Built-ins / constants */
 .token.builtin {
   color: #2A8099;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 /* Variables / identifiers */
