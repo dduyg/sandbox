@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ＶＡＰＯＲＢＡＳＥ — Name Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0514;
+    --bg2: #100820;
+    --bg3: #160b2e;
+    --pink: #ff71ce;
+    --cyan: #01cdfe;
+    --purple: #b967ff;
+    --yellow: #fffb96;
+    --green: #05ffa1;
+    --text: #e8d5ff;
+    --muted: #7a6a99;
+    --border: rgba(185,103,255,0.2);
+    --glow-pink: 0 0 20px rgba(255,113,206,0.4);
+    --glow-cyan: 0 0 20px rgba(1,205,254,0.4);
+    --glow-purple: 0 0 20px rgba(185,103,255,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Space Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(185,103,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(185,103,255,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanlines */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* HEADER */
+  header {
+    padding: 48px 0 32px;
+    text-align: center;
+    position: relative;
+  }
+
+  .header-subtitle {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
+  }
+
+  .header-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 5vw, 56px);
+    font-weight: 900;
+    letter-spacing: 8px;
+    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 50%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .header-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+  }
+
+  .header-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+
+  .stat-val {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* SEARCH BAR */
+  .search-section {
+    margin: 32px 0 24px;
+  }
+
+  .search-wrap {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .search-input {
+    width: 100%;
+    background: rgba(185,103,255,0.07);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 14px 48px 14px 20px;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    letter-spacing: 1px;
+  }
+
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus {
+    border-color: var(--purple);
+    box-shadow: var(--glow-purple);
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--purple);
+    font-size: 18px;
+    pointer-events: none;
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .result-count {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  .result-count span { color: var(--cyan); }
+
+  .btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 8px 16px;
+    border: 1px solid;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    background: transparent;
+  }
+
+  .btn-pink {
+    border-color: var(--pink);
+    color: var(--pink);
+  }
+  .btn-pink:hover {
+    background: var(--pink);
+    color: var(--bg);
+    box-shadow: var(--glow-pink);
+  }
+
+  .btn-cyan {
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+  .btn-cyan:hover {
+    background: var(--cyan);
+    color: var(--bg);
+    box-shadow: var(--glow-cyan);
+  }
+
+  .btn-purple {
+    border-color: var(--purple);
+    color: var(--purple);
+  }
+  .btn-purple:hover {
+    background: var(--purple);
+    color: var(--bg);
+    box-shadow: var(--glow-purple);
+  }
+
+  .btn-green {
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .btn-green:hover {
+    background: var(--green);
+    color: var(--bg);
+  }
+
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+  }
+
+  .view-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    border-radius: 2px;
+  }
+  .view-btn.active {
+    border-color: var(--purple);
+    color: var(--purple);
+    background: rgba(185,103,255,0.1);
+  }
+
+  /* FILTER PANEL */
+  .filter-panel {
+    background: rgba(16,8,32,0.8);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 24px;
+    display: none;
+    backdrop-filter: blur(10px);
+  }
+
+  .filter-panel.open { display: block; }
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .filter-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    cursor: pointer;
+    color: var(--muted);
+    background: transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .chip:hover { border-color: var(--purple); color: var(--text); }
+
+  .chip.active {
+    background: rgba(185,103,255,0.15);
+    border-color: var(--purple);
+    color: var(--purple);
+  }
+
+  .chip.active-pink {
+    background: rgba(255,113,206,0.15);
+    border-color: var(--pink);
+    color: var(--pink);
+  }
+
+  .chip.active-cyan {
+    background: rgba(1,205,254,0.15);
+    border-color: var(--cyan);
+    color: var(--cyan);
+  }
+
+  .sort-select {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    background: rgba(185,103,255,0.07);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 12px;
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+
+  .sort-select:focus { border-color: var(--purple); }
+  .sort-select option { background: #1a0d30; }
+
+  .filter-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .active-filter-tag {
+    font-size: 10px;
+    padding: 4px 10px;
+    background: rgba(1,205,254,0.1);
+    border: 1px solid rgba(1,205,254,0.3);
+    border-radius: 2px;
+    color: var(--cyan);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .active-filter-tag:hover { background: rgba(255,113,206,0.15); border-color: var(--pink); color: var(--pink); }
+
+  /* GRID VIEW */
+  .names-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  /* LIST VIEW */
+  .names-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  .names-list .name-card {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 20px;
+    gap: 16px;
+  }
+
+  .names-list .name-card .card-title {
+    font-size: 16px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .names-list .card-meta { flex-shrink: 0; }
+  .names-list .card-tags { flex-shrink: 0; }
+  .names-list .card-bottom { display: none; }
+
+  /* CARD */
+  .name-card {
+    background: rgba(16,8,32,0.6);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(4px);
+  }
+
+  .name-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .name-card:hover {
+    border-color: rgba(185,103,255,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(185,103,255,0.15);
+  }
+
+  .name-card:hover::before { opacity: 1; }
+
+  /* Color per category */
+  .name-card[data-category="Technical"]::before { background: linear-gradient(90deg, var(--cyan), var(--purple)); }
+  .name-card[data-category="Atmospheric"]::before { background: linear-gradient(90deg, var(--pink), var(--purple)); }
+  .name-card[data-category="Institutional"]::before { background: linear-gradient(90deg, var(--yellow), var(--cyan)); }
+  .name-card[data-category="Creative"]::before { background: linear-gradient(90deg, var(--pink), var(--yellow)); }
+  .name-card[data-category="Hybrid"]::before { background: linear-gradient(90deg, var(--green), var(--cyan)); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .card-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .copy-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+  .copy-btn:hover { color: var(--cyan); }
+  .copy-btn.copied { color: var(--green); }
+
+  .card-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .badge {
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .badge-category { background: rgba(185,103,255,0.15); color: var(--purple); border: 1px solid rgba(185,103,255,0.3); }
+  .badge-mood { background: rgba(255,113,206,0.12); color: var(--pink); border: 1px solid rgba(255,113,206,0.3); }
+  .badge-style { background: rgba(1,205,254,0.1); color: var(--cyan); border: 1px solid rgba(1,205,254,0.25); }
+  .badge-length { background: rgba(5,255,161,0.08); color: var(--green); border: 1px solid rgba(5,255,161,0.2); }
+
+  .card-tags {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 9px;
+    color: var(--muted);
+    padding: 2px 7px;
+    border: 1px solid rgba(122,106,153,0.3);
+    border-radius: 2px;
+    letter-spacing: 1px;
+  }
+
+  .card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+    margin-top: 2px;
+  }
+
+  .card-id { letter-spacing: 2px; }
+
+  /* ADD MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,2,14,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid rgba(185,103,255,0.4);
+    border-radius: 6px;
+    padding: 32px;
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0 60px rgba(185,103,255,0.2);
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .modal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: var(--purple);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--pink); }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    background: rgba(185,103,255,0.07);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 10px 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--purple);
+  }
+
+  .form-select option { background: #1a0d30; }
+  .form-textarea { resize: vertical; min-height: 80px; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-hint {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+    letter-spacing: 1px;
+  }
+
+  /* AI SECTION */
+  .ai-section {
+    background: rgba(5,255,161,0.04);
+    border: 1px solid rgba(5,255,161,0.15);
+    border-radius: 4px;
+    padding: 20px;
+    margin-top: 12px;
+  }
+
+  .ai-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .ai-pulse {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .ai-prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .ai-prompt-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 5px 10px;
+    border: 1px solid rgba(5,255,161,0.25);
+    border-radius: 2px;
+    color: var(--green);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 1px;
+  }
+
+  .ai-prompt-btn:hover { background: rgba(5,255,161,0.1); }
+
+  .ai-result {
+    font-size: 12px;
+    color: var(--text);
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 12px;
+    min-height: 48px;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    display: none;
+    position: relative;
+  }
+
+  .ai-result.loading::after {
+    content: '█';
+    animation: blink 0.7s infinite;
+    color: var(--green);
+  }
+
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+  .ai-use-btn {
+    display: none;
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 6px 14px;
+    border: 1px solid var(--green);
+    border-radius: 2px;
+    color: var(--green);
+    background: transparent;
+    cursor: pointer;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: all 0.15s;
+  }
+
+  .ai-use-btn:hover { background: rgba(5,255,161,0.1); }
+
+  .modal-footer {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--muted);
+  }
+
+  .empty-state .empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.3;
+  }
+
+  .empty-state p {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--bg2);
+    border: 1px solid var(--green);
+    border-radius: 3px;
+    padding: 12px 20px;
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 2px;
+    z-index: 200;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s;
+    box-shadow: var(--glow-cyan);
+  }
+
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(185,103,255,0.3); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(185,103,255,0.6); }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .names-grid { grid-template-columns: 1fr; }
+    .toolbar { flex-direction: column; align-items: stretch; }
+  }
+
+  /* Animated gradient border on search focus */
+  .search-wrap:focus-within::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--pink), var(--purple), var(--cyan));
+    z-index: -1;
+    opacity: 0.5;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 24px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="header-subtitle">ヴェイパーウェーブ · データベース · v2.0</div>
+    <h1 class="header-title">ＶＡＰＯＲＢＡＳＥ</h1>
+    <div class="header-jp">名前のアーカイブ — Name Archive System</div>
+    <div class="header-stats">
+      <span>ENTRIES <span class="stat-val" id="total-count">0</span></span>
+      <span>FILTERED <span class="stat-val" id="filtered-count">0</span></span>
+      <span>TAGS <span class="stat-val" id="tag-count">0</span></span>
+    </div>
+  </header>
+
+  <div class="search-section">
+    <div class="search-wrap">
+      <input type="text" class="search-input" id="search-input" placeholder="SEARCH NAMES, TAGS, MOODS...">
+      <span class="search-icon">⌕</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-purple" id="filter-toggle">⊞ FILTERS</button>
+      <select class="sort-select" id="sort-select">
+        <option value="default">SORT: DEFAULT</option>
+        <option value="alpha-asc">A → Z</option>
+        <option value="alpha-desc">Z → A</option>
+        <option value="length-asc">LENGTH ↑</option>
+        <option value="length-desc">LENGTH ↓</option>
+        <option value="newest">NEWEST FIRST</option>
+      </select>
+      <span class="result-count">SHOWING <span id="filtered-count-inline">0</span> OF <span id="total-count-inline">0</span></span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="view-toggle">
+        <button class="view-btn active" id="view-grid" title="Grid view">⊞</button>
+        <button class="view-btn" id="view-list" title="List view">☰</button>
+      </div>
+      <button class="btn btn-pink" id="add-btn">+ ADD ENTRY</button>
+    </div>
+  </div>
+
+  <div class="filter-panel" id="filter-panel">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>Category</label>
+        <div class="filter-chips" id="filter-category"></div>
+      </div>
+      <div class="filter-group">
+        <label>Mood</label>
+        <div class="filter-chips" id="filter-mood"></div>
+      </div>
+      <div class="filter-group">
+        <label>Style</label>
+        <div class="filter-chips" id="filter-style"></div>
+      </div>
+      <div class="filter-group">
+        <label>Length</label>
+        <div class="filter-chips" id="filter-length"></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="filter-group">
+      <label>Tags</label>
+      <div class="filter-chips" id="filter-tags"></div>
+    </div>
+    <div class="filter-actions">
+      <div class="active-filters" id="active-filters"></div>
+      <button class="btn btn-pink" id="clear-filters">✕ CLEAR ALL</button>
+    </div>
+  </div>
+
+  <div class="names-grid" id="names-container"></div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">NEW ENTRY</span>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Title *</label>
+      <input type="text" class="form-input" id="form-title" placeholder="e.g. Synthetic Entrance">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Category *</label>
+        <select class="form-select" id="form-category">
+          <option value="">Select...</option>
+          <option>Technical</option>
+          <option>Atmospheric</option>
+          <option>Institutional</option>
+          <option>Creative</option>
+          <option>Hybrid</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mood *</label>
+        <select class="form-select" id="form-mood">
+          <option value="">Select...</option>
+          <option>Mysterious</option>
+          <option>Analytical</option>
+          <option>Energetic</option>
+          <option>Melancholic</option>
+          <option>Dreamy</option>
+          <option>Nostalgic</option>
+          <option>Eerie</option>
+          <option>Hopeful</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Style</label>
+        <select class="form-select" id="form-style">
+          <option value="">Select...</option>
+          <option>Formal</option>
+          <option>Casual</option>
+          <option>Creative</option>
+          <option>Professional</option>
+          <option>Glitch</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Length (auto)</label>
+        <input type="text" class="form-input" id="form-length" placeholder="Auto-calculated" readonly style="opacity:0.5;">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tags <span style="color:var(--muted)">(comma-separated)</span></label>
+      <input type="text" class="form-input" id="form-tags" placeholder="cyber, retro, nostalgia, code">
+      <div class="form-hint">Multi-select tags for filtering</div>
+    </div>
+
+    <div class="ai-section">
+      <div class="ai-label">
+        <div class="ai-pulse"></div>
+        AI ASSIST — POWERED BY CLAUDE
+      </div>
+      <div class="ai-prompts">
+        <button class="ai-prompt-btn" onclick="aiGenerate('similar')">◈ Generate similar names</button>
+        <button class="ai-prompt-btn" onclick="aiGenerate('tags')">◈ Suggest tags for title</button>
+        <button class="ai-prompt-btn" onclick="aiGenerate('batch')">◈ Generate 5 new names</button>
+        <button class="ai-prompt-btn" onclick="aiGenerate('explain')">◈ Explain mood/vibe</button>
+      </div>
+      <div class="ai-result" id="ai-result"></div>
+      <button class="ai-use-btn" id="ai-use-btn">↑ USE THIS NAME</button>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-pink" id="modal-cancel">CANCEL</button>
+      <button class="btn btn-cyan" id="modal-save">SAVE ENTRY</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+
+let DB = [
+  { id: 1, title: "Synthetic Entrance", category: "Technical", mood: "Mysterious", style: "Creative", tags: ["cyber", "tech", "entry"], added: Date.now() - 86400000*10 },
+  { id: 2, title: "Cherry Cola Skies", category: "Atmospheric", mood: "Dreamy", style: "Casual", tags: ["retro", "sky", "pastel", "nostalgia"], added: Date.now() - 86400000*9 },
+  { id: 3, title: "Counting Constellations", category: "Atmospheric", mood: "Melancholic", style: "Creative", tags: ["space", "night", "poetic"], added: Date.now() - 86400000*8 },
+  { id: 4, title: "C0d3r's Paradox", category: "Technical", mood: "Analytical", style: "Glitch", tags: ["code", "cyber", "glitch", "leet"], added: Date.now() - 86400000*7 },
+  { id: 5, title: "Neon Meridian", category: "Atmospheric", mood: "Energetic", style: "Creative", tags: ["neon", "retro", "city", "cyber"], added: Date.now() - 86400000*6 },
+  { id: 6, title: "Protocol Horizon", category: "Technical", mood: "Mysterious", style: "Professional", tags: ["tech", "network", "future"], added: Date.now() - 86400000*5 },
+  { id: 7, title: "Glass Frequencies", category: "Creative", mood: "Dreamy", style: "Creative", tags: ["music", "ethereal", "analog"], added: Date.now() - 86400000*4 },
+  { id: 8, title: "Terminal Bloom", category: "Hybrid", mood: "Nostalgic", style: "Creative", tags: ["code", "nature", "contrast", "retro"], added: Date.now() - 86400000*3 },
+  { id: 9, title: "Cascade Index", category: "Institutional", mood: "Analytical", style: "Formal", tags: ["data", "system", "order"], added: Date.now() - 86400000*2 },
+  { id: 10, title: "Velvet Algorithm", category: "Technical", mood: "Mysterious", style: "Creative", tags: ["luxury", "code", "soft", "cyber"], added: Date.now() - 86400000 },
+  { id: 11, title: "Midnight Compile", category: "Technical", mood: "Melancholic", style: "Casual", tags: ["code", "night", "dev", "late-night"], added: Date.now() - 3600000*20 },
+  { id: 12, title: "Pastel Override", category: "Creative", mood: "Energetic", style: "Glitch", tags: ["pastel", "retro", "cyber", "override"], added: Date.now() - 3600000*15 },
+  { id: 13, title: "Signal Lost", category: "Atmospheric", mood: "Eerie", style: "Creative", tags: ["analog", "signal", "nostalgia", "broken"], added: Date.now() - 3600000*10 },
+  { id: 14, title: "Datawave Reverie", category: "Hybrid", mood: "Dreamy", style: "Creative", tags: ["data", "wave", "dream", "retro"], added: Date.now() - 3600000*5 },
+  { id: 15, title: "The Archive Speaks", category: "Institutional", mood: "Mysterious", style: "Formal", tags: ["archive", "history", "memory", "system"], added: Date.now() - 3600000*2 },
+  { id: 16, title: "Pink Noise Garden", category: "Atmospheric", mood: "Dreamy", style: "Creative", tags: ["pink", "nature", "sound", "ambient"], added: Date.now() - 1800000 },
+  { id: 17, title: "Recursion Sunset", category: "Technical", mood: "Melancholic", style: "Creative", tags: ["code", "sky", "loop", "poetic"], added: Date.now() - 900000 },
+  { id: 18, title: "Mall Cop Frequency", category: "Creative", mood: "Nostalgic", style: "Casual", tags: ["retro", "90s", "mall", "irony"], added: Date.now() - 600000 },
+  { id: 19, title: "Liminal Loop", category: "Atmospheric", mood: "Eerie", style: "Creative", tags: ["liminal", "loop", "void", "space"], added: Date.now() - 300000 },
+  { id: 20, title: "Quantum Drift", category: "Technical", mood: "Mysterious", style: "Professional", tags: ["quantum", "drift", "physics", "future"], added: Date.now() },
+];
+
+let nextId = DB.length + 1;
+let currentView = 'grid';
+let activeFilters = { category: [], mood: [], style: [], length: [], tags: [] };
+let editingId = null;
+let lastAiResult = '';
+
+// ═══════════════════════════════════════════
+// FILTER OPTIONS
+// ═══════════════════════════════════════════
+
+const FILTER_OPTIONS = {
+  category: ['Technical', 'Atmospheric', 'Institutional', 'Creative', 'Hybrid'],
+  mood: ['Mysterious', 'Analytical', 'Energetic', 'Melancholic', 'Dreamy', 'Nostalgic', 'Eerie', 'Hopeful'],
+  style: ['Formal', 'Casual', 'Creative', 'Professional', 'Glitch'],
+  length: ['Short (1–2)', 'Medium (2–3)', 'Long (4+)']
+};
+
+function getLength(title) {
+  const words = title.trim().split(/\s+/).length;
+  if (words <= 2) return 'Short (1–2)';
+  if (words === 3) return 'Medium (2–3)';
+  return 'Long (4+)';
+}
+
+// ═══════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════
+
+function getAllTags() {
+  const tagSet = new Set();
+  DB.forEach(e => (e.tags || []).forEach(t => tagSet.add(t)));
+  return [...tagSet].sort();
+}
+
+function buildFilterChips() {
+  ['category', 'mood', 'style', 'length'].forEach(type => {
+    const wrap = document.getElementById('filter-' + type);
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    (FILTER_OPTIONS[type] || []).forEach(val => {
+      const btn = document.createElement('button');
+      btn.className = 'chip' + (activeFilters[type].includes(val) ? ' active' : '');
+      btn.textContent = val;
+      btn.onclick = () => toggleFilter(type, val);
+      wrap.appendChild(btn);
+    });
+  });
+
+  const tagsWrap = document.getElementById('filter-tags');
+  tagsWrap.innerHTML = '';
+  getAllTags().forEach(tag => {
+    const btn = document.createElement('button');
+    btn.className = 'chip' + (activeFilters.tags.includes(tag) ? ' active-pink' : '');
+    btn.textContent = '#' + tag;
+    btn.onclick = () => toggleFilter('tags', tag);
+    tagsWrap.appendChild(btn);
+  });
+}
+
+function toggleFilter(type, val) {
+  const arr = activeFilters[type];
+  const idx = arr.indexOf(val);
+  if (idx >= 0) arr.splice(idx, 1);
+  else arr.push(val);
+  buildFilterChips();
+  renderActiveFilters();
+  render();
+}
+
+function renderActiveFilters() {
+  const wrap = document.getElementById('active-filters');
+  wrap.innerHTML = '';
+  Object.entries(activeFilters).forEach(([type, vals]) => {
+    vals.forEach(val => {
+      const tag = document.createElement('div');
+      tag.className = 'active-filter-tag';
+      tag.innerHTML = `<span>${type}: ${val}</span><span>✕</span>`;
+      tag.onclick = () => toggleFilter(type, val);
+      wrap.appendChild(tag);
+    });
+  });
+}
+
+function getFiltered() {
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+  const sort = document.getElementById('sort-select').value;
+
+  let items = DB.filter(e => {
+    if (q) {
+      const haystack = [e.title, e.category, e.mood, e.style, ...(e.tags || [])].join(' ').toLowerCase();
+      if (!haystack.includes(q)) return false;
+    }
+    if (activeFilters.category.length && !activeFilters.category.includes(e.category)) return false;
+    if (activeFilters.mood.length && !activeFilters.mood.includes(e.mood)) return false;
+    if (activeFilters.style.length && !activeFilters.style.includes(e.style)) return false;
+    if (activeFilters.length.length) {
+      if (!activeFilters.length.includes(getLength(e.title))) return false;
+    }
+    if (activeFilters.tags.length) {
+      if (!activeFilters.tags.some(t => (e.tags || []).includes(t))) return false;
+    }
+    return true;
+  });
+
+  if (sort === 'alpha-asc') items.sort((a, b) => a.title.localeCompare(b.title));
+  else if (sort === 'alpha-desc') items.sort((a, b) => b.title.localeCompare(a.title));
+  else if (sort === 'length-asc') items.sort((a, b) => a.title.length - b.title.length);
+  else if (sort === 'length-desc') items.sort((a, b) => b.title.length - a.title.length);
+  else if (sort === 'newest') items.sort((a, b) => b.added - a.added);
+
+  return items;
+}
+
+function render() {
+  const items = getFiltered();
+  const container = document.getElementById('names-container');
+
+  document.getElementById('total-count').textContent = DB.length;
+  document.getElementById('filtered-count').textContent = items.length;
+  document.getElementById('filtered-count-inline').textContent = items.length;
+  document.getElementById('total-count-inline').textContent = DB.length;
+  document.getElementById('tag-count').textContent = getAllTags().length;
+
+  container.className = currentView === 'grid' ? 'names-grid' : 'names-list';
+
+  if (items.length === 0) {
+    container.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon">◈</div>
+      <p>NO ENTRIES MATCH YOUR FILTERS</p>
+    </div>`;
+    return;
+  }
+
+  container.innerHTML = items.map(e => {
+    const len = getLength(e.title);
+    const tags = (e.tags || []).map(t => `<span class="tag">#${t}</span>`).join('');
+    return `<div class="name-card" data-category="${e.category}" data-id="${e.id}">
+      <div class="card-top">
+        <div class="card-title">${e.title}</div>
+        <div style="display:flex;gap:6px">
+          <button class="copy-btn" onclick="copyTitle(event, '${e.title.replace(/'/g, "\\'")}', this)" title="Copy">⊕</button>
+          <button class="copy-btn" onclick="editEntry(${e.id})" title="Edit" style="font-size:12px">✎</button>
+          <button class="copy-btn" onclick="deleteEntry(${e.id})" title="Delete" style="font-size:12px">⊗</button>
+        </div>
+      </div>
+      <div class="card-meta">
+        <span class="badge badge-category">${e.category}</span>
+        <span class="badge badge-mood">${e.mood}</span>
+        ${e.style ? `<span class="badge badge-style">${e.style}</span>` : ''}
+      </div>
+      <div class="card-tags">${tags}</div>
+      <div class="card-bottom">
+        <span class="card-id">ID·${String(e.id).padStart(4,'0')}</span>
+        <span class="badge badge-length">${len}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  buildFilterChips();
+}
+
+// ═══════════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════════
+
+function copyTitle(evt, title, btn) {
+  evt.stopPropagation();
+  navigator.clipboard.writeText(title).catch(() => {});
+  btn.textContent = '✓';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.textContent = '⊕'; btn.classList.remove('copied'); }, 1500);
+  showToast('COPIED: ' + title);
+}
+
+function deleteEntry(id) {
+  if (!confirm('Delete this entry?')) return;
+  DB = DB.filter(e => e.id !== id);
+  render();
+  showToast('ENTRY DELETED');
+}
+
+function editEntry(id) {
+  const e = DB.find(x => x.id === id);
+  if (!e) return;
+  editingId = id;
+  document.getElementById('modal-title').textContent = 'EDIT ENTRY';
+  document.getElementById('form-title').value = e.title;
+  document.getElementById('form-category').value = e.category;
+  document.getElementById('form-mood').value = e.mood;
+  document.getElementById('form-style').value = e.style || '';
+  document.getElementById('form-tags').value = (e.tags || []).join(', ');
+  updateLengthPreview();
+  openModal();
+}
+
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('ai-result').style.display = 'none';
+  document.getElementById('ai-use-btn').style.display = 'none';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  editingId = null;
+  document.getElementById('form-title').value = '';
+  document.getElementById('form-category').value = '';
+  document.getElementById('form-mood').value = '';
+  document.getElementById('form-style').value = '';
+  document.getElementById('form-tags').value = '';
+  document.getElementById('form-length').value = '';
+  document.getElementById('modal-title').textContent = 'NEW ENTRY';
+  lastAiResult = '';
+}
+
+function updateLengthPreview() {
+  const val = document.getElementById('form-title').value;
+  document.getElementById('form-length').value = val ? getLength(val) : '';
+}
+
+function saveEntry() {
+  const title = document.getElementById('form-title').value.trim();
+  const category = document.getElementById('form-category').value;
+  const mood = document.getElementById('form-mood').value;
+  const style = document.getElementById('form-style').value;
+  const tagsRaw = document.getElementById('form-tags').value;
+
+  if (!title) { showToast('TITLE REQUIRED'); return; }
+  if (!category) { showToast('CATEGORY REQUIRED'); return; }
+  if (!mood) { showToast('MOOD REQUIRED'); return; }
+
+  const tags = tagsRaw.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
+
+  if (editingId) {
+    const e = DB.find(x => x.id === editingId);
+    Object.assign(e, { title, category, mood, style, tags });
+    showToast('ENTRY UPDATED');
+  } else {
+    DB.push({ id: nextId++, title, category, mood, style, tags, added: Date.now() });
+    showToast('ENTRY ADDED: ' + title);
+  }
+
+  closeModal();
+  render();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════════
+// AI GENERATION (Claude API)
+// ═══════════════════════════════════════════
+
+async function aiGenerate(type) {
+  const titleInput = document.getElementById('form-title').value.trim();
+  const resultEl = document.getElementById('ai-result');
+  const useBtn = document.getElementById('ai-use-btn');
+
+  resultEl.style.display = 'block';
+  resultEl.textContent = '';
+  resultEl.classList.add('loading');
+  useBtn.style.display = 'none';
+
+  const existingTitles = DB.map(e => e.title).join(', ');
+
+  let prompt = '';
+  if (type === 'similar') {
+    if (!titleInput) { resultEl.textContent = 'Enter a title first.'; resultEl.classList.remove('loading'); return; }
+    prompt = `You are a vaporwave name generator. Generate 5 names similar in vibe to "${titleInput}". Style: atmospheric, nostalgic, cyberpunk, dreamy, retro-futuristic. Mix of single words, two-word combos, and poetic phrases. Some can use l33tspeak or numbers stylistically. Keep each name on its own line. Only output the names, nothing else.`;
+  } else if (type === 'tags') {
+    if (!titleInput) { resultEl.textContent = 'Enter a title first.'; resultEl.classList.remove('loading'); return; }
+    prompt = `For the vaporwave project name "${titleInput}", suggest 4-6 relevant tags as a comma-separated list. Tags should be single lowercase words like: cyber, retro, nostalgia, glitch, analog, code, sky, neon, dream, memory, system, etc. Only output the comma-separated tags.`;
+  } else if (type === 'batch') {
+    prompt = `Generate 8 original vaporwave-style project names. They should feel: nostalgic, cyberpunk, dreamy, atmospheric, retro-futuristic. Mix technical terms with poetic imagery. Some can use numbers/l33tspeak. Avoid these existing ones: ${existingTitles}. Output one name per line, nothing else.`;
+  } else if (type === 'explain') {
+    if (!titleInput) { resultEl.textContent = 'Enter a title first.'; resultEl.classList.remove('loading'); return; }
+    prompt = `Briefly describe the vibe, mood, and feel of the vaporwave project name "${titleInput}" in 2-3 sentences. What kind of project would fit this name? Keep it poetic and atmospheric.`;
+  }
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content?.map(b => b.text || '').join('') || 'No response.';
+    lastAiResult = text;
+
+    resultEl.classList.remove('loading');
+    resultEl.textContent = text;
+
+    if (type === 'similar' || type === 'batch') {
+      useBtn.style.display = 'inline-block';
+      useBtn.textContent = '↑ USE FIRST NAME';
+    } else if (type === 'tags') {
+      useBtn.style.display = 'inline-block';
+      useBtn.textContent = '↑ USE THESE TAGS';
+    }
+  } catch (err) {
+    resultEl.classList.remove('loading');
+    resultEl.textContent = 'API error: ' + err.message;
+  }
+}
+
+document.getElementById('ai-use-btn').onclick = () => {
+  if (!lastAiResult) return;
+  const lines = lastAiResult.split('\n').filter(l => l.trim());
+  const firstLine = lines[0].replace(/^\d+[\.\)]\s*/, '').trim();
+  const tagsField = document.getElementById('form-tags');
+  const titleField = document.getElementById('form-title');
+
+  // If result looks like tags (commas, short words), put in tags
+  if (lastAiResult.includes(',') && !lastAiResult.includes('\n')) {
+    tagsField.value = lastAiResult.trim();
+    showToast('TAGS APPLIED');
+  } else {
+    titleField.value = firstLine;
+    updateLengthPreview();
+    showToast('NAME APPLIED: ' + firstLine);
+  }
+};
+
+// ═══════════════════════════════════════════
+// EVENT LISTENERS
+// ═══════════════════════════════════════════
+
+document.getElementById('search-input').addEventListener('input', render);
+document.getElementById('sort-select').addEventListener('change', render);
+
+document.getElementById('filter-toggle').onclick = () => {
+  document.getElementById('filter-panel').classList.toggle('open');
+};
+
+document.getElementById('clear-filters').onclick = () => {
+  activeFilters = { category: [], mood: [], style: [], length: [], tags: [] };
+  buildFilterChips();
+  renderActiveFilters();
+  render();
+};
+
+document.getElementById('add-btn').onclick = () => { editingId = null; openModal(); };
+document.getElementById('modal-close').onclick = closeModal;
+document.getElementById('modal-cancel').onclick = closeModal;
+document.getElementById('modal-save').onclick = saveEntry;
+document.getElementById('form-title').addEventListener('input', updateLengthPreview);
+
+document.getElementById('modal-overlay').onclick = (e) => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+};
+
+document.getElementById('view-grid').onclick = () => {
+  currentView = 'grid';
+  document.getElementById('view-grid').classList.add('active');
+  document.getElementById('view-list').classList.remove('active');
+  render();
+};
+
+document.getElementById('view-list').onclick = () => {
+  currentView = 'list';
+  document.getElementById('view-list').classList.add('active');
+  document.getElementById('view-grid').classList.remove('active');
+  render();
+};
+
+// Init
+buildFilterChips();
+render();
+</script>
+</body>
+</html>
