@@ -3,969 +3,767 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ＶＡＰＯＲ ＬＥＸＩＣＯＮ</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<title>ＮＡＭＥＤＲＯＰ — Name Archive</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,300&family=Bebas+Neue&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a12;
-    --bg2: #0f0f1a;
-    --bg3: #14142a;
-    --pink: #ff6ec7;
-    --cyan: #00e5ff;
-    --purple: #b44fff;
-    --lavender: #c8b4ff;
-    --yellow: #ffe66d;
-    --dim: rgba(255,255,255,0.07);
-    --dim2: rgba(255,255,255,0.04);
-    --border: rgba(200,180,255,0.15);
-    --text: #e8e0ff;
-    --muted: rgba(232,224,255,0.45);
+    --bg:      #0e0c08;
+    --bg2:     #161309;
+    --bg3:     #1e190d;
+    --ink:     #f0e6cc;
+    --ink2:    #b8a882;
+    --ink3:    #6b5f44;
+    --amber:   #e8a030;
+    --rust:    #c94b28;
+    --gold:    #f5c842;
+    --sage:    #7aab7a;
+    --cream:   #f7ead8;
+    --border:  rgba(232,160,48,0.15);
+    --border2: rgba(232,160,48,0.3);
+    --glow-a:  0 0 24px rgba(232,160,48,0.25);
+    --glow-r:  0 0 24px rgba(201,75,40,0.3);
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
+  * { margin:0; padding:0; box-sizing:border-box; }
   body {
+    font-family: 'IBM Plex Mono', monospace;
     background: var(--bg);
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
+    color: var(--ink);
     min-height: 100vh;
     overflow-x: hidden;
   }
-
-  /* scanline overlay */
   body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
-    pointer-events: none;
-    z-index: 9999;
+    content:'';
+    position:fixed; inset:0;
+    background-image: radial-gradient(circle, rgba(232,160,48,0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events:none; z-index:0;
   }
+  .container { position:relative; z-index:1; max-width:1320px; margin:0 auto; padding:0 28px; }
 
-  /* grid bg */
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(180,79,255,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(180,79,255,0.06) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 24px; }
-
-  /* ── HEADER ── */
+  /* HEADER */
   header {
-    padding: 48px 0 32px;
-    text-align: center;
-    position: relative;
-  }
-
-  .header-glow {
-    position: absolute;
-    top: 0; left: 50%; transform: translateX(-50%);
-    width: 600px; height: 200px;
-    background: radial-gradient(ellipse, rgba(180,79,255,0.18) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .logo {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2.2rem, 5vw, 4rem);
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 40%, var(--cyan) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 6px;
-  }
-
-  .logo-sub {
-    font-size: 0.65rem;
-    letter-spacing: 0.5em;
-    color: var(--muted);
-    text-transform: uppercase;
-  }
-
-  /* ── SEARCH ── */
-  .search-bar {
-    max-width: 640px;
-    margin: 32px auto 0;
-    position: relative;
-  }
-
-  .search-bar input {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.95rem;
-    padding: 14px 50px 14px 18px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-bar input:focus { border-color: var(--purple); }
-  .search-bar input::placeholder { color: var(--muted); }
-
-  .search-icon {
-    position: absolute;
-    right: 16px; top: 50%; transform: translateY(-50%);
-    color: var(--muted);
-    font-size: 1.1rem;
-    pointer-events: none;
-  }
-
-  /* ── LAYOUT ── */
-  .main-layout {
+    padding: 52px 0 36px;
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     gap: 24px;
-    margin-top: 32px;
-    padding-bottom: 60px;
+  }
+  .header-left  { font-size:10px; letter-spacing:3px; color:var(--ink3); text-transform:uppercase; line-height:2.2; }
+  .header-left span { color:var(--amber); }
+  .header-center { text-align:center; }
+  .header-title {
+    font-family:'Bebas Neue', sans-serif;
+    font-size: clamp(42px,7vw,84px);
+    letter-spacing:14px;
+    color: var(--cream);
+    line-height:0.9;
+    text-shadow: 0 0 60px rgba(232,160,48,0.15);
+  }
+  .header-title span {
+    display:block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; font-weight:300;
+    letter-spacing:8px; color:var(--amber);
+    margin-top:8px; text-transform:uppercase;
+  }
+  .header-right { text-align:right; font-size:10px; letter-spacing:3px; color:var(--ink3); text-transform:uppercase; line-height:2.2; }
+  .header-right span { color:var(--gold); }
+  .header-rule {
+    height:1px;
+    background: linear-gradient(90deg, transparent, var(--amber), var(--rust), var(--amber), transparent);
+    margin-bottom:36px; opacity:0.4;
   }
 
-  @media (max-width: 900px) {
-    .main-layout { grid-template-columns: 1fr; }
-    .sidebar { order: -1; }
+  /* SEARCH */
+  .search-wrap { position:relative; max-width:560px; margin:0 auto 28px; }
+  .search-input {
+    width:100%;
+    background: rgba(232,160,48,0.05);
+    border:1px solid var(--border);
+    border-top:2px solid var(--amber);
+    padding:13px 48px 13px 18px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; color:var(--ink);
+    outline:none; transition:all 0.2s; letter-spacing:1px;
   }
+  .search-input::placeholder { color:var(--ink3); }
+  .search-input:focus { background:rgba(232,160,48,0.08); border-color:var(--amber); box-shadow:var(--glow-a); }
+  .search-icon { position:absolute; right:14px; top:50%; transform:translateY(-50%); color:var(--amber); font-size:16px; pointer-events:none; opacity:0.7; }
 
-  /* ── SIDEBAR ── */
-  .sidebar { display: flex; flex-direction: column; gap: 16px; }
+  /* TOOLBAR */
+  .toolbar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+  .toolbar-left, .toolbar-right { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .result-count { font-size:10px; color:var(--ink3); letter-spacing:2px; white-space:nowrap; }
+  .result-count em { color:var(--amber); font-style:normal; font-weight:600; }
 
-  .filter-panel {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
+  /* CUSTOM SORT WIDGET */
+  .sort-widget { position:relative; user-select:none; }
+  .sort-trigger {
+    display:flex; align-items:center; gap:8px;
+    padding:8px 14px;
+    border:1px solid var(--border2);
+    background:rgba(232,160,48,0.05);
+    cursor:pointer;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:2px; color:var(--amber);
+    text-transform:uppercase; transition:all 0.15s; white-space:nowrap;
   }
-
-  .filter-title {
-    font-size: 0.6rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--purple);
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .sort-trigger:hover { background:rgba(232,160,48,0.1); border-color:var(--amber); }
+  .sort-trigger.open  { background:rgba(232,160,48,0.12); border-color:var(--amber); box-shadow:var(--glow-a); }
+  .sort-arrow { font-size:8px; transition:transform 0.2s; opacity:0.7; }
+  .sort-trigger.open .sort-arrow { transform:rotate(180deg); }
+  .sort-dropdown {
+    position:absolute; top:calc(100% + 4px); left:0;
+    background:var(--bg2); border:1px solid var(--border2);
+    min-width:210px; z-index:50; display:none;
+    box-shadow:0 12px 40px rgba(0,0,0,0.65), var(--glow-a);
   }
-  .filter-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
+  .sort-dropdown.open { display:block; }
+  .sort-option {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 16px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:2px; color:var(--ink2);
+    cursor:pointer; text-transform:uppercase; transition:all 0.12s;
+    border-left:2px solid transparent;
   }
+  .sort-option:hover { background:rgba(232,160,48,0.07); color:var(--ink); border-left-color:var(--amber); }
+  .sort-option.active { color:var(--amber); border-left-color:var(--amber); background:rgba(232,160,48,0.06); }
+  .sort-option .sort-dir { font-size:11px; opacity:0.5; }
+  .sort-divider { height:1px; background:var(--border); margin:3px 0; }
 
-  .filter-group { margin-bottom: 18px; }
-  .filter-group:last-child { margin-bottom: 0; }
-  .filter-label {
-    font-size: 0.62rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-    display: block;
+  /* BUTTONS */
+  .btn {
+    font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:2px;
+    padding:8px 16px; border:1px solid; cursor:pointer;
+    transition:all 0.15s; text-transform:uppercase; background:transparent;
   }
-
-  .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-
-  .chip {
-    background: var(--dim2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.05em;
-    user-select: none;
-  }
-  .chip:hover { border-color: var(--purple); color: var(--lavender); }
-  .chip.active { background: rgba(180,79,255,0.18); border-color: var(--purple); color: var(--purple); }
-
-  .sort-select {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    padding: 8px 10px;
-    outline: none;
-    cursor: pointer;
-  }
-  .sort-select option { background: var(--bg3); }
-
-  .clear-btn {
-    width: 100%;
-    background: transparent;
-    border: 1px solid rgba(255,110,199,0.25);
-    border-radius: 4px;
-    color: var(--pink);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    padding: 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.15s;
-    margin-top: 4px;
-  }
-  .clear-btn:hover { background: rgba(255,110,199,0.1); border-color: var(--pink); }
-
-  /* ── AI PANEL ── */
-  .ai-panel {
-    background: linear-gradient(135deg, rgba(180,79,255,0.08), rgba(0,229,255,0.05));
-    border: 1px solid rgba(180,79,255,0.3);
-    border-radius: 10px;
-    padding: 20px;
-  }
-
-  .ai-title {
-    font-size: 0.6rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 12px;
-  }
-
-  .ai-prompt {
-    width: 100%;
-    background: rgba(0,0,0,0.3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    padding: 10px;
-    outline: none;
-    resize: vertical;
-    min-height: 70px;
-    margin-bottom: 10px;
-  }
-  .ai-prompt::placeholder { color: var(--muted); }
-  .ai-prompt:focus { border-color: var(--cyan); }
-
-  .ai-generate-btn {
-    width: 100%;
-    background: linear-gradient(135deg, rgba(0,229,255,0.15), rgba(180,79,255,0.15));
-    border: 1px solid var(--cyan);
-    border-radius: 4px;
-    color: var(--cyan);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    padding: 10px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.2s;
-  }
-  .ai-generate-btn:hover { background: linear-gradient(135deg, rgba(0,229,255,0.25), rgba(180,79,255,0.25)); }
-  .ai-generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .ai-status {
-    font-size: 0.62rem;
-    color: var(--muted);
-    margin-top: 8px;
-    min-height: 16px;
-    text-align: center;
-  }
-  .ai-status.loading { color: var(--cyan); }
-  .ai-status.error { color: var(--pink); }
-
-  /* ── ADD FORM ── */
-  .add-panel {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-  }
-
-  .add-form-inner { display: flex; flex-direction: column; gap: 10px; }
-
-  .form-input {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
-    padding: 8px 10px;
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  .form-input:focus { border-color: var(--purple); }
-  .form-input::placeholder { color: var(--muted); }
-
-  .form-select {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    padding: 8px 10px;
-    outline: none;
-    cursor: pointer;
-  }
-  .form-select option { background: var(--bg3); }
-
-  .add-btn {
-    background: rgba(180,79,255,0.2);
-    border: 1px solid var(--purple);
-    border-radius: 4px;
-    color: var(--purple);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    padding: 9px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: all 0.15s;
-  }
-  .add-btn:hover { background: rgba(180,79,255,0.35); }
-
-  /* ── MAIN CONTENT ── */
-  .content-area {}
-
-  .toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .result-count {
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-  }
-  .result-count span { color: var(--purple); }
-
-  .view-toggle { display: flex; gap: 6px; }
+  .btn-amber { border-color:var(--amber); color:var(--amber); }
+  .btn-amber:hover { background:var(--amber); color:var(--bg); box-shadow:var(--glow-a); }
+  .btn-rust  { border-color:var(--rust);  color:var(--rust);  }
+  .btn-rust:hover  { background:var(--rust);  color:var(--cream); box-shadow:var(--glow-r); }
+  .btn-sage  { border-color:var(--sage);  color:var(--sage);  }
+  .btn-sage:hover  { background:var(--sage);  color:var(--bg); }
+  .view-toggle { display:flex; gap:3px; }
   .view-btn {
-    background: var(--dim2);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--muted);
-    font-size: 0.9rem;
-    padding: 6px 10px;
-    cursor: pointer;
-    transition: all 0.15s;
+    background:transparent; border:1px solid var(--border);
+    color:var(--ink3); padding:8px 11px; cursor:pointer; font-size:13px; transition:all 0.15s;
   }
-  .view-btn.active { border-color: var(--purple); color: var(--purple); background: rgba(180,79,255,0.1); }
+  .view-btn.active { border-color:var(--amber); color:var(--amber); background:rgba(232,160,48,0.08); }
 
-  /* ── CARDS GRID ── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 14px;
+  /* FILTER PANEL */
+  .filter-panel {
+    background:rgba(22,19,9,0.92);
+    border:1px solid var(--border); border-top:2px solid var(--rust);
+    padding:24px; margin-bottom:24px; display:none;
+    backdrop-filter:blur(12px);
   }
+  .filter-panel.open { display:block; }
+  .filter-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(170px,1fr)); gap:22px; margin-bottom:20px; }
+  .filter-group label { display:block; font-size:9px; letter-spacing:4px; color:var(--rust); text-transform:uppercase; margin-bottom:10px; font-weight:600; }
+  .filter-chips { display:flex; flex-wrap:wrap; gap:5px; }
+  .chip {
+    font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:1px;
+    padding:4px 10px; border:1px solid rgba(107,95,68,0.4);
+    cursor:pointer; color:var(--ink3); background:transparent; transition:all 0.12s;
+    white-space:nowrap; text-transform:uppercase;
+  }
+  .chip:hover { border-color:var(--amber); color:var(--ink2); }
+  .chip.active      { background:rgba(232,160,48,0.12); border-color:var(--amber); color:var(--amber); }
+  .chip.active-rust { background:rgba(201,75,40,0.12);  border-color:var(--rust);  color:var(--rust);  }
+  .filter-actions { display:flex; gap:10px; align-items:center; padding-top:16px; border-top:1px solid var(--border); flex-wrap:wrap; }
+  .active-filters { display:flex; flex-wrap:wrap; gap:6px; flex:1; }
+  .active-filter-tag {
+    font-size:9px; padding:4px 10px;
+    background:rgba(201,75,40,0.1); border:1px solid rgba(201,75,40,0.3);
+    color:var(--rust); display:flex; align-items:center; gap:6px; cursor:pointer;
+    letter-spacing:1px; text-transform:uppercase; transition:all 0.12s;
+  }
+  .active-filter-tag:hover { background:rgba(232,160,48,0.1); border-color:var(--amber); color:var(--amber); }
 
-  .cards-grid.list-view {
-    grid-template-columns: 1fr;
-  }
+  /* GRID / LIST */
+  .names-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(290px,1fr)); gap:14px; margin-bottom:48px; }
+  .names-list { display:flex; flex-direction:column; gap:6px; margin-bottom:48px; }
+  .names-list .name-card { flex-direction:row; align-items:center; padding:12px 20px; gap:20px; }
+  .names-list .card-title { font-size:16px; flex:1; min-width:0; }
+  .names-list .card-bottom { display:none; }
+  .names-list .card-meta { flex-shrink:0; }
+  .names-list .card-tags { flex-shrink:0; }
 
-  .card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
+  /* CARD */
+  .name-card {
+    background:rgba(22,19,9,0.7);
+    border:1px solid var(--border); border-left:3px solid transparent;
+    padding:20px; cursor:default;
+    transition:all 0.18s;
+    display:flex; flex-direction:column; gap:12px;
+    backdrop-filter:blur(4px);
   }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 60%, rgba(180,79,255,0.06));
-    pointer-events: none;
-  }
-  .card:hover {
-    border-color: rgba(180,79,255,0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(180,79,255,0.12);
-  }
+  .name-card:hover { border-color:rgba(232,160,48,0.35); background:rgba(30,25,13,0.88); transform:translateX(2px); }
+  .name-card[data-category="Technical"]    { border-left-color:#5ba8d4; }
+  .name-card[data-category="Technical"]:hover    { box-shadow:-4px 0 0 #5ba8d4,   4px 0 20px rgba(0,0,0,0.4); }
+  .name-card[data-category="Atmospheric"] { border-left-color:#c97bbf; }
+  .name-card[data-category="Atmospheric"]:hover { box-shadow:-4px 0 0 #c97bbf,   4px 0 20px rgba(0,0,0,0.4); }
+  .name-card[data-category="Institutional"]{ border-left-color:var(--gold); }
+  .name-card[data-category="Institutional"]:hover{ box-shadow:-4px 0 0 var(--gold), 4px 0 20px rgba(0,0,0,0.4); }
+  .name-card[data-category="Creative"]    { border-left-color:var(--rust); }
+  .name-card[data-category="Creative"]:hover    { box-shadow:-4px 0 0 var(--rust),  4px 0 20px rgba(0,0,0,0.4); }
+  .name-card[data-category="Hybrid"]     { border-left-color:var(--sage); }
+  .name-card[data-category="Hybrid"]:hover     { box-shadow:-4px 0 0 var(--sage),  4px 0 20px rgba(0,0,0,0.4); }
 
-  .card-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 10px;
-    line-height: 1.3;
+  .card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
+  .card-title { font-family:'Bebas Neue', sans-serif; font-size:20px; letter-spacing:2px; color:var(--cream); line-height:1.1; }
+  .card-actions { display:flex; gap:4px; flex-shrink:0; }
+  .icon-btn { background:none; border:none; color:var(--ink3); cursor:pointer; font-size:12px; padding:3px 5px; transition:color 0.15s; line-height:1; }
+  .icon-btn:hover { color:var(--amber); }
+  .icon-btn.copied { color:var(--sage); }
+  .icon-btn.del:hover { color:var(--rust); }
+  .card-meta { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .badge { font-size:8px; letter-spacing:2px; padding:3px 7px; text-transform:uppercase; font-weight:600; }
+  .badge-cat-Technical     { background:rgba(91,168,212,0.12); color:#5ba8d4; border:1px solid rgba(91,168,212,0.25); }
+  .badge-cat-Atmospheric   { background:rgba(201,123,191,0.12); color:#c97bbf; border:1px solid rgba(201,123,191,0.25); }
+  .badge-cat-Institutional { background:rgba(245,200,66,0.1); color:var(--gold); border:1px solid rgba(245,200,66,0.25); }
+  .badge-cat-Creative      { background:rgba(201,75,40,0.12); color:var(--rust); border:1px solid rgba(201,75,40,0.25); }
+  .badge-cat-Hybrid        { background:rgba(122,171,122,0.1); color:var(--sage); border:1px solid rgba(122,171,122,0.25); }
+  .badge-mood   { background:rgba(232,160,48,0.08); color:var(--amber); border:1px solid rgba(232,160,48,0.2); }
+  .badge-style  { background:rgba(240,230,204,0.06); color:var(--ink2); border:1px solid rgba(240,230,204,0.12); }
+  .badge-length { background:rgba(122,171,122,0.08); color:var(--sage); border:1px solid rgba(122,171,122,0.2); }
+  .card-tags { display:flex; gap:4px; flex-wrap:wrap; }
+  .tag { font-size:8px; color:var(--ink3); padding:2px 6px; border:1px solid rgba(107,95,68,0.25); letter-spacing:1px; text-transform:uppercase; }
+  .card-bottom { display:flex; justify-content:space-between; align-items:center; font-size:9px; color:var(--ink3); border-top:1px solid var(--border); padding-top:10px; margin-top:2px; letter-spacing:2px; }
+
+  /* MODAL */
+  .modal-overlay {
+    position:fixed; inset:0; background:rgba(8,7,4,0.88); backdrop-filter:blur(10px);
+    z-index:100; display:flex; align-items:center; justify-content:center; padding:20px;
+    opacity:0; pointer-events:none; transition:opacity 0.25s;
   }
-
-  .card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-bottom: 10px;
+  .modal-overlay.open { opacity:1; pointer-events:all; }
+  .modal {
+    background:var(--bg2); border:1px solid var(--border2); border-top:3px solid var(--amber);
+    padding:32px; width:100%; max-width:580px; max-height:90vh; overflow-y:auto;
+    box-shadow:0 0 80px rgba(232,160,48,0.12), 0 32px 64px rgba(0,0,0,0.7);
+    transform:translateY(16px); transition:transform 0.25s;
   }
-
-  .badge {
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 3px 7px;
-    border-radius: 3px;
-    font-family: 'Space Mono', monospace;
+  .modal-overlay.open .modal { transform:translateY(0); }
+  .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+  .modal-title { font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:5px; color:var(--amber); }
+  .modal-close { background:none; border:none; color:var(--ink3); font-size:18px; cursor:pointer; transition:color 0.15s; }
+  .modal-close:hover { color:var(--rust); }
+  .form-group { margin-bottom:18px; }
+  .form-label { display:block; font-size:9px; letter-spacing:3px; color:var(--amber); text-transform:uppercase; margin-bottom:7px; font-weight:600; }
+  .form-input, .form-select {
+    width:100%; background:rgba(232,160,48,0.05);
+    border:1px solid var(--border); border-bottom:1px solid var(--border2);
+    padding:10px 13px; font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--ink); outline:none; transition:border-color 0.15s, background 0.15s;
   }
-  .badge-category { background: rgba(255,110,199,0.12); color: var(--pink); border: 1px solid rgba(255,110,199,0.2); }
-  .badge-mood { background: rgba(0,229,255,0.1); color: var(--cyan); border: 1px solid rgba(0,229,255,0.2); }
-  .badge-style { background: rgba(180,79,255,0.1); color: var(--lavender); border: 1px solid rgba(180,79,255,0.2); }
-  .badge-length { background: rgba(255,230,109,0.08); color: var(--yellow); border: 1px solid rgba(255,230,109,0.15); }
+  .form-input:focus, .form-select:focus { border-color:var(--amber); background:rgba(232,160,48,0.08); }
+  .form-select option { background:#1e190d; color:var(--ink); }
+  .form-input[readonly] { opacity:0.45; cursor:default; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .form-hint { font-size:9px; color:var(--ink3); margin-top:4px; letter-spacing:1px; }
 
-  .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+  /* AI */
+  .ai-section { background:rgba(122,171,122,0.04); border:1px solid rgba(122,171,122,0.18); border-top:2px solid var(--sage); padding:18px; margin-top:10px; }
+  .ai-label { font-size:9px; letter-spacing:4px; color:var(--sage); text-transform:uppercase; margin-bottom:12px; display:flex; align-items:center; gap:8px; font-weight:600; }
+  .ai-pulse { width:7px; height:7px; border-radius:50%; background:var(--sage); animation:pulse 1.8s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.75)} }
+  .ai-prompts { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:12px; }
+  .ai-prompt-btn {
+    font-family:'IBM Plex Mono', monospace; font-size:9px; padding:5px 10px;
+    border:1px solid rgba(122,171,122,0.3); color:var(--sage); background:transparent;
+    cursor:pointer; transition:all 0.12s; letter-spacing:1px; text-transform:uppercase;
   }
+  .ai-prompt-btn:hover { background:rgba(122,171,122,0.1); border-color:var(--sage); }
+  .ai-prompt-btn:disabled { opacity:0.4; cursor:not-allowed; }
+  .ai-result { font-size:11px; color:var(--ink); background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:12px; min-height:44px; line-height:1.7; display:none; white-space:pre-wrap; }
+  .ai-result.loading { color:var(--sage); }
+  .ai-cursor { display:inline-block; animation:blink 0.6s infinite; }
+  @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+  .ai-use-btn { display:none; margin-top:8px; font-family:'IBM Plex Mono', monospace; font-size:9px; padding:6px 14px; border:1px solid var(--sage); color:var(--sage); background:transparent; cursor:pointer; letter-spacing:2px; text-transform:uppercase; transition:all 0.12s; }
+  .ai-use-btn:hover { background:rgba(122,171,122,0.12); }
+  .modal-footer { display:flex; gap:10px; justify-content:flex-end; margin-top:24px; padding-top:18px; border-top:1px solid var(--border); }
 
-  .tag {
-    font-size: 0.58rem;
-    color: var(--muted);
-    background: var(--dim);
-    border-radius: 2px;
-    padding: 2px 6px;
+  /* EMPTY / TOAST */
+  .empty-state { text-align:center; padding:80px 20px; color:var(--ink3); grid-column:1/-1; }
+  .empty-state .ei { font-size:40px; margin-bottom:14px; opacity:0.25; }
+  .empty-state p { font-size:10px; letter-spacing:3px; text-transform:uppercase; }
+  .toast { position:fixed; bottom:24px; right:24px; background:var(--bg3); border:1px solid var(--amber); border-left:3px solid var(--amber); padding:11px 18px; font-size:10px; color:var(--amber); letter-spacing:2px; z-index:200; transform:translateY(70px); opacity:0; transition:all 0.25s; text-transform:uppercase; }
+  .toast.show { transform:translateY(0); opacity:1; }
+
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:var(--bg); }
+  ::-webkit-scrollbar-thumb { background:rgba(232,160,48,0.25); }
+  ::-webkit-scrollbar-thumb:hover { background:rgba(232,160,48,0.5); }
+
+  @media (max-width:700px) {
+    header { grid-template-columns:1fr; text-align:center; gap:12px; }
+    .header-left, .header-right { display:none; }
+    .form-row { grid-template-columns:1fr; }
+    .names-grid { grid-template-columns:1fr; }
+    .toolbar { flex-direction:column; align-items:stretch; }
   }
-  .tag::before { content: '#'; opacity: 0.6; }
-
-  .card-copy {
-    position: absolute;
-    top: 12px; right: 12px;
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    font-size: 0.9rem;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.15s;
-    padding: 4px;
-    border-radius: 3px;
-  }
-  .card:hover .card-copy { opacity: 1; }
-  .card-copy:hover { color: var(--cyan); background: var(--dim); }
-
-  .card-delete {
-    position: absolute;
-    bottom: 12px; right: 12px;
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    font-size: 0.8rem;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.15s;
-    padding: 4px;
-    border-radius: 3px;
-  }
-  .card:hover .card-delete { opacity: 0.5; }
-  .card-delete:hover { opacity: 1 !important; color: var(--pink); }
-
-  /* list view */
-  .cards-grid.list-view .card {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 14px 18px;
-  }
-  .cards-grid.list-view .card-name { margin-bottom: 0; font-size: 0.95rem; flex: 0 0 220px; }
-  .cards-grid.list-view .card-meta { margin-bottom: 0; flex: 1; }
-  .cards-grid.list-view .card-tags { flex: 0 0 auto; }
-
-  /* ── EMPTY STATE ── */
-  .empty-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: var(--muted);
-  }
-  .empty-state .icon { font-size: 3rem; margin-bottom: 16px; opacity: 0.3; }
-  .empty-state p { font-size: 0.8rem; letter-spacing: 0.1em; }
-
-  /* ── AI RESULTS ── */
-  .ai-results {
-    margin-top: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .ai-result-item {
-    background: rgba(0,229,255,0.05);
-    border: 1px solid rgba(0,229,255,0.15);
-    border-radius: 4px;
-    padding: 8px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .ai-result-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 0.85rem;
-    color: var(--text);
-    flex: 1;
-  }
-
-  .ai-add-btn {
-    background: transparent;
-    border: 1px solid rgba(0,229,255,0.3);
-    border-radius: 3px;
-    color: var(--cyan);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.58rem;
-    padding: 4px 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    white-space: nowrap;
-    transition: all 0.15s;
-  }
-  .ai-add-btn:hover { background: rgba(0,229,255,0.15); }
-
-  /* ── TOAST ── */
-  .toast {
-    position: fixed;
-    bottom: 24px; right: 24px;
-    background: var(--bg3);
-    border: 1px solid var(--purple);
-    border-radius: 6px;
-    padding: 12px 18px;
-    font-size: 0.72rem;
-    color: var(--lavender);
-    letter-spacing: 0.05em;
-    z-index: 9998;
-    transform: translateY(80px);
-    opacity: 0;
-    transition: all 0.25s;
-  }
-  .toast.show { transform: translateY(0); opacity: 1; }
-
-  /* scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: rgba(180,79,255,0.3); border-radius: 3px; }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 </style>
 </head>
 <body>
-
 <div class="container">
+
   <header>
-    <div class="header-glow"></div>
-    <div class="logo">ＶＡＰＯＲ ＬＥＸＩＣＯＮ</div>
-    <div class="logo-sub">a vaporwave name database &amp; generator</div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="search titles, tags, moods…" />
-      <span class="search-icon">⌕</span>
+    <div class="header-left">ENTRIES <span id="hdr-total">0</span><br>TAGS <span id="hdr-tags">0</span><br>FILTERED <span id="hdr-filtered">0</span></div>
+    <div class="header-center">
+      <div class="header-title">ＮＡＭＥＤＲＯＰ<span>名前のアーカイブ — name archive system</span></div>
     </div>
+    <div class="header-right">v2.1<br>ARCHIVE<br>DATABASE</div>
   </header>
+  <div class="header-rule"></div>
 
-  <div class="main-layout">
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search-input" placeholder="search names, tags, moods...">
+    <span class="search-icon">⌕</span>
+  </div>
 
-      <!-- FILTERS -->
-      <div class="filter-panel">
-        <div class="filter-title">Filters</div>
-
-        <div class="filter-group">
-          <span class="filter-label">Category</span>
-          <div class="filter-chips" id="catChips"></div>
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-amber" id="filter-toggle">⊞ Filters</button>
+      <div class="sort-widget" id="sort-widget">
+        <div class="sort-trigger" id="sort-trigger">
+          <span id="sort-label">Sort: Default</span>
+          <span class="sort-arrow">▾</span>
         </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Mood</span>
-          <div class="filter-chips" id="moodChips"></div>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Style</span>
-          <div class="filter-chips" id="styleChips"></div>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Length</span>
-          <div class="filter-chips" id="lengthChips"></div>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Sort by</span>
-          <select class="sort-select" id="sortSelect">
-            <option value="az">A → Z</option>
-            <option value="za">Z → A</option>
-            <option value="length-asc">Shortest first</option>
-            <option value="length-desc">Longest first</option>
-            <option value="newest">Newest first</option>
-          </select>
-        </div>
-
-        <button class="clear-btn" id="clearBtn">✕ clear all filters</button>
-      </div>
-
-      <!-- AI GENERATOR -->
-      <div class="ai-panel">
-        <div class="ai-title">// AI GENERATOR</div>
-        <textarea class="ai-prompt" id="aiPrompt" placeholder="describe a vibe, theme, or aesthetic… e.g. 'melancholic late-night city drives' or 'retro tech nostalgia'"></textarea>
-        <button class="ai-generate-btn" id="aiGenerateBtn" onclick="generateAI()">⟡ generate titles</button>
-        <div class="ai-status" id="aiStatus"></div>
-        <div class="ai-results" id="aiResults"></div>
-      </div>
-
-      <!-- ADD ENTRY -->
-      <div class="add-panel">
-        <div class="filter-title">Add Entry</div>
-        <div class="add-form-inner">
-          <input class="form-input" id="addName" type="text" placeholder="title name…" />
-          <div class="form-row">
-            <select class="form-select" id="addCategory">
-              <option value="">category…</option>
-            </select>
-            <select class="form-select" id="addMood">
-              <option value="">mood…</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <select class="form-select" id="addStyle">
-              <option value="">style…</option>
-            </select>
-            <select class="form-select" id="addLength" disabled>
-              <option value="">auto-length</option>
-            </select>
-          </div>
-          <input class="form-input" id="addTags" type="text" placeholder="tags: cyber, retro, neon…" />
-          <button class="add-btn" onclick="addEntry()">+ add to lexicon</button>
+        <div class="sort-dropdown" id="sort-dropdown">
+          <div class="sort-option active" data-val="default">Default <span class="sort-dir">—</span></div>
+          <div class="sort-divider"></div>
+          <div class="sort-option" data-val="alpha-asc">Alphabetical <span class="sort-dir">A→Z</span></div>
+          <div class="sort-option" data-val="alpha-desc">Alphabetical <span class="sort-dir">Z→A</span></div>
+          <div class="sort-divider"></div>
+          <div class="sort-option" data-val="length-asc">Word count <span class="sort-dir">↑</span></div>
+          <div class="sort-option" data-val="length-desc">Word count <span class="sort-dir">↓</span></div>
+          <div class="sort-divider"></div>
+          <div class="sort-option" data-val="newest">Newest first <span class="sort-dir">↓</span></div>
         </div>
       </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="content-area">
-      <div class="toolbar">
-        <div class="result-count" id="resultCount"></div>
-        <div class="view-toggle">
-          <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grid view">⊞</button>
-          <button class="view-btn" id="listBtn" onclick="setView('list')" title="List view">☰</button>
-        </div>
+      <span class="result-count">Showing <em id="fc-inline">0</em> of <em id="tc-inline">0</em></span>
+    </div>
+    <div class="toolbar-right">
+      <div class="view-toggle">
+        <button class="view-btn active" id="view-grid" title="Grid">⊞</button>
+        <button class="view-btn" id="view-list" title="List">☰</button>
       </div>
-      <div class="cards-grid" id="cardsGrid"></div>
-    </main>
+      <button class="btn btn-rust" id="add-btn">+ Add Entry</button>
+    </div>
+  </div>
+
+  <div class="filter-panel" id="filter-panel">
+    <div class="filter-grid">
+      <div class="filter-group"><label>Category</label><div class="filter-chips" id="filter-category"></div></div>
+      <div class="filter-group"><label>Mood</label><div class="filter-chips" id="filter-mood"></div></div>
+      <div class="filter-group"><label>Style</label><div class="filter-chips" id="filter-style"></div></div>
+      <div class="filter-group"><label>Length</label><div class="filter-chips" id="filter-length"></div></div>
+    </div>
+    <div style="height:1px;background:var(--border);margin-bottom:18px;"></div>
+    <div class="filter-group"><label>Tags</label><div class="filter-chips" id="filter-tags"></div></div>
+    <div class="filter-actions">
+      <div class="active-filters" id="active-filters"></div>
+      <button class="btn btn-rust" id="clear-filters">✕ Clear all</button>
+    </div>
+  </div>
+
+  <div class="names-grid" id="names-container"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">New Entry</span>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Title *</label>
+      <input type="text" class="form-input" id="form-title" placeholder="e.g. Synthetic Entrance">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Category *</label>
+        <select class="form-select" id="form-category">
+          <option value="">Select...</option>
+          <option>Technical</option><option>Atmospheric</option>
+          <option>Institutional</option><option>Creative</option><option>Hybrid</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mood *</label>
+        <select class="form-select" id="form-mood">
+          <option value="">Select...</option>
+          <option>Mysterious</option><option>Analytical</option><option>Energetic</option>
+          <option>Melancholic</option><option>Dreamy</option><option>Nostalgic</option>
+          <option>Eerie</option><option>Hopeful</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Style</label>
+        <select class="form-select" id="form-style">
+          <option value="">Select...</option>
+          <option>Formal</option><option>Casual</option><option>Creative</option>
+          <option>Professional</option><option>Glitch</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Length (auto)</label>
+        <input type="text" class="form-input" id="form-length" readonly placeholder="—">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tags <span style="color:var(--ink3);font-weight:300">(comma-separated)</span></label>
+      <input type="text" class="form-input" id="form-tags" placeholder="cyber, retro, nostalgia, code">
+      <div class="form-hint">Multi-select tags used in filtering</div>
+    </div>
+    <div class="ai-section">
+      <div class="ai-label"><div class="ai-pulse"></div>AI Assist — Claude</div>
+      <div class="ai-prompts">
+        <button class="ai-prompt-btn" id="ai-btn-similar" onclick="aiGenerate('similar')">◈ Similar names</button>
+        <button class="ai-prompt-btn" id="ai-btn-tags"    onclick="aiGenerate('tags')">◈ Suggest tags</button>
+        <button class="ai-prompt-btn" id="ai-btn-batch"   onclick="aiGenerate('batch')">◈ Batch generate</button>
+        <button class="ai-prompt-btn" id="ai-btn-explain" onclick="aiGenerate('explain')">◈ Explain vibe</button>
+      </div>
+      <div class="ai-result" id="ai-result"></div>
+      <button class="ai-use-btn" id="ai-use-btn">↑ Use this</button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-amber" id="modal-cancel">Cancel</button>
+      <button class="btn btn-rust"  id="modal-save">Save Entry</button>
+    </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══ DATA ═══
-const CATEGORIES = ['Technical', 'Atmospheric', 'Institutional', 'Creative', 'Temporal', 'Spatial', 'Cyberpunk', 'Nature'];
-const MOODS = ['Mysterious', 'Analytical', 'Energetic', 'Melancholic', 'Dreamy', 'Nostalgic', 'Tense', 'Euphoric', 'Liminal', 'Serene'];
-const STYLES = ['Formal', 'Casual', 'Creative', 'Professional', 'Poetic', 'Glitch'];
-const LENGTHS = ['Short (1-2)', 'Medium (3)', 'Long (4+)'];
+// ══════════════════════════════════════════════════════
+// HARDCODED DATABASE — always present, never lost
+// Session additions live in-memory on top of this base
+// ══════════════════════════════════════════════════════
+const BASE_DB = [
+  { id: 1,  title:"Synthetic Entrance",      category:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["cyber","tech","entry"],               added:1745000000000 },
+  { id: 2,  title:"Cherry Cola Skies",        category:"Atmospheric",   mood:"Dreamy",      style:"Casual",       tags:["retro","sky","pastel","nostalgia"],    added:1745086400000 },
+  { id: 3,  title:"Counting Constellations",  category:"Atmospheric",   mood:"Melancholic", style:"Creative",     tags:["space","night","poetic"],              added:1745172800000 },
+  { id: 4,  title:"C0d3r's Paradox",          category:"Technical",     mood:"Analytical",  style:"Glitch",       tags:["code","cyber","glitch","leet"],        added:1745259200000 },
+  { id: 5,  title:"Neon Meridian",            category:"Atmospheric",   mood:"Energetic",   style:"Creative",     tags:["neon","retro","city","cyber"],         added:1745345600000 },
+  { id: 6,  title:"Protocol Horizon",         category:"Technical",     mood:"Mysterious",  style:"Professional", tags:["tech","network","future"],             added:1745432000000 },
+  { id: 7,  title:"Glass Frequencies",        category:"Creative",      mood:"Dreamy",      style:"Creative",     tags:["music","ethereal","analog"],           added:1745518400000 },
+  { id: 8,  title:"Terminal Bloom",           category:"Hybrid",        mood:"Nostalgic",   style:"Creative",     tags:["code","nature","contrast","retro"],    added:1745604800000 },
+  { id: 9,  title:"Cascade Index",            category:"Institutional", mood:"Analytical",  style:"Formal",       tags:["data","system","order"],               added:1745691200000 },
+  { id: 10, title:"Velvet Algorithm",         category:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["luxury","code","soft","cyber"],        added:1745777600000 },
+  { id: 11, title:"Midnight Compile",         category:"Technical",     mood:"Melancholic", style:"Casual",       tags:["code","night","dev","late-night"],     added:1745864000000 },
+  { id: 12, title:"Pastel Override",          category:"Creative",      mood:"Energetic",   style:"Glitch",       tags:["pastel","retro","cyber","override"],   added:1745950400000 },
+  { id: 13, title:"Signal Lost",              category:"Atmospheric",   mood:"Eerie",       style:"Creative",     tags:["analog","signal","nostalgia","broken"],added:1746036800000 },
+  { id: 14, title:"Datawave Reverie",         category:"Hybrid",        mood:"Dreamy",      style:"Creative",     tags:["data","wave","dream","retro"],         added:1746123200000 },
+  { id: 15, title:"The Archive Speaks",       category:"Institutional", mood:"Mysterious",  style:"Formal",       tags:["archive","history","memory","system"], added:1746209600000 },
+  { id: 16, title:"Pink Noise Garden",        category:"Atmospheric",   mood:"Dreamy",      style:"Creative",     tags:["pink","nature","sound","ambient"],     added:1746296000000 },
+  { id: 17, title:"Recursion Sunset",         category:"Technical",     mood:"Melancholic", style:"Creative",     tags:["code","sky","loop","poetic"],          added:1746382400000 },
+  { id: 18, title:"Mall Cop Frequency",       category:"Creative",      mood:"Nostalgic",   style:"Casual",       tags:["retro","90s","mall","irony"],          added:1746468800000 },
+  { id: 19, title:"Liminal Loop",             category:"Atmospheric",   mood:"Eerie",       style:"Creative",     tags:["liminal","loop","void","space"],       added:1746555200000 },
+  { id: 20, title:"Quantum Drift",            category:"Technical",     mood:"Mysterious",  style:"Professional", tags:["quantum","drift","physics","future"],  added:1746641600000 },
+  { id: 21, title:"Fluorescent Epoch",        category:"Atmospheric",   mood:"Nostalgic",   style:"Creative",     tags:["light","era","glow","retro"],          added:1746728000000 },
+  { id: 22, title:"Broken Satellite",         category:"Creative",      mood:"Melancholic", style:"Casual",       tags:["space","broken","signal","sad"],       added:1746814400000 },
+  { id: 23, title:"S1LENT PROTOCOL",          category:"Technical",     mood:"Eerie",       style:"Glitch",       tags:["cyber","silence","leet","dark"],       added:1746900800000 },
+  { id: 24, title:"Department of Dreams",     category:"Institutional", mood:"Dreamy",      style:"Formal",       tags:["office","surreal","dream","irony"],    added:1746987200000 },
+  { id: 25, title:"Analog Memory",            category:"Atmospheric",   mood:"Nostalgic",   style:"Creative",     tags:["analog","memory","tape","warm"],       added:1747073600000 },
+];
 
-function getLength(name) {
-  const words = name.trim().split(/\s+/).length;
-  if (words <= 2) return 'Short (1-2)';
-  if (words === 3) return 'Medium (3)';
-  return 'Long (4+)';
+let DB = BASE_DB.map(e => ({...e}));
+let nextId = DB.length + 1;
+
+// ─── STATE ───
+let currentView = 'grid';
+let currentSort = 'default';
+let activeFilters = { category:[], mood:[], style:[], length:[], tags:[] };
+let editingId = null;
+let lastAiResult = '';
+
+const FILTER_OPTIONS = {
+  category:['Technical','Atmospheric','Institutional','Creative','Hybrid'],
+  mood:    ['Mysterious','Analytical','Energetic','Melancholic','Dreamy','Nostalgic','Eerie','Hopeful'],
+  style:   ['Formal','Casual','Creative','Professional','Glitch'],
+  length:  ['Short (1–2)','Medium (2–3)','Long (4+)'],
+};
+
+const SORT_LABELS = {
+  'default':'Sort: Default','alpha-asc':'Sort: A→Z','alpha-desc':'Sort: Z→A',
+  'length-asc':'Sort: Words ↑','length-desc':'Sort: Words ↓','newest':'Sort: Newest',
+};
+
+function getLength(t) {
+  const w = t.trim().split(/\s+/).length;
+  return w<=2?'Short (1–2)':w===3?'Medium (2–3)':'Long (4+)';
+}
+function getAllTags() {
+  const s=new Set(); DB.forEach(e=>(e.tags||[]).forEach(t=>s.add(t))); return [...s].sort();
 }
 
-let db = [
-  { id: 1, name: 'Synthetic Entrance', category: 'Technical', mood: 'Mysterious', style: 'Formal', tags: ['cyber', 'retro', 'entry'] },
-  { id: 2, name: 'Cherry Cola Skies', category: 'Atmospheric', mood: 'Dreamy', style: 'Poetic', tags: ['nostalgia', 'summer', 'pastel'] },
-  { id: 3, name: 'Counting Constellations', category: 'Nature', mood: 'Melancholic', style: 'Poetic', tags: ['space', 'night', 'nostalgia'] },
-  { id: 4, name: 'C0d3r\'s Paradox', category: 'Technical', mood: 'Analytical', style: 'Glitch', tags: ['cyber', 'code', 'glitch'] },
-  { id: 5, name: 'Liminal Gateway', category: 'Spatial', mood: 'Liminal', style: 'Creative', tags: ['liminal', 'surreal', 'transition'] },
-  { id: 6, name: 'Neon Archaeology', category: 'Temporal', mood: 'Nostalgic', style: 'Creative', tags: ['neon', 'retro', 'history'] },
-  { id: 7, name: 'Analog Dream Protocol', category: 'Technical', mood: 'Dreamy', style: 'Formal', tags: ['analog', 'protocol', 'retro'] },
-  { id: 8, name: 'Pacific Coast Algorithm', category: 'Technical', mood: 'Serene', style: 'Creative', tags: ['ocean', 'code', 'west'] },
-  { id: 9, name: 'Retrograde Frequency', category: 'Temporal', mood: 'Mysterious', style: 'Creative', tags: ['retro', 'radio', 'signal'] },
-  { id: 10, name: 'Glass Horizon', category: 'Atmospheric', mood: 'Liminal', style: 'Poetic', tags: ['glass', 'sky', 'future'] },
-  { id: 11, name: 'Café Simulation', category: 'Institutional', mood: 'Nostalgic', style: 'Casual', tags: ['café', 'lofi', 'cozy'] },
-  { id: 12, name: 'Forgotten Data', category: 'Technical', mood: 'Melancholic', style: 'Glitch', tags: ['memory', 'lost', 'digital'] },
-  { id: 13, name: 'Eternal Beta', category: 'Technical', mood: 'Tense', style: 'Casual', tags: ['software', 'loop', 'tech'] },
-  { id: 14, name: 'Crystalline Latency', category: 'Technical', mood: 'Serene', style: 'Professional', tags: ['network', 'crystal', 'delay'] },
-  { id: 15, name: 'Phantom Signal', category: 'Atmospheric', mood: 'Mysterious', style: 'Creative', tags: ['ghost', 'radio', 'signal'] },
-  { id: 16, name: 'Solar Collapse', category: 'Nature', mood: 'Energetic', style: 'Poetic', tags: ['space', 'sun', 'dramatic'] },
-  { id: 17, name: 'Infinite Checkout', category: 'Institutional', mood: 'Liminal', style: 'Casual', tags: ['liminal', 'mundane', 'surreal'] },
-  { id: 18, name: 'Velvet Algorithm', category: 'Technical', mood: 'Dreamy', style: 'Creative', tags: ['soft', 'code', 'luxury'] },
-  { id: 19, name: 'Midnight Database', category: 'Technical', mood: 'Mysterious', style: 'Professional', tags: ['night', 'data', 'dark'] },
-  { id: 20, name: 'Sakura Protocol', category: 'Nature', mood: 'Melancholic', style: 'Formal', tags: ['japanese', 'spring', 'protocol'] },
-  { id: 21, name: 'Haze Engine', category: 'Technical', mood: 'Dreamy', style: 'Glitch', tags: ['fog', 'engine', 'distortion'] },
-  { id: 22, name: 'Borrowed Sunsets', category: 'Atmospheric', mood: 'Nostalgic', style: 'Poetic', tags: ['sunset', 'memory', 'soft'] },
-  { id: 23, name: 'Club Oblivion', category: 'Spatial', mood: 'Liminal', style: 'Creative', tags: ['night', 'void', 'dance'] },
-  { id: 24, name: 'Hyper Pastoral', category: 'Nature', mood: 'Euphoric', style: 'Creative', tags: ['nature', 'hyper', 'surreal'] },
-].map(d => ({ ...d, length: getLength(d.name), id: d.id }));
-
-let nextId = db.length + 1;
-
-// ── FILTERS STATE ──
-let filters = { category: null, mood: null, style: null, length: null };
-let currentView = 'grid';
-
-// ══ INIT ══
-document.addEventListener('DOMContentLoaded', () => {
-  buildChips('catChips', CATEGORIES, 'category');
-  buildChips('moodChips', MOODS, 'mood');
-  buildChips('styleChips', STYLES, 'style');
-  buildChips('lengthChips', LENGTHS, 'length');
-  populateFormSelects();
-  document.getElementById('searchInput').addEventListener('input', render);
-  document.getElementById('sortSelect').addEventListener('change', render);
-  document.getElementById('clearBtn').addEventListener('click', clearFilters);
-  render();
+// ─── SORT WIDGET ───
+document.getElementById('sort-trigger').onclick = e => {
+  e.stopPropagation();
+  document.getElementById('sort-trigger').classList.toggle('open');
+  document.getElementById('sort-dropdown').classList.toggle('open');
+};
+document.addEventListener('click', () => {
+  document.getElementById('sort-trigger').classList.remove('open');
+  document.getElementById('sort-dropdown').classList.remove('open');
+});
+document.querySelectorAll('.sort-option').forEach(opt => {
+  opt.addEventListener('click', e => {
+    e.stopPropagation();
+    currentSort = opt.dataset.val;
+    document.querySelectorAll('.sort-option').forEach(o=>o.classList.remove('active'));
+    opt.classList.add('active');
+    document.getElementById('sort-label').textContent = SORT_LABELS[currentSort];
+    document.getElementById('sort-trigger').classList.remove('open');
+    document.getElementById('sort-dropdown').classList.remove('open');
+    render();
+  });
 });
 
-function buildChips(containerId, options, filterKey) {
-  const el = document.getElementById(containerId);
-  options.forEach(opt => {
-    const chip = document.createElement('div');
-    chip.className = 'chip';
-    chip.textContent = opt;
-    chip.onclick = () => toggleFilter(filterKey, opt, chip);
-    el.appendChild(chip);
+// ─── FILTERS ───
+function buildFilterChips() {
+  ['category','mood','style','length'].forEach(type => {
+    const w = document.getElementById('filter-'+type); if(!w) return;
+    w.innerHTML='';
+    (FILTER_OPTIONS[type]||[]).forEach(val=>{
+      const b=document.createElement('button');
+      b.className='chip'+(activeFilters[type].includes(val)?' active':'');
+      b.textContent=val; b.onclick=()=>toggleFilter(type,val); w.appendChild(b);
+    });
+  });
+  const tw=document.getElementById('filter-tags'); tw.innerHTML='';
+  getAllTags().forEach(tag=>{
+    const b=document.createElement('button');
+    b.className='chip'+(activeFilters.tags.includes(tag)?' active-rust':'');
+    b.textContent='#'+tag; b.onclick=()=>toggleFilter('tags',tag); tw.appendChild(b);
+  });
+}
+function toggleFilter(type,val) {
+  const a=activeFilters[type], i=a.indexOf(val);
+  if(i>=0) a.splice(i,1); else a.push(val);
+  buildFilterChips(); renderActiveFilterTags(); render();
+}
+function renderActiveFilterTags() {
+  const w=document.getElementById('active-filters'); w.innerHTML='';
+  Object.entries(activeFilters).forEach(([type,vals])=>{
+    vals.forEach(val=>{
+      const el=document.createElement('div');
+      el.className='active-filter-tag';
+      el.innerHTML=`<span>${type}: ${val}</span><span>✕</span>`;
+      el.onclick=()=>toggleFilter(type,val); w.appendChild(el);
+    });
   });
 }
 
-function toggleFilter(key, value, chipEl) {
-  if (filters[key] === value) {
-    filters[key] = null;
-    chipEl.classList.remove('active');
-  } else {
-    // deactivate siblings
-    const siblings = chipEl.parentElement.querySelectorAll('.chip');
-    siblings.forEach(s => s.classList.remove('active'));
-    filters[key] = value;
-    chipEl.classList.add('active');
-  }
-  render();
-}
-
-function clearFilters() {
-  filters = { category: null, mood: null, style: null, length: null };
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-  document.getElementById('searchInput').value = '';
-  render();
-}
-
-function populateFormSelects() {
-  const catSel = document.getElementById('addCategory');
-  const moodSel = document.getElementById('addMood');
-  const styleSel = document.getElementById('addStyle');
-  CATEGORIES.forEach(c => catSel.add(new Option(c, c)));
-  MOODS.forEach(m => moodSel.add(new Option(m, m)));
-  STYLES.forEach(s => styleSel.add(new Option(s, s)));
-}
-
-// ══ RENDER ══
+// ─── RENDER ───
 function getFiltered() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const sort = document.getElementById('sortSelect').value;
-
-  let results = db.filter(d => {
-    if (filters.category && d.category !== filters.category) return false;
-    if (filters.mood && d.mood !== filters.mood) return false;
-    if (filters.style && d.style !== filters.style) return false;
-    if (filters.length && d.length !== filters.length) return false;
-    if (q) {
-      const searchable = [d.name, d.category, d.mood, d.style, ...d.tags].join(' ').toLowerCase();
-      if (!searchable.includes(q)) return false;
-    }
+  const q=document.getElementById('search-input').value.toLowerCase().trim();
+  let items=DB.filter(e=>{
+    if(q){const h=[e.title,e.category,e.mood,e.style,...(e.tags||[])].join(' ').toLowerCase();if(!h.includes(q))return false;}
+    if(activeFilters.category.length&&!activeFilters.category.includes(e.category))return false;
+    if(activeFilters.mood.length&&!activeFilters.mood.includes(e.mood))return false;
+    if(activeFilters.style.length&&!activeFilters.style.includes(e.style))return false;
+    if(activeFilters.length.length&&!activeFilters.length.includes(getLength(e.title)))return false;
+    if(activeFilters.tags.length&&!activeFilters.tags.some(t=>(e.tags||[]).includes(t)))return false;
     return true;
   });
-
-  results.sort((a, b) => {
-    if (sort === 'az') return a.name.localeCompare(b.name);
-    if (sort === 'za') return b.name.localeCompare(a.name);
-    if (sort === 'length-asc') return a.name.length - b.name.length;
-    if (sort === 'length-desc') return b.name.length - a.name.length;
-    if (sort === 'newest') return b.id - a.id;
-    return 0;
-  });
-
-  return results;
+  if(currentSort==='alpha-asc')  items.sort((a,b)=>a.title.localeCompare(b.title));
+  if(currentSort==='alpha-desc') items.sort((a,b)=>b.title.localeCompare(a.title));
+  if(currentSort==='length-asc') items.sort((a,b)=>a.title.split(' ').length-b.title.split(' ').length);
+  if(currentSort==='length-desc')items.sort((a,b)=>b.title.split(' ').length-a.title.split(' ').length);
+  if(currentSort==='newest')     items.sort((a,b)=>b.added-a.added);
+  return items;
 }
 
 function render() {
-  const results = getFiltered();
-  const grid = document.getElementById('cardsGrid');
-  const countEl = document.getElementById('resultCount');
-
-  countEl.innerHTML = `<span>${results.length}</span> / ${db.length} titles`;
-
-  if (results.length === 0) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-      <div class="icon">◈</div>
-      <p>no titles match your filters</p>
-    </div>`;
+  const items=getFiltered(), c=document.getElementById('names-container');
+  document.getElementById('hdr-total').textContent    = DB.length;
+  document.getElementById('hdr-filtered').textContent = items.length;
+  document.getElementById('hdr-tags').textContent     = getAllTags().length;
+  document.getElementById('tc-inline').textContent    = DB.length;
+  document.getElementById('fc-inline').textContent    = items.length;
+  c.className = currentView==='grid'?'names-grid':'names-list';
+  if(!items.length){
+    c.innerHTML=`<div class="empty-state"><div class="ei">◈</div><p>No entries match your filters</p></div>`;
     return;
   }
-
-  grid.innerHTML = results.map(d => `
-    <div class="card" title="click to copy">
-      <button class="card-copy" onclick="copyTitle(event,'${d.name.replace(/'/,"\\'")}')">⎘</button>
-      <div class="card-name">${highlight(d.name)}</div>
+  c.innerHTML=items.map(e=>{
+    const catCls='badge-cat-'+e.category.replace(/\s+/g,'');
+    const tags=(e.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
+    const st=e.title.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="name-card" data-category="${e.category}" data-id="${e.id}">
+      <div class="card-top">
+        <div class="card-title">${e.title}</div>
+        <div class="card-actions">
+          <button class="icon-btn" onclick="copyTitle(event,'${st}',this)" title="Copy">⊕</button>
+          <button class="icon-btn" onclick="editEntry(${e.id})" title="Edit">✎</button>
+          <button class="icon-btn del" onclick="deleteEntry(${e.id})" title="Delete">⊗</button>
+        </div>
+      </div>
       <div class="card-meta">
-        <span class="badge badge-category">${d.category}</span>
-        <span class="badge badge-mood">${d.mood}</span>
-        <span class="badge badge-style">${d.style}</span>
-        <span class="badge badge-length">${d.length}</span>
+        <span class="badge ${catCls}">${e.category}</span>
+        <span class="badge badge-mood">${e.mood}</span>
+        ${e.style?`<span class="badge badge-style">${e.style}</span>`:''}
       </div>
-      <div class="card-tags">${d.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-      <button class="card-delete" onclick="deleteEntry(event,${d.id})">✕</button>
-    </div>
-  `).join('');
-}
-
-function highlight(text) {
-  const q = document.getElementById('searchInput').value;
-  if (!q) return text;
-  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
-  return text.replace(re, '<mark style="background:rgba(180,79,255,0.3);color:inherit;border-radius:2px;">$1</mark>');
-}
-
-function setView(v) {
-  currentView = v;
-  const grid = document.getElementById('cardsGrid');
-  grid.classList.toggle('list-view', v === 'list');
-  document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
-  document.getElementById('listBtn').classList.toggle('active', v === 'list');
-}
-
-// ══ COPY ══
-function copyTitle(e, name) {
-  e.stopPropagation();
-  navigator.clipboard.writeText(name).then(() => toast(`Copied: ${name}`));
-}
-
-// ══ DELETE ══
-function deleteEntry(e, id) {
-  e.stopPropagation();
-  db = db.filter(d => d.id !== id);
-  render();
-}
-
-// ══ ADD ══
-function addEntry() {
-  const name = document.getElementById('addName').value.trim();
-  if (!name) { toast('Enter a title name'); return; }
-
-  const entry = {
-    id: nextId++,
-    name,
-    category: document.getElementById('addCategory').value || 'Creative',
-    mood: document.getElementById('addMood').value || 'Mysterious',
-    style: document.getElementById('addStyle').value || 'Creative',
-    length: getLength(name),
-    tags: document.getElementById('addTags').value.split(',').map(t => t.trim().toLowerCase().replace(/\s+/g,'_')).filter(Boolean),
-  };
-
-  db.unshift(entry);
-  document.getElementById('addName').value = '';
-  document.getElementById('addTags').value = '';
-  document.getElementById('addCategory').value = '';
-  document.getElementById('addMood').value = '';
-  document.getElementById('addStyle').value = '';
-
-  // switch sort to newest
-  document.getElementById('sortSelect').value = 'newest';
-  render();
-  toast(`✦ "${name}" added to lexicon`);
-}
-
-// ══ AI GENERATOR ══
-async function generateAI() {
-  const prompt = document.getElementById('aiPrompt').value.trim();
-  if (!prompt) { toast('Describe a vibe first'); return; }
-
-  const btn = document.getElementById('aiGenerateBtn');
-  const status = document.getElementById('aiStatus');
-  const resultsEl = document.getElementById('aiResults');
-
-  btn.disabled = true;
-  status.className = 'ai-status loading';
-  status.textContent = '⟳ generating…';
-  resultsEl.innerHTML = '';
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: `You are a vaporwave naming expert. Generate creative vaporwave-aesthetic project/title names. 
-Respond ONLY with a JSON array of objects. No preamble, no markdown, no backticks.
-Each object has: name (string), category (one of: Technical,Atmospheric,Institutional,Creative,Temporal,Spatial,Cyberpunk,Nature), mood (one of: Mysterious,Analytical,Energetic,Melancholic,Dreamy,Nostalgic,Tense,Euphoric,Liminal,Serene), style (one of: Formal,Casual,Creative,Professional,Poetic,Glitch), tags (array of 2-4 lowercase strings).
-Generate exactly 6 names. They should feel authentic to vaporwave aesthetics: nostalgic, slightly corporate, dreamlike, digital-analog hybrid.`,
-        messages: [{ role: 'user', content: `Generate vaporwave titles inspired by this vibe: ${prompt}` }]
-      })
-    });
-
-    const data = await response.json();
-    const text = data.content.map(i => i.text || '').join('');
-    const clean = text.replace(/```json|```/g, '').trim();
-    const generated = JSON.parse(clean);
-
-    status.className = 'ai-status';
-    status.textContent = `✦ ${generated.length} titles generated`;
-
-    resultsEl.innerHTML = generated.map((item, i) => `
-      <div class="ai-result-item">
-        <span class="ai-result-name">${item.name}</span>
-        <button class="ai-add-btn" onclick='addAIEntry(${JSON.stringify(item).replace(/'/g,"&#39;")})'>+ add</button>
+      <div class="card-tags">${tags}</div>
+      <div class="card-bottom">
+        <span>ID·${String(e.id).padStart(4,'0')}</span>
+        <span class="badge badge-length">${getLength(e.title)}</span>
       </div>
-    `).join('');
+    </div>`;
+  }).join('');
+  buildFilterChips();
+}
 
-  } catch (err) {
-    status.className = 'ai-status error';
-    status.textContent = '⚠ generation failed — try again';
-    console.error(err);
+// ─── ACTIONS ───
+function copyTitle(evt,title,btn){
+  evt.stopPropagation();
+  navigator.clipboard.writeText(title).catch(()=>{});
+  btn.textContent='✓'; btn.classList.add('copied');
+  setTimeout(()=>{btn.textContent='⊕';btn.classList.remove('copied');},1500);
+  showToast('Copied: '+title);
+}
+function deleteEntry(id){
+  if(!confirm('Delete this entry?'))return;
+  DB=DB.filter(e=>e.id!==id); render(); showToast('Entry deleted');
+}
+function editEntry(id){
+  const e=DB.find(x=>x.id===id); if(!e)return;
+  editingId=id;
+  document.getElementById('modal-title').textContent='EDIT ENTRY';
+  document.getElementById('form-title').value=e.title;
+  document.getElementById('form-category').value=e.category;
+  document.getElementById('form-mood').value=e.mood;
+  document.getElementById('form-style').value=e.style||'';
+  document.getElementById('form-tags').value=(e.tags||[]).join(', ');
+  updateLengthPreview(); openModal();
+}
+function openModal(){
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('ai-result').style.display='none';
+  document.getElementById('ai-use-btn').style.display='none';
+  lastAiResult='';
+}
+function closeModal(){
+  document.getElementById('modal-overlay').classList.remove('open');
+  editingId=null;
+  ['form-title','form-tags','form-length'].forEach(id=>document.getElementById(id).value='');
+  ['form-category','form-mood','form-style'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('modal-title').textContent='New Entry';
+}
+function updateLengthPreview(){
+  const v=document.getElementById('form-title').value;
+  document.getElementById('form-length').value=v?getLength(v):'';
+}
+function saveEntry(){
+  const title=document.getElementById('form-title').value.trim();
+  const category=document.getElementById('form-category').value;
+  const mood=document.getElementById('form-mood').value;
+  const style=document.getElementById('form-style').value;
+  const tags=document.getElementById('form-tags').value.split(',').map(t=>t.trim().toLowerCase()).filter(Boolean);
+  if(!title){showToast('Title required');return;}
+  if(!category){showToast('Category required');return;}
+  if(!mood){showToast('Mood required');return;}
+  if(editingId){
+    Object.assign(DB.find(x=>x.id===editingId),{title,category,mood,style,tags});
+    showToast('Entry updated');
+  } else {
+    DB.push({id:nextId++,title,category,mood,style,tags,added:Date.now()});
+    showToast('Entry added: '+title);
   }
-
-  btn.disabled = false;
+  closeModal(); render();
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-function addAIEntry(item) {
-  const entry = {
-    id: nextId++,
-    name: item.name,
-    category: item.category || 'Creative',
-    mood: item.mood || 'Mysterious',
-    style: item.style || 'Creative',
-    length: getLength(item.name),
-    tags: item.tags || [],
+// ─── AI ───
+const AI_BTNS=['ai-btn-similar','ai-btn-tags','ai-btn-batch','ai-btn-explain'];
+function setAiLoading(on){ AI_BTNS.forEach(id=>document.getElementById(id).disabled=on); }
+
+async function aiGenerate(type){
+  const ti=document.getElementById('form-title').value.trim();
+  const resultEl=document.getElementById('ai-result');
+  const useBtn=document.getElementById('ai-use-btn');
+  resultEl.style.display='block';
+  resultEl.innerHTML=`Generating<span class="ai-cursor">█</span>`;
+  resultEl.classList.add('loading');
+  useBtn.style.display='none';
+  setAiLoading(true);
+  const ex=DB.map(e=>e.title).join(', ');
+  const prompts={
+    similar: ti?`Generate 5 vaporwave names similar to "${ti}". Atmospheric, nostalgic, cyberpunk, dreamy, retro-futuristic. Mix single words, two-word combos, poetic phrases. Some may use l33tspeak. One per line. Names only.`:null,
+    tags:    ti?`Suggest 5–7 tags for the vaporwave name "${ti}" as comma-separated lowercase words: e.g. cyber, retro, glitch, analog, code, sky, neon, dream, memory. Tags only.`:null,
+    batch:   `Generate 8 original vaporwave project names. Atmospheric, nostalgic, cyberpunk, dreamy, retro-futuristic. Mix technical imagery with poetic words. Avoid: ${ex}. One per line. Names only.`,
+    explain: ti?`Describe the vibe, mood and feel of "${ti}" in 2–3 sentences. What project would suit it? Keep it poetic.`:null,
   };
-  db.unshift(entry);
-  document.getElementById('sortSelect').value = 'newest';
-  render();
-  toast(`✦ "${item.name}" added`);
+  const prompt=prompts[type];
+  if(!prompt){resultEl.classList.remove('loading');resultEl.textContent='Enter a title first.';setAiLoading(false);return;}
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})
+    });
+    const data=await res.json();
+    const text=(data.content||[]).map(b=>b.text||'').join('')||'No response.';
+    lastAiResult=text;
+    resultEl.classList.remove('loading');
+    resultEl.textContent=text;
+    if(type==='similar'||type==='batch'){useBtn.style.display='inline-block';useBtn.textContent='↑ Use first name';}
+    else if(type==='tags'){useBtn.style.display='inline-block';useBtn.textContent='↑ Use these tags';}
+  }catch(err){
+    resultEl.classList.remove('loading');
+    resultEl.textContent='API error: '+err.message;
+  }
+  setAiLoading(false);
 }
 
-// ══ TOAST ══
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
+document.getElementById('ai-use-btn').onclick=()=>{
+  if(!lastAiResult)return;
+  const lines=lastAiResult.split('\n').filter(l=>l.trim());
+  const first=lines[0].replace(/^\d+[\.\)]\s*/,'').trim();
+  if(lastAiResult.includes(',')&&!lastAiResult.includes('\n')){
+    document.getElementById('form-tags').value=lastAiResult.trim();showToast('Tags applied');
+  }else{
+    document.getElementById('form-title').value=first;updateLengthPreview();showToast('Name applied: '+first);
+  }
+};
+
+// ─── EVENT LISTENERS ───
+document.getElementById('search-input').addEventListener('input',render);
+document.getElementById('filter-toggle').onclick=()=>document.getElementById('filter-panel').classList.toggle('open');
+document.getElementById('clear-filters').onclick=()=>{
+  activeFilters={category:[],mood:[],style:[],length:[],tags:[]};
+  buildFilterChips();renderActiveFilterTags();render();
+};
+document.getElementById('add-btn').onclick=()=>{editingId=null;openModal();};
+document.getElementById('modal-close').onclick=closeModal;
+document.getElementById('modal-cancel').onclick=closeModal;
+document.getElementById('modal-save').onclick=saveEntry;
+document.getElementById('form-title').addEventListener('input',updateLengthPreview);
+document.getElementById('modal-overlay').onclick=e=>{if(e.target===document.getElementById('modal-overlay'))closeModal();};
+document.getElementById('view-grid').onclick=()=>{
+  currentView='grid';
+  document.getElementById('view-grid').classList.add('active');
+  document.getElementById('view-list').classList.remove('active'); render();
+};
+document.getElementById('view-list').onclick=()=>{
+  currentView='list';
+  document.getElementById('view-list').classList.add('active');
+  document.getElementById('view-grid').classList.remove('active'); render();
+};
+
+buildFilterChips();
+render();
 </script>
 </body>
 </html>
