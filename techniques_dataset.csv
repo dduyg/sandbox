@@ -1,0 +1,47 @@
+domain,subdomain,technique,description,maturity_level,processing_type,complexity,primary_tools,cloud_services,notes
+ingestion,batch,scheduled batch ETL,Periodic extraction and load of data,high,batch,low,Airflow;Informatica,AWS Glue;Azure Data Factory,Common in legacy systems
+ingestion,batch,bulk file ingestion,Loading large files from storage,high,batch,low,Spark;Python,S3;ADLS;GCS,Used in data lakes
+ingestion,streaming,event streaming ingestion,Real-time ingestion via event brokers,high,stream,high,Kafka;Pulsar,Kinesis;Pub/Sub,Core for real-time systems
+ingestion,streaming,log ingestion,Collecting application/system logs,high,stream,medium,Fluentd;Logstash,CloudWatch;Stackdriver,Observability pipelines
+ingestion,cdc,change data capture,Tracking DB row-level changes,high,stream,high,Debezium;DMS,AWS DMS;Datastream,Reduces full reloads
+ingestion,api,rest api ingestion,Pulling data from external APIs,high,batch,medium,Python;Airbyte,API Gateway,Rate limit handling required
+storage,lake,data lake storage,Raw scalable object storage,high,both,medium,S3;ADLS;GCS,S3;Azure Data Lake;GCS,Schema-on-read model
+storage,warehouse,data warehouse,Structured analytics storage,high,batch,medium,Snowflake;BigQuery,Redshift;Synapse,Schema-on-write
+storage,lakehouse,lakehouse architecture,Hybrid lake + warehouse model,medium,both,high,Delta Lake;Iceberg,Databricks;BigLake,Supports ACID on lakes
+storage,mart,data mart,Department-specific data subset,high,batch,medium,dbt;SQL,Snowflake;BigQuery,Optimized for BI
+modeling,dimensional,star schema,Fact table with dimensions,high,batch,medium,Kimball modeling tools,All warehouses,BI friendly
+modeling,dimensional,snowflake schema,Normalized dimensional model,high,batch,high,SQL modeling,All warehouses,More complex joins
+modeling,data vault,data vault modeling,Historical audit-friendly modeling,medium,batch,high,Data Vault tools,Any warehouse,Enterprise governance
+transformation,etl,extract transform load,Transform before loading target,high,batch,medium,Informatica;SSIS,On-prem/cloud,Traditional approach
+transformation,elt,extract load transform,Transform inside warehouse,high,batch,low,dbt;SQL,Snowflake;BigQuery,Cloud-native standard
+transformation,cleaning,data cleansing,Fix missing/invalid data,high,batch,low,Python;pandas,Dataprep,Improves data quality
+transformation,normalization,data normalization,Reduce redundancy in datasets,high,batch,medium,SQL,Any RDBMS,OLTP optimization
+transformation,denormalization,data denormalization,Optimize read performance,high,batch,medium,SQL,Warehouses,Used in OLAP
+processing,distributed,distributed computing,Parallel computation across nodes,high,batch,high,Spark;Hadoop,Databricks;EMR,Big data core
+processing,streaming,stream processing,Continuous data computation,high,stream,high,Flink;Spark Streaming,Kinesis Analytics,Low latency systems
+processing,microbatch,micro-batching,Small batch stream processing,high,stream,medium,Spark Streaming,Databricks,Tradeoff latency vs throughput
+processing,inmemory,in-memory processing,Compute in RAM for speed,high,batch,medium,Spark,Databricks,Fast iterative workloads
+quality,validation,data validation,Rule-based correctness checks,high,batch,low,Great Expectations,dbt tests,Pipeline reliability
+quality,profiling,data profiling,Statistical dataset analysis,high,batch,low,Pandas;SQL,Databricks,Exploratory step
+quality,deduplication,duplicate removal,Eliminating repeated records,high,batch,low,Spark;SQL,BigQuery,Improves accuracy
+quality,standardization,data standardization,Unifying formats and units,high,batch,medium,Python;dbt,Any cloud,Important for merging sources
+orchestration,scheduling,workflow scheduling,Time-based pipeline execution,high,batch,medium,Airflow;Dagster,Composer;MWAA,Core orchestration layer
+orchestration,dependency,task dependency management,Managing DAG dependencies,high,batch,medium,Airflow;Prefect,Cloud Composer,Ensures execution order
+orchestration,retries,failure retries,Automatic retry logic,high,batch,low,Airflow;Prefect,All clouds,Improves reliability
+governance,lineage,data lineage tracking,Tracking data flow across systems,medium,both,high,OpenLineage;Collibra,Data Catalogs,Audit compliance
+governance,metadata,metadata management,Central dataset cataloging,high,both,medium,DataHub;Amundsen,Glue Catalog,Data discovery
+governance,security,access control,Permission management for datasets,high,both,high,IAM;Ranger,IAM;Azure AD,Regulatory requirement
+governance,masking,data masking,Protect sensitive data,high,batch,medium,Snowflake masking;Python,Snowflake;BigQuery,GDPR compliance
+optimization,indexing,data indexing,Speed up query access,high,online,medium,SQL indexes,All RDBMS,Query acceleration
+optimization,partitioning,data partitioning,Splitting data for performance,high,batch,medium,BigQuery;Hive,BigQuery;Snowflake,Cost + speed optimization
+optimization,compression,data compression,Reduce storage footprint,high,batch,low,Parquet;ORC,All clouds,Storage efficiency
+optimization,caching,query caching,Store frequent query results,high,online,low,Redis;Spark cache,All clouds,Dashboard acceleration
+reliability,idempotency,idempotent processing,Safe repeated execution,high,batch,high,SQL;Spark,All clouds,Prevents duplication
+reliability,checkpointing,stream checkpointing,Save stream state progress,high,stream,high,Flink;Spark Streaming,Kinesis;Databricks,Recovery mechanism
+reliability,deadletter,dead-letter queues,Handling failed events,high,stream,medium,Kafka;SQS,SQS;Pub/Sub,Error isolation
+deployment,containerization,docker packaging,Packaging pipelines in containers,high,both,medium,Docker;Kubernetes,EKS;AKS;GKE,Portable environments
+deployment,cicd,continuous integration delivery,Automated pipeline deployment,high,both,medium,GitHub Actions;Jenkins,Cloud Build,DevOps standard
+deployment,iac,infrastructure as code,Provisioning infra via code,high,both,medium,Terraform;Pulumi,All clouds,Repeatable infra
+observability,monitoring,pipeline monitoring,Tracking pipeline health,high,both,medium,Prometheus;Grafana,CloudWatch;Azure Monitor,Detect failures early
+observability,logging,centralized logging,Aggregating logs across systems,high,both,low,ELK stack,Cloud Logging,Debugging support
+observability,alerting,alerting systems,Triggering failure notifications,high,both,low,PagerDuty;Opsgenie,Cloud Alerts,Incident response
