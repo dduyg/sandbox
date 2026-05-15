@@ -1,62 +1,62 @@
-category,technique,description,tools,tool_icons
-Ingestion,Batch Ingestion,Periodic loading of large datasets,Apache Sqoop;AWS Glue;Airflow,http://cdn.simpleicons.org/apache http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apacheairflow
-Ingestion,Real-time Streaming,Continuous ingestion of event data,Apache Kafka;Amazon Kinesis;Apache Pulsar,http://cdn.simpleicons.org/apachekafka http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apachepulsar
-Ingestion,Change Data Capture (CDC),Capturing incremental DB changes,Debezium;AWS DMS;Oracle GoldenGate,http://cdn.simpleicons.org/debezium http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/oracle
-Ingestion,Log-based Ingestion,Extracting system/application logs,Fluentd;Logstash;Filebeat,http://cdn.simpleicons.org/fluentd http://cdn.simpleicons.org/elastic http://cdn.simpleicons.org/elastic
-Ingestion,API-based Ingestion,Pulling data from external APIs,REST APIs;GraphQL;Custom connectors,,http://cdn.simpleicons.org/graphql
-Ingestion,Web Scraping,Extracting data from websites,BeautifulSoup;Scrapy;Selenium,,http://cdn.simpleicons.org/scrapy http://cdn.simpleicons.org/selenium
-Ingestion,Event-driven Ingestion,Trigger-based data capture,Kafka Streams;AWS Lambda;Event triggers,http://cdn.simpleicons.org/apachekafka http://cdn.simpleicons.org/amazonaws http://cdn.simpleicons.org/amazonaws
-Storage,Data Warehousing,Structured analytical storage,Snowflake;BigQuery;Redshift,http://cdn.simpleicons.org/snowflake http://cdn.simpleicons.org/googlebigquery http://cdn.simpleicons.org/amazonredshift
-Storage,Data Lakes,Raw and semi-structured storage,S3;Azure Data Lake;HDFS,http://cdn.simpleicons.org/amazonaws http://cdn.simpleicons.org/microsoftazure http://cdn.simpleicons.org/apachehadoop
-Storage,Data Lakehouse,Hybrid warehouse + lake,Delta Lake;Apache Iceberg;Apache Hudi,http://cdn.simpleicons.org/databricks http://cdn.simpleicons.org/apache http://cdn.simpleicons.org/apache
-Storage,Columnar Storage,Efficient analytical column storage,Parquet;ORC,,
-Storage,Row-based Storage,Transactional storage,MySQL;PostgreSQL,http://cdn.simpleicons.org/mysql http://cdn.simpleicons.org/postgresql
-Storage,NoSQL Storage,Schema-flexible storage,MongoDB;Cassandra;DynamoDB,http://cdn.simpleicons.org/mongodb http://cdn.simpleicons.org/apachecassandra http://cdn.simpleicons.org/amazonaws
-Storage,Time-series Storage,Time-indexed optimized storage,InfluxDB;TimescaleDB,http://cdn.simpleicons.org/influxdb http://cdn.simpleicons.org/timescale
-Processing,Batch Processing,Large-scale periodic computation,Apache Spark;Hadoop MapReduce,http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/apachehadoop
-Processing,Stream Processing,Real-time processing,Apache Flink;Kafka Streams,http://cdn.simpleicons.org/apacheflink http://cdn.simpleicons.org/apachekafka
-Processing,Micro-batching,Hybrid streaming model,Spark Structured Streaming,http://cdn.simpleicons.org/apachespark
-Processing,In-memory Processing,RAM-based computation,Spark;Apache Ignite,http://cdn.simpleicons.org/apachespark 
-Processing,Distributed Processing,Horizontal scaling,Hadoop;Spark,http://cdn.simpleicons.org/apachehadoop http://cdn.simpleicons.org/apachespark
-Processing,Serverless Processing,On-demand execution,AWS Lambda;Google Cloud Functions,http://cdn.simpleicons.org/awslambda http://cdn.simpleicons.org/googlecloud
-Transformation,ETL,Transform before loading,Informatica;Talend,http://cdn.simpleicons.org/informatica http://cdn.simpleicons.org/talend
-Transformation,ELT,Transform after loading,dbt;Snowflake SQL,http://cdn.simpleicons.org/dbt http://cdn.simpleicons.org/snowflake
-Transformation,Data Normalization,Structuring relational data,SQL rules,,
-Transformation,Data Denormalization,Optimizing read performance,Star schema;Snowflake schema,,
-Transformation,Data Aggregation,Summarization,SQL;Spark,http://cdn.simpleicons.org/apachespark
-Transformation,Feature Engineering,ML-ready transformations,Pandas;Spark MLlib,http://cdn.simpleicons.org/python http://cdn.simpleicons.org/apachespark
-Orchestration,Workflow Scheduling,Pipeline execution management,Airflow;Luigi,http://cdn.simpleicons.org/apacheairflow 
-Orchestration,DAG-based Orchestration,DAG pipeline design,Airflow;Prefect;Dagster,http://cdn.simpleicons.org/apacheairflow 
-Orchestration,Event-driven Orchestration,Trigger-based workflows,AWS Step Functions,http://cdn.simpleicons.org/amazonaws
-Orchestration,Pipeline Versioning,Tracking changes,Git;DVC,http://cdn.simpleicons.org/git http://cdn.simpleicons.org/git
-Orchestration,Dependency Management,Task dependencies,Airflow DAGs,http://cdn.simpleicons.org/apacheairflow
-Quality,Data Validation,Ensuring correctness,Great Expectations;Deequ,, 
-Quality,Data Profiling,Analyzing structure,pandas-profiling;Talend,http://cdn.simpleicons.org/python http://cdn.simpleicons.org/talend
-Quality,Deduplication,Removing duplicates,Spark;SQL,http://cdn.simpleicons.org/apachespark
-Quality,Data Cleansing,Fixing inconsistencies,OpenRefine;ETL tools,,
-Quality,Schema Validation,Schema consistency,Avro;JSON Schema,,
-Quality,Anomaly Detection,Outlier detection,Spark ML;Sklearn,http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/python
-Governance,Data Cataloging,Metadata management,Apache Atlas;Amundsen,http://cdn.simpleicons.org/apache
-Governance,Data Lineage Tracking,Data flow tracking,OpenLineage;DataHub,http://cdn.simpleicons.org/openlineage
-Governance,MDM,Single source of truth,Informatica MDM,http://cdn.simpleicons.org/informatica
-Governance,Data Stewardship,Governance roles,Collibra,http://cdn.simpleicons.org/collibra
-Governance,Metadata Management,Central metadata,AWS Glue,http://cdn.simpleicons.org/amazonwebservices
-Governance,Data Classification,Tagging sensitive data,Azure Purview,http://cdn.simpleicons.org/microsoftazure
-Security,Encryption at Rest,Protect stored data,AES;KMS,http://cdn.simpleicons.org/amazonwebservices
-Security,Encryption in Transit,Protect data in motion,TLS/SSL,,
-Security,Access Control,RBAC permissions,IAM;Apache Ranger,http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apache
-Security,Data Masking,Hiding sensitive values,Dynamic masking tools,,
-Security,Tokenization,Replace sensitive data,Vault;Protegrity,, 
-Security,Auditing & Logging,Track access changes,CloudTrail;Splunk,http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/splunk
-Optimization,Partitioning,Splitting datasets,Hive;Spark,http://cdn.simpleicons.org/apachehadoop http://cdn.simpleicons.org/apachespark
-Optimization,Indexing,Speed up queries,B-tree;Bitmap indexes,,
-Optimization,Caching,Store frequent data,Redis;Spark cache,http://cdn.simpleicons.org/redis http://cdn.simpleicons.org/apachespark
-Optimization,Compression,Reduce storage,Snappy;Zstd,,
-Optimization,Query Optimization,Improve SQL execution,CBO;Query planners,,
-Optimization,Parallel Processing,Concurrent execution,Spark executors,http://cdn.simpleicons.org/apachespark
-Advanced,Data Mesh,Decentralized ownership,Domain-oriented architecture,,
-Advanced,Data Fabric,Unified data layer,IBM Data Fabric,,
-Advanced,Lambda Architecture,Batch + streaming,Spark;Kafka,http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/apachekafka
-Advanced,Kappa Architecture,Stream-only architecture,Kafka,http://cdn.simpleicons.org/apachekafka
-Advanced,Event Sourcing,Event log state storage,EventStoreDB,http://cdn.simpleicons.org/eventstore
-Advanced,CQRS,Separation of read/write,Microservices architecture,,
+"category","technique","description","tools","tool_icons"
+"Ingestion","Batch Ingestion","Periodic loading of large datasets","Apache Sqoop;AWS Glue;Airflow","http://cdn.simpleicons.org/apache http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apacheairflow"
+"Ingestion","Real-time Streaming","Continuous ingestion of event data","Apache Kafka;Amazon Kinesis;Apache Pulsar","http://cdn.simpleicons.org/apachekafka http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apachepulsar"
+"Ingestion","Change Data Capture (CDC)","Capturing incremental DB changes","Debezium;AWS DMS;Oracle GoldenGate","http://cdn.simpleicons.org/debezium http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/oracle"
+"Ingestion","Log-based Ingestion","Extracting system/application logs","Fluentd;Logstash;Filebeat","http://cdn.simpleicons.org/fluentd http://cdn.simpleicons.org/elastic http://cdn.simpleicons.org/elastic"
+"Ingestion","API-based Ingestion","Pulling data from external APIs","REST APIs;GraphQL;Custom connectors","http://cdn.simpleicons.org/graphql"
+"Ingestion","Web Scraping","Extracting data from websites","BeautifulSoup;Scrapy;Selenium","http://cdn.simpleicons.org/scrapy http://cdn.simpleicons.org/selenium"
+"Ingestion","Event-driven Ingestion","Trigger-based data capture","Kafka Streams;AWS Lambda;Event triggers","http://cdn.simpleicons.org/apachekafka http://cdn.simpleicons.org/amazonaws http://cdn.simpleicons.org/amazonaws"
+"Storage","Data Warehousing","Structured analytical storage","Snowflake;BigQuery;Redshift","http://cdn.simpleicons.org/snowflake http://cdn.simpleicons.org/googlebigquery http://cdn.simpleicons.org/amazonredshift"
+"Storage","Data Lakes","Raw and semi-structured storage","S3;Azure Data Lake;HDFS","http://cdn.simpleicons.org/amazonaws http://cdn.simpleicons.org/microsoftazure http://cdn.simpleicons.org/apachehadoop"
+"Storage","Data Lakehouse","Hybrid warehouse + lake","Delta Lake;Apache Iceberg;Apache Hudi","http://cdn.simpleicons.org/databricks http://cdn.simpleicons.org/apache http://cdn.simpleicons.org/apache"
+"Storage","Columnar Storage","Efficient analytical column storage","Parquet;ORC",""
+"Storage","Row-based Storage","Transactional storage","MySQL;PostgreSQL","http://cdn.simpleicons.org/mysql http://cdn.simpleicons.org/postgresql"
+"Storage","NoSQL Storage","Schema-flexible storage","MongoDB;Cassandra;DynamoDB","http://cdn.simpleicons.org/mongodb http://cdn.simpleicons.org/apachecassandra http://cdn.simpleicons.org/amazonaws"
+"Storage","Time-series Storage","Time-indexed optimized storage","InfluxDB;TimescaleDB","http://cdn.simpleicons.org/influxdb http://cdn.simpleicons.org/timescale"
+"Processing","Batch Processing","Large-scale periodic computation","Apache Spark;Hadoop MapReduce","http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/apachehadoop"
+"Processing","Stream Processing","Real-time processing","Apache Flink;Kafka Streams","http://cdn.simpleicons.org/apacheflink http://cdn.simpleicons.org/apachekafka"
+"Processing","Micro-batching","Hybrid streaming model","Spark Structured Streaming","http://cdn.simpleicons.org/apachespark"
+"Processing","In-memory Processing","RAM-based computation","Spark;Apache Ignite","http://cdn.simpleicons.org/apachespark"
+"Processing","Distributed Processing","Horizontal scaling","Hadoop;Spark","http://cdn.simpleicons.org/apachehadoop http://cdn.simpleicons.org/apachespark"
+"Processing","Serverless Processing","On-demand execution","AWS Lambda;Google Cloud Functions","http://cdn.simpleicons.org/awslambda http://cdn.simpleicons.org/googlecloud"
+"Transformation","ETL","Transform before loading","Informatica;Talend","http://cdn.simpleicons.org/informatica http://cdn.simpleicons.org/talend"
+"Transformation","ELT","Transform after loading","dbt;Snowflake SQL","http://cdn.simpleicons.org/dbt http://cdn.simpleicons.org/snowflake"
+"Transformation","Data Normalization","Structuring relational data","SQL rules",""
+"Transformation","Data Denormalization","Optimizing read performance","Star schema;Snowflake schema",""
+"Transformation","Data Aggregation","Summarization","SQL;Spark","http://cdn.simpleicons.org/apachespark"
+"Transformation","Feature Engineering","ML-ready transformations","Pandas;Spark MLlib","http://cdn.simpleicons.org/python http://cdn.simpleicons.org/apachespark"
+"Orchestration","Workflow Scheduling","Pipeline execution management","Airflow;Luigi","http://cdn.simpleicons.org/apacheairflow"
+"Orchestration","DAG-based Orchestration","DAG pipeline design","Airflow;Prefect;Dagster","http://cdn.simpleicons.org/apacheairflow"
+"Orchestration","Event-driven Orchestration","Trigger-based workflows","AWS Step Functions","http://cdn.simpleicons.org/amazonaws"
+"Orchestration","Pipeline Versioning","Tracking changes","Git;DVC","http://cdn.simpleicons.org/git http://cdn.simpleicons.org/git"
+"Orchestration","Dependency Management","Task dependencies","Airflow DAGs","http://cdn.simpleicons.org/apacheairflow"
+"Quality","Data Validation","Ensuring correctness","Great Expectations;Deequ",""
+"Quality","Data Profiling","Analyzing structure","pandas-profiling;Talend","http://cdn.simpleicons.org/python http://cdn.simpleicons.org/talend"
+"Quality","Deduplication","Removing duplicates","Spark;SQL","http://cdn.simpleicons.org/apachespark"
+"Quality","Data Cleansing","Fixing inconsistencies","OpenRefine;ETL tools",""
+"Quality","Schema Validation","Schema consistency","Avro;JSON Schema",""
+"Quality","Anomaly Detection","Outlier detection","Spark ML;Sklearn","http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/python"
+"Governance","Data Cataloging","Metadata management","Apache Atlas;Amundsen","http://cdn.simpleicons.org/apache"
+"Governance","Data Lineage Tracking","Data flow tracking","OpenLineage;DataHub","http://cdn.simpleicons.org/openlineage"
+"Governance","MDM","Single source of truth","Informatica MDM","http://cdn.simpleicons.org/informatica"
+"Governance","Data Stewardship","Governance roles","Collibra","http://cdn.simpleicons.org/collibra"
+"Governance","Metadata Management","Central metadata","AWS Glue","http://cdn.simpleicons.org/amazonwebservices"
+"Governance","Data Classification","Tagging sensitive data","Azure Purview","http://cdn.simpleicons.org/microsoftazure"
+"Security","Encryption at Rest","Protect stored data","AES;KMS","http://cdn.simpleicons.org/amazonwebservices"
+"Security","Encryption in Transit","Protect data in motion","TLS/SSL",""
+"Security","Access Control","RBAC permissions","IAM;Apache Ranger","http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apache"
+"Security","Data Masking","Hiding sensitive values","Dynamic masking tools",""
+"Security","Tokenization","Replace sensitive data","Vault;Protegrity",""
+"Security","Auditing & Logging","Track access changes","CloudTrail;Splunk","http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/splunk"
+"Optimization","Partitioning","Splitting datasets","Hive;Spark","http://cdn.simpleicons.org/apachehadoop http://cdn.simpleicons.org/apachespark"
+"Optimization","Indexing","Speed up queries","B-tree;Bitmap indexes",""
+"Optimization","Caching","Store frequent data","Redis;Spark cache","http://cdn.simpleicons.org/redis http://cdn.simpleicons.org/apachespark"
+"Optimization","Compression","Reduce storage","Snappy;Zstd",""
+"Optimization","Query Optimization","Improve SQL execution","CBO;Query planners",""
+"Optimization","Parallel Processing","Concurrent execution","Spark executors","http://cdn.simpleicons.org/apachespark"
+"Advanced","Data Mesh","Decentralized ownership","Domain-oriented architecture",""
+"Advanced","Data Fabric","Unified data layer","IBM Data Fabric",""
+"Advanced","Lambda Architecture","Batch + streaming","Spark;Kafka","http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/apachekafka"
+"Advanced","Kappa Architecture","Stream-only architecture","Kafka","http://cdn.simpleicons.org/apachekafka"
+"Advanced","Event Sourcing","Event log state storage","EventStoreDB","http://cdn.simpleicons.org/eventstore"
+"Advanced","CQRS","Separation of read/write","Microservices architecture",""
