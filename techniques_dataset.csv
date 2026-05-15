@@ -1,47 +1,71 @@
-domain,subdomain,technique,description,maturity_level,processing_type,complexity,primary_tools,cloud_services,notes
-ingestion,batch,scheduled batch ETL,Periodic extraction and load of data,high,batch,low,Airflow;Informatica,AWS Glue;Azure Data Factory,Common in legacy systems
-ingestion,batch,bulk file ingestion,Loading large files from storage,high,batch,low,Spark;Python,S3;ADLS;GCS,Used in data lakes
-ingestion,streaming,event streaming ingestion,Real-time ingestion via event brokers,high,stream,high,Kafka;Pulsar,Kinesis;Pub/Sub,Core for real-time systems
-ingestion,streaming,log ingestion,Collecting application/system logs,high,stream,medium,Fluentd;Logstash,CloudWatch;Stackdriver,Observability pipelines
-ingestion,cdc,change data capture,Tracking DB row-level changes,high,stream,high,Debezium;DMS,AWS DMS;Datastream,Reduces full reloads
-ingestion,api,rest api ingestion,Pulling data from external APIs,high,batch,medium,Python;Airbyte,API Gateway,Rate limit handling required
-storage,lake,data lake storage,Raw scalable object storage,high,both,medium,S3;ADLS;GCS,S3;Azure Data Lake;GCS,Schema-on-read model
-storage,warehouse,data warehouse,Structured analytics storage,high,batch,medium,Snowflake;BigQuery,Redshift;Synapse,Schema-on-write
-storage,lakehouse,lakehouse architecture,Hybrid lake + warehouse model,medium,both,high,Delta Lake;Iceberg,Databricks;BigLake,Supports ACID on lakes
-storage,mart,data mart,Department-specific data subset,high,batch,medium,dbt;SQL,Snowflake;BigQuery,Optimized for BI
-modeling,dimensional,star schema,Fact table with dimensions,high,batch,medium,Kimball modeling tools,All warehouses,BI friendly
-modeling,dimensional,snowflake schema,Normalized dimensional model,high,batch,high,SQL modeling,All warehouses,More complex joins
-modeling,data vault,data vault modeling,Historical audit-friendly modeling,medium,batch,high,Data Vault tools,Any warehouse,Enterprise governance
-transformation,etl,extract transform load,Transform before loading target,high,batch,medium,Informatica;SSIS,On-prem/cloud,Traditional approach
-transformation,elt,extract load transform,Transform inside warehouse,high,batch,low,dbt;SQL,Snowflake;BigQuery,Cloud-native standard
-transformation,cleaning,data cleansing,Fix missing/invalid data,high,batch,low,Python;pandas,Dataprep,Improves data quality
-transformation,normalization,data normalization,Reduce redundancy in datasets,high,batch,medium,SQL,Any RDBMS,OLTP optimization
-transformation,denormalization,data denormalization,Optimize read performance,high,batch,medium,SQL,Warehouses,Used in OLAP
-processing,distributed,distributed computing,Parallel computation across nodes,high,batch,high,Spark;Hadoop,Databricks;EMR,Big data core
-processing,streaming,stream processing,Continuous data computation,high,stream,high,Flink;Spark Streaming,Kinesis Analytics,Low latency systems
-processing,microbatch,micro-batching,Small batch stream processing,high,stream,medium,Spark Streaming,Databricks,Tradeoff latency vs throughput
-processing,inmemory,in-memory processing,Compute in RAM for speed,high,batch,medium,Spark,Databricks,Fast iterative workloads
-quality,validation,data validation,Rule-based correctness checks,high,batch,low,Great Expectations,dbt tests,Pipeline reliability
-quality,profiling,data profiling,Statistical dataset analysis,high,batch,low,Pandas;SQL,Databricks,Exploratory step
-quality,deduplication,duplicate removal,Eliminating repeated records,high,batch,low,Spark;SQL,BigQuery,Improves accuracy
-quality,standardization,data standardization,Unifying formats and units,high,batch,medium,Python;dbt,Any cloud,Important for merging sources
-orchestration,scheduling,workflow scheduling,Time-based pipeline execution,high,batch,medium,Airflow;Dagster,Composer;MWAA,Core orchestration layer
-orchestration,dependency,task dependency management,Managing DAG dependencies,high,batch,medium,Airflow;Prefect,Cloud Composer,Ensures execution order
-orchestration,retries,failure retries,Automatic retry logic,high,batch,low,Airflow;Prefect,All clouds,Improves reliability
-governance,lineage,data lineage tracking,Tracking data flow across systems,medium,both,high,OpenLineage;Collibra,Data Catalogs,Audit compliance
-governance,metadata,metadata management,Central dataset cataloging,high,both,medium,DataHub;Amundsen,Glue Catalog,Data discovery
-governance,security,access control,Permission management for datasets,high,both,high,IAM;Ranger,IAM;Azure AD,Regulatory requirement
-governance,masking,data masking,Protect sensitive data,high,batch,medium,Snowflake masking;Python,Snowflake;BigQuery,GDPR compliance
-optimization,indexing,data indexing,Speed up query access,high,online,medium,SQL indexes,All RDBMS,Query acceleration
-optimization,partitioning,data partitioning,Splitting data for performance,high,batch,medium,BigQuery;Hive,BigQuery;Snowflake,Cost + speed optimization
-optimization,compression,data compression,Reduce storage footprint,high,batch,low,Parquet;ORC,All clouds,Storage efficiency
-optimization,caching,query caching,Store frequent query results,high,online,low,Redis;Spark cache,All clouds,Dashboard acceleration
-reliability,idempotency,idempotent processing,Safe repeated execution,high,batch,high,SQL;Spark,All clouds,Prevents duplication
-reliability,checkpointing,stream checkpointing,Save stream state progress,high,stream,high,Flink;Spark Streaming,Kinesis;Databricks,Recovery mechanism
-reliability,deadletter,dead-letter queues,Handling failed events,high,stream,medium,Kafka;SQS,SQS;Pub/Sub,Error isolation
-deployment,containerization,docker packaging,Packaging pipelines in containers,high,both,medium,Docker;Kubernetes,EKS;AKS;GKE,Portable environments
-deployment,cicd,continuous integration delivery,Automated pipeline deployment,high,both,medium,GitHub Actions;Jenkins,Cloud Build,DevOps standard
-deployment,iac,infrastructure as code,Provisioning infra via code,high,both,medium,Terraform;Pulumi,All clouds,Repeatable infra
-observability,monitoring,pipeline monitoring,Tracking pipeline health,high,both,medium,Prometheus;Grafana,CloudWatch;Azure Monitor,Detect failures early
-observability,logging,centralized logging,Aggregating logs across systems,high,both,low,ELK stack,Cloud Logging,Debugging support
-observability,alerting,alerting systems,Triggering failure notifications,high,both,low,PagerDuty;Opsgenie,Cloud Alerts,Incident response
+category,technique,description,tools,tool_icons
+Ingestion,Batch Ingestion,Periodic loading of large datasets,Apache Sqoop;AWS Glue;Airflow,http://cdn.simpleicons.org/apache http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apacheairflow
+Ingestion,Real-time Streaming,Continuous ingestion of event data,Apache Kafka;Amazon Kinesis;Apache Pulsar,http://cdn.simpleicons.org/apachekafka http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apachepulsar
+Ingestion,Change Data Capture (CDC),Capturing incremental DB changes,Debezium;AWS DMS;Oracle GoldenGate,http://cdn.simpleicons.org/debezium http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/oracle
+Ingestion,Log-based Ingestion,Extracting system/application logs,Fluentd;Logstash;Filebeat,http://cdn.simpleicons.org/fluentd http://cdn.simpleicons.org/elastic http://cdn.simpleicons.org/elastic
+Ingestion,API-based Ingestion,Pulling data from external APIs,REST APIs;GraphQL;Custom connectors,,http://cdn.simpleicons.org/graphql
+Ingestion,Web Scraping,Extracting data from websites,BeautifulSoup;Scrapy;Selenium,,http://cdn.simpleicons.org/scrapy http://cdn.simpleicons.org/selenium
+Ingestion,Event-driven Ingestion,Trigger-based data capture,Kafka Streams;AWS Lambda;Event triggers,http://cdn.simpleicons.org/apachekafka http://cdn.simpleicons.org/amazonaws http://cdn.simpleicons.org/amazonaws
+
+Storage,Data Warehousing,Structured analytical storage,Snowflake;BigQuery;Redshift,http://cdn.simpleicons.org/snowflake http://cdn.simpleicons.org/googlebigquery http://cdn.simpleicons.org/amazonredshift
+Storage,Data Lakes,Raw and semi-structured storage,S3;Azure Data Lake;HDFS,http://cdn.simpleicons.org/amazonaws http://cdn.simpleicons.org/microsoftazure http://cdn.simpleicons.org/apachehadoop
+Storage,Data Lakehouse,Hybrid warehouse + lake,Delta Lake;Apache Iceberg;Apache Hudi,http://cdn.simpleicons.org/databricks http://cdn.simpleicons.org/apache http://cdn.simpleicons.org/apache
+Storage,Columnar Storage,Efficient analytical column storage,Parquet;ORC,,
+Storage,Row-based Storage,Transactional storage,MySQL;PostgreSQL,http://cdn.simpleicons.org/mysql http://cdn.simpleicons.org/postgresql
+Storage,NoSQL Storage,Schema-flexible storage,MongoDB;Cassandra;DynamoDB,http://cdn.simpleicons.org/mongodb http://cdn.simpleicons.org/apachecassandra http://cdn.simpleicons.org/amazonaws
+Storage,Time-series Storage,Time-indexed optimized storage,InfluxDB;TimescaleDB,http://cdn.simpleicons.org/influxdb http://cdn.simpleicons.org/timescale
+
+Processing,Batch Processing,Large-scale periodic computation,Apache Spark;Hadoop MapReduce,http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/apachehadoop
+Processing,Stream Processing,Real-time processing,Apache Flink;Kafka Streams,http://cdn.simpleicons.org/apacheflink http://cdn.simpleicons.org/apachekafka
+Processing,Micro-batching,Hybrid streaming model,Spark Structured Streaming,http://cdn.simpleicons.org/apachespark
+Processing,In-memory Processing,RAM-based computation,Spark;Apache Ignite,http://cdn.simpleicons.org/apachespark 
+Processing,Distributed Processing,Horizontal scaling,Hadoop;Spark,http://cdn.simpleicons.org/apachehadoop http://cdn.simpleicons.org/apachespark
+Processing,Serverless Processing,On-demand execution,AWS Lambda;Google Cloud Functions,http://cdn.simpleicons.org/awslambda http://cdn.simpleicons.org/googlecloud
+
+Transformation,ETL,Transform before loading,Informatica;Talend,http://cdn.simpleicons.org/informatica http://cdn.simpleicons.org/talend
+Transformation,ELT,Transform after loading,dbt;Snowflake SQL,http://cdn.simpleicons.org/dbt http://cdn.simpleicons.org/snowflake
+Transformation,Data Normalization,Structuring relational data,SQL rules,,
+Transformation,Data Denormalization,Optimizing read performance,Star schema;Snowflake schema,,
+Transformation,Data Aggregation,Summarization,SQL;Spark,http://cdn.simpleicons.org/apachespark
+Transformation,Feature Engineering,ML-ready transformations,Pandas;Spark MLlib,http://cdn.simpleicons.org/python http://cdn.simpleicons.org/apachespark
+
+Orchestration,Workflow Scheduling,Pipeline execution management,Airflow;Luigi,http://cdn.simpleicons.org/apacheairflow 
+Orchestration,DAG-based Orchestration,DAG pipeline design,Airflow;Prefect;Dagster,http://cdn.simpleicons.org/apacheairflow 
+Orchestration,Event-driven Orchestration,Trigger-based workflows,AWS Step Functions,http://cdn.simpleicons.org/amazonaws
+Orchestration,Pipeline Versioning,Tracking changes,Git;DVC,http://cdn.simpleicons.org/git http://cdn.simpleicons.org/git
+Orchestration,Dependency Management,Task dependencies,Airflow DAGs,http://cdn.simpleicons.org/apacheairflow
+
+Quality,Data Validation,Ensuring correctness,Great Expectations;Deequ,, 
+Quality,Data Profiling,Analyzing structure,pandas-profiling;Talend,http://cdn.simpleicons.org/python http://cdn.simpleicons.org/talend
+Quality,Deduplication,Removing duplicates,Spark;SQL,http://cdn.simpleicons.org/apachespark
+Quality,Data Cleansing,Fixing inconsistencies,OpenRefine;ETL tools,,
+Quality,Schema Validation,Schema consistency,Avro;JSON Schema,,
+Quality,Anomaly Detection,Outlier detection,Spark ML;Sklearn,http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/python
+
+Governance,Data Cataloging,Metadata management,Apache Atlas;Amundsen,http://cdn.simpleicons.org/apache
+Governance,Data Lineage Tracking,Data flow tracking,OpenLineage;DataHub,http://cdn.simpleicons.org/openlineage
+Governance,MDM,Single source of truth,Informatica MDM,http://cdn.simpleicons.org/informatica
+Governance,Data Stewardship,Governance roles,Collibra,http://cdn.simpleicons.org/collibra
+Governance,Metadata Management,Central metadata,AWS Glue,http://cdn.simpleicons.org/amazonwebservices
+Governance,Data Classification,Tagging sensitive data,Azure Purview,http://cdn.simpleicons.org/microsoftazure
+
+Security,Encryption at Rest,Protect stored data,AES;KMS,http://cdn.simpleicons.org/amazonwebservices
+Security,Encryption in Transit,Protect data in motion,TLS/SSL,,
+Security,Access Control,RBAC permissions,IAM;Apache Ranger,http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/apache
+Security,Data Masking,Hiding sensitive values,Dynamic masking tools,,
+Security,Tokenization,Replace sensitive data,Vault;Protegrity,, 
+Security,Auditing & Logging,Track access changes,CloudTrail;Splunk,http://cdn.simpleicons.org/amazonwebservices http://cdn.simpleicons.org/splunk
+
+Optimization,Partitioning,Splitting datasets,Hive;Spark,http://cdn.simpleicons.org/apachehadoop http://cdn.simpleicons.org/apachespark
+Optimization,Indexing,Speed up queries,B-tree;Bitmap indexes,,
+Optimization,Caching,Store frequent data,Redis;Spark cache,http://cdn.simpleicons.org/redis http://cdn.simpleicons.org/apachespark
+Optimization,Compression,Reduce storage,Snappy;Zstd,,
+Optimization,Query Optimization,Improve SQL execution,CBO;Query planners,,
+Optimization,Parallel Processing,Concurrent execution,Spark executors,http://cdn.simpleicons.org/apachespark
+
+Advanced,Data Mesh,Decentralized ownership,Domain-oriented architecture,,
+Advanced,Data Fabric,Unified data layer,IBM Data Fabric,,
+Advanced,Lambda Architecture,Batch + streaming,Spark;Kafka,http://cdn.simpleicons.org/apachespark http://cdn.simpleicons.org/apachekafka
+Advanced,Kappa Architecture,Stream-only architecture,Kafka,http://cdn.simpleicons.org/apachekafka
+Advanced,Event Sourcing,Event log state storage,EventStoreDB,http://cdn.simpleicons.org/eventstore
+Advanced,CQRS,Separation of read/write,Microservices architecture,,
