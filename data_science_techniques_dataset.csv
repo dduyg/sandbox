@@ -1,0 +1,60 @@
+category,technique,description
+Data Collection,Web Scraping,Extracting data from websites using automated tools
+Data Collection,APIs,Collecting data via application programming interfaces
+Data Collection,Surveys,Gathering structured responses from users
+Data Collection,Sensors/IoT,Collecting real-time physical world data
+Data Cleaning,Missing Value Imputation,Handling missing data using statistical or ML methods
+Data Cleaning,Outlier Removal,Detecting and removing anomalous data points
+Data Cleaning,Deduplication,Removing duplicate records
+Data Cleaning,Normalization,Scaling numeric data to a standard range
+EDA,Descriptive Statistics,"Mean, median, variance, distribution analysis"
+EDA,Data Visualization,Using charts to explore patterns
+EDA,Correlation Analysis,Measuring relationships between variables
+Feature Engineering,One-Hot Encoding,Converting categorical variables into binary vectors
+Feature Engineering,Feature Scaling,Standardization or normalization of features
+Feature Engineering,Feature Extraction,Transforming raw data into informative features
+Supervised Learning - Regression,Linear Regression,Modeling linear relationships between variables
+Supervised Learning - Regression,Polynomial Regression,Modeling nonlinear relationships using polynomial terms
+Supervised Learning - Regression,Ridge/Lasso Regression,Regularized regression techniques
+Supervised Learning - Classification,Logistic Regression,Binary/multiclass classification model
+Supervised Learning - Classification,Decision Trees,Tree-based decision-making models
+Supervised Learning - Classification,Random Forest,Ensemble of decision trees
+Supervised Learning - Classification,Support Vector Machines,Max-margin classification algorithm
+Supervised Learning - Classification,k-Nearest Neighbors,Instance-based learning method
+Supervised Learning - Classification,Naive Bayes,Probabilistic classifier based on Bayes theorem
+Unsupervised Learning - Clustering,K-Means,Partitioning data into k clusters
+Unsupervised Learning - Clustering,Hierarchical Clustering,Building cluster hierarchy
+Unsupervised Learning - Clustering,DBSCAN,Density-based clustering method
+Unsupervised Learning - Dimensionality Reduction,PCA,Principal Component Analysis for reducing dimensions
+Unsupervised Learning - Dimensionality Reduction,t-SNE,Nonlinear dimensionality reduction for visualization
+Unsupervised Learning - Dimensionality Reduction,UMAP,Manifold learning for embedding
+Anomaly Detection,Isolation Forest,Tree-based anomaly detection method
+Anomaly Detection,One-Class SVM,Support vector method for novelty detection
+Time Series,ARIMA,Autoregressive Integrated Moving Average model
+Time Series,Exponential Smoothing,Forecasting using weighted averages
+Time Series,Prophet,Additive forecasting model by Meta
+NLP,Tokenization,Splitting text into tokens
+NLP,TF-IDF,Term frequency-inverse document frequency representation
+NLP,Word Embeddings,"Vector representation of words (Word2Vec, GloVe)"
+NLP,Transformer Models,Attention-based deep learning models
+Computer Vision,Edge Detection,Detecting boundaries in images
+Computer Vision,Image Classification,Assigning labels to images
+Computer Vision,Object Detection,Locating objects in images
+Deep Learning,MLP,Multi-layer perceptron neural networks
+Deep Learning,CNN,Convolutional neural networks for images
+Deep Learning,RNN,Recurrent neural networks for sequences
+Deep Learning,LSTM,Long short-term memory networks
+Deep Learning,GAN,Generative adversarial networks
+Deep Learning,Autoencoders,Neural networks for representation learning
+Causal Inference,A/B Testing,Controlled experiments for comparison
+Causal Inference,Propensity Score Matching,Balancing treatment and control groups
+Causal Inference,Instrumental Variables,Estimating causal effects with confounders
+Reinforcement Learning,Q-Learning,Value-based RL algorithm
+Reinforcement Learning,Policy Gradient,Direct optimization of policies
+Reinforcement Learning,Deep Q Networks,Neural network-based Q-learning
+Model Evaluation,Cross Validation,Model validation technique
+Model Evaluation,Confusion Matrix,Classification performance measurement
+Model Evaluation,ROC-AUC,Receiver operating characteristic analysis
+MLOps,Model Deployment,Deploying models into production
+MLOps,Feature Store,Centralized feature management
+MLOps,Model Monitoring,Tracking model performance in production
