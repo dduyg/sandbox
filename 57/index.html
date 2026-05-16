@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ＮＡＭＥ∕ＢＡＮＫ — vaporwave title archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0612;
+    --bg2: #110a1f;
+    --bg3: #1a1030;
+    --panel: #13092296;
+    --border: #3a1f6a;
+    --border-bright: #7c3aed;
+    --pink: #f472b6;
+    --cyan: #67e8f9;
+    --purple: #a78bfa;
+    --lavender: #c4b5fd;
+    --yellow: #fde68a;
+    --white: #f0e8ff;
+    --muted: #7c6a9a;
+    --tag-bg: #1f1040;
+    --tag-border: #4c2a8a;
+    --card-bg: #0f0820;
+    --card-border: #2a1555;
+    --card-hover: #1a0f35;
+    --glow-pink: 0 0 20px #f472b644;
+    --glow-cyan: 0 0 20px #67e8f944;
+    --glow-purple: 0 0 30px #7c3aed33;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Ambient background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, #3b1a6a22 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 80%, #1a3a6a22 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 60% 20%, #6a1a4422 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanlines */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 48px 0 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .header-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+
+  .logo {
+    font-family: 'Bodoni Moda', serif;
+    font-style: italic;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--white);
+    text-shadow: var(--glow-purple);
+  }
+  .logo span { color: var(--pink); }
+
+  .logo-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .header-right { text-align: right; }
+
+  .count-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.15em;
+    background: #0a2a3a55;
+    border: 1px solid #67e8f933;
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+
+  /* ── SEARCH BAR ── */
+  .search-wrap {
+    margin: 32px 0 0;
+    position: relative;
+  }
+
+  .search-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .search-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-prefix {
+    position: absolute;
+    left: 16px;
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--purple);
+    font-size: 1.1rem;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  #search {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 14px 60px 14px 44px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    caret-color: var(--pink);
+  }
+  #search::placeholder { color: var(--muted); }
+  #search:focus {
+    border-color: var(--border-bright);
+    box-shadow: var(--glow-purple);
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 4px;
+    transition: color 0.2s;
+    display: none;
+  }
+  .search-clear:hover { color: var(--pink); }
+  .search-clear.visible { display: block; }
+
+  /* ── MAIN LAYOUT ── */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 28px;
+    margin-top: 32px;
+    align-items: start;
+  }
+  @media (max-width: 768px) {
+    .main-layout { grid-template-columns: 1fr; }
+  }
+
+  /* ── FILTER PANEL ── */
+  .filter-panel {
+    position: sticky;
+    top: 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+
+  .filter-panel-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .filter-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--cyan);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  .filter-reset {
+    background: none;
+    border: none;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+  .filter-reset:hover { color: var(--pink); border-color: var(--pink); }
+
+  .filter-section {
+    padding: 16px 18px;
+    border-bottom: 1px solid #1e1040;
+  }
+  .filter-section:last-child { border-bottom: none; }
+
+  .filter-section-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  /* Custom pill buttons for filters — NO native selects */
+  .pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .pill {
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 2px;
+    padding: 4px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--lavender);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .pill:hover {
+    border-color: var(--purple);
+    color: var(--white);
+  }
+  .pill.active {
+    background: #3a1f6a;
+    border-color: var(--purple);
+    color: var(--white);
+    box-shadow: 0 0 12px #7c3aed44;
+  }
+  .pill.active.cat-Technical   { background:#0f2a3a; border-color:#67e8f9; color:var(--cyan); box-shadow:var(--glow-cyan); }
+  .pill.active.cat-Atmospheric { background:#2a0f3a; border-color:#f472b6; color:var(--pink); box-shadow:var(--glow-pink); }
+  .pill.active.cat-Institutional{ background:#1a2a0f; border-color:#86efac; color:#86efac; }
+  .pill.active.cat-Creative    { background:#3a2a0f; border-color:#fde68a; color:var(--yellow); }
+  .pill.active.cat-Conceptual  { background:#2a0f2a; border-color:#c084fc; color:#c084fc; }
+  .pill.active.cat-Liminal     { background:#0f1a3a; border-color:#93c5fd; color:#93c5fd; }
+
+  /* Sort control */
+  .sort-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sort-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    user-select: none;
+    border: 1px solid transparent;
+  }
+  .sort-option:hover { color: var(--white); background: #1a0f35; }
+  .sort-option.active {
+    color: var(--cyan);
+    border-color: #67e8f933;
+    background: #0a2a3a33;
+  }
+
+  .sort-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    border: 1px solid var(--muted);
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+  .sort-option.active .sort-dot {
+    background: var(--cyan);
+    border-color: var(--cyan);
+    box-shadow: 0 0 8px var(--cyan);
+  }
+
+  /* ── RESULTS PANEL ── */
+  .results-panel {}
+
+  .results-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .results-count {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .results-count strong { color: var(--white); }
+
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+  }
+  .view-btn {
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 2px;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.75rem;
+    transition: all 0.15s;
+  }
+  .view-btn.active { background: #3a1f6a; border-color: var(--purple); color: var(--white); }
+
+  /* ── CARDS GRID ── */
+  #cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    transition: all 0.2s;
+  }
+  #cards-container.list-view {
+    grid-template-columns: 1fr;
+  }
+
+  .name-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 4px;
+    padding: 18px 18px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 0.3s ease both;
+  }
+
+  @keyframes cardIn {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .name-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .name-card:hover { background: var(--card-hover); border-color: var(--border-bright); }
+  .name-card:hover::before { opacity: 1; }
+
+  .card-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    line-height: 1.3;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .meta-chip {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55rem;
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .chip-cat  { background: #1a0f35; color: var(--purple); border: 1px solid #3a1f6a55; }
+  .chip-mood { background: #0f1a2a; color: var(--cyan);   border: 1px solid #1a3a5555; }
+  .chip-style{ background: #1a1a0f; color: var(--yellow); border: 1px solid #3a3a1555; }
+  .chip-len  { background: #1a0f1a; color: var(--pink);   border: 1px solid #3a1f3a55; }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--muted);
+    background: #0f0820;
+    border: 1px solid #1e1040;
+    border-radius: 2px;
+    padding: 2px 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.65rem;
+    font-family: 'Share Tech Mono', monospace;
+    padding: 3px 7px;
+    opacity: 0;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+  }
+  .name-card:hover .copy-btn { opacity: 1; }
+  .copy-btn:hover { color: var(--cyan); border-color: var(--cyan); background: #0a2a3a44; }
+  .copy-btn.copied { color: #86efac; border-color: #86efac44; }
+
+  /* ── NO RESULTS ── */
+  .no-results {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--muted);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    display: none;
+  }
+  .no-results.visible { display: block; }
+  .no-results-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 2rem;
+    color: #2a1555;
+    margin-bottom: 12px;
+  }
+
+  /* ── AI GENERATE SECTION ── */
+  .ai-section {
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+
+  .ai-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .ai-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--white);
+  }
+  .ai-title span { color: var(--pink); }
+
+  .ai-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  .ai-controls {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 20px;
+  }
+  @media (max-width: 600px) {
+    .ai-controls { grid-template-columns: 1fr; }
+  }
+
+  .ai-field label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .ai-pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .ai-pill {
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 2px;
+    padding: 4px 9px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--lavender);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.05em;
+    user-select: none;
+  }
+  .ai-pill:hover { border-color: var(--purple); color: var(--white); }
+  .ai-pill.active { background: #3a1f6a; border-color: var(--purple); color: var(--white); }
+
+  .ai-count-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .count-btn {
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    border-radius: 2px;
+    width: 28px; height: 28px;
+    font-family: 'Share Tech Mono', monospace;
+    color: var(--lavender);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .count-btn:hover { border-color: var(--purple); color: var(--white); }
+  .count-display {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.4rem;
+    color: var(--white);
+    min-width: 24px;
+    text-align: center;
+  }
+
+  .ai-generate-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #3a1f6a, #1f0f3a);
+    border: 1px solid var(--border-bright);
+    border-radius: 3px;
+    padding: 14px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--white);
+    cursor: pointer;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-generate-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #6a3aaa44, transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .ai-generate-btn:hover::before { opacity: 1; }
+  .ai-generate-btn:hover { box-shadow: var(--glow-purple); }
+  .ai-generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .ai-status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    min-height: 20px;
+    margin-top: 8px;
+    text-align: center;
+  }
+  .ai-status.loading { color: var(--purple); }
+  .ai-status.success { color: #86efac; }
+  .ai-status.error   { color: var(--pink); }
+
+  /* Generated results */
+  #ai-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .ai-card {
+    background: #0f0820;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 16px 14px 12px;
+    position: relative;
+    overflow: hidden;
+    animation: cardIn 0.3s ease both;
+  }
+  .ai-card::after {
+    content: 'AI';
+    position: absolute;
+    top: 8px; right: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.5rem;
+    color: var(--purple);
+    letter-spacing: 0.1em;
+    opacity: 0.6;
+  }
+
+  .ai-card-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.05rem;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .ai-card-meta {
+    display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .ai-card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+
+  .ai-save-btn {
+    background: none;
+    border: 1px solid var(--tag-border);
+    border-radius: 2px;
+    padding: 4px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--lavender);
+    cursor: pointer;
+    letter-spacing: 0.08em;
+    transition: all 0.15s;
+    width: 100%;
+  }
+  .ai-save-btn:hover { border-color: #86efac; color: #86efac; }
+  .ai-save-btn.saved { border-color: #86efac44; color: var(--muted); cursor: default; }
+
+  /* ── ACTIVE FILTER CHIPS ── */
+  .active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+    min-height: 0;
+  }
+  .active-filter-chip {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #2a0f4a;
+    border: 1px solid var(--border-bright);
+    border-radius: 2px;
+    padding: 3px 8px 3px 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--lavender);
+    letter-spacing: 0.05em;
+  }
+  .active-filter-chip button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.15s;
+  }
+  .active-filter-chip button:hover { color: var(--pink); }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="header-inner">
+      <div>
+        <div class="logo">ＮＡＭＥ<span>/</span>ＢＡＮＫ</div>
+        <div class="logo-sub">vaporwave title archive &amp; generator</div>
+      </div>
+      <div class="header-right">
+        <div class="count-badge" id="total-badge">— entries loaded</div>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <span class="search-label">search titles, tags, moods</span>
+      <div class="search-input-wrap">
+        <span class="search-prefix">›</span>
+        <input type="text" id="search" placeholder="synthetic entrance, cherry cola, cyber..." autocomplete="off" spellcheck="false">
+        <button class="search-clear" id="search-clear" aria-label="Clear search">✕</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-layout">
+    <!-- FILTERS -->
+    <aside class="filter-panel">
+      <div class="filter-panel-header">
+        <span class="filter-title">// filters</span>
+        <button class="filter-reset" id="reset-all">reset all</button>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-section-label">category</div>
+        <div class="pill-group" id="filter-category">
+          <div class="pill" data-value="Technical">Technical</div>
+          <div class="pill" data-value="Atmospheric">Atmospheric</div>
+          <div class="pill" data-value="Institutional">Institutional</div>
+          <div class="pill" data-value="Creative">Creative</div>
+          <div class="pill" data-value="Conceptual">Conceptual</div>
+          <div class="pill" data-value="Liminal">Liminal</div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-section-label">mood</div>
+        <div class="pill-group" id="filter-mood">
+          <div class="pill" data-value="Mysterious">Mysterious</div>
+          <div class="pill" data-value="Analytical">Analytical</div>
+          <div class="pill" data-value="Energetic">Energetic</div>
+          <div class="pill" data-value="Melancholic">Melancholic</div>
+          <div class="pill" data-value="Dreamy">Dreamy</div>
+          <div class="pill" data-value="Eerie">Eerie</div>
+          <div class="pill" data-value="Nostalgic">Nostalgic</div>
+          <div class="pill" data-value="Serene">Serene</div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-section-label">style</div>
+        <div class="pill-group" id="filter-style">
+          <div class="pill" data-value="Formal">Formal</div>
+          <div class="pill" data-value="Casual">Casual</div>
+          <div class="pill" data-value="Creative">Creative</div>
+          <div class="pill" data-value="Professional">Professional</div>
+          <div class="pill" data-value="Glitchy">Glitchy</div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-section-label">length</div>
+        <div class="pill-group" id="filter-length">
+          <div class="pill" data-value="Short">Short (1–2)</div>
+          <div class="pill" data-value="Medium">Medium (2–3)</div>
+          <div class="pill" data-value="Long">Long (4+)</div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <div class="filter-section-label">sort by</div>
+        <div class="sort-group" id="sort-group">
+          <div class="sort-option active" data-value="default"><div class="sort-dot"></div>Default</div>
+          <div class="sort-option" data-value="alpha-asc"><div class="sort-dot"></div>A → Z</div>
+          <div class="sort-option" data-value="alpha-desc"><div class="sort-dot"></div>Z → A</div>
+          <div class="sort-option" data-value="length-asc"><div class="sort-dot"></div>Shortest first</div>
+          <div class="sort-option" data-value="length-desc"><div class="sort-dot"></div>Longest first</div>
+          <div class="sort-option" data-value="newest"><div class="sort-dot"></div>Newest first</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RESULTS -->
+    <div class="results-panel">
+      <div class="results-bar">
+        <div class="results-count"><strong id="result-count">0</strong> <span id="result-label">titles</span></div>
+        <div class="view-toggle">
+          <button class="view-btn active" id="grid-btn">⊞ grid</button>
+          <button class="view-btn" id="list-btn">≡ list</button>
+        </div>
+      </div>
+      <div class="active-filters" id="active-filters"></div>
+      <div id="cards-container"></div>
+      <div class="no-results" id="no-results">
+        <div class="no-results-title">∅</div>
+        no titles match your filters
+      </div>
+    </div>
+  </div>
+
+  <!-- AI GENERATOR -->
+  <div class="ai-section">
+    <div class="ai-header">
+      <div>
+        <div class="ai-title"><span>✦</span> AI name generator</div>
+        <div class="ai-sub">generate new vaporwave titles with claude — saved entries persist in the database</div>
+      </div>
+    </div>
+
+    <div class="ai-controls">
+      <div class="ai-field">
+        <label>category</label>
+        <div class="ai-pill-group" id="ai-cat">
+          <div class="ai-pill active" data-value="any">any</div>
+          <div class="ai-pill" data-value="Technical">Technical</div>
+          <div class="ai-pill" data-value="Atmospheric">Atmospheric</div>
+          <div class="ai-pill" data-value="Institutional">Institutional</div>
+          <div class="ai-pill" data-value="Creative">Creative</div>
+          <div class="ai-pill" data-value="Conceptual">Conceptual</div>
+          <div class="ai-pill" data-value="Liminal">Liminal</div>
+        </div>
+      </div>
+      <div class="ai-field">
+        <label>mood</label>
+        <div class="ai-pill-group" id="ai-mood">
+          <div class="ai-pill active" data-value="any">any</div>
+          <div class="ai-pill" data-value="Mysterious">Mysterious</div>
+          <div class="ai-pill" data-value="Analytical">Analytical</div>
+          <div class="ai-pill" data-value="Energetic">Energetic</div>
+          <div class="ai-pill" data-value="Melancholic">Melancholic</div>
+          <div class="ai-pill" data-value="Dreamy">Dreamy</div>
+          <div class="ai-pill" data-value="Eerie">Eerie</div>
+          <div class="ai-pill" data-value="Nostalgic">Nostalgic</div>
+        </div>
+      </div>
+      <div class="ai-field">
+        <label>how many</label>
+        <div class="ai-count-row">
+          <button class="count-btn" id="count-minus">−</button>
+          <div class="count-display" id="count-display">6</div>
+          <button class="count-btn" id="count-plus">+</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="ai-generate-btn" id="generate-btn">⟳ generate titles</button>
+    <div class="ai-status" id="ai-status"></div>
+    <div id="ai-results"></div>
+  </div>
+</div>
+
+<script>
+// ─── DATA ──────────────────────────────────────────────────────────────────
+const BASE_DATA = [
+  { id:1,  title:"Synthetic Entrance",      category:"Technical",     mood:"Mysterious",  style:"Creative",     length:"Medium", tags:["cyber","retro","gateway"] },
+  { id:2,  title:"Cherry Cola Skies",       category:"Atmospheric",   mood:"Nostalgic",   style:"Casual",       length:"Medium", tags:["color","nostalgia","dreamy"] },
+  { id:3,  title:"Counting Constellations", category:"Atmospheric",   mood:"Dreamy",      style:"Creative",     length:"Medium", tags:["space","night","poetic"] },
+  { id:4,  title:"C0d3r's Paradox",         category:"Technical",     mood:"Analytical",  style:"Glitchy",      length:"Medium", tags:["cyber","code","glitch"] },
+  { id:5,  title:"Liminal Protocol",        category:"Liminal",       mood:"Eerie",       style:"Professional", length:"Medium", tags:["liminal","system","void"] },
+  { id:6,  title:"Neon Dissolution",        category:"Atmospheric",   mood:"Melancholic", style:"Creative",     length:"Medium", tags:["neon","retro","fade"] },
+  { id:7,  title:"Holographic Drift",       category:"Conceptual",    mood:"Dreamy",      style:"Creative",     length:"Medium", tags:["holo","space","float"] },
+  { id:8,  title:"Archive.exe",             category:"Technical",     mood:"Mysterious",  style:"Glitchy",      length:"Short",  tags:["file","archive","system"] },
+  { id:9,  title:"Pastel Infrastructure",   category:"Institutional", mood:"Serene",      style:"Formal",       length:"Medium", tags:["pastel","structure","soft"] },
+  { id:10, title:"Tokyo Mainframe",         category:"Technical",     mood:"Energetic",   style:"Professional", length:"Medium", tags:["cyber","japan","network"] },
+  { id:11, title:"Vapor",                   category:"Atmospheric",   mood:"Serene",      style:"Casual",       length:"Short",  tags:["minimal","vibe","air"] },
+  { id:12, title:"Forgotten Mall",          category:"Liminal",       mood:"Melancholic", style:"Casual",       length:"Medium", tags:["liminal","nostalgia","empty"] },
+  { id:13, title:"Signal Loss",             category:"Technical",     mood:"Eerie",       style:"Creative",     length:"Short",  tags:["signal","glitch","void"] },
+  { id:14, title:"Soft Reboot",             category:"Technical",     mood:"Serene",      style:"Casual",       length:"Short",  tags:["system","calm","restart"] },
+  { id:15, title:"The Cerulean Division",   category:"Institutional", mood:"Mysterious",  style:"Formal",       length:"Long",   tags:["color","org","retro"] },
+  { id:16, title:"Chromatic Residue",       category:"Conceptual",    mood:"Analytical",  style:"Professional", length:"Medium", tags:["color","data","abstract"] },
+  { id:17, title:"Night Market Loop",       category:"Atmospheric",   mood:"Nostalgic",   style:"Casual",       length:"Medium", tags:["japan","night","cycle"] },
+  { id:18, title:"Spectral Index",          category:"Technical",     mood:"Analytical",  style:"Professional", length:"Medium", tags:["data","spectrum","index"] },
+  { id:19, title:"Gossamer Protocol",       category:"Liminal",       mood:"Dreamy",      style:"Formal",       length:"Medium", tags:["soft","system","void"] },
+  { id:20, title:"Cascade",                 category:"Creative",      mood:"Energetic",   style:"Creative",     length:"Short",  tags:["flow","motion","water"] },
+  { id:21, title:"Retrowave Cartography",   category:"Creative",      mood:"Nostalgic",   style:"Creative",     length:"Medium", tags:["retro","map","wave"] },
+  { id:22, title:"Undefined Meridian",      category:"Conceptual",    mood:"Mysterious",  style:"Creative",     length:"Medium", tags:["abstract","space","code"] },
+  { id:23, title:"Fluorescent Memory",      category:"Atmospheric",   mood:"Nostalgic",   style:"Creative",     length:"Medium", tags:["light","nostalgia","color"] },
+  { id:24, title:"Bureau of Dusk",          category:"Institutional", mood:"Eerie",       style:"Formal",       length:"Medium", tags:["org","night","liminal"] },
+  { id:25, title:"Loading: Euphoria",       category:"Technical",     mood:"Energetic",   style:"Glitchy",      length:"Medium", tags:["system","joy","glitch"] },
+  { id:26, title:"Glass Architecture",      category:"Institutional", mood:"Serene",      style:"Professional", length:"Medium", tags:["structure","clear","modern"] },
+  { id:27, title:"Aquamarine Static",       category:"Atmospheric",   mood:"Eerie",       style:"Creative",     length:"Medium", tags:["color","signal","glitch"] },
+  { id:28, title:"The Last Lobby",          category:"Liminal",       mood:"Melancholic", style:"Casual",       length:"Medium", tags:["liminal","empty","end"] },
+  { id:29, title:"Polychrome",              category:"Creative",      mood:"Energetic",   style:"Creative",     length:"Short",  tags:["color","multi","art"] },
+  { id:30, title:"Subroutine",              category:"Technical",     mood:"Analytical",  style:"Professional", length:"Short",  tags:["code","system","loop"] },
+  { id:31, title:"Drift Protocol",          category:"Liminal",       mood:"Dreamy",      style:"Creative",     length:"Medium", tags:["float","system","void"] },
+  { id:32, title:"Crystallized Frequency",  category:"Conceptual",    mood:"Mysterious",  style:"Creative",     length:"Medium", tags:["crystal","wave","data"] },
+  { id:33, title:"Department of Haze",      category:"Institutional", mood:"Eerie",       style:"Formal",       length:"Medium", tags:["org","mist","liminal"] },
+  { id:34, title:"Idle Animation",          category:"Technical",     mood:"Serene",      style:"Glitchy",      length:"Medium", tags:["system","loop","soft"] },
+  { id:35, title:"Coral Network",           category:"Technical",     mood:"Energetic",   style:"Professional", length:"Medium", tags:["network","color","organic"] },
+  { id:36, title:"Plum Sector Seven",       category:"Institutional", mood:"Mysterious",  style:"Formal",       length:"Long",   tags:["color","org","number"] },
+  { id:37, title:"Echoes of Upload",        category:"Conceptual",    mood:"Nostalgic",   style:"Creative",     length:"Medium", tags:["data","memory","echo"] },
+  { id:38, title:"Terminal Bloom",          category:"Technical",     mood:"Melancholic", style:"Creative",     length:"Medium", tags:["code","nature","end"] },
+  { id:39, title:"Infinity Kiosk",          category:"Liminal",       mood:"Eerie",       style:"Creative",     length:"Medium", tags:["liminal","loop","retail"] },
+  { id:40, title:"Soft Infrastructure",     category:"Institutional", mood:"Serene",      style:"Formal",       length:"Medium", tags:["structure","soft","system"] },
+  { id:41, title:"Mirage.mp3",              category:"Atmospheric",   mood:"Dreamy",      style:"Glitchy",      length:"Short",  tags:["audio","illusion","glitch"] },
+  { id:42, title:"The Lavender Division",   category:"Institutional", mood:"Mysterious",  style:"Formal",       length:"Long",   tags:["color","org","soft"] },
+  { id:43, title:"Input Buffer",            category:"Technical",     mood:"Analytical",  style:"Professional", length:"Medium", tags:["code","data","system"] },
+  { id:44, title:"Perpetual Checkout",      category:"Liminal",       mood:"Eerie",       style:"Casual",       length:"Medium", tags:["liminal","retail","loop"] },
+  { id:45, title:"Hazy Meridian",           category:"Atmospheric",   mood:"Dreamy",      style:"Creative",     length:"Medium", tags:["mist","space","soft"] },
+  { id:46, title:"Neon Archipelago",        category:"Creative",      mood:"Energetic",   style:"Creative",     length:"Medium", tags:["neon","island","map"] },
+  { id:47, title:"Velvet Transmission",     category:"Atmospheric",   mood:"Mysterious",  style:"Creative",     length:"Medium", tags:["signal","soft","wave"] },
+  { id:48, title:"Recursive Garden",        category:"Conceptual",    mood:"Serene",      style:"Creative",     length:"Medium", tags:["code","nature","loop"] },
+  { id:49, title:"Amber Mainframe",         category:"Technical",     mood:"Nostalgic",   style:"Professional", length:"Medium", tags:["color","network","retro"] },
+  { id:50, title:"Teal Departure",          category:"Atmospheric",   mood:"Melancholic", style:"Creative",     length:"Medium", tags:["color","travel","end"] },
+];
+
+// AI-generated entries that get saved permanently (appended at end)
+let AI_SAVED = [];
+
+function getAllData() {
+  return [...BASE_DATA, ...AI_SAVED];
+}
+
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let state = {
+  search: '',
+  category: null,
+  mood: null,
+  style: null,
+  length: null,
+  sort: 'default',
+  view: 'grid',
+  genCount: 6,
+  genCat: 'any',
+  genMood: 'any',
+};
+
+// ─── FILTER + SORT ─────────────────────────────────────────────────────────
+function filterData() {
+  let data = getAllData();
+  const q = state.search.toLowerCase().trim();
+  if (q) {
+    data = data.filter(d =>
+      d.title.toLowerCase().includes(q) ||
+      d.tags.some(t => t.toLowerCase().includes(q)) ||
+      d.mood.toLowerCase().includes(q) ||
+      d.category.toLowerCase().includes(q) ||
+      d.style.toLowerCase().includes(q)
+    );
+  }
+  if (state.category) data = data.filter(d => d.category === state.category);
+  if (state.mood)     data = data.filter(d => d.mood === state.mood);
+  if (state.style)    data = data.filter(d => d.style === state.style);
+  if (state.length)   data = data.filter(d => d.length === state.length);
+
+  const wordCount = title => title.split(/\s+/).length;
+  switch(state.sort) {
+    case 'alpha-asc':   data.sort((a,b)=>a.title.localeCompare(b.title)); break;
+    case 'alpha-desc':  data.sort((a,b)=>b.title.localeCompare(a.title)); break;
+    case 'length-asc':  data.sort((a,b)=>wordCount(a.title)-wordCount(b.title)); break;
+    case 'length-desc': data.sort((a,b)=>wordCount(b.title)-wordCount(a.title)); break;
+    case 'newest':      data.sort((a,b)=>b.id-a.id); break;
+  }
+  return data;
+}
+
+// ─── RENDER CARDS ──────────────────────────────────────────────────────────
+function renderCards() {
+  const data = filterData();
+  const container = document.getElementById('cards-container');
+  const noResults = document.getElementById('no-results');
+  const countEl = document.getElementById('result-count');
+  const labelEl = document.getElementById('result-label');
+
+  countEl.textContent = data.length;
+  labelEl.textContent = data.length === 1 ? 'title' : 'titles';
+
+  container.innerHTML = '';
+  noResults.classList.toggle('visible', data.length === 0);
+
+  data.forEach((d, i) => {
+    const card = document.createElement('div');
+    card.className = 'name-card';
+    card.style.animationDelay = `${Math.min(i * 20, 300)}ms`;
+    card.innerHTML = `
+      <button class="copy-btn" data-title="${d.title}">copy</button>
+      <div class="card-title">${highlight(d.title, state.search)}</div>
+      <div class="card-meta">
+        <span class="meta-chip chip-cat">${d.category}</span>
+        <span class="meta-chip chip-mood">${d.mood}</span>
+        <span class="meta-chip chip-style">${d.style}</span>
+        <span class="meta-chip chip-len">${d.length}</span>
+      </div>
+      <div class="card-tags">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    `;
+    container.appendChild(card);
+  });
+
+  // Copy buttons
+  container.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const title = btn.dataset.title;
+      navigator.clipboard.writeText(title).catch(()=>{});
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 1500);
+    });
+  });
+
+  renderActiveFilters();
+}
+
+function highlight(text, q) {
+  if (!q.trim()) return text;
+  const re = new RegExp(`(${q.trim().replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(re, '<mark style="background:#3a1f6a;color:#c4b5fd;border-radius:2px;">$1</mark>');
+}
+
+// ─── ACTIVE FILTER CHIPS ───────────────────────────────────────────────────
+function renderActiveFilters() {
+  const el = document.getElementById('active-filters');
+  el.innerHTML = '';
+  const keys = ['category','mood','style','length'];
+  keys.forEach(k => {
+    if (!state[k]) return;
+    const chip = document.createElement('div');
+    chip.className = 'active-filter-chip';
+    chip.innerHTML = `<span>${k}: ${state[k]}</span><button>✕</button>`;
+    chip.querySelector('button').addEventListener('click', () => {
+      state[k] = null;
+      document.querySelectorAll(`#filter-${k} .pill`).forEach(p => p.classList.remove('active'));
+      renderCards();
+    });
+    el.appendChild(chip);
+  });
+}
+
+// ─── PILL FILTERS ──────────────────────────────────────────────────────────
+function initFilters() {
+  ['category','mood','style','length'].forEach(key => {
+    document.querySelectorAll(`#filter-${key} .pill`).forEach(pill => {
+      pill.addEventListener('click', () => {
+        const val = pill.dataset.value;
+        if (state[key] === val) {
+          state[key] = null;
+          pill.classList.remove('active', `cat-${val}`);
+        } else {
+          state[key] = val;
+          document.querySelectorAll(`#filter-${key} .pill`).forEach(p => p.classList.remove('active', ...Array.from(p.classList).filter(c=>c.startsWith('cat-'))));
+          pill.classList.add('active');
+          if (key === 'category') pill.classList.add(`cat-${val}`);
+        }
+        renderCards();
+      });
+    });
+  });
+
+  // Sort
+  document.querySelectorAll('#sort-group .sort-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      state.sort = opt.dataset.value;
+      document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      renderCards();
+    });
+  });
+
+  // Reset
+  document.getElementById('reset-all').addEventListener('click', () => {
+    state.category = state.mood = state.style = state.length = null;
+    state.sort = 'default';
+    state.search = '';
+    document.getElementById('search').value = '';
+    document.getElementById('search-clear').classList.remove('visible');
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active', ...Array.from(p.classList).filter(c=>c.startsWith('cat-'))));
+    document.querySelectorAll('.sort-option').forEach(o => o.classList.remove('active'));
+    document.querySelector('.sort-option[data-value="default"]').classList.add('active');
+    renderCards();
+  });
+}
+
+// ─── SEARCH ────────────────────────────────────────────────────────────────
+function initSearch() {
+  const input = document.getElementById('search');
+  const clear = document.getElementById('search-clear');
+  input.addEventListener('input', () => {
+    state.search = input.value;
+    clear.classList.toggle('visible', !!input.value);
+    renderCards();
+  });
+  clear.addEventListener('click', () => {
+    input.value = '';
+    state.search = '';
+    clear.classList.remove('visible');
+    renderCards();
+    input.focus();
+  });
+}
+
+// ─── VIEW TOGGLE ───────────────────────────────────────────────────────────
+function initViewToggle() {
+  document.getElementById('grid-btn').addEventListener('click', () => {
+    state.view = 'grid';
+    document.getElementById('cards-container').classList.remove('list-view');
+    document.getElementById('grid-btn').classList.add('active');
+    document.getElementById('list-btn').classList.remove('active');
+  });
+  document.getElementById('list-btn').addEventListener('click', () => {
+    state.view = 'list';
+    document.getElementById('cards-container').classList.add('list-view');
+    document.getElementById('list-btn').classList.add('active');
+    document.getElementById('grid-btn').classList.remove('active');
+  });
+}
+
+// ─── AI GENERATOR ──────────────────────────────────────────────────────────
+function initAIControls() {
+  // Category
+  document.querySelectorAll('#ai-cat .ai-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('#ai-cat .ai-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      state.genCat = pill.dataset.value;
+    });
+  });
+  // Mood
+  document.querySelectorAll('#ai-mood .ai-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('#ai-mood .ai-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      state.genMood = pill.dataset.value;
+    });
+  });
+  // Count
+  document.getElementById('count-minus').addEventListener('click', () => {
+    state.genCount = Math.max(1, state.genCount - 1);
+    document.getElementById('count-display').textContent = state.genCount;
+  });
+  document.getElementById('count-plus').addEventListener('click', () => {
+    state.genCount = Math.min(12, state.genCount + 1);
+    document.getElementById('count-display').textContent = state.genCount;
+  });
+
+  document.getElementById('generate-btn').addEventListener('click', generateTitles);
+}
+
+async function generateTitles() {
+  const btn = document.getElementById('generate-btn');
+  const statusEl = document.getElementById('ai-status');
+  const resultsEl = document.getElementById('ai-results');
+
+  btn.disabled = true;
+  btn.textContent = '⟳ generating...';
+  statusEl.className = 'ai-status loading';
+  statusEl.textContent = '// calling claude api...';
+  resultsEl.innerHTML = '';
+
+  const catHint = state.genCat !== 'any' ? `Category: ${state.genCat}` : '';
+  const moodHint = state.genMood !== 'any' ? `Mood: ${state.genMood}` : '';
+
+  const prompt = `Generate exactly ${state.genCount} vaporwave/aesthetic project title names.
+${catHint ? `Filter: ${catHint}` : ''}
+${moodHint ? `Filter: ${moodHint}` : ''}
+
+Titles should feel like: Synthetic Entrance, Cherry Cola Skies, Counting Constellations, C0d3r's Paradox, Liminal Protocol, Neon Dissolution, Holographic Drift. Mix of poetic, technical, atmospheric, institutional styles.
+
+For each title, assign:
+- category: one of [Technical, Atmospheric, Institutional, Creative, Conceptual, Liminal]
+- mood: one of [Mysterious, Analytical, Energetic, Melancholic, Dreamy, Eerie, Nostalgic, Serene]
+- style: one of [Formal, Casual, Creative, Professional, Glitchy]
+- tags: array of 2-4 short lowercase tags (e.g. ["cyber","retro","nostalgia"])
+
+Respond ONLY with a JSON array, no preamble, no markdown fences. Example:
+[{"title":"Signal Drift","category":"Atmospheric","mood":"Dreamy","style":"Creative","tags":["signal","float","dreamy"]}]`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || 'API error');
+
+    const raw = data.content.map(i => i.text || '').join('').trim()
+      .replace(/^```json\s*/, '').replace(/```$/, '').trim();
+    const items = JSON.parse(raw);
+
+    if (!Array.isArray(items)) throw new Error('Invalid response format');
+
+    statusEl.className = 'ai-status success';
+    statusEl.textContent = `// generated ${items.length} titles — save to add to database`;
+
+    items.forEach((item, i) => {
+      const words = item.title.split(/\s+/).length;
+      const length = words <= 2 ? 'Short' : words <= 3 ? 'Medium' : 'Long';
+      const card = document.createElement('div');
+      card.className = 'ai-card';
+      card.style.animationDelay = `${i * 60}ms`;
+      card.innerHTML = `
+        <div class="ai-card-title">${item.title}</div>
+        <div class="ai-card-meta">
+          <span class="meta-chip chip-cat">${item.category||'Creative'}</span>
+          <span class="meta-chip chip-mood">${item.mood||'Mysterious'}</span>
+          <span class="meta-chip chip-style">${item.style||'Creative'}</span>
+          <span class="meta-chip chip-len">${length}</span>
+        </div>
+        <div class="ai-card-tags">${(item.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        <button class="ai-save-btn" data-idx="${i}">+ save to database</button>
+      `;
+      resultsEl.appendChild(card);
+
+      card.querySelector('.ai-save-btn').addEventListener('click', function() {
+        if (this.classList.contains('saved')) return;
+        const maxId = Math.max(...getAllData().map(d=>d.id), 0);
+        AI_SAVED.push({
+          id: maxId + 1,
+          title: item.title,
+          category: item.category || 'Creative',
+          mood: item.mood || 'Mysterious',
+          style: item.style || 'Creative',
+          length,
+          tags: item.tags || []
+        });
+        this.textContent = '✓ saved';
+        this.classList.add('saved');
+        // Update badge
+        document.getElementById('total-badge').textContent = `${getAllData().length} entries`;
+        renderCards();
+      });
+    });
+
+  } catch(err) {
+    statusEl.className = 'ai-status error';
+    statusEl.textContent = `// error: ${err.message}`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '⟳ generate titles';
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────────────
+function init() {
+  document.getElementById('total-badge').textContent = `${getAllData().length} entries`;
+  initSearch();
+  initFilters();
+  initViewToggle();
+  initAIControls();
+  renderCards();
+}
+
+init();
+</script>
+</body>
+</html>
