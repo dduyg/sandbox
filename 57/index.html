@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ＮＡＭＥＤＲＯＰ</title>
+<link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -30,7 +31,6 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-
   body::before {
     content: '';
     position: fixed;
@@ -40,7 +40,6 @@
     pointer-events: none;
     z-index: 0;
   }
-
   .container {
     position: relative;
     z-index: 1;
@@ -66,7 +65,7 @@
   }
 
   .header-title {
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Dellmonte Sans', sans-serif;
     font-size: clamp(32px, 6vw, 62px);
     font-weight: 900;
     letter-spacing: 6px;
@@ -104,13 +103,11 @@
 
   /* ── SEARCH ── */
   .search-section { margin-bottom: 20px; }
-
   .search-wrap {
     position: relative;
     max-width: 560px;
     margin: 0 auto;
   }
-
   .search-input {
     width: 100%;
     background: var(--bg2);
@@ -124,13 +121,11 @@
     letter-spacing: 1px;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-
   .search-input::placeholder { color: var(--muted); }
   .search-input:focus {
     border-color: var(--amber);
     box-shadow: 0 4px 20px rgba(232,197,71,0.07);
   }
-
   .search-icon {
     position: absolute;
     right: 15px;
@@ -150,7 +145,6 @@
     margin-bottom: 18px;
     flex-wrap: wrap;
   }
-
   .toolbar-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
   .result-count {
@@ -159,10 +153,9 @@
     letter-spacing: 2px;
     white-space: nowrap;
   }
-
   .result-count span { color: var(--amber); }
 
-  /* custom sort — no <select> */
+  /* custom sort */
   .sort-widget {
     display: flex;
     align-items: stretch;
@@ -342,6 +335,12 @@
     position: relative;
     overflow: hidden;
     user-select: none;
+    transform-style: preserve-3d;
+  }
+  @keyframes Conveyor {
+      0% {transform: perspective(2300px) translateZ(45em) rotateX(85deg);}
+      60% {transform: perspective(2300px) rotateX(0deg);}
+      100% {transform: perspective(2300px) rotateX(0deg);}
   }
 
   .name-card::after {
@@ -358,13 +357,14 @@
   .name-card:hover {
     border-color: rgba(232,197,71,0.28);
     background: var(--bg3);
+    animation: Conveyor 3s infinite ease-out;
   }
-
   .name-card:hover::after { transform: scaleX(1); }
 
   .name-card.flash {
     background: rgba(232,197,71,0.07);
     border-color: var(--amber);
+    animation: Conveyor 3s infinite ease-out;
   }
 
   .card-title {
@@ -484,8 +484,7 @@
 
   /* ── MODAL ── */
   .modal-overlay {
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background: rgba(8,11,15,0.88);
     backdrop-filter: blur(6px);
     z-index: 100;
@@ -628,8 +627,7 @@
   /* ── TOAST ── */
   .toast {
     position: fixed;
-    bottom: 24px;
-    left: 50%;
+    bottom: 24px; left: 50%;
     transform: translateX(-50%) translateY(60px);
     background: var(--bg3);
     border: 1px solid var(--amber);
@@ -673,7 +671,7 @@
 
   <div class="search-section">
     <div class="search-wrap">
-      <input type="text" class="search-input" id="search-input" placeholder="SEARCH TITLES, TAGS, MOODS...">
+      <input type="text" class="search-input" id="search-input" placeholder="Search...">
       <span class="search-icon">⌕</span>
     </div>
   </div>
@@ -697,7 +695,7 @@
         <button class="view-btn active" id="view-grid" title="Grid">⊞</button>
         <button class="view-btn" id="view-list" title="List">☰</button>
       </div>
-      <button class="btn btn-amber" id="add-btn">+ ADD</button>
+      <button class="btn btn-amber" id="add-btn">+ ADD ENTRY</button>
     </div>
   </div>
 
@@ -794,9 +792,8 @@
 
 <script>
 // ═══════════════════════════════════════════════════
-// DATASET  — fixed, no localStorage, no reset on reload
+// DATASET
 // ═══════════════════════════════════════════════════
-
 const BASE_DB = [
   { id:1,  title:"Synthetic Entrance",      category:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["cyber","tech","entry"],                added:1714000000000 },
   { id:2,  title:"Cherry Cola Skies",       category:"Atmospheric",   mood:"Dreamy",      style:"Casual",       tags:["retro","sky","pastel","nostalgia"],      added:1714086400000 },
@@ -820,7 +817,6 @@ const BASE_DB = [
   { id:20, title:"Quantum Drift",           category:"Technical",     mood:"Mysterious",  style:"Professional", tags:["quantum","drift","physics","future"],   added:1715641600000 },
 ];
 
-// session-only additions & edits (gone on reload, intentional)
 let runtime = [];
 let deletedIds = new Set();
 let nextId = BASE_DB.length + 1;
@@ -833,7 +829,6 @@ function allEntries() {
 // ═══════════════════════════════════
 // STATE
 // ═══════════════════════════════════
-
 let currentView = 'grid';
 let currentSort = 'default';
 let activeFilters = { category:[], mood:[], style:[], length:[], tags:[] };
@@ -843,7 +838,6 @@ let ctxTargetId = null;
 // ═══════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════
-
 function wordLen(title) {
   const w = title.trim().split(/\s+/).length;
   if (w <= 2) return 'Short (1–2)';
@@ -881,7 +875,6 @@ function flashCard(id) {
 // ═══════════════════════════════════
 // FILTER CHIPS
 // ═══════════════════════════════════
-
 function buildChips() {
   buildGroup('fc-category', uniqueVals('category'), 'category');
   buildGroup('fc-mood',     uniqueVals('mood'),     'mood');
@@ -1019,7 +1012,6 @@ function listRow(e) {
 // ═══════════════════════════════════
 // COPY ON CLICK
 // ═══════════════════════════════════
-
 function copyEntry(id) {
   const e = getEntry(id);
   if (!e) return;
@@ -1029,9 +1021,8 @@ function copyEntry(id) {
 }
 
 // ═══════════════════════════════════
-// CONTEXT MENU  (right-click)
+// CONTEXT MENU
 // ═══════════════════════════════════
-
 function openCtx(evt, id) {
   evt.preventDefault();
   evt.stopPropagation();
@@ -1064,7 +1055,6 @@ document.getElementById('ctx-delete').onclick = ev => {
 // ═══════════════════════════════════
 // EDIT / DELETE
 // ═══════════════════════════════════
-
 function deleteEntry(id) {
   if (!confirm('Delete this entry?')) return;
   const ri = runtime.findIndex(e => e.id === id);
@@ -1091,7 +1081,6 @@ function openEdit(id) {
 // ═══════════════════════════════════
 // MODAL
 // ═══════════════════════════════════
-
 function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
 
 function closeModal() {
@@ -1136,7 +1125,6 @@ function saveEntry() {
 // ═══════════════════════════════════
 // EVENTS
 // ═══════════════════════════════════
-
 document.getElementById('search-input').addEventListener('input', render);
 
 document.querySelectorAll('.sort-option').forEach(btn => {
