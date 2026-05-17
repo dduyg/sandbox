@@ -20,7 +20,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     font-family: 'Space Mono', monospace;
     background-color: #800080;
@@ -31,8 +30,7 @@
 
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image: radial-gradient(rgba(255,0,255,0.09) 1px, transparent 1px);
     background-size: 26px 26px;
     pointer-events: none;
@@ -123,8 +121,7 @@
 
   .search-icon {
     position: absolute;
-    right: 14px;
-    top: 50%;
+    right: 14px; top: 50%;
     transform: translateY(-50%);
     color: var(--text-dim);
     font-size: 18px;
@@ -378,7 +375,7 @@
   .badge-length   { color: var(--text-dim); border-color: var(--border); background: transparent; font-size: 8px; }
 
   .card-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-  .tag { font-size: 9px; color: var(--text-dim); padding: 2px 7px; border: 1px solid rgba(255,0,255,0.18); letter-spacing: 1px; }
+  .tag { font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
 
   .card-footer {
     display: flex;
@@ -585,7 +582,6 @@
 </style>
 </head>
 <body>
-
 <div class="container">
 
   <header>
@@ -630,7 +626,7 @@
         <button class="view-btn active" id="view-grid" title="Grid">⊞</button>
         <button class="view-btn" id="view-list" title="List">☰</button>
       </div>
-      <button class="btn btn-primary" id="add-btn">+ ADD</button>
+      <button class="btn btn-primary" id="add-btn">+ ADD ENTRY</button>
     </div>
   </div>
 
@@ -725,9 +721,8 @@
 
 <script>
 // ═══════════════════════════════════════════
-// DATASET — fixed in code, not localStorage
+// DATASET
 // ═══════════════════════════════════════════
-
 const DB = [
   { id:1,  title:"Synthetic Entrance",     category:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["cyber","tech","entry"],              added:1744070400000 },
   { id:2,  title:"Cherry Cola Skies",      category:"Atmospheric",   mood:"Dreamy",      style:"Casual",       tags:["retro","sky","pastel","nostalgia"],   added:1744156800000 },
@@ -756,7 +751,7 @@ const DB = [
   { id:25, title:"Frequency Drift",        category:"Technical",     mood:"Mysterious",  style:"Glitch",       tags:["signal","drift","analog","frequency"],added:1746144000000 },
 ];
 
-// User-added entries live here in memory (not persisted — by design)
+// User-added entries live here in memory
 let userEntries = [];
 let nextId = DB.length + 1;
 let currentView = 'grid';
@@ -766,14 +761,13 @@ let activeFilters = { category:[], mood:[], style:[], length:[], tags:[] };
 // ═══════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════
-
 const allEntries = () => [...DB, ...userEntries];
 
 function getLength(title) {
   const w = title.trim().split(/\s+/).length;
-  if (w <= 2) return 'Short (1–2)';
-  if (w === 3) return 'Medium (2–3)';
-  return 'Long (4+)';
+  if (w <= 2) return 'Short';
+  if (w === 3) return 'Medium';
+  return 'Long';
 }
 
 function getUniqueValues(field) {
@@ -789,7 +783,6 @@ function getAllTags() {
 // ═══════════════════════════════════════════
 // DATALIST (autocomplete suggestions)
 // ═══════════════════════════════════════════
-
 function refreshDataLists() {
   const fill = (id, vals) => {
     const dl = document.getElementById(id);
@@ -803,7 +796,6 @@ function refreshDataLists() {
 // ═══════════════════════════════════════════
 // FILTER CHIPS
 // ═══════════════════════════════════════════
-
 function buildFilterChips() {
   const make = (containerId, vals, key) => {
     const wrap = document.getElementById(containerId);
@@ -821,7 +813,7 @@ function buildFilterChips() {
   make('filter-category', getUniqueValues('category'), 'category');
   make('filter-mood',     getUniqueValues('mood'),     'mood');
   make('filter-style',    getUniqueValues('style'),    'style');
-  make('filter-length',   ['Short (1–2)', 'Medium (2–3)', 'Long (4+)'], 'length');
+  make('filter-length',   ['Short', 'Medium', 'Long)'], 'length');
 
   const tw = document.getElementById('filter-tags');
   tw.innerHTML = '';
@@ -860,7 +852,6 @@ function renderActiveFilters() {
 // ═══════════════════════════════════════════
 // FILTER + SORT
 // ═══════════════════════════════════════════
-
 function getFiltered() {
   const q = document.getElementById('search-input').value.toLowerCase().trim();
   let items = allEntries().filter(e => {
@@ -888,7 +879,6 @@ function getFiltered() {
 // ═══════════════════════════════════════════
 // RENDER
 // ═══════════════════════════════════════════
-
 function render() {
   const items = getFiltered();
   const total = allEntries().length;
@@ -948,7 +938,6 @@ function render() {
 // ═══════════════════════════════════════════
 // COPY ON CLICK
 // ═══════════════════════════════════════════
-
 function copyItem(el, title) {
   navigator.clipboard.writeText(title).catch(() => {});
   el.classList.add('copied-flash');
@@ -959,7 +948,6 @@ function copyItem(el, title) {
 // ═══════════════════════════════════════════
 // MODAL
 // ═══════════════════════════════════════════
-
 function openModal() {
   refreshDataLists();
   document.getElementById('modal-overlay').classList.add('open');
@@ -993,7 +981,6 @@ function saveEntry() {
 // ═══════════════════════════════════════════
 // TOAST
 // ═══════════════════════════════════════════
-
 function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1005,7 +992,6 @@ function showToast(msg) {
 // ═══════════════════════════════════════════
 // SORT CUSTOM DROPDOWN
 // ═══════════════════════════════════════════
-
 const sortLabels = {
   'default':     'SORT: DEFAULT',
   'alpha-asc':   'SORT: A → Z',
@@ -1045,7 +1031,6 @@ document.addEventListener('click', () => {
 // ═══════════════════════════════════════════
 // EVENTS
 // ═══════════════════════════════════════════
-
 document.getElementById('search-input').addEventListener('input', render);
 
 document.getElementById('filter-toggle').onclick = () =>
