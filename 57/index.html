@@ -333,13 +333,6 @@
     position: relative;
     overflow: hidden;
     user-select: none;
-    transform-style: preserve-3d;
-  }
-  @keyframes Rebound {
-    0% {transform: perspective(1800px) translateZ(-50em) rotateX(70deg); transform-origin: 50% 100%;}
-    47% {transform: perspective(1800px) translateZ(0em) rotateX(0deg); transform-origin: 50% 50%;}
-    53% {transform: perspective(1800px) translateZ(0em) rotateX(0deg); transform-origin: 50% 50%;}
-    100% {transform: perspective(1800px) translateZ(-50em) rotateX(-70deg); transform-origin: 50% 0%;}
   }
 
   .name-card::after {
@@ -354,14 +347,12 @@
   .name-card:hover {
     border-color: rgba(232,197,71,0.28);
     background: var(--bg3);
-    animation: Rebound 1s forwards;
   }
   .name-card:hover::after { transform: scaleX(1); }
 
   .name-card.flash {
     background: rgba(232,197,71,0.07);
     border-color: var(--amber);
-    animation: Rebound 1s forwards;
   }
 
   .card-title {
