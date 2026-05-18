@@ -3,103 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Search Bar Animation</title>
+<title>Animated Search Bar</title>
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 
 <style>
-body {
-    margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #ff4747;
-    overflow: hidden;
-    font-family: Roboto, sans-serif;
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#ff4747;
+    font-family:Roboto,sans-serif;
 }
 
-#bar {
-    position: relative;
-    width: 300px;
-    height: 50px;
+/* Container */
+#bar{
+    position:relative;
+    width:50px;
+    height:50px;
 }
 
-input {
-    box-sizing: border-box;
-    width: 50px;
-    height: 50px;
-    border: 4px solid white;
-    border-radius: 50%;
-    background: transparent;
-    color: white;
-    font-size: 16px;
-    outline: none;
-    padding: 0;
-    transition:
-        width 0.4s ease-in-out,
-        border-radius 0.4s ease-in-out,
-        padding 0.2s;
+/* Hidden input initially */
+#search-input{
+    position:absolute;
+    top:0;
+    right:0;
+    width:50px;
+    height:50px;
+    border:4px solid white;
+    border-radius:50px;
+    background:transparent;
+    outline:none;
+    color:white;
+    font-size:16px;
+    padding:0;
+    opacity:0;
+    visibility:hidden;
+    transition:all 0.4s ease;
+    box-sizing:border-box;
 }
 
-.square {
-    width: 300px;
-    border-radius: 0;
-    padding: 0 50px 0 15px;
+/* Expanded input */
+#search-input.active{
+    width:300px;
+    padding:0 55px 0 15px;
+    border-radius:6px;
+    opacity:1;
+    visibility:visible;
 }
 
-.search {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
+/* Search button */
+#search-btn{
+    position:absolute;
+    top:0;
+    right:0;
+    width:50px;
+    height:50px;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    z-index:2;
 }
 
-.search::before {
-    content: "";
-    position: absolute;
-    width: 18px;
-    height: 4px;
-    background: white;
-    transform: rotate(45deg);
-    top: 30px;
-    left: 22px;
-    transition: 0.3s;
+/* Magnifying glass */
+#search-btn::before{
+    content:"";
+    position:absolute;
+    width:16px;
+    height:16px;
+    border:4px solid white;
+    border-radius:50%;
+    top:8px;
+    left:8px;
+    transition:0.3s;
 }
 
-.search::after {
-    content: "";
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border: 4px solid white;
-    border-radius: 50%;
-    top: 8px;
-    left: 8px;
-    transition: 0.3s;
+#search-btn::after{
+    content:"";
+    position:absolute;
+    width:18px;
+    height:4px;
+    background:white;
+    transform:rotate(45deg);
+    top:30px;
+    left:24px;
+    transition:0.3s;
 }
 
-.search.close::before {
-    width: 25px;
-    top: 23px;
-    left: 13px;
-    transform: rotate(45deg);
+/* Close icon */
+#search-btn.close::before{
+    width:26px;
+    height:4px;
+    border:none;
+    border-radius:0;
+    background:white;
+    transform:rotate(45deg);
+    top:23px;
+    left:12px;
 }
 
-.search.close::after {
-    width: 25px;
-    height: 4px;
-    border: none;
-    border-radius: 0;
-    background: white;
-    top: 23px;
-    left: 13px;
-    transform: rotate(-45deg);
+#search-btn.close::after{
+    width:26px;
+    transform:rotate(-45deg);
+    top:23px;
+    left:12px;
 }
 </style>
 </head>
@@ -107,30 +116,25 @@ input {
 <body>
 
 <form id="bar">
-    <input
-        type="text"
-        id="search-input"
-        placeholder="Search..."
-    >
-
-    <button type="button" class="search" id="search-btn"></button>
+    <input type="text" id="search-input" placeholder="Search...">
+    <button type="button" id="search-btn"></button>
 </form>
 
 <script>
 const input = document.getElementById("search-input");
-const searchBtn = document.getElementById("search-btn");
+const button = document.getElementById("search-btn");
 
-searchBtn.addEventListener("click", function (e) {
-    e.preventDefault();
+button.addEventListener("click", () => {
 
-    searchBtn.classList.toggle("close");
-    input.classList.toggle("square");
+    input.classList.toggle("active");
+    button.classList.toggle("close");
 
-    if (input.classList.contains("square")) {
+    if(input.classList.contains("active")){
         input.focus();
     } else {
         input.value = "";
     }
+
 });
 </script>
 
