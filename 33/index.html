@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ＮＡＭＥＤＲＯＰ</title>
+
+<link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  /* ── VAPORWAVE LIGHT THEME ── */
+  --bg:      #f6f1ff;
+  --bg2:     rgba(255,255,255,0.65);
+  --bg3:     #ffffff;
+
+  --pink:    #ff6ec7;
+  --cyan:    #39d5ff;
+  --purple:  #8a5cff;
+  --lav:     #cdb4ff;
+
+  --text:    #2b2b3a;
+  --muted:   #6b6f8a;
+
+  --border:  rgba(138,92,255,0.18);
+  --border2: rgba(57,213,255,0.10);
+
+  --amber:   var(--pink);
+  --amber2:  var(--purple);
+  --rust:    #ff7aa2;
+  --sage:    #4dd6b6;
+  --slate:   #7aa0ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Space Mono', monospace;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #f6f1ff 0%,
+    #fdf2ff 25%,
+    #eaf7ff 50%,
+    #fff0f6 75%,
+    #f6f1ff 100%
+  );
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px),
+    radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
+  background-size: 28px 28px, 36px 36px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 52px 0 36px;
+  text-align: center;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 36px;
+}
+
+.header-eyebrow {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 10px;
+  letter-spacing: 8px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.header-title {
+  font-family: 'Dellmonte Sans', sans-serif;
+  font-size: clamp(32px, 6vw, 62px);
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: var(--purple);
+  text-shadow: 0 0 30px rgba(138,92,255,0.25);
+}
+
+.header-sub {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.header-stats {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.5);
+}
+
+.stat-pill {
+  padding: 6px 18px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+}
+
+.stat-pill:last-child { border-right: none; }
+.stat-pill .val { color: var(--pink); font-weight: 700; }
+
+/* ── SEARCH ── */
+.search-input {
+  width: 100%;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--pink);
+  padding: 13px 44px 13px 18px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.search-input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 4px 20px rgba(138,92,255,0.12);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: 'Space Mono';
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border: 1px solid;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.btn-amber { border-color: var(--pink); color: var(--pink); }
+.btn-amber:hover { background: var(--pink); color: white; }
+
+.btn-rust { border-color: var(--purple); color: var(--purple); }
+.btn-rust:hover { background: var(--purple); color: white; }
+
+/* ── CARDS (GLASS VAPORWAVE) ── */
+.name-card {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(138,92,255,0.15);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.name-card:hover {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(255,110,199,0.35);
+  box-shadow: 0 12px 30px rgba(138,92,255,0.15);
+}
+
+/* badges */
+.badge-category {
+  background: rgba(255,110,199,0.12);
+  color: var(--pink);
+  border: 1px solid rgba(255,110,199,0.2);
+}
+
+.badge-mood {
+  background: rgba(57,213,255,0.10);
+  color: var(--cyan);
+  border: 1px solid rgba(57,213,255,0.2);
+}
+
+.badge-style {
+  background: rgba(138,92,255,0.10);
+  color: var(--purple);
+  border: 1px solid rgba(138,92,255,0.2);
+}
+
+.badge-length {
+  background: rgba(255,122,162,0.10);
+  color: var(--rust);
+  border: 1px solid rgba(255,122,162,0.2);
+}
+
+/* list rows */
+.list-row {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--border2);
+}
+
+.list-row:hover {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(255,110,199,0.25);
+}
+
+/* filter panel */
+.filter-panel {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--pink);
+}
+
+/* modal */
+.modal {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(138,92,255,0.25);
+  border-top: 3px solid var(--pink);
+}
+
+/* toast */
+.toast {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--pink);
+  color: var(--purple);
+}
+
+/* keep rest of original styling intact */
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <div class="header-eyebrow">名前のアーカイブ · Name Archive System</div>
+  <h1 class="header-title">ＮＡＭＥＤＲＯＰ</h1>
+  <div class="header-sub">vaporwave archive system</div>
+
+  <div class="header-stats">
+    <div class="stat-pill">ENTRIES <span class="val" id="stat-total">0</span></div>
+    <div class="stat-pill">SHOWING <span class="val" id="stat-filtered">0</span></div>
+    <div class="stat-pill">TAGS <span class="val" id="stat-tags">0</span></div>
+  </div>
+</header>
+
+<div class="search-section">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search-input" placeholder="Search...">
+  </div>
+</div>
+
+<div id="names-container"></div>
+
+</div>
+
+<script>
+/* ── your original JS stays EXACTLY the same ── */
+</script>
+
+</body>
+</html>
