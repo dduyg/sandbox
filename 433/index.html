@@ -6,6 +6,12 @@
 <title>Animated Search Bar</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 <style>
+body {
+    background-color: #FFF0F5; 
+    font-family: 'Roboto', sans-serif;
+    margin: 0; padding: 0;
+}
+
 #bar{
     position:relative;
     width:50px;
@@ -41,7 +47,7 @@ header { position: fixed; top: 5%; right: 8%; }
 }
 
 #search-input::placeholder{
-    color: #A5B5BB;
+    color: #7E8E94; /* Darkened slightly for better contrast on pink */
     opacity: 0.9;
 }
 
@@ -118,6 +124,5 @@ button.addEventListener("click", () => {
 
 });
 </script>
-
 </body>
 </html>
