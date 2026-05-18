@@ -23,20 +23,19 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     font-family: 'Space Mono', monospace;
-    background: var(--bg);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
+    background: linear-gradient(135deg, #f6f1ff 0%, #fdf2ff 25%, #eaf7ff 50%, #fff0f6 75%, #f6f1ff 100%);
   }
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(232,197,71,0.055) 1px, transparent 1px);
-    background-size: 28px 28px;
+    background: radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px), radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
+    background-size: 28px 28px, 36px 36px;
     pointer-events: none;
     z-index: 0;
   }
