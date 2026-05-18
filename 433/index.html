@@ -4,55 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Moving Text Mask</title>
-
 <link href="https://fonts.googleapis.com/css?family=Raleway:400,800,900" rel="stylesheet">
-
 <style>
-html,
 body{
-    width:100%;
-    height:100%;
-    margin:0;
-    overflow:hidden;
-    font-family:'Raleway',sans-serif;
-}
-
-/* Background */
-body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
     background:linear-gradient(#ebece7, white);
 }
-
-/* Container */
-.container{
+.title {
     text-align:center;
-}
-
-/* Text Mask Effect */
-.title{
     font-size:120px;
     font-weight:900;
     line-height:100px;
     letter-spacing:-6px;
-
     color:transparent;
-
     background-image:url("https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg");
     background-size:cover;
     background-repeat:no-repeat;
     background-position:40% 50%;
-
     -webkit-background-clip:text;
     background-clip:text;
-
     transition:background-position 0.1s;
 }
 
 /* Mobile Responsive */
 @media (max-width:768px){
-
     .title{
         font-size:50px;
         line-height:60px;
@@ -62,12 +36,8 @@ body{
 }
 </style>
 </head>
-
 <body>
-
-<div class="container">
-    <div class="title">WEBDEVTRICK.COM</div>
-</div>
+<div class="title">dduyg</div>
 
 <script>
 document.addEventListener("mousemove", function(e){
@@ -82,6 +52,5 @@ document.addEventListener("mousemove", function(e){
         traX + "% " + traY + "%";
 });
 </script>
-
 </body>
 </html>
