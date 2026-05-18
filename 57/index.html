@@ -58,47 +58,43 @@
 
   .header-eyebrow {
     font-family: 'Noto Serif JP', serif;
-    font-size: 10px;
-    letter-spacing: 8px;
+    font-size: 11px;
+    letter-spacing: 6px;
     color: var(--muted);
-    margin-bottom: 14px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    opacity: 0.8;
   }
 
   .header-title {
     font-family: 'Dellmonte Sans', sans-serif;
-    font-size: clamp(32px, 6vw, 62px);
+    font-size: clamp(28px, 5vw, 56px);
     font-weight: 900;
-    letter-spacing: 6px;
+    letter-spacing: 8px;
     color: var(--amber);
     line-height: 1;
-    margin-bottom: 10px;
-    text-shadow: 0 0 60px rgba(232,197,71,0.18);
+    margin-bottom: 8px;
   }
 
   .header-sub {
-    font-size: 10px;
-    letter-spacing: 5px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
     color: var(--muted);
-    margin-bottom: 24px;
-    font-style: italic;
+    margin-bottom: 20px;
   }
 
   .header-stats {
-    display: inline-flex;
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
   }
-
+  
   .stat-pill {
-    padding: 6px 18px;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 2px;
     color: var(--muted);
-    border-right: 1px solid var(--border);
   }
-
-  .stat-pill:last-child { border-right: none; }
   .stat-pill .val { color: var(--amber); font-weight: 700; }
 
   /* ── SEARCH ── */
