@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Bar Animation</title>
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ff4747;
+    overflow: hidden;
+    font-family: Roboto, sans-serif;
+}
+
+#bar {
+    position: relative;
+    width: 300px;
+    height: 50px;
+}
+
+input {
+    box-sizing: border-box;
+    width: 50px;
+    height: 50px;
+    border: 4px solid white;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    padding: 0;
+    transition:
+        width 0.4s ease-in-out,
+        border-radius 0.4s ease-in-out,
+        padding 0.2s;
+}
+
+.square {
+    width: 300px;
+    border-radius: 0;
+    padding: 0 50px 0 15px;
+}
+
+.search {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+.search::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 4px;
+    background: white;
+    transform: rotate(45deg);
+    top: 30px;
+    left: 22px;
+    transition: 0.3s;
+}
+
+.search::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 4px solid white;
+    border-radius: 50%;
+    top: 8px;
+    left: 8px;
+    transition: 0.3s;
+}
+
+.search.close::before {
+    width: 25px;
+    top: 23px;
+    left: 13px;
+    transform: rotate(45deg);
+}
+
+.search.close::after {
+    width: 25px;
+    height: 4px;
+    border: none;
+    border-radius: 0;
+    background: white;
+    top: 23px;
+    left: 13px;
+    transform: rotate(-45deg);
+}
+</style>
+</head>
+
+<body>
+
+<form id="bar">
+    <input
+        type="text"
+        id="search-input"
+        placeholder="Search..."
+    >
+
+    <button type="button" class="search" id="search-btn"></button>
+</form>
+
+<script>
+const input = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
+
+searchBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    searchBtn.classList.toggle("close");
+    input.classList.toggle("square");
+
+    if (input.classList.contains("square")) {
+        input.focus();
+    } else {
+        input.value = "";
+    }
+});
+</script>
+
+</body>
+</html>
