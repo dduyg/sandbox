@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ＮＡＭＥＤＲＯＰ</title>
+<link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:      #f6f1ff;
+  --bg2:     rgba(255,255,255,0.65);
+  --bg3:     #ffffff;
+
+  --pink:    #ff6ec7;
+  --cyan:    #39d5ff;
+  --purple:  #8a5cff;
+  --lav:     #cdb4ff;
+
+  --text:    #2b2b3a;
+  --muted:   #6b6f8a;
+
+  --border:  rgba(138,92,255,0.18);
+  --border2: rgba(57,213,255,0.10);
+
+  --amber:   var(--pink);
+  --amber2:  var(--purple);
+  --rust:    #ff7aa2;
+  --sage:    #4dd6b6;
+  --slate:   #7aa0ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Space Mono', monospace;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #f6f1ff 0%,
+    #fdf2ff 25%,
+    #eaf7ff 50%,
+    #fff0f6 75%,
+    #f6f1ff 100%
+  );
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px),
+    radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
+  background-size: 28px 28px, 36px 36px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ── HEADER ── */
+header {
+  padding: 52px 0 36px;
+  text-align: center;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 36px;
+}
+
+.header-eyebrow {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 10px;
+  letter-spacing: 8px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.header-title {
+  font-family: 'Dellmonte Sans', sans-serif;
+  font-size: clamp(32px, 6vw, 62px);
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: var(--purple);
+  text-shadow: 0 0 30px rgba(138,92,255,0.25);
+}
+
+.header-sub {
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.header-stats {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.5);
+}
+
+.stat-pill {
+  padding: 6px 18px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+}
+
+.stat-pill:last-child { border-right: none; }
+.stat-pill .val { color: var(--pink); font-weight: 700; }
+
+/* ── SEARCH ── */
+.search-input {
+  width: 100%;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--pink);
+  padding: 13px 44px 13px 18px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.search-input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 4px 20px rgba(138,92,255,0.12);
+}
+
+/* ── BUTTONS ── */
+.btn {
+  font-family: 'Space Mono';
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 8px 16px;
+  border: 1px solid;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.btn-amber { border-color: var(--pink); color: var(--pink); }
+.btn-amber:hover { background: var(--pink); color: white; }
+
+.btn-rust { border-color: var(--purple); color: var(--purple); }
+.btn-rust:hover { background: var(--purple); color: white; }
+
+/* ── CARDS (GLASS VAPORWAVE) ── */
+.name-card {
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(138,92,255,0.15);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.name-card:hover {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(255,110,199,0.35);
+  box-shadow: 0 12px 30px rgba(138,92,255,0.15);
+}
+
+/* badges */
+.badge-category {
+  background: rgba(255,110,199,0.12);
+  color: var(--pink);
+  border: 1px solid rgba(255,110,199,0.2);
+}
+
+.badge-mood {
+  background: rgba(57,213,255,0.10);
+  color: var(--cyan);
+  border: 1px solid rgba(57,213,255,0.2);
+}
+
+.badge-style {
+  background: rgba(138,92,255,0.10);
+  color: var(--purple);
+  border: 1px solid rgba(138,92,255,0.2);
+}
+
+.badge-length {
+  background: rgba(255,122,162,0.10);
+  color: var(--rust);
+  border: 1px solid rgba(255,122,162,0.2);
+}
+
+/* list rows */
+.list-row {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--border2);
+}
+
+.list-row:hover {
+  background: rgba(255,255,255,0.85);
+  border-color: rgba(255,110,199,0.25);
+}
+
+/* filter panel */
+.filter-panel {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--pink);
+}
+
+/* modal */
+.modal {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(138,92,255,0.25);
+  border-top: 3px solid var(--pink);
+}
+
+/* toast */
+.toast {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid var(--pink);
+  color: var(--purple);
+}
+
+/* keep rest of original styling intact */
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <div class="header-eyebrow">名前のアーカイブ · Name Archive System</div>
+  <h1 class="header-title">ＮＡＭＥＤＲＯＰ</h1>
+  <div class="header-sub">vaporwave archive system</div>
+
+  <div class="header-stats">
+    <div class="stat-pill">ENTRIES <span class="val" id="stat-total">0</span></div>
+    <div class="stat-pill">SHOWING <span class="val" id="stat-filtered">0</span></div>
+    <div class="stat-pill">TAGS <span class="val" id="stat-tags">0</span></div>
+  </div>
+</header>
+
+<div class="search-section">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="search-input" placeholder="Search...">
+  </div>
+</div>
+
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-amber" id="filter-toggle">⊞ FILTERS</button>
+      <div class="sort-widget">
+        <span class="sort-label">SORT</span>
+        <button class="sort-option active" data-sort="default">DEFAULT</button>
+        <button class="sort-option" data-sort="alpha-asc">A→Z</button>
+        <button class="sort-option" data-sort="alpha-desc">Z→A</button>
+        <button class="sort-option" data-sort="len-asc">LEN↑</button>
+        <button class="sort-option" data-sort="len-desc">LEN↓</button>
+        <button class="sort-option" data-sort="newest">NEW</button>
+      </div>
+      <span class="result-count">SHOWING <span id="rc-filtered">0</span> OF <span id="rc-total">0</span></span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="view-toggle">
+        <button class="view-btn active" id="view-grid" title="Grid">⊞</button>
+        <button class="view-btn" id="view-list" title="List">☰</button>
+      </div>
+      <button class="btn btn-amber" id="add-btn">+ ADD ENTRY</button>
+    </div>
+  </div>
+
+  <div class="filter-panel" id="filter-panel">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <label>Category</label>
+        <div class="filter-chips" id="fc-category"></div>
+      </div>
+      <div class="filter-group">
+        <label>Mood</label>
+        <div class="filter-chips" id="fc-mood"></div>
+      </div>
+      <div class="filter-group">
+        <label>Style</label>
+        <div class="filter-chips" id="fc-style"></div>
+      </div>
+      <div class="filter-group">
+        <label>Length</label>
+        <div class="filter-chips" id="fc-length"></div>
+      </div>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <label>Tags</label>
+      <div class="filter-chips" id="fc-tags"></div>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-actions">
+      <div class="active-filters" id="active-filters"></div>
+      <button class="btn btn-rust" id="clear-filters">✕ CLEAR</button>
+    </div>
+  </div>
+
+  <div id="names-container"></div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">NEW ENTRY</span>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Title *</label>
+      <input type="text" class="form-input" id="f-title" placeholder="e.g. Synthetic Entrance">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Category *</label>
+        <input type="text" class="form-input" id="f-category" placeholder="Technical, Atmospheric…">
+        <div class="form-hint">Free text — invent new ones</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mood *</label>
+        <input type="text" class="form-input" id="f-mood" placeholder="Dreamy, Eerie, Hopeful…">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Style</label>
+        <input type="text" class="form-input" id="f-style" placeholder="Glitch, Formal, Casual…">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Length</label>
+        <input type="text" class="form-input" id="f-length" readonly placeholder="Auto-detected">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tags <span style="color:var(--muted);font-weight:400">(comma-separated)</span></label>
+      <input type="text" class="form-input" id="f-tags" placeholder="cyber, retro, nostalgia">
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-rust" id="modal-cancel">CANCEL</button>
+      <button class="btn btn-amber" id="modal-save">SAVE</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXT MENU -->
+<div class="ctx-menu" id="ctx-menu">
+  <button class="ctx-item" id="ctx-edit">✎  EDIT</button>
+  <button class="ctx-item danger" id="ctx-delete">⊗  DELETE</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATASET
+// ═══════════════════════════════════════════════════
+const BASE_DB = [
+  { id:1,  title:"Synthetic Entrance",      category:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["cyber","tech","entry"],                added:1714000000000 },
+  { id:2,  title:"Cherry Cola Skies",       category:"Atmospheric",   mood:"Dreamy",      style:"Casual",       tags:["retro","sky","pastel","nostalgia"],      added:1714086400000 },
+  { id:3,  title:"Counting Constellations", category:"Atmospheric",   mood:"Melancholic", style:"Creative",     tags:["space","night","poetic"],               added:1714172800000 },
+  { id:4,  title:"C0d3r's Paradox",         category:"Technical",     mood:"Analytical",  style:"Glitch",       tags:["code","cyber","glitch","leet"],         added:1714259200000 },
+  { id:5,  title:"Neon Meridian",           category:"Atmospheric",   mood:"Energetic",   style:"Creative",     tags:["neon","retro","city","cyber"],          added:1714345600000 },
+  { id:6,  title:"Protocol Horizon",        category:"Technical",     mood:"Mysterious",  style:"Professional", tags:["tech","network","future"],             added:1714432000000 },
+  { id:7,  title:"Glass Frequencies",       category:"Creative",      mood:"Dreamy",      style:"Creative",     tags:["music","ethereal","analog"],            added:1714518400000 },
+  { id:8,  title:"Terminal Bloom",          category:"Hybrid",        mood:"Nostalgic",   style:"Creative",     tags:["code","nature","contrast","retro"],     added:1714604800000 },
+  { id:9,  title:"Cascade Index",           category:"Institutional", mood:"Analytical",  style:"Formal",       tags:["data","system","order"],               added:1714691200000 },
+  { id:10, title:"Velvet Algorithm",        category:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["luxury","code","soft","cyber"],         added:1714777600000 },
+  { id:11, title:"Midnight Compile",        category:"Technical",     mood:"Melancholic", style:"Casual",       tags:["code","night","dev","late-night"],      added:1714864000000 },
+  { id:12, title:"Pastel Override",         category:"Creative",      mood:"Energetic",   style:"Glitch",       tags:["pastel","retro","cyber","override"],    added:1714950400000 },
+  { id:13, title:"Signal Lost",             category:"Atmospheric",   mood:"Eerie",       style:"Creative",     tags:["analog","signal","nostalgia","broken"], added:1715036800000 },
+  { id:14, title:"Datawave Reverie",        category:"Hybrid",        mood:"Dreamy",      style:"Creative",     tags:["data","wave","dream","retro"],          added:1715123200000 },
+  { id:15, title:"The Archive Speaks",      category:"Institutional", mood:"Mysterious",  style:"Formal",       tags:["archive","history","memory","system"],  added:1715209600000 },
+  { id:16, title:"Pink Noise Garden",       category:"Atmospheric",   mood:"Dreamy",      style:"Creative",     tags:["pink","nature","sound","ambient"],      added:1715296000000 },
+  { id:17, title:"Recursion Sunset",        category:"Technical",     mood:"Melancholic", style:"Creative",     tags:["code","sky","loop","poetic"],           added:1715382400000 },
+  { id:18, title:"Mall Cop Frequency",      category:"Creative",      mood:"Nostalgic",   style:"Casual",       tags:["retro","90s","mall","irony"],           added:1715468800000 },
+  { id:19, title:"Liminal Loop",            category:"Atmospheric",   mood:"Eerie",       style:"Creative",     tags:["liminal","loop","void","space"],        added:1715555200000 },
+  { id:20, title:"Quantum Drift",           category:"Technical",     mood:"Mysterious",  style:"Professional", tags:["quantum","drift","physics","future"],   added:1715641600000 },
+];
+
+let runtime = [];
+let deletedIds = new Set();
+let nextId = BASE_DB.length + 1;
+
+function allEntries() {
+  const base = BASE_DB.filter(e => !deletedIds.has(e.id));
+  return [...base, ...runtime];
+}
+
+// ═══════════════════════════════════
+// STATE
+// ═══════════════════════════════════
+let currentView = 'grid';
+let currentSort = 'default';
+let activeFilters = { category:[], mood:[], style:[], length:[], tags:[] };
+let editingId = null;
+let ctxTargetId = null;
+
+// ═══════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════
+function wordLen(title) {
+  const w = title.trim().split(/\s+/).length;
+  if (w <= 2) return 'Short (1–2)';
+  if (w === 3) return 'Medium (3)';
+  return 'Long (4+)';
+}
+
+function getAllTags() {
+  const s = new Set();
+  allEntries().forEach(e => (e.tags||[]).forEach(t => s.add(t)));
+  return [...s].sort();
+}
+
+function uniqueVals(key) {
+  return [...new Set(allEntries().map(e => e[key]).filter(Boolean))].sort();
+}
+
+function getEntry(id) { return allEntries().find(e => e.id === id); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function flashCard(id) {
+  const el = document.querySelector(`[data-id="${id}"]`);
+  if (!el) return;
+  el.classList.add('flash');
+  setTimeout(() => el.classList.remove('flash'), 550);
+}
+
+// ═══════════════════════════════════
+// FILTER CHIPS
+// ═══════════════════════════════════
+function buildChips() {
+  buildGroup('fc-category', uniqueVals('category'), 'category');
+  buildGroup('fc-mood',     uniqueVals('mood'),     'mood');
+  buildGroup('fc-style',    uniqueVals('style'),    'style');
+  buildGroup('fc-length',   ['Short (1–2)', 'Medium (3)', 'Long (4+)'], 'length');
+
+  const tw = document.getElementById('fc-tags');
+  tw.innerHTML = '';
+  getAllTags().forEach(t => {
+    tw.appendChild(chip('#' + t, activeFilters.tags.includes(t), () => toggleFilter('tags', t)));
+  });
+
+  renderActiveFilters();
+}
+
+function buildGroup(elId, vals, type) {
+  const w = document.getElementById(elId);
+  w.innerHTML = '';
+  vals.forEach(v => w.appendChild(chip(v, activeFilters[type].includes(v), () => toggleFilter(type, v))));
+}
+
+function chip(label, isActive, onClick) {
+  const b = document.createElement('button');
+  b.className = 'chip' + (isActive ? ' active' : '');
+  b.textContent = label;
+  b.onclick = onClick;
+  return b;
+}
+
+function toggleFilter(type, val) {
+  const arr = activeFilters[type];
+  const i = arr.indexOf(val);
+  if (i >= 0) arr.splice(i, 1); else arr.push(val);
+  buildChips();
+  render();
+}
+
+function renderActiveFilters() {
+  const w = document.getElementById('active-filters');
+  w.innerHTML = '';
+  Object.entries(activeFilters).forEach(([type, vals]) => {
+    vals.forEach(v => {
+      const d = document.createElement('div');
+      d.className = 'active-filter-tag';
+      d.innerHTML = `${type}: ${v} <span>✕</span>`;
+      d.onclick = () => toggleFilter(type, v);
+      w.appendChild(d);
+    });
+  });
+}
+
+// ═══════════════════════════════════
+// RENDER
+// ═══════════════════════════════════
+
+function getFiltered() {
+  const q = document.getElementById('search-input').value.toLowerCase().trim();
+
+  let items = allEntries().filter(e => {
+    if (q) {
+      const hay = [e.title, e.category, e.mood, e.style, ...(e.tags||[])].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    if (activeFilters.category.length && !activeFilters.category.includes(e.category)) return false;
+    if (activeFilters.mood.length     && !activeFilters.mood.includes(e.mood))         return false;
+    if (activeFilters.style.length    && !activeFilters.style.includes(e.style))       return false;
+    if (activeFilters.length.length   && !activeFilters.length.includes(wordLen(e.title))) return false;
+    if (activeFilters.tags.length     && !activeFilters.tags.some(t => (e.tags||[]).includes(t))) return false;
+    return true;
+  });
+
+  const s = currentSort;
+  if (s === 'alpha-asc')  items.sort((a,b) => a.title.localeCompare(b.title));
+  if (s === 'alpha-desc') items.sort((a,b) => b.title.localeCompare(a.title));
+  if (s === 'len-asc')    items.sort((a,b) => a.title.length - b.title.length);
+  if (s === 'len-desc')   items.sort((a,b) => b.title.length - a.title.length);
+  if (s === 'newest')     items.sort((a,b) => b.added - a.added);
+
+  return items;
+}
+
+function render() {
+  const items = getFiltered();
+  const all   = allEntries();
+
+  document.getElementById('stat-total').textContent    = all.length;
+  document.getElementById('stat-filtered').textContent = items.length;
+  document.getElementById('stat-tags').textContent     = getAllTags().length;
+  document.getElementById('rc-filtered').textContent   = items.length;
+  document.getElementById('rc-total').textContent      = all.length;
+
+  const c = document.getElementById('names-container');
+
+  if (currentView === 'grid') {
+    c.className = 'names-grid';
+    c.innerHTML = items.length ? items.map(gridCard).join('') : emptyHTML();
+  } else {
+    c.className = 'names-list';
+    c.innerHTML = items.length ? items.map(listRow).join('') : emptyHTML();
+  }
+
+  buildChips();
+}
+
+function emptyHTML() {
+  return `<div class="empty-state"><div class="e-icon">◈</div><p>No entries match</p></div>`;
+}
+
+function gridCard(e) {
+  const tags = (e.tags||[]).map(t => `<span class="tag">#${t}</span>`).join('');
+  return `<div class="name-card" data-id="${e.id}" onclick="copyEntry(${e.id})" oncontextmenu="openCtx(event,${e.id})">
+    <div class="card-title">${e.title}</div>
+    <div class="card-meta">
+      ${e.category ? `<span class="badge badge-category">${e.category}</span>` : ''}
+      ${e.mood     ? `<span class="badge badge-mood">${e.mood}</span>`         : ''}
+      ${e.style    ? `<span class="badge badge-style">${e.style}</span>`       : ''}
+    </div>
+    ${tags ? `<div class="card-tags">${tags}</div>` : ''}
+    <div class="card-footer">
+      <span>ID·${String(e.id).padStart(4,'0')}</span>
+      <span class="badge badge-length">${wordLen(e.title)}</span>
+      <span class="copy-hint">CLICK TO COPY</span>
+    </div>
+  </div>`;
+}
+
+function listRow(e) {
+  return `<div class="list-row" data-id="${e.id}" onclick="copyEntry(${e.id})" oncontextmenu="openCtx(event,${e.id})">
+    <span class="list-id">ID·${String(e.id).padStart(4,'0')}</span>
+    <span class="list-title">${e.title}</span>
+    <span class="list-copy">CLICK TO COPY</span>
+  </div>`;
+}
+
+// ═══════════════════════════════════
+// COPY ON CLICK
+// ═══════════════════════════════════
+function copyEntry(id) {
+  const e = getEntry(id);
+  if (!e) return;
+  navigator.clipboard.writeText(e.title).catch(() => {});
+  flashCard(id);
+  showToast('COPIED — ' + e.title);
+}
+
+// ═══════════════════════════════════
+// CONTEXT MENU
+// ═══════════════════════════════════
+function openCtx(evt, id) {
+  evt.preventDefault();
+  evt.stopPropagation();
+  ctxTargetId = id;
+  const m = document.getElementById('ctx-menu');
+  m.style.left = Math.min(evt.clientX, window.innerWidth  - 150) + 'px';
+  m.style.top  = Math.min(evt.clientY, window.innerHeight - 80)  + 'px';
+  m.classList.add('open');
+}
+
+function closeCtx() { document.getElementById('ctx-menu').classList.remove('open'); }
+
+document.addEventListener('click', closeCtx);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeCtx(); closeModal(); }
+});
+
+document.getElementById('ctx-edit').onclick = ev => {
+  ev.stopPropagation();
+  closeCtx();
+  openEdit(ctxTargetId);
+};
+
+document.getElementById('ctx-delete').onclick = ev => {
+  ev.stopPropagation();
+  closeCtx();
+  deleteEntry(ctxTargetId);
+};
+
+// ═══════════════════════════════════
+// EDIT / DELETE
+// ═══════════════════════════════════
+function deleteEntry(id) {
+  if (!confirm('Delete this entry?')) return;
+  const ri = runtime.findIndex(e => e.id === id);
+  if (ri >= 0) runtime.splice(ri, 1);
+  else deletedIds.add(id);
+  render();
+  showToast('DELETED');
+}
+
+function openEdit(id) {
+  const e = getEntry(id);
+  if (!e) return;
+  editingId = id;
+  document.getElementById('modal-title').textContent = 'EDIT ENTRY';
+  document.getElementById('f-title').value    = e.title;
+  document.getElementById('f-category').value = e.category || '';
+  document.getElementById('f-mood').value     = e.mood || '';
+  document.getElementById('f-style').value    = e.style || '';
+  document.getElementById('f-tags').value     = (e.tags||[]).join(', ');
+  updateLenPreview();
+  openModal();
+}
+
+// ═══════════════════════════════════
+// MODAL
+// ═══════════════════════════════════
+function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  editingId = null;
+  ['f-title','f-category','f-mood','f-style','f-tags','f-length'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  document.getElementById('modal-title').textContent = 'NEW ENTRY';
+}
+
+function updateLenPreview() {
+  const v = document.getElementById('f-title').value;
+  document.getElementById('f-length').value = v.trim() ? wordLen(v) : '';
+}
+
+function saveEntry() {
+  const title    = document.getElementById('f-title').value.trim();
+  const category = document.getElementById('f-category').value.trim();
+  const mood     = document.getElementById('f-mood').value.trim();
+  const style    = document.getElementById('f-style').value.trim();
+  const tags     = document.getElementById('f-tags').value.split(',').map(t => t.trim().toLowerCase()).filter(Boolean);
+
+  if (!title)    { showToast('TITLE REQUIRED');    return; }
+  if (!category) { showToast('CATEGORY REQUIRED'); return; }
+  if (!mood)     { showToast('MOOD REQUIRED');     return; }
+
+  if (editingId) {
+    let entry = runtime.find(e => e.id === editingId)
+             || BASE_DB.find(e => e.id === editingId);
+    if (entry) Object.assign(entry, { title, category, mood, style, tags });
+    showToast('UPDATED — ' + title);
+  } else {
+    runtime.push({ id: nextId++, title, category, mood, style, tags, added: Date.now() });
+    showToast('ADDED — ' + title);
+  }
+
+  closeModal();
+  render();
+}
+
+// ═══════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════
+document.getElementById('search-input').addEventListener('input', render);
+
+document.querySelectorAll('.sort-option').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sort-option').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentSort = btn.dataset.sort;
+    render();
+  });
+});
+
+document.getElementById('filter-toggle').onclick = () =>
+  document.getElementById('filter-panel').classList.toggle('open');
+
+document.getElementById('clear-filters').onclick = () => {
+  activeFilters = { category:[], mood:[], style:[], length:[], tags:[] };
+  buildChips();
+  render();
+};
+
+document.getElementById('add-btn').onclick = () => { editingId = null; openModal(); };
+document.getElementById('modal-close').onclick = closeModal;
+document.getElementById('modal-cancel').onclick = closeModal;
+document.getElementById('modal-save').onclick = saveEntry;
+document.getElementById('f-title').addEventListener('input', updateLenPreview);
+
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+
+document.getElementById('view-grid').onclick = () => {
+  currentView = 'grid';
+  document.getElementById('view-grid').classList.add('active');
+  document.getElementById('view-list').classList.remove('active');
+  render();
+};
+
+document.getElementById('view-list').onclick = () => {
+  currentView = 'list';
+  document.getElementById('view-list').classList.add('active');
+  document.getElementById('view-grid').classList.remove('active');
+  render();
+};
+
+// INIT
+buildChips();
+render();
+</script>
+</body>
+</html>
