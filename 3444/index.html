@@ -1,164 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ＮＡＭＥＤＲＯ🪭Ｐ</title>
-
-<link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<title>NAMEDROP</title>
 
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 
 <style>
-:root{
-  --bg:#f6f1ff;
-  --bg2:rgba(255,255,255,0.7);
-  --bg3:#ffffff;
-  --amber:#ff6ec7;
-  --amber2:#8a5cff;
-  --rust:#ff7aa2;
-  --sage:#4dd6b6;
-  --slate:#7aa0ff;
-  --text:#2b2b3a;
-  --muted:#6b6f8a;
-  --border:rgba(138,92,255,0.18);
-  --border2:rgba(57,213,255,0.10);
-}
-
-*{ margin:0; padding:0; box-sizing:border-box; }
-
-body{
-  font-family:'Space Mono', monospace;
-  color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
-  background: linear-gradient(135deg, #f6f1ff 0%, #fdf2ff 25%, #eaf7ff 50%, #fff0f6 75%, #f6f1ff 100%);
-}
-
-body::before {
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px),
-    radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
-  background-size:28px 28px, 36px 36px;
-  pointer-events:none;
-}
-
-.container{
-  max-width:1300px;
-  margin:auto;
-  padding:0 24px;
-  position:relative;
-  z-index:1;
-}
-
-/* HEADER */
-header{
-  text-align:center;
-  padding:50px 0 35px;
-  border-bottom:1px solid var(--border2);
-  margin-bottom:25px;
-}
-
-.header-title{
-  font-family:'Dellmonte Sans', sans-serif;
-  font-size:clamp(32px,5vw,60px);
-  color:var(--amber);
-  letter-spacing:8px;
-}
-
-.header-sub{ color:var(--muted); font-size:12px; margin-top:10px; }
-
-.auth-bar{
-  margin-top:15px;
-}
-
-.btn{
-  border:1px solid;
-  background:transparent;
-  font-family:'Space Mono';
-  padding:9px 14px;
-  font-size:10px;
-  letter-spacing:2px;
-  cursor:pointer;
-}
-
-.btn-amber{ border-color:var(--amber); color:var(--amber); }
-.btn-rust{ border-color:var(--rust); color:var(--rust); }
-
-/* GRID */
-.names-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:14px;
-  margin:30px 0;
-}
-
-.name-card{
-  background:var(--bg2);
-  border:1px solid var(--border2);
-  padding:18px;
-  position:relative;
-  cursor:pointer;
-}
-
-.card-title{ font-family:'Orbitron'; margin-bottom:10px; }
-
-.card-footer{
-  margin-top:10px;
-  display:flex;
-  justify-content:space-between;
-  font-size:9px;
-  color:var(--muted);
-}
-
-.edit-btn{
-  margin-top:10px;
-  font-size:9px;
-  border:1px solid var(--amber2);
-  color:var(--amber2);
-  padding:4px 8px;
-  cursor:pointer;
-}
-
-/* MODAL */
-.modal-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.7);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  pointer-events:none;
-}
-
-.modal-overlay.open{
-  opacity:1;
-  pointer-events:auto;
-}
-
-.modal{
-  background:white;
-  padding:25px;
-  width:420px;
-}
-
-.form-input{
-  width:100%;
-  padding:10px;
-  margin-bottom:10px;
-}
-
-/* AUTH SCREEN */
-.login-screen{
-  text-align:center;
-  padding:80px 20px;
-}
-
+body{font-family:Arial;background:#f5f5ff;margin:0;padding:0}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:white;padding:10px;margin:10px 0;border:1px solid #ddd;cursor:pointer}
+button{padding:6px 10px;margin:3px}
+input{padding:6px;width:100%;margin:5px 0}
+#loginBox{background:#fff;padding:20px;border:1px solid #ddd;margin-bottom:20px}
+.hidden{display:none}
 </style>
 </head>
 
@@ -166,38 +22,34 @@ header{
 
 <div class="container">
 
-<header>
-  <div class="header-title">ＮＡＭＥＤＲＯＰ</div>
-  <div class="header-sub">Name Archive System</div>
+<!-- LOGIN -->
+<div id="loginBox">
+  <h3>Login</h3>
+  <input id="email" placeholder="Email"/>
+  <button onclick="login()">Send Magic Link</button>
+  <button onclick="logout()">Logout</button>
+  <div id="userInfo"></div>
+</div>
 
-  <div class="auth-bar">
-    <button class="btn btn-amber" id="login-btn">LOGIN WITH GITHUB</button>
-    <button class="btn btn-rust" id="logout-btn" style="display:none;">LOGOUT</button>
-  </div>
-</header>
+<!-- ADD FORM -->
+<div id="app" class="hidden">
 
-<div id="app">
+  <h2>Namedrop</h2>
 
-  <div class="names-grid" id="names-container"></div>
+  <input id="title" placeholder="Title"/>
+  <input id="category" placeholder="Category"/>
+  <input id="mood" placeholder="Mood"/>
+  <input id="style" placeholder="Style"/>
+  <input id="tags" placeholder="tags comma separated"/>
+
+  <button onclick="save()">Save</button>
+  <button onclick="resetForm()">Clear</button>
+
+  <h3>Entries</h3>
+  <div id="list"></div>
 
 </div>
 
-</div>
-
-<!-- MODAL -->
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-
-    <input id="f-title" class="form-input" placeholder="Title">
-    <input id="f-category" class="form-input" placeholder="Category">
-    <input id="f-mood" class="form-input" placeholder="Mood">
-    <input id="f-style" class="form-input" placeholder="Style">
-    <input id="f-tags" class="form-input" placeholder="Tags comma separated">
-
-    <button class="btn btn-amber" id="save-btn">SAVE</button>
-    <button class="btn btn-rust" onclick="closeModal()">CLOSE</button>
-
-  </div>
 </div>
 
 <script>
@@ -206,132 +58,150 @@ const supabase = window.supabase.createClient(
   "sb_publishable_2g6DAgmpVToaCGIqUfQivg_416bQvVy"
 );
 
-let session = null;
-let entries = [];
-let editId = null;
+let editingId = null;
+let sessionUser = null;
 
 /* AUTH */
 async function login(){
-  await supabase.auth.signInWithOAuth({
-    provider: 'github',
-    options: {
-      redirectTo: window.location.origin
-    }
+  const email = document.getElementById("email").value;
+
+  const { error } = await supabase.auth.signInWithOtp({
+    email
   });
-  }
+
+  if(error) return alert(error.message);
+  alert("Check your email for login link");
+}
 
 async function logout(){
   await supabase.auth.signOut();
+  location.reload();
 }
 
-supabase.auth.onAuthStateChange((_event, s)=>{
-  session = s;
-  updateUI();
-  loadEntries();
+supabase.auth.onAuthStateChange((_event, session)=>{
+  sessionUser = session?.user || null;
+
+  if(sessionUser){
+    document.getElementById("app").classList.remove("hidden");
+    document.getElementById("userInfo").innerText =
+      "Logged in: " + sessionUser.email;
+    load();
+    subscribeRealtime();
+  } else {
+    document.getElementById("app").classList.add("hidden");
+  }
 });
 
-/* UI */
-function updateUI(){
-  document.getElementById('login-btn').style.display = session ? 'none':'inline-block';
-  document.getElementById('logout-btn').style.display = session ? 'inline-block':'none';
+/* CRUD */
+async function save(){
+
+  if(!sessionUser){
+    alert("Login required");
+    return;
+  }
+
+  const data = {
+    title: title.value,
+    category: category.value,
+    mood: mood.value,
+    style: style.value,
+    tags: tags.value.split(",").map(t=>t.trim()),
+    added: Date.now()
+  };
+
+  if(editingId){
+    await supabase.from("namedrop_entries")
+      .update(data)
+      .eq("id", editingId);
+    editingId = null;
+  } else {
+    await supabase.from("namedrop_entries")
+      .insert([data]);
+  }
+
+  resetForm();
+  load();
 }
 
-/* DATA */
-async function loadEntries(){
-  const { data } = await supabase
-    .from('namedrop_entries')
-    .select('*')
-    .order('added',{ascending:false});
+function edit(item){
+  editingId = item.id;
+  title.value = item.title;
+  category.value = item.category;
+  mood.value = item.mood;
+  style.value = item.style;
+  tags.value = (item.tags || []).join(",");
+}
 
-  entries = data || [];
-  render();
+/* LOAD */
+async function load(){
+  const { data } = await supabase
+    .from("namedrop_entries")
+    .select("*")
+    .order("added",{ascending:false});
+
+  render(data || []);
+}
+
+/* DELETE */
+async function del(id){
+  await supabase
+    .from("namedrop_entries")
+    .delete()
+    .eq("id", id);
+
+  load();
+}
+
+/* RENDER */
+function render(items){
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  items.forEach(i=>{
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <b>${i.title}</b><br/>
+      ${i.category} | ${i.mood}<br/>
+      <small>${(i.tags||[]).join(", ")}</small><br/>
+      <button onclick='edit(${JSON.stringify(i)})'>Edit</button>
+      <button onclick='del(${i.id})'>Delete</button>
+    `;
+
+    list.appendChild(div);
+  });
 }
 
 /* REALTIME */
-supabase
-.channel('namedrop_live')
-.on('postgres_changes',{
-  event:'*',
-  schema:'public',
-  table:'namedrop_entries'
-},()=>{
-  loadEntries();
-})
-.subscribe();
-
-/* RENDER */
-function render(){
-  const container = document.getElementById('names-container');
-  container.innerHTML = entries.map(e=>`
-    <div class="name-card">
-
-      <div class="card-title">${e.title}</div>
-
-      <div class="card-footer">
-        <span>${e.category}</span>
-        <span>${e.mood}</span>
-      </div>
-
-      ${session ? `
-        <button class="edit-btn" onclick="editEntry(${e.id})">EDIT</button>
-      `:''}
-
-    </div>
-  `).join('');
+function subscribeRealtime(){
+  supabase.channel("namedrop-live")
+  .on(
+    "postgres_changes",
+    { event: "*", schema: "public", table: "namedrop_entries" },
+    () => load()
+  )
+  .subscribe();
 }
 
-/* MODAL */
-function openModal(){
-  document.getElementById('modal').classList.add('open');
+/* RESET */
+function resetForm(){
+  title.value = "";
+  category.value = "";
+  mood.value = "";
+  style.value = "";
+  tags.value = "";
 }
 
-function closeModal(){
-  document.getElementById('modal').classList.remove('open');
-  editId = null;
-}
-
-window.editEntry = (id)=>{
-  const e = entries.find(x=>x.id===id);
-  editId = id;
-
-  f-title.value = e.title;
-  f-category.value = e.category;
-  f-mood.value = e.mood;
-  f-style.value = e.style;
-  f-tags.value = (e.tags||[]).join(',');
-
-  openModal();
-}
-
-/* SAVE */
-document.getElementById('save-btn').onclick = async ()=>{
-  if(!session) return alert("Login required");
-
-  const payload = {
-    title:f-title.value,
-    category:f-category.value,
-    mood:f-mood.value,
-    style:f-style.value,
-    tags:f-tags.value.split(',').map(t=>t.trim()),
-  };
-
-  if(editId){
-    await supabase.from('namedrop_entries')
-      .update(payload)
-      .eq('id', editId);
-  } else {
-    await supabase.from('namedrop_entries')
-      .insert({...payload, added:Date.now()});
+/* SESSION CHECK */
+supabase.auth.getSession().then(({data})=>{
+  if(data.session){
+    sessionUser = data.session.user;
+    document.getElementById("app").classList.remove("hidden");
+    load();
+    subscribeRealtime();
   }
-
-  closeModal();
-  loadEntries();
-};
-
-/* EVENTS */
-document.getElementById('login-btn').onclick = login;
-document.getElementById('logout-btn').onclick = logout;
-
+});
 </script>
 
 </body>
