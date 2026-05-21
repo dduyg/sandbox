@@ -213,9 +213,12 @@ let editId = null;
 /* AUTH */
 async function login(){
   await supabase.auth.signInWithOAuth({
-    provider:'github'
+    provider: 'github',
+    options: {
+      redirectTo: window.location.origin
+    }
   });
-}
+  }
 
 async function logout(){
   await supabase.auth.signOut();
