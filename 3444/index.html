@@ -1087,480 +1087,132 @@ async function loadEntries() {
     .order('added', { ascending: false });
 
   if (error) {
-    console.log(error);
+    console.error(error);
+    alert("ERROR LOADING DATABASE");
     return;
   }
 
-  entries = data;
+  entries = data || [];
+
   render();
 }
 
-function allEntries() {
-  return entries;
-}
-
-let currentView = 'grid';
-let currentSort = 'default';
-
-let activeFilters = {
-  category:[],
-  mood:[],
-  style:[],
-  length:[],
-  tags:[]
-};
-
-let editingId = null;
-
 function wordLen(title) {
+
   const w = title.trim().split(/\s+/).length;
 
   if (w <= 2) return 'Short (1–2)';
   if (w === 3) return 'Medium (3)';
+
   return 'Long (4+)';
-}
-
-function getAllTags() {
-  const s = new Set();
-
-  allEntries().forEach(e =>
-    (e.tags || []).forEach(t => s.add(t))
-  );
-
-  return [...s].sort();
-}
-
-function uniqueVals(key) {
-  return [...new Set(
-    allEntries().map(e => e[key]).filter(Boolean)
-  )].sort();
-}
-
-function getEntry(id) {
-  return allEntries().find(e => e.id === id);
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-
-  t.textContent = msg;
-  t.classList.add('show');
-
-  clearTimeout(t._t);
-
-  t._t = setTimeout(() => {
-    t.classList.remove('show');
-  }, 2000);
-}
-
-function flashCard(id) {
-  const el = document.querySelector(`[data-id="${id}"]`);
-
-  if (!el) return;
-
-  el.classList.add('flash');
-
-  setTimeout(() => {
-    el.classList.remove('flash');
-  }, 550);
-}
-
-function buildChips() {
-
-  buildGroup(
-    'fc-category',
-    uniqueVals('category'),
-    'category'
-  );
-
-  buildGroup(
-    'fc-mood',
-    uniqueVals('mood'),
-    'mood'
-  );
-
-  buildGroup(
-    'fc-style',
-    uniqueVals('style'),
-    'style'
-  );
-
-  buildGroup(
-    'fc-length',
-    ['Short (1–2)', 'Medium (3)', 'Long (4+)'],
-    'length'
-  );
-
-  const tw = document.getElementById('fc-tags');
-
-  tw.innerHTML = '';
-
-  getAllTags().forEach(t => {
-    tw.appendChild(
-      chip(
-        '#' + t,
-        activeFilters.tags.includes(t),
-        () => toggleFilter('tags', t)
-      )
-    );
-  });
-
-  renderActiveFilters();
-}
-
-function buildGroup(elId, vals, type) {
-
-  const w = document.getElementById(elId);
-
-  w.innerHTML = '';
-
-  vals.forEach(v => {
-    w.appendChild(
-      chip(
-        v,
-        activeFilters[type].includes(v),
-        () => toggleFilter(type, v)
-      )
-    );
-  });
-}
-
-function chip(label, isActive, onClick) {
-
-  const b = document.createElement('button');
-
-  b.className = 'chip' + (isActive ? ' active' : '');
-
-  b.textContent = label;
-
-  b.onclick = onClick;
-
-  return b;
-}
-
-function toggleFilter(type, val) {
-
-  const arr = activeFilters[type];
-
-  const i = arr.indexOf(val);
-
-  if (i >= 0) {
-    arr.splice(i, 1);
-  } else {
-    arr.push(val);
-  }
-
-  buildChips();
-  render();
-}
-
-function renderActiveFilters() {
-
-  const w = document.getElementById('active-filters');
-
-  w.innerHTML = '';
-
-  Object.entries(activeFilters).forEach(([type, vals]) => {
-
-    vals.forEach(v => {
-
-      const d = document.createElement('div');
-
-      d.className = 'active-filter-tag';
-
-      d.innerHTML = `${type}: ${v} <span>✕</span>`;
-
-      d.onclick = () => toggleFilter(type, v);
-
-      w.appendChild(d);
-    });
-
-  });
-}
-
-function getFiltered() {
-
-  const q = document
-    .getElementById('search-input')
-    .value
-    .toLowerCase()
-    .trim();
-
-  let items = allEntries().filter(e => {
-
-    if (q) {
-
-      const hay = [
-        e.title,
-        e.category,
-        e.mood,
-        e.style,
-        ...(e.tags || [])
-      ].join(' ').toLowerCase();
-
-      if (!hay.includes(q)) return false;
-    }
-
-    if (
-      activeFilters.category.length &&
-      !activeFilters.category.includes(e.category)
-    ) return false;
-
-    if (
-      activeFilters.mood.length &&
-      !activeFilters.mood.includes(e.mood)
-    ) return false;
-
-    if (
-      activeFilters.style.length &&
-      !activeFilters.style.includes(e.style)
-    ) return false;
-
-    if (
-      activeFilters.length.length &&
-      !activeFilters.length.includes(wordLen(e.title))
-    ) return false;
-
-    if (
-      activeFilters.tags.length &&
-      !activeFilters.tags.some(t => (e.tags || []).includes(t))
-    ) return false;
-
-    return true;
-  });
-
-  const s = currentSort;
-
-  if (s === 'alpha-asc') {
-    items.sort((a,b) => a.title.localeCompare(b.title));
-  }
-
-  if (s === 'alpha-desc') {
-    items.sort((a,b) => b.title.localeCompare(a.title));
-  }
-
-  if (s === 'len-asc') {
-    items.sort((a,b) => a.title.length - b.title.length);
-  }
-
-  if (s === 'len-desc') {
-    items.sort((a,b) => b.title.length - a.title.length);
-  }
-
-  if (s === 'newest') {
-    items.sort((a,b) => b.added - a.added);
-  }
-
-  return items;
 }
 
 function render() {
 
-  const items = getFiltered();
-  const all = allEntries();
+  const container = document.getElementById('names-container');
 
-  document.getElementById('stat-total').textContent = all.length;
-  document.getElementById('stat-filtered').textContent = items.length;
-  document.getElementById('stat-tags').textContent = getAllTags().length;
+  if (!entries.length) {
 
-  document.getElementById('rc-filtered').textContent = items.length;
-  document.getElementById('rc-total').textContent = all.length;
-
-  const c = document.getElementById('names-container');
-
-  if (currentView === 'grid') {
-
-    c.className = 'names-grid';
-
-    c.innerHTML = items.length
-      ? items.map(gridCard).join('')
-      : emptyHTML();
-
-  } else {
-
-    c.className = 'names-list';
-
-    c.innerHTML = items.length
-      ? items.map(listRow).join('')
-      : emptyHTML();
-  }
-
-  buildChips();
-}
-
-function emptyHTML() {
-  return `
-    <div class="empty-state">
-      <div class="e-icon">◈</div>
-      <p>No entries match</p>
-    </div>
-  `;
-}
-
-function gridCard(e) {
-
-  const tags = (e.tags || [])
-    .map(t => `#${t}`)
-    .join(', ');
-
-  return `
-    <div
-      class="name-card"
-      data-id="${e.id}"
-      onclick="copyEntry(${e.id})"
-    >
-
-      <div class="card-title">
-        ${e.title}
+    container.innerHTML = `
+      <div class="empty-state">
+        <div class="e-icon">◈</div>
+        <p>No entries yet</p>
       </div>
+    `;
 
-      <div class="card-meta">
-
-        ${e.category ? `
-          <span class="badge badge-category">
-            ${e.category}
-          </span>
-        ` : ''}
-
-        ${e.mood ? `
-          <span class="badge badge-mood">
-            ${e.mood}
-          </span>
-        ` : ''}
-
-        ${e.style ? `
-          <span class="badge badge-style">
-            ${e.style}
-          </span>
-        ` : ''}
-
-      </div>
-
-      ${tags ? `
-        <div class="card-tags-inline">
-          ${tags}
-        </div>
-      ` : ''}
-
-      <div class="card-footer">
-
-        <span>
-          ID·${String(e.id).padStart(4,'0')}
-        </span>
-
-        <span class="badge badge-length">
-          ${wordLen(e.title)}
-        </span>
-
-      </div>
-
-    </div>
-  `;
-}
-
-function listRow(e) {
-
-  return `
-    <div
-      class="list-row"
-      data-id="${e.id}"
-      onclick="copyEntry(${e.id})"
-    >
-
-      <span class="list-title">
-        ${e.title}
-      </span>
-
-      <span class="list-copy">
-        ID·${String(e.id).padStart(4,'0')}
-      </span>
-
-    </div>
-  `;
-}
-
-function copyEntry(id) {
-
-  const e = getEntry(id);
-
-  if (!e) return;
-
-  navigator.clipboard.writeText(e.title).catch(() => {});
-
-  flashCard(id);
-
-  showToast('COPIED — ' + e.title);
-}
-
-async function deleteEntry(id) {
-
-  const { error } = await supabaseClient
-    .from('namedrop_entries')
-    .delete()
-    .eq('id', id);
-
-  if (error) {
-    console.log(error);
     return;
   }
 
-  showToast("DELETED");
-  loadEntries();
-}
-  
-function openModal() {
-  document
-    .getElementById('modal-overlay')
-    .classList
-    .add('open');
-}
+  container.className = 'names-grid';
 
-function closeModal() {
+  container.innerHTML = entries.map(e => {
 
-  document
-    .getElementById('modal-overlay')
-    .classList
-    .remove('open');
+    const tags = (e.tags || [])
+      .map(t => "#" + t)
+      .join(", ");
 
-  editingId = null;
+    return `
+      <div class="name-card">
 
-  [
-    'f-title',
-    'f-category',
-    'f-mood',
-    'f-style',
-    'f-tags',
-    'f-length'
-  ].forEach(id => {
-    document.getElementById(id).value = '';
-  });
+        <div class="card-title">
+          ${e.title}
+        </div>
 
-  document.getElementById('modal-title').textContent = 'NEW ENTRY';
-}
+        <div class="card-meta">
 
-function updateLenPreview() {
+          <span class="badge badge-category">
+            ${e.category}
+          </span>
 
-  const v = document.getElementById('f-title').value;
+          <span class="badge badge-mood">
+            ${e.mood}
+          </span>
 
-  document.getElementById('f-length').value =
-    v.trim() ? wordLen(v) : '';
+          ${e.style ? `
+            <span class="badge badge-style">
+              ${e.style}
+            </span>
+          ` : ''}
+
+        </div>
+
+        ${
+          tags
+          ? `<div class="card-tags-inline">${tags}</div>`
+          : ''
+        }
+
+        <div class="card-footer">
+
+          <span>
+            ID·${e.id}
+          </span>
+
+          <span class="badge badge-length">
+            ${wordLen(e.title)}
+          </span>
+
+        </div>
+
+      </div>
+    `;
+
+  }).join('');
 }
 
 async function saveEntry() {
-  const title = document.getElementById('f-title').value.trim();
-  const category = document.getElementById('f-category').value.trim();
-  const mood = document.getElementById('f-mood').value.trim();
-  const style = document.getElementById('f-style').value.trim();
 
-  const tags = document
-    .getElementById('f-tags')
+  const title =
+    document.getElementById('f-title')
+    .value
+    .trim();
+
+  const category =
+    document.getElementById('f-category')
+    .value
+    .trim();
+
+  const mood =
+    document.getElementById('f-mood')
+    .value
+    .trim();
+
+  const style =
+    document.getElementById('f-style')
+    .value
+    .trim();
+
+  const tags =
+    document.getElementById('f-tags')
     .value
     .split(',')
     .map(t => t.trim().toLowerCase())
     .filter(Boolean);
 
   if (!title || !category || !mood) {
-    showToast("FILL REQUIRED FIELDS");
+
+    alert("Fill required fields");
+
     return;
   }
 
@@ -1576,128 +1228,66 @@ async function saveEntry() {
     }]);
 
   if (error) {
-    console.log(error);
-    showToast("ERROR SAVING");
+
+    console.error(error);
+
+    alert(error.message);
+
     return;
   }
 
-  showToast("ADDED — " + title);
+  alert("Entry added!");
 
   closeModal();
+
   loadEntries();
 }
 
-/* ── EVENTS ── */
+function openModal() {
 
-document
-  .getElementById('search-input')
-  .addEventListener('input', render);
+  document
+    .getElementById('modal-overlay')
+    .classList
+    .add('open');
+}
 
-document
-  .querySelectorAll('.sort-option')
-  .forEach(btn => {
+function closeModal() {
 
-    btn.addEventListener('click', () => {
+  document
+    .getElementById('modal-overlay')
+    .classList
+    .remove('open');
 
-      document
-        .querySelectorAll('.sort-option')
-        .forEach(b => b.classList.remove('active'));
+  [
+    'f-title',
+    'f-category',
+    'f-mood',
+    'f-style',
+    'f-tags'
+  ].forEach(id => {
 
-      btn.classList.add('active');
-
-      currentSort = btn.dataset.sort;
-
-      render();
-    });
+    document.getElementById(id).value = '';
 
   });
-
-document.getElementById('filter-toggle').onclick = () =>
-  document
-    .getElementById('filter-panel')
-    .classList
-    .toggle('open');
-
-document.getElementById('clear-filters').onclick = () => {
-
-  activeFilters = {
-    category:[],
-    mood:[],
-    style:[],
-    length:[],
-    tags:[]
-  };
-
-  buildChips();
-  render();
-};
-
-document.getElementById('add-btn').onclick = () => {
-  editingId = null;
-  openModal();
-};
-
-document.getElementById('modal-close').onclick = closeModal;
-document.getElementById('modal-cancel').onclick = closeModal;
-document.getElementById('modal-save').onclick = saveEntry;
+}
 
 document
-  .getElementById('f-title')
-  .addEventListener('input', updateLenPreview);
+  .getElementById('add-btn')
+  .onclick = openModal;
 
 document
-  .getElementById('modal-overlay')
-  .addEventListener('click', e => {
+  .getElementById('modal-close')
+  .onclick = closeModal;
 
-    if (
-      e.target === document.getElementById('modal-overlay')
-    ) {
-      closeModal();
-    }
-  });
+document
+  .getElementById('modal-cancel')
+  .onclick = closeModal;
 
-document.getElementById('view-grid').onclick = () => {
+document
+  .getElementById('modal-save')
+  .onclick = saveEntry;
 
-  currentView = 'grid';
-
-  document
-    .getElementById('view-grid')
-    .classList
-    .add('active');
-
-  document
-    .getElementById('view-list')
-    .classList
-    .remove('active');
-
-  render();
-};
-
-document.getElementById('view-list').onclick = () => {
-
-  currentView = 'list';
-
-  document
-    .getElementById('view-list')
-    .classList
-    .add('active');
-
-  document
-    .getElementById('view-grid')
-    .classList
-    .remove('active');
-
-  render();
-};
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeModal();
-});
-
-/* ── INIT ── */
 loadEntries();
-buildChips();
-render();
 </script>
 </body>
 </html>
