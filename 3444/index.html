@@ -1,20 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NAMEDROP</title>
-
+<title>ＮＡＭＥＤＲＯ🪭Ｐ</title>
+<link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
 <style>
-body{font-family:Arial;background:#f5f5ff;margin:0;padding:0}
-.container{max-width:900px;margin:auto;padding:20px}
-.card{background:white;padding:10px;margin:10px 0;border:1px solid #ddd;cursor:pointer}
-button{padding:6px 10px;margin:3px}
-input{padding:6px;width:100%;margin:5px 0}
-#loginBox{background:#fff;padding:20px;border:1px solid #ddd;margin-bottom:20px}
-.hidden{display:none}
+:root{
+  --bg:#f6f1ff;
+  --bg2:rgba(255,255,255,0.7);
+  --bg3:#ffffff;
+  --amber:#ff6ec7;
+  --amber2:#8a5cff;
+  --rust:#ff7aa2;
+  --sage:#4dd6b6;
+  --slate:#7aa0ff;
+  --text:#2b2b3a;
+  --muted:#6b6f8a;
+  --border:rgba(138,92,255,0.18);
+  --border2:rgba(57,213,255,0.10);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: 'Space Mono', monospace;
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #f6f1ff 0%, #fdf2ff 25%, #eaf7ff 50%, #fff0f6 75%, #f6f1ff 100%);
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px), radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
+  background-size: 28px 28px, 36px 36px;
+  pointer-events: none;
+}
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+  margin: auto;
+  padding: 0 24px;
+}
+
+header { 
+  text-align: center;
+  padding: 50px 0 35px;
+  border-bottom: 1px solid var(--border2);
+  margin-bottom: 35px;
+}
+.header-eyebrow {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.header-title {
+  font-family: 'Dellmonte Sans', sans-serif;
+  font-size: clamp(32px,5vw,60px);
+  color: var(--amber);
+  letter-spacing: 8px;
+  margin-bottom: 10px;
+}
+.header-sub {
+  font-family: 'Noto Serif JP', serif;
+  color: var(--muted);
+  letter-spacing: 3px;
+  font-size: 12px;
+  margin-bottom: 20px;
+}
+.header-stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.stat-pill{
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+.stat-pill .val{
+  color:var(--amber);
+}
+
+.search-wrap{
+  position:relative;
+  max-width:600px;
+  margin:0 auto 30px;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--amber2);
+  padding: 14px 45px 14px 18px;
+  font-family: 'Space Mono', monospace;
+  color: var(--text);
+  outline: none;
+}
+.search-input:focus { 
+  border-color: var(--amber);
+}
+
+.search-icon{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--amber2);
+}
+
+.toolbar{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.btn{
+  border:1px solid;
+  background:transparent;
+
+  font-family:'Space Mono', monospace;
+
+  padding:9px 15px;
+  font-size:10px;
+  letter-spacing:2px;
+
+  cursor:pointer;
+  transition:.15s;
+}
+
+.btn-amber{
+  border-color:var(--amber);
+  color:var(--amber);
+}
+
+.btn-amber:hover{
+  background:var(--amber);
+  color:white;
+}
+
+.btn-rust{
+  border-color:var(--rust);
+  color:var(--rust);
+}
+
+.btn-rust:hover{
+  background:var(--rust);
+  color:white;
+}
+
+.names-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:14px;
+
+  margin-bottom:50px;
+}
+
+.name-card{
+  background:var(--bg2);
+
+  border:1px solid var(--border2);
+
+  padding:20px;
+
+  cursor:pointer;
+
+  transition:.15s;
+
+  position:relative;
+}
+
+.name-card:hover{
+  background:var(--bg3);
+  border-color:var(--amber);
+}
+
+.name-card::after{
+  content:'';
+
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+
+  height:2px;
+
+  background:
+  linear-gradient(
+    90deg,
+    var(--amber2),
+    var(--amber)
+  );
+
+  transform:scaleX(0);
+  transition:.2s;
+}
+
+.name-card:hover::after{
+  transform:scaleX(1);
+}
+
+.card-title{
+  font-family:'Orbitron', sans-serif;
+  font-size:15px;
+  line-height:1.4;
+  margin-bottom:12px;
+}
+
+.card-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:10px;
+}
+
+.badge{
+  padding:4px 7px;
+  font-size:8px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border-radius:2px;
+}
+
+.badge-category{
+  background:rgba(232,197,71,0.1);
+  border:1px solid rgba(232,197,71,0.2);
+  color:var(--amber2);
+}
+
+.badge-mood{
+  background:rgba(122,171,138,0.1);
+  border:1px solid rgba(122,171,138,0.2);
+  color:var(--sage);
+}
+
+.badge-style{
+  background:rgba(143,163,184,0.1);
+  border:1px solid rgba(143,163,184,0.2);
+  color:var(--slate);
+}
+
+.tags{
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+  margin-bottom:12px;
+}
+
+.card-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  font-size:9px;
+  color:var(--muted);
+
+  border-top:1px solid var(--border2);
+
+  padding-top:10px;
+}
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,0.75);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:20px;
+
+  opacity:0;
+  pointer-events:none;
+
+  transition:.2s;
+
+  z-index:100;
+}
+
+.modal-overlay.open{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.modal{
+  width:100%;
+  max-width:520px;
+
+  background:var(--bg2);
+
+  border:1px solid var(--amber);
+
+  padding:30px;
+
+  max-height:90vh;
+  overflow:auto;
+}
+
+.modal-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:20px;
+
+  border-bottom:1px solid var(--border2);
+  padding-bottom:14px;
+}
+
+.modal-title{
+  font-family:'Orbitron', sans-serif;
+  letter-spacing:4px;
+  color:var(--amber);
+}
+
+.form-group{
+  margin-bottom:16px;
+}
+
+.form-label{
+  display:block;
+  margin-bottom:7px;
+
+  font-size:9px;
+  letter-spacing:3px;
+
+  color:var(--amber2);
+}
+
+.form-input{
+  width:100%;
+
+  background:white;
+
+  border:1px solid var(--border);
+
+  padding:11px 13px;
+
+  font-family:'Space Mono', monospace;
+
+  outline:none;
+}
+
+.form-input:focus{
+  border-color:var(--amber2);
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.modal-footer{
+  display:flex;
+  justify-content:flex-end;
+  gap:10px;
+
+  margin-top:20px;
+}
+
+.empty{
+  text-align:center;
+  padding:80px 20px;
+  color:var(--muted);
+}
+
+.toast{
+  position:fixed;
+  bottom:25px;
+  left:50%;
+
+  transform:translateX(-50%) translateY(50px);
+
+  background:white;
+  border:1px solid var(--amber);
+
+  padding:10px 20px;
+
+  font-size:10px;
+  letter-spacing:3px;
+
+  color:var(--amber);
+
+  opacity:0;
+
+  transition:.2s;
+
+  z-index:300;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+@media(max-width:650px){
+
+  .form-row{
+    grid-template-columns:1fr;
+  }
+
+  .names-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style>
 </head>
 
@@ -22,187 +426,518 @@ input{padding:6px;width:100%;margin:5px 0}
 
 <div class="container">
 
-<!-- LOGIN -->
-<div id="loginBox">
-  <h3>Login</h3>
-  <input id="email" placeholder="Email"/>
-  <button onclick="login()">Send Magic Link</button>
-  <button onclick="logout()">Logout</button>
-  <div id="userInfo"></div>
+<header>
+
+<div class="header-eyebrow">
+ネーミングデータベースアーカイブ
 </div>
 
-<!-- ADD FORM -->
-<div id="app" class="hidden">
+<h1 class="header-title">
+ＮＡＭＥＤＲＯＰ
+</h1>
 
-  <h2>Namedrop</h2>
+<div class="header-sub">
+名前のアーカイブ — Name Archive System
+</div>
 
-  <input id="title" placeholder="Title"/>
-  <input id="category" placeholder="Category"/>
-  <input id="mood" placeholder="Mood"/>
-  <input id="style" placeholder="Style"/>
-  <input id="tags" placeholder="tags comma separated"/>
+<div class="header-stats">
 
-  <button onclick="save()">Save</button>
-  <button onclick="resetForm()">Clear</button>
+<div class="stat-pill">
+ENTRIES <span class="val" id="stat-total">0</span>
+</div>
 
-  <h3>Entries</h3>
-  <div id="list"></div>
-
+<div class="stat-pill">
+FILTERED <span class="val" id="stat-filtered">0</span>
 </div>
 
 </div>
+
+</header>
+
+<div class="search-wrap">
+
+<input
+type="text"
+id="search-input"
+class="search-input"
+placeholder="Search..."
+>
+
+<div class="search-icon">
+⌕
+</div>
+
+</div>
+
+<div class="toolbar">
+
+<button class="btn btn-amber" id="add-btn">
++ NEW ENTRY
+</button>
+
+</div>
+
+<div id="names-container" class="names-grid"></div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal-overlay" id="modal-overlay">
+
+<div class="modal">
+
+<div class="modal-header">
+
+<div class="modal-title">
+NEW ENTRY
+</div>
+
+<button class="btn btn-rust" id="modal-close">
+✕
+</button>
+
+</div>
+
+<div class="form-group">
+<label class="form-label">TITLE *</label>
+
+<input
+type="text"
+id="f-title"
+class="form-input"
+placeholder="Synthetic Entrance"
+>
+</div>
+
+<div class="form-row">
+
+<div class="form-group">
+<label class="form-label">CATEGORY *</label>
+
+<input
+type="text"
+id="f-category"
+class="form-input"
+placeholder="Atmospheric"
+>
+</div>
+
+<div class="form-group">
+<label class="form-label">MOOD *</label>
+
+<input
+type="text"
+id="f-mood"
+class="form-input"
+placeholder="Dreamy"
+>
+</div>
+
+</div>
+
+<div class="form-group">
+<label class="form-label">STYLE</label>
+
+<input
+type="text"
+id="f-style"
+class="form-input"
+placeholder="Cyberpunk"
+>
+</div>
+
+<div class="form-group">
+<label class="form-label">TAGS</label>
+
+<input
+type="text"
+id="f-tags"
+class="form-input"
+placeholder="retro, neon, future"
+>
+</div>
+
+<div class="modal-footer">
+
+<button class="btn btn-rust" id="cancel-btn">
+CANCEL
+</button>
+
+<button class="btn btn-amber" id="save-btn">
+SAVE
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-const supabase = window.supabase.createClient(
-  "https://zsiilkcothfqtdmazbds.supabase.co",
-  "sb_publishable_2g6DAgmpVToaCGIqUfQivg_416bQvVy"
+
+/* =========================
+   PUT YOUR REAL VALUES HERE
+========================= */
+
+const SUPABASE_URL =
+"https://zsiilkcothfqtdmazbds.supabase.co";
+
+const SUPABASE_KEY =
+"YOUR_SUPABASE_ANON_KEY";
+
+/* ========================= */
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
-let editingId = null;
-let sessionUser = null;
+console.log("SUPABASE CONNECTED");
 
-/* AUTH */
-async function login(){
-  const email = document.getElementById("email").value;
+let entries = [];
 
-  const { error } = await supabase.auth.signInWithOtp({
-    email
+const namesContainer =
+document.getElementById('names-container');
+
+function toast(msg){
+
+  const t =
+  document.getElementById('toast');
+
+  t.textContent = msg;
+
+  t.classList.add('show');
+
+  clearTimeout(t.timer);
+
+  t.timer = setTimeout(()=>{
+    t.classList.remove('show');
+  },2000);
+}
+
+function wordLen(title){
+
+  const w =
+  title.trim().split(/\s+/).length;
+
+  if(w <= 2) return 'Short';
+  if(w === 3) return 'Medium';
+
+  return 'Long';
+}
+
+async function loadEntries(){
+
+  const { data, error } =
+  await supabaseClient
+  .from('namedrop_entries')
+  .select('*')
+  .order('added', {
+    ascending:false
   });
 
-  if(error) return alert(error.message);
-  alert("Check your email for login link");
-}
+  if(error){
 
-async function logout(){
-  await supabase.auth.signOut();
-  location.reload();
-}
+    console.error(error);
 
-supabase.auth.onAuthStateChange((_event, session)=>{
-  sessionUser = session?.user || null;
+    toast("DATABASE ERROR");
 
-  if(sessionUser){
-    document.getElementById("app").classList.remove("hidden");
-    document.getElementById("userInfo").innerText =
-      "Logged in: " + sessionUser.email;
-    load();
-    subscribeRealtime();
-  } else {
-    document.getElementById("app").classList.add("hidden");
-  }
-});
-
-/* CRUD */
-async function save(){
-
-  if(!sessionUser){
-    alert("Login required");
     return;
   }
 
-  const data = {
-    title: title.value,
-    category: category.value,
-    mood: mood.value,
-    style: style.value,
-    tags: tags.value.split(",").map(t=>t.trim()),
-    added: Date.now()
-  };
+  entries = data || [];
 
-  if(editingId){
-    await supabase.from("namedrop_entries")
-      .update(data)
-      .eq("id", editingId);
-    editingId = null;
-  } else {
-    await supabase.from("namedrop_entries")
-      .insert([data]);
-  }
-
-  resetForm();
-  load();
+  render();
 }
 
-function edit(item){
-  editingId = item.id;
-  title.value = item.title;
-  category.value = item.category;
-  mood.value = item.mood;
-  style.value = item.style;
-  tags.value = (item.tags || []).join(",");
-}
+function render(){
 
-/* LOAD */
-async function load(){
-  const { data } = await supabase
-    .from("namedrop_entries")
-    .select("*")
-    .order("added",{ascending:false});
+  const q =
+  document
+  .getElementById('search-input')
+  .value
+  .toLowerCase()
+  .trim();
 
-  render(data || []);
-}
+  const filtered =
+  entries.filter(e=>{
 
-/* DELETE */
-async function del(id){
-  await supabase
-    .from("namedrop_entries")
-    .delete()
-    .eq("id", id);
+    const hay =
+    [
+      e.title,
+      e.category,
+      e.mood,
+      e.style,
+      ...(e.tags || [])
+    ]
+    .join(' ')
+    .toLowerCase();
 
-  load();
-}
+    return hay.includes(q);
+  });
 
-/* RENDER */
-function render(items){
-  const list = document.getElementById("list");
-  list.innerHTML = "";
+  document.getElementById('stat-total')
+  .textContent = entries.length;
 
-  items.forEach(i=>{
-    const div = document.createElement("div");
-    div.className = "card";
+  document.getElementById('stat-filtered')
+  .textContent = filtered.length;
 
-    div.innerHTML = `
-      <b>${i.title}</b><br/>
-      ${i.category} | ${i.mood}<br/>
-      <small>${(i.tags||[]).join(", ")}</small><br/>
-      <button onclick='edit(${JSON.stringify(i)})'>Edit</button>
-      <button onclick='del(${i.id})'>Delete</button>
+  if(!filtered.length){
+
+    namesContainer.innerHTML = `
+    <div class="empty">
+      No entries found
+    </div>
     `;
 
-    list.appendChild(div);
+    return;
+  }
+
+  namesContainer.innerHTML =
+  filtered.map(cardHTML).join('');
+}
+
+function cardHTML(e){
+
+  const tags =
+  (e.tags || [])
+  .map(t=>`#${t}`)
+  .join(', ');
+
+  return `
+  <div
+  class="name-card"
+  onclick="copyTitle('${escapeQuotes(e.title)}')"
+  >
+
+    <div class="card-title">
+      ${safe(e.title)}
+    </div>
+
+    <div class="card-meta">
+
+      ${
+        e.category
+        ?
+        `<span class="badge badge-category">
+          ${safe(e.category)}
+        </span>`
+        :
+        ''
+      }
+
+      ${
+        e.mood
+        ?
+        `<span class="badge badge-mood">
+          ${safe(e.mood)}
+        </span>`
+        :
+        ''
+      }
+
+      ${
+        e.style
+        ?
+        `<span class="badge badge-style">
+          ${safe(e.style)}
+        </span>`
+        :
+        ''
+      }
+
+    </div>
+
+    ${
+      tags
+      ?
+      `<div class="tags">${safe(tags)}</div>`
+      :
+      ''
+    }
+
+    <div class="card-footer">
+
+      <span>
+        ID·${String(e.id).padStart(4,'0')}
+      </span>
+
+      <span>
+        ${wordLen(e.title)}
+      </span>
+
+    </div>
+
+  </div>
+  `;
+}
+
+function safe(str){
+
+  if(!str) return '';
+
+  return str
+  .replace(/&/g,'&amp;')
+  .replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;');
+}
+
+function escapeQuotes(str){
+
+  return str.replace(/'/g,"\\'");
+}
+
+async function saveEntry(){
+
+  const title =
+  document.getElementById('f-title')
+  .value
+  .trim();
+
+  const category =
+  document.getElementById('f-category')
+  .value
+  .trim();
+
+  const mood =
+  document.getElementById('f-mood')
+  .value
+  .trim();
+
+  const style =
+  document.getElementById('f-style')
+  .value
+  .trim();
+
+  const tags =
+  document.getElementById('f-tags')
+  .value
+  .split(',')
+  .map(t=>t.trim().toLowerCase())
+  .filter(Boolean);
+
+  if(!title || !category || !mood){
+
+    toast("FILL REQUIRED FIELDS");
+
+    return;
+  }
+
+  const { error } =
+  await supabaseClient
+  .from('namedrop_entries')
+  .insert([
+    {
+      title,
+      category,
+      mood,
+      style,
+      tags,
+      added:Date.now()
+    }
+  ]);
+
+  if(error){
+
+    console.error(error);
+
+    toast("SAVE FAILED");
+
+    return;
+  }
+
+  toast("ENTRY ADDED");
+
+  closeModal();
+
+  loadEntries();
+}
+
+function copyTitle(title){
+
+  navigator.clipboard
+  .writeText(title)
+  .then(()=>{
+    toast("COPIED — " + title);
   });
 }
 
-/* REALTIME */
-function subscribeRealtime(){
-  supabase.channel("namedrop-live")
-  .on(
-    "postgres_changes",
-    { event: "*", schema: "public", table: "namedrop_entries" },
-    () => load()
-  )
-  .subscribe();
+function openModal(){
+
+  document
+  .getElementById('modal-overlay')
+  .classList
+  .add('open');
 }
 
-/* RESET */
-function resetForm(){
-  title.value = "";
-  category.value = "";
-  mood.value = "";
-  style.value = "";
-  tags.value = "";
+function closeModal(){
+
+  document
+  .getElementById('modal-overlay')
+  .classList
+  .remove('open');
+
+  [
+    'f-title',
+    'f-category',
+    'f-mood',
+    'f-style',
+    'f-tags'
+  ]
+  .forEach(id=>{
+
+    document.getElementById(id)
+    .value = '';
+  });
 }
 
-/* SESSION CHECK */
-supabase.auth.getSession().then(({data})=>{
-  if(data.session){
-    sessionUser = data.session.user;
-    document.getElementById("app").classList.remove("hidden");
-    load();
-    subscribeRealtime();
+/* EVENTS */
+
+document
+.getElementById('search-input')
+.addEventListener('input', render);
+
+document
+.getElementById('add-btn')
+.onclick = openModal;
+
+document
+.getElementById('modal-close')
+.onclick = closeModal;
+
+document
+.getElementById('cancel-btn')
+.onclick = closeModal;
+
+document
+.getElementById('save-btn')
+.onclick = saveEntry;
+
+document
+.getElementById('modal-overlay')
+.addEventListener('click', e=>{
+
+  if(
+    e.target ===
+    document.getElementById('modal-overlay')
+  ){
+    closeModal();
   }
 });
-</script>
 
+document.addEventListener('keydown', e=>{
+
+  if(e.key === 'Escape'){
+    closeModal();
+  }
+});
+
+/* INIT */
+loadEntries();
+</script>
 </body>
 </html>
