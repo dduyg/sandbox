@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ＮＡＭＥＤＲＯＰ</title>
-
+<title>ＮＡＭＥＤＲＯ🪭Ｐ</title>
 <link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root {
   --bg:      #f6f1ff;
@@ -35,23 +34,13 @@ body {
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
-  background: linear-gradient(
-    135deg,
-    #f6f1ff 0%,
-    #fdf2ff 25%,
-    #eaf7ff 50%,
-    #fff0f6 75%,
-    #f6f1ff 100%
-  );
+  background: linear-gradient(135deg, #f6f1ff 0%, #fdf2ff 25%, #eaf7ff 50%, #fff0f6 75%, #f6f1ff 100%);
 }
-
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px),
-    radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
+  background: radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px), radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
   background-size: 28px 28px, 36px 36px;
   pointer-events: none;
   z-index: 0;
@@ -1080,34 +1069,34 @@ header {
 <div class="toast" id="toast"></div>
 
 <script>
-const BASE_DB = [
-  {
-    id:1,
-    title:"Synthetic Entrance",
-    category:"Technical",
-    mood:"Mysterious",
-    style:"Creative",
-    tags:["cyber","tech","entry"],
-    added:1714000000000
-  },
-  {
-    id:2,
-    title:"Cherry Cola Skies",
-    category:"Atmospheric",
-    mood:"Dreamy",
-    style:"Casual",
-    tags:["retro","sky","pastel","nostalgia"],
-    added:1714086400000
-  }
-];
+const SUPABASE_URL = "https://zsiilkcothfqtdmazbds.supabase.co";
+const SUPABASE_KEY = "sb_publishable_2g6DAgmpVToaCGIqUfQivg_416bQvVy";
 
-let runtime = [];
-let deletedIds = new Set();
-let nextId = BASE_DB.length + 1;
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let entries = [];
+
+async function loadEntries() {
+
+  const { data, error } = await supabaseClient
+    .from('namedrop_entries')
+    .select('*')
+    .order('added', { ascending: false });
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  entries = data;
+  render();
+}
 
 function allEntries() {
-  const base = BASE_DB.filter(e => !deletedIds.has(e.id));
-  return [...base, ...runtime];
+  return entries;
 }
 
 let currentView = 'grid';
@@ -1503,6 +1492,22 @@ function copyEntry(id) {
   showToast('COPIED — ' + e.title);
 }
 
+async function deleteEntry(id) {
+
+  const { error } = await supabaseClient
+    .from('namedrop_entries')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  showToast("DELETED");
+  loadEntries();
+}
+  
 function openModal() {
   document
     .getElementById('modal-overlay')
@@ -1541,57 +1546,45 @@ function updateLenPreview() {
     v.trim() ? wordLen(v) : '';
 }
 
-function saveEntry() {
+async function saveEntry() {
+  const title = document.getElementById('f-title').value.trim();
+  const category = document.getElementById('f-category').value.trim();
+  const mood = document.getElementById('f-mood').value.trim();
+  const style = document.getElementById('f-style').value.trim();
 
-  const title =
-    document.getElementById('f-title').value.trim();
+  const tags = document
+    .getElementById('f-tags')
+    .value
+    .split(',')
+    .map(t => t.trim().toLowerCase())
+    .filter(Boolean);
 
-  const category =
-    document.getElementById('f-category').value.trim();
-
-  const mood =
-    document.getElementById('f-mood').value.trim();
-
-  const style =
-    document.getElementById('f-style').value.trim();
-
-  const tags =
-    document
-      .getElementById('f-tags')
-      .value
-      .split(',')
-      .map(t => t.trim().toLowerCase())
-      .filter(Boolean);
-
-  if (!title) {
-    showToast('TITLE REQUIRED');
+  if (!title || !category || !mood) {
+    showToast("FILL REQUIRED FIELDS");
     return;
   }
 
-  if (!category) {
-    showToast('CATEGORY REQUIRED');
+  const { error } = await supabaseClient
+    .from('namedrop_entries')
+    .insert([{
+      title,
+      category,
+      mood,
+      style,
+      tags,
+      added: Date.now()
+    }]);
+
+  if (error) {
+    console.log(error);
+    showToast("ERROR SAVING");
     return;
   }
 
-  if (!mood) {
-    showToast('MOOD REQUIRED');
-    return;
-  }
-
-  runtime.push({
-    id: nextId++,
-    title,
-    category,
-    mood,
-    style,
-    tags,
-    added: Date.now()
-  });
-
-  showToast('ADDED — ' + title);
+  showToast("ADDED — " + title);
 
   closeModal();
-  render();
+  loadEntries();
 }
 
 /* ── EVENTS ── */
@@ -1702,7 +1695,7 @@ document.addEventListener('keydown', e => {
 });
 
 /* ── INIT ── */
-
+loadEntries();
 buildChips();
 render();
 </script>
