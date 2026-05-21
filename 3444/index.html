@@ -394,550 +394,208 @@ header{
   position:fixed;
   bottom:25px;
   left:50%;
-
   transform:translateX(-50%) translateY(50px);
-
   background:white;
   border:1px solid var(--amber);
-
   padding:10px 20px;
-
   font-size:10px;
   letter-spacing:3px;
-
   color:var(--amber);
-
   opacity:0;
-
   transition:.2s;
-
   z-index:300;
 }
-
 .toast.show{
   opacity:1;
   transform:translateX(-50%) translateY(0);
 }
 
 @media(max-width:650px){
-
   .form-row{
     grid-template-columns:1fr;
   }
-
   .names-grid{
     grid-template-columns:1fr;
   }
 }
+
+/* AUTH BAR */
+.auth-bar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
 <header>
-
-<div class="header-eyebrow">
-ネーミングデータベースアーカイブ
-</div>
-
-<h1 class="header-title">
-ＮＡＭＥＤＲＯＰ
-</h1>
-
-<div class="header-sub">
-名前のアーカイブ — Name Archive System
-</div>
-
+<div class="header-eyebrow">ネーミングデータベースアーカイブ</div>
+<h1 class="header-title">ＮＡＭＥＤＲＯＰ</h1>
+<div class="header-sub">名前のアーカイブ — Name Archive System</div>
 <div class="header-stats">
-
-<div class="stat-pill">
-ENTRIES <span class="val" id="stat-total">0</span>
+<div class="stat-pill">ENTRIES <span class="val" id="stat-total">0</span></div>
+<div class="stat-pill">FILTERED <span class="val" id="stat-filtered">0</span></div>
 </div>
-
-<div class="stat-pill">
-FILTERED <span class="val" id="stat-filtered">0</span>
-</div>
-
-</div>
-
 </header>
 
 <div class="search-wrap">
-
-<input
-type="text"
-id="search-input"
-class="search-input"
-placeholder="Search..."
->
-
-<div class="search-icon">
-⌕
-</div>
-
+<input type="text" id="search-input" class="search-input" placeholder="Search...">
+<div class="search-icon">⌕</div>
 </div>
 
 <div class="toolbar">
+<button class="btn btn-amber" id="add-btn">+ NEW ENTRY</button>
+</div
 
-<button class="btn btn-amber" id="add-btn">
-+ NEW ENTRY
-</button>
-
+<div class="auth-bar">
+  <button class="btn btn-amber" id="login-btn">LOGIN WITH GITHUB</button>
+  <button class="btn btn-rust" id="logout-btn" style="display:none;">LOGOUT</button>
 </div>
 
 <div id="names-container" class="names-grid"></div>
 
-</div>
-
 <!-- MODAL -->
-
-<div class="modal-overlay" id="modal-overlay">
-
+<div class="modal-overlay" id="modal">
 <div class="modal">
 
-<div class="modal-header">
+<input id="title" placeholder="title" class="form-input"/>
+<input id="category" placeholder="category" class="form-input"/>
+<input id="mood" placeholder="mood" class="form-input"/>
+<input id="style" placeholder="style" class="form-input"/>
+<input id="tags" placeholder="tags comma" class="form-input"/>
 
-<div class="modal-title">
-NEW ENTRY
+<button class="btn btn-amber" id="save-btn">SAVE</button>
 </div>
-
-<button class="btn btn-rust" id="modal-close">
-✕
-</button>
-
 </div>
-
-<div class="form-group">
-<label class="form-label">TITLE *</label>
-
-<input
-type="text"
-id="f-title"
-class="form-input"
-placeholder="Synthetic Entrance"
->
-</div>
-
-<div class="form-row">
-
-<div class="form-group">
-<label class="form-label">CATEGORY *</label>
-
-<input
-type="text"
-id="f-category"
-class="form-input"
-placeholder="Atmospheric"
->
-</div>
-
-<div class="form-group">
-<label class="form-label">MOOD *</label>
-
-<input
-type="text"
-id="f-mood"
-class="form-input"
-placeholder="Dreamy"
->
-</div>
-
-</div>
-
-<div class="form-group">
-<label class="form-label">STYLE</label>
-
-<input
-type="text"
-id="f-style"
-class="form-input"
-placeholder="Cyberpunk"
->
-</div>
-
-<div class="form-group">
-<label class="form-label">TAGS</label>
-
-<input
-type="text"
-id="f-tags"
-class="form-input"
-placeholder="retro, neon, future"
->
-</div>
-
-<div class="modal-footer">
-
-<button class="btn btn-rust" id="cancel-btn">
-CANCEL
-</button>
-
-<button class="btn btn-amber" id="save-btn">
-SAVE
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-const SUPABASE_URL = "https://zsiilkcothfqtdmazbds.supabase.co";
-const SUPABASE_KEY = "sb_publishable_2g6DAgmpVToaCGIqUfQivg_416bQvVy";
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+const supabase = window.supabase.createClient(
+  "https://zsiilkcothfqtdmazbds.supabase.co",
+  "sb_publishable_2g6DAgmpVToaCGIqUfQivg_416bQvVy"
 );
 
-console.log("SUPABASE CONNECTED");
-
+let sessionUser = null;
 let entries = [];
+let editId = null;
 
-const namesContainer =
-document.getElementById('names-container');
-
-function toast(msg){
-
-  const t =
-  document.getElementById('toast');
-
-  t.textContent = msg;
-
-  t.classList.add('show');
-
-  clearTimeout(t.timer);
-
-  t.timer = setTimeout(()=>{
-    t.classList.remove('show');
-  },2000);
+/* AUTH */
+async function checkAuth(){
+  const { data } = await supabase.auth.getSession();
+  sessionUser = data.session?.user || null;
+  updateUI();
 }
 
-function wordLen(title){
+supabase.auth.onAuthStateChange((_event, session)=>{
+  sessionUser = session?.user || null;
+  updateUI();
+  load();
+});
 
-  const w =
-  title.trim().split(/\s+/).length;
-
-  if(w <= 2) return 'Short';
-  if(w === 3) return 'Medium';
-
-  return 'Long';
+function updateUI(){
+  document.getElementById("login-btn").style.display = sessionUser ? "none":"inline-block";
+  document.getElementById("logout-btn").style.display = sessionUser ? "inline-block":"none";
+  document.getElementById("add-btn").style.display = sessionUser ? "inline-block":"none";
 }
 
-async function loadEntries(){
+/* LOGIN */
+document.getElementById("login-btn").onclick = async ()=>{
+  await supabase.auth.signInWithOAuth({ provider:"github" });
+};
 
-  const { data, error } =
-  await supabaseClient
-  .from('namedrop_entries')
-  .select('*')
-  .order('added', {
-    ascending:false
-  });
+document.getElementById("logout-btn").onclick = async ()=>{
+  await supabase.auth.signOut();
+};
 
-  if(error){
-
-    console.error(error);
-
-    toast("DATABASE ERROR");
-
-    return;
-  }
+/* LOAD */
+async function load(){
+  const { data } = await supabase
+    .from("namedrop_entries")
+    .select("*")
+    .order("added",{ascending:false});
 
   entries = data || [];
-
   render();
 }
 
+/* REALTIME */
+supabase.channel("db")
+  .on("postgres_changes",
+    { event:"*", schema:"public", table:"namedrop_entries" },
+    ()=> load()
+  ).subscribe();
+
+/* RENDER */
 function render(){
+  const box = document.getElementById("names-container");
 
-  const q =
-  document
-  .getElementById('search-input')
-  .value
-  .toLowerCase()
-  .trim();
+  box.innerHTML = entries.map(e=>`
+    <div class="name-card">
+      <div class="card-title">${e.title}</div>
 
-  const filtered =
-  entries.filter(e=>{
+      <div>
+        <button onclick="edit(${e.id})">EDIT</button>
+      </div>
 
-    const hay =
-    [
-      e.title,
-      e.category,
-      e.mood,
-      e.style,
-      ...(e.tags || [])
-    ]
-    .join(' ')
-    .toLowerCase();
-
-    return hay.includes(q);
-  });
-
-  document.getElementById('stat-total')
-  .textContent = entries.length;
-
-  document.getElementById('stat-filtered')
-  .textContent = filtered.length;
-
-  if(!filtered.length){
-
-    namesContainer.innerHTML = `
-    <div class="empty">
-      No entries found
+      <div class="card-footer">
+        <span>${e.category}</span>
+        <span>${e.mood}</span>
+      </div>
     </div>
-    `;
+  `).join("");
+}
 
-    return;
+/* EDIT */
+window.edit = (id)=>{
+  const e = entries.find(x=>x.id===id);
+  editId = id;
+
+  title.value = e.title;
+  category.value = e.category;
+  mood.value = e.mood;
+  style.value = e.style;
+  tags.value = (e.tags||[]).join(",");
+
+  modal.classList.add("open");
+};
+
+/* SAVE */
+document.getElementById("save-btn").onclick = async ()=>{
+
+  const payload = {
+    title:title.value,
+    category:category.value,
+    mood:mood.value,
+    style:style.value,
+    tags:tags.value.split(",").map(t=>t.trim())
+  };
+
+  if(editId){
+    await supabase.from("namedrop_entries")
+      .update(payload)
+      .eq("id",editId);
+  } else {
+    await supabase.from("namedrop_entries")
+      .insert([{...payload, added:Date.now()}]);
   }
 
-  namesContainer.innerHTML =
-  filtered.map(cardHTML).join('');
-}
+  editId = null;
+  modal.classList.remove("open");
+  load();
+};
 
-function cardHTML(e){
-
-  const tags =
-  (e.tags || [])
-  .map(t=>`#${t}`)
-  .join(', ');
-
-  return `
-  <div
-  class="name-card"
-  onclick="copyTitle('${escapeQuotes(e.title)}')"
-  >
-
-    <div class="card-title">
-      ${safe(e.title)}
-    </div>
-
-    <div class="card-meta">
-
-      ${
-        e.category
-        ?
-        `<span class="badge badge-category">
-          ${safe(e.category)}
-        </span>`
-        :
-        ''
-      }
-
-      ${
-        e.mood
-        ?
-        `<span class="badge badge-mood">
-          ${safe(e.mood)}
-        </span>`
-        :
-        ''
-      }
-
-      ${
-        e.style
-        ?
-        `<span class="badge badge-style">
-          ${safe(e.style)}
-        </span>`
-        :
-        ''
-      }
-
-    </div>
-
-    ${
-      tags
-      ?
-      `<div class="tags">${safe(tags)}</div>`
-      :
-      ''
-    }
-
-    <div class="card-footer">
-
-      <span>
-        ID·${String(e.id).padStart(4,'0')}
-      </span>
-
-      <span>
-        ${wordLen(e.title)}
-      </span>
-
-    </div>
-
-  </div>
-  `;
-}
-
-function safe(str){
-
-  if(!str) return '';
-
-  return str
-  .replace(/&/g,'&amp;')
-  .replace(/</g,'&lt;')
-  .replace(/>/g,'&gt;');
-}
-
-function escapeQuotes(str){
-
-  return str.replace(/'/g,"\\'");
-}
-
-async function saveEntry(){
-
-  const title =
-  document.getElementById('f-title')
-  .value
-  .trim();
-
-  const category =
-  document.getElementById('f-category')
-  .value
-  .trim();
-
-  const mood =
-  document.getElementById('f-mood')
-  .value
-  .trim();
-
-  const style =
-  document.getElementById('f-style')
-  .value
-  .trim();
-
-  const tags =
-  document.getElementById('f-tags')
-  .value
-  .split(',')
-  .map(t=>t.trim().toLowerCase())
-  .filter(Boolean);
-
-  if(!title || !category || !mood){
-
-    toast("FILL REQUIRED FIELDS");
-
-    return;
-  }
-
-  const { error } =
-  await supabaseClient
-  .from('namedrop_entries')
-  .insert([
-    {
-      title,
-      category,
-      mood,
-      style,
-      tags,
-      added:Date.now()
-    }
-  ]);
-
-  if(error){
-
-    console.error(error);
-
-    toast("SAVE FAILED");
-
-    return;
-  }
-
-  toast("ENTRY ADDED");
-
-  closeModal();
-
-  loadEntries();
-}
-
-function copyTitle(title){
-
-  navigator.clipboard
-  .writeText(title)
-  .then(()=>{
-    toast("COPIED — " + title);
-  });
-}
-
-function openModal(){
-
-  document
-  .getElementById('modal-overlay')
-  .classList
-  .add('open');
-}
-
-function closeModal(){
-
-  document
-  .getElementById('modal-overlay')
-  .classList
-  .remove('open');
-
-  [
-    'f-title',
-    'f-category',
-    'f-mood',
-    'f-style',
-    'f-tags'
-  ]
-  .forEach(id=>{
-
-    document.getElementById(id)
-    .value = '';
-  });
-}
-
-/* EVENTS */
-
-document
-.getElementById('search-input')
-.addEventListener('input', render);
-
-document
-.getElementById('add-btn')
-.onclick = openModal;
-
-document
-.getElementById('modal-close')
-.onclick = closeModal;
-
-document
-.getElementById('cancel-btn')
-.onclick = closeModal;
-
-document
-.getElementById('save-btn')
-.onclick = saveEntry;
-
-document
-.getElementById('modal-overlay')
-.addEventListener('click', e=>{
-
-  if(
-    e.target ===
-    document.getElementById('modal-overlay')
-  ){
-    closeModal();
-  }
-});
-
-document.addEventListener('keydown', e=>{
-
-  if(e.key === 'Escape'){
-    closeModal();
-  }
-});
+/* ADD */
+document.getElementById("add-btn").onclick = ()=>{
+  editId = null;
+  modal.classList.add("open");
+};
 
 /* INIT */
-loadEntries();
+checkAuth();
+load();
 </script>
 </body>
 </html>
