@@ -259,8 +259,7 @@ header {
   background: rgba(232,197,71,0.1);
   color: var(--amber);
 }  
-  
-  :ro:🟤
+
 /* ── FILTER PANEL ── */
 .filter-panel {
   background: var(--bg2);
@@ -548,7 +547,6 @@ header {
   transform: translateY(14px);
   transition: transform 0.22s;
 }
-
 .modal-overlay.open .modal {
   transform: translateY(0);
 }
@@ -683,158 +681,112 @@ header {
 </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <div class="header-eyebrow">ネーミングデータベースアーカイブ · v2.0</div>
+      <h1 class="header-title">ＮＡＭＥＤＲＯＰ</h1>
+      <div class="header-sub">名前のアーカイブ — Name Archive System</div>
+      <div class="header-stats">
+        <div class="stat-pill">ENTRIES <span class="val" id="stat-total">0</span></div>
+        <div class="stat-pill">FILTERED <span class="val" id="stat-filtered">0</span></div>
+        <div class="stat-pill">TAGS <span class="val" id="stat-tags">0</span></div>
+      </div>
+    </header>
 
-<div class="container">
-
-<header>
-
-<div class="header-eyebrow">
-ネーミングデータベースアーカイブ
-</div>
-
-<h1 class="header-title">
-ＮＡＭＥＤＲＯＰ
-</h1>
-
-<div class="header-sub">
-名前のアーカイブ — Name Archive System
-</div>
-
-<div class="header-stats">
-
-<div class="stat-pill">
-ENTRIES <span class="val" id="stat-total">0</span>
-</div>
-
-<div class="stat-pill">
-FILTERED <span class="val" id="stat-filtered">0</span>
-</div>
-
-</div>
-
-</header>
-
-<div class="search-wrap">
-
-<input
-type="text"
-id="search-input"
-class="search-input"
-placeholder="Search..."
->
-
-<div class="search-icon">
-⌕
-</div>
-
-</div>
-
-<div class="toolbar">
-
-<button class="btn btn-amber" id="add-btn">
-+ NEW ENTRY
-</button>
-
-</div>
-
-<div id="names-container" class="names-grid"></div>
-
-</div>
-
-<!-- MODAL -->
-
-<div class="modal-overlay" id="modal-overlay">
-
-<div class="modal">
-
-<div class="modal-header">
-
-<div class="modal-title">
-NEW ENTRY
-</div>
-
-<button class="btn btn-rust" id="modal-close">
-✕
-</button>
-
-</div>
-
-<div class="form-group">
-<label class="form-label">TITLE *</label>
-
-<input
-type="text"
-id="f-title"
-class="form-input"
-placeholder="Synthetic Entrance"
->
-</div>
-
-<div class="form-row">
-
-<div class="form-group">
-<label class="form-label">CATEGORY *</label>
-
-<input
-type="text"
-id="f-category"
-class="form-input"
-placeholder="Atmospheric"
->
-</div>
-
-<div class="form-group">
-<label class="form-label">MOOD *</label>
-
-<input
-type="text"
-id="f-mood"
-class="form-input"
-placeholder="Dreamy"
->
-</div>
-
-</div>
-
-<div class="form-group">
-<label class="form-label">STYLE</label>
-
-<input
-type="text"
-id="f-style"
-class="form-input"
-placeholder="Cyberpunk"
->
-</div>
-
-<div class="form-group">
-<label class="form-label">TAGS</label>
-
-<input
-type="text"
-id="f-tags"
-class="form-input"
-placeholder="retro, neon, future"
->
-</div>
-
-<div class="modal-footer">
-
-<button class="btn btn-rust" id="cancel-btn">
-CANCEL
-</button>
-
-<button class="btn btn-amber" id="save-btn">
-SAVE
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="toast" id="toast"></div>
+    <div class="search-section">
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        <span class="search-icon">⌕</span>
+      </div>
+    </div>
+    
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button class="btn btn-amber" id="filter-toggle">⊞ FILTERS</button>
+        <div class="sort-widget">
+          <span class="sort-label">SORT</span>
+          <button class="sort-option active" data-sort="default">DEFAULT</button>
+          <button class="sort-option" data-sort="alpha-asc">A→Z</button>
+          <button class="sort-option" data-sort="alpha-desc">Z→A</button>
+          <button class="sort-option" data-sort="len-asc">LEN↑</button>
+          <button class="sort-option" data-sort="len-desc">LEN↓</button>
+          <button class="sort-option" data-sort="newest">NEW</button>
+        </div>
+        <span class="result-count">SHOWING <span id="rc-filtered">0</span> OF <span id="rc-total">0</span></span>
+      </div>
+      
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="view-toggle">
+          <button class="view-btn active" id="view-grid" title="Grid">⊞</button>
+          <button class="view-btn" id="view-list" title="List">☰</button>
+        </div>
+        <button class="btn btn-amber" id="add-btn">+ NEW ENTRY</button>
+      </div>
+    </div>
+    
+    <div class="filter-panel" id="filter-panel">
+      <div class="filter-grid">
+        <div class="filter-group"><label>Category</label><div class="filter-chips" id="fc-category"></div></div>
+        <div class="filter-group"><label>Mood</label><div class="filter-chips" id="fc-mood"></div></div>
+        <div class="filter-group"><label>Style</label><div class="filter-chips" id="fc-style"></div></div>
+        <div class="filter-group"><label>Length</label><div class="filter-chips" id="fc-length"></div></div>
+      </div>
+      <div class="filter-divider"></div>
+      <div class="filter-group"><label>Tags</label><div class="filter-chips" id="fc-tags"></div></div>
+      <div class="filter-divider"></div>
+      
+      <div class="filter-actions">
+        <div class="active-filters" id="active-filters"></div>
+        <button class="btn btn-rust" id="clear-filters">✕ CLEAR</button>
+      </div>
+    </div>
+    
+    <div id="names-container"></div>
+  </div>
+  
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">NEW ENTRY</span>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Title *</label>
+        <input type="text" class="form-input" id="f-title" placeholder="Synthetic Entrance">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Category *</label>
+          <input type="text" class="form-input" id="f-category" placeholder="Technical">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mood *</label>
+          <input type="text" class="form-input" id="f-mood" placeholder="Dreamy">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Style</label>
+          <input type="text" class="form-input" id="f-style" placeholder="Glitch">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Length</label>
+          <input type="text" class="form-input" id="f-length" readonly placeholder="Auto-detected">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tags <span style="color:var(--muted);font-weight:400">(comma-separated)</span></label>
+        <input type="text" class="form-input" id="f-tags" placeholder="cyber, retro, nostalgia">
+      </div> 
+      <div class="modal-footer">
+        <button class="btn btn-rust" id="modal-cancel">CANCEL</button>
+        <button class="btn btn-amber" id="modal-save">SAVE</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="toast" id="toast"></div>
 
 <script>
 const SUPABASE_URL = "https://zsiilkcothfqtdmazbds.supabase.co";
