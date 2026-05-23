@@ -953,7 +953,7 @@ async function loadEntries() {
   const { data, error } = await db
     .from('namedrop_entries')
     .select('*')
-    .order('added', { ascending: false });
+    .order('added', { ascending: true });
 
   if (error) {
     console.error(error);
