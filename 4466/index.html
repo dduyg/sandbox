@@ -146,7 +146,7 @@ header {
   gap: 10px;
   flex-wrap: wrap;
 }
-.admin-lock-btn {
+#admin-lock-btn {
   color: var(--muted);
   font-size: 10px;
   letter-spacing: 2px;
@@ -155,7 +155,6 @@ header {
   text-transform: uppercase;
   user-select: none;
 }
-.admin-lock-btn span { color: var(--amber); }
 
 /* ── SORT ── */
 .sort-widget {
@@ -674,8 +673,7 @@ header {
         <button class="sort-option" data-sort="len-desc">LEN↓</button>
         <button class="sort-option" data-sort="newest">NEW</button>
       </div>
-      <span class="result-count">SHOWING <span id="rc-filtered">—</span> OF <span id="rc-total">—</span></span>
-      <span id="admin-lock-btn" title="Admin access" style="font-size:9px;letter-spacing:2px;color:var(--muted);cursor:pointer;text-transform:uppercase;user-select:none;">⚿ admin</span>
+      <span id="admin-lock-btn">⚿ Admin access</span>
     </div>
     <div style="display:flex;gap:8px;align-items:center;">
       <div class="view-toggle">
@@ -704,10 +702,7 @@ header {
   </div>
 
   <div id="names-container">
-    <div class="loading-state">
-      <span class="spinner">◈</span>
-      LOADING ARCHIVE...
-    </div>
+    <div class="loading-state"><span class="spinner">◈</span>LOADING DATABASE...</div>
   </div>
 </div>
 
