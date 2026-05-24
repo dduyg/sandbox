@@ -1028,8 +1028,6 @@ function render() {
   document.getElementById('stat-total').textContent    = entries.length;
   document.getElementById('stat-filtered').textContent = items.length;
   document.getElementById('stat-tags').textContent     = getAllTags().length;
-  document.getElementById('rc-filtered').textContent   = items.length;
-  document.getElementById('rc-total').textContent      = entries.length;
   const c = document.getElementById('names-container');
   if (currentView === 'grid') {
     c.className = 'names-grid';
