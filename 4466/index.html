@@ -1077,7 +1077,7 @@ function copyEntry(id) {
   if (!e) return;
   navigator.clipboard.writeText(e.title).catch(() => {});
   flashCard(id);
-  showToast('COPIED — ' + e.title);
+  showToast('COPIED:' + e.title);
 }
 
 /* ═══════════════════════════════════════
@@ -1088,11 +1088,11 @@ function openCtx(event, id) {
   event.stopPropagation();
   ctxTargetId = id;
   // show/hide admin items
-  document.getElementById('ctx-edit').style.display   = isAdmin ? '' : 'none';
-  document.getElementById('ctx-delete').style.display = isAdmin ? '' : 'none';
-  const m = document.getElementById('ctx-menu');
-  m.style.left = Math.min(event.clientX, window.innerWidth  - 180) + 'px';
-  m.style.top  = Math.min(event.clientY, window.innerHeight - 90)  + 'px';
+  document.getElementById('ctx-edit').style.display   = isAdmin ? 'block' : 'none';  
+  document.getElementById('ctx-delete').style.display = isAdmin ? 'block' : 'none';
+  const m = document.getElementById('ctx-menu');  
+  m.style.left = Math.min(event.clientX, window.innerWidth  - 180) + 'px';  
+  m.style.top  = Math.min(event.clientY, window.innerHeight - 90)  + 'px';  
   m.classList.add('open');
 }
 function closeCtx() {
