@@ -96,7 +96,6 @@ header {
   font-weight: 700;
 }
 
-
 /* ── SEARCH ── */
 .search-section { padding-bottom: 30px; }
 .search-wrap {
@@ -931,13 +930,13 @@ async function saveEntry() {
       .update({ title, category, mood, style, tags })
       .eq('id', editingId);
     if (error) { console.error(error); showToast('UPDATE FAILED'); return; }
-    showToast('UPDATED — ' + title);
+    showToast('UPDATED: ' + title);
   } else {
     const { error } = await db
       .from('namedrop_entries')
       .insert([{ title, category, mood, style, tags, added: Date.now() }]);
     if (error) { console.error(error); showToast('SAVE FAILED'); return; }
-    showToast('ADDED — ' + title);
+    showToast('ADDED: ' + title);
   }
   closeModal();
   await loadEntries();
@@ -1077,7 +1076,7 @@ function copyEntry(id) {
   if (!e) return;
   navigator.clipboard.writeText(e.title).catch(() => {});
   flashCard(id);
-  showToast('COPIED:' + e.title);
+  showToast('COPIED: ' + e.title);
 }
 
 /* ═══════════════════════════════════════
