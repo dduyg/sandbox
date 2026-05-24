@@ -35,9 +35,7 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px),
-    radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
+  background: radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px), radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
   background-size: 28px 28px, 36px 36px;
   pointer-events: none;
   z-index: 0;
@@ -99,13 +97,11 @@ header {
 }
 /* admin status indicator in header */
 .admin-indicator {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
-  font-size: 9px;
-  letter-spacing: 3px;
+  font-size: 10px;
   color: var(--muted);
   text-transform: uppercase;
 }
@@ -130,15 +126,15 @@ header {
   border: 1px solid var(--border);
   color: var(--muted);
   font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-size: 10px;
   letter-spacing: 2px;
-  padding: 3px 9px;
+  padding: 3px 8px;
   cursor: pointer;
   transition: all 0.12s;
   border-radius: 2px;
 }
 .admin-lock-btn:hover { border-color: var(--rust); color: var(--rust); }
-
+  
 /* ── SEARCH ── */
 .search-section { padding-bottom: 30px; }
 .search-wrap {
@@ -188,13 +184,6 @@ header {
   gap: 10px;
   flex-wrap: wrap;
 }
-.result-count {
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 2px;
-  white-space: nowrap;
-}
-.result-count span { color: var(--amber); }
 
 /* ── SORT ── */
 .sort-widget {
@@ -691,12 +680,7 @@ header {
       <div class="stat-pill">ENTRIES <span class="val" id="stat-total">—</span></div>
       <div class="stat-pill">FILTERED <span class="val" id="stat-filtered">—</span></div>
       <div class="stat-pill">TAGS <span class="val" id="stat-tags">—</span></div>
-    </div>
-    <div class="admin-indicator">
-      <div class="admin-dot" id="admin-dot"></div>
-      <span id="admin-label">PUBLIC VIEW</span>
-      <button class="admin-lock-btn" id="admin-lock-btn" title="Admin access">⚿ ADMIN</button>
-    </div>
+    </div> 
   </header>
 
   <div class="search-section">
@@ -718,7 +702,10 @@ header {
         <button class="sort-option" data-sort="len-desc">LEN↓</button>
         <button class="sort-option" data-sort="newest">NEW</button>
       </div>
-      <span class="result-count">SHOWING <span id="rc-filtered">—</span> OF <span id="rc-total">—</span></span>
+      <span class="admin-indicator">
+        <div class="admin-dot" id="admin-dot"></div>
+        <button class="admin-lock-btn" id="admin-lock-btn" title="Admin access">⚿ ADMIN</button>
+      </span>
     </div>
     <div style="display:flex;gap:8px;align-items:center;">
       <div class="view-toggle">
@@ -875,13 +862,11 @@ function setAdminState(val) {
 
   if (isAdmin) {
     dot.classList.add('active');
-    label.textContent = 'ADMIN MODE';
     btn.textContent   = '⚿ LOCK';
     btn.title         = 'Lock admin session';
     document.querySelectorAll('.admin-hidden, #add-btn, #ctx-edit, #ctx-delete').forEach(el => el.classList.remove('admin-hidden'));
   } else {
     dot.classList.remove('active');
-    label.textContent = 'PUBLIC VIEW';
     btn.textContent   = '⚿ ADMIN';
     btn.title         = 'Admin access';
     ['add-btn','ctx-edit','ctx-delete'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('admin-hidden'); });
