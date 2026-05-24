@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>ℕ𝕒𝕞𝕖𝕕𝕣𝕠𝕡 Ⴆყ ԃԃꪊყᧁ</title>
+<title>ℕ𝕒𝕞𝕖𝕕𝕣𝕠𝕡 Ⴆყ ԃԃꪊყᧁ 🔮</title>
 <link rel="shortcut icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@shelf/0-6/favicons/RGB-magentaLavender.ico">
 <link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
@@ -97,47 +97,7 @@ header {
   color: var(--amber);
   font-weight: 700;
 }
-/* admin status indicator in header */
-.admin-indicator {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  font-size: 9px;
-  letter-spacing: 3px;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-.admin-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--muted);
-  opacity: 0.3;
-}
-.admin-dot.active {
-  background: var(--sage);
-  opacity: 1;
-  box-shadow: 0 0 6px var(--sage);
-  animation: pulse-dot 2s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { box-shadow: 0 0 4px var(--sage); }
-  50%      { box-shadow: 0 0 10px var(--sage); }
-}
-.admin-lock-btn {
-  background: none;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 2px;
-  padding: 3px 9px;
-  cursor: pointer;
-  transition: all 0.12s;
-  border-radius: 2px;
-}
-.admin-lock-btn:hover { border-color: var(--rust); color: var(--rust); }
+
 
 /* ── SEARCH ── */
 .search-section { padding-bottom: 30px; }
@@ -692,11 +652,6 @@ header {
       <div class="stat-pill">FILTERED <span class="val" id="stat-filtered">—</span></div>
       <div class="stat-pill">TAGS <span class="val" id="stat-tags">—</span></div>
     </div>
-    <div class="admin-indicator">
-      <div class="admin-dot" id="admin-dot"></div>
-      <span id="admin-label">PUBLIC VIEW</span>
-      <button class="admin-lock-btn" id="admin-lock-btn" title="Admin access">⚿ ADMIN</button>
-    </div>
   </header>
 
   <div class="search-section">
@@ -719,6 +674,7 @@ header {
         <button class="sort-option" data-sort="newest">NEW</button>
       </div>
       <span class="result-count">SHOWING <span id="rc-filtered">—</span> OF <span id="rc-total">—</span></span>
+      <span id="admin-lock-btn" title="Admin access" style="font-size:9px;letter-spacing:2px;color:var(--muted);cursor:pointer;text-transform:uppercase;user-select:none;">⚿ admin</span>
     </div>
     <div style="display:flex;gap:8px;align-items:center;">
       <div class="view-toggle">
@@ -812,7 +768,6 @@ header {
 
 <!-- CONTEXT MENU -->
 <div class="ctx-menu" id="ctx-menu">
-  <div class="ctx-item" id="ctx-copy">⎘ COPY</div>
   <!-- edit/delete only injected when admin -->
   <div class="ctx-item admin-hidden" id="ctx-edit">✎ EDIT</div>
   <div class="ctx-item danger admin-hidden" id="ctx-delete">✕ DELETE</div>
@@ -869,21 +824,14 @@ async function tryUnlock(pw) {
 
 function setAdminState(val) {
   isAdmin = val;
-  const dot   = document.getElementById('admin-dot');
-  const label = document.getElementById('admin-label');
-  const btn   = document.getElementById('admin-lock-btn');
-
+  const btn = document.getElementById('admin-lock-btn');
   if (isAdmin) {
-    dot.classList.add('active');
-    label.textContent = 'ADMIN MODE';
-    btn.textContent   = '⚿ LOCK';
-    btn.title         = 'Lock admin session';
+    btn.textContent = '⚿ lock';
+    btn.title = 'Lock admin session';
     document.querySelectorAll('.admin-hidden, #add-btn, #ctx-edit, #ctx-delete').forEach(el => el.classList.remove('admin-hidden'));
   } else {
-    dot.classList.remove('active');
-    label.textContent = 'PUBLIC VIEW';
-    btn.textContent   = '⚿ ADMIN';
-    btn.title         = 'Admin access';
+    btn.textContent = '⚿ admin';
+    btn.title = 'Admin access';
     ['add-btn','ctx-edit','ctx-delete'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('admin-hidden'); });
   }
 }
@@ -1187,11 +1135,7 @@ function closeCtx() {
   ctxTargetId = null;
 }
 
-document.getElementById('ctx-copy').onclick = () => {
-  if (ctxTargetId === null) return;
-  copyEntry(ctxTargetId);
-  closeCtx();
-};
+
 document.getElementById('ctx-edit').onclick = () => {
   if (ctxTargetId === null || !isAdmin) return;
   openEditModal(ctxTargetId);
