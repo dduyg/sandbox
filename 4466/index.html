@@ -254,7 +254,7 @@ header {
 .btn-rust  { border-color: var(--rust);  color: var(--rust);  }
 .btn-rust:hover  { background: var(--rust);  color: var(--bg); }
 /* hidden admin controls */
-.admin-only { display: none !important; }
+.admin-hidden { display: none !important; }
 
 .view-toggle {
   display: flex;
@@ -726,7 +726,7 @@ header {
         <button class="view-btn" id="view-list" title="List">☰</button>
       </div>
       <!-- Only visible when admin is unlocked -->
-      <button class="btn btn-amber admin-only" id="add-btn">+ NEW ENTRY</button>
+      <button class="btn btn-amber admin-hidden" id="add-btn">+ NEW ENTRY</button>
     </div>
   </div>
 
@@ -814,8 +814,8 @@ header {
 <div class="ctx-menu" id="ctx-menu">
   <div class="ctx-item" id="ctx-copy">⎘ COPY</div>
   <!-- edit/delete only injected when admin -->
-  <div class="ctx-item admin-only" id="ctx-edit">✎ EDIT</div>
-  <div class="ctx-item danger admin-only" id="ctx-delete">✕ DELETE</div>
+  <div class="ctx-item admin-hidden" id="ctx-edit">✎ EDIT</div>
+  <div class="ctx-item danger admin-hidden" id="ctx-delete">✕ DELETE</div>
 </div>
 
 <!-- PASSWORD MODAL -->
@@ -878,13 +878,13 @@ function setAdminState(val) {
     label.textContent = 'ADMIN MODE';
     btn.textContent   = '⚿ LOCK';
     btn.title         = 'Lock admin session';
-    document.querySelectorAll('.admin-only').forEach(el => el.style.removeProperty('display'));
+    document.querySelectorAll('.admin-hidden, #add-btn, #ctx-edit, #ctx-delete').forEach(el => el.classList.remove('admin-hidden'));
   } else {
     dot.classList.remove('active');
     label.textContent = 'PUBLIC VIEW';
     btn.textContent   = '⚿ ADMIN';
     btn.title         = 'Admin access';
-    document.querySelectorAll('.admin-only').forEach(el => el.style.setProperty('display','none','important'));
+    ['add-btn','ctx-edit','ctx-delete'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('admin-hidden'); });
   }
 }
 
