@@ -454,9 +454,7 @@ header {
 .modal::before {
   content: '';
   position: absolute; inset: 0;
-  background:
-    radial-gradient(circle, rgba(255,110,199,0.07) 1px, transparent 1px),
-    radial-gradient(circle, rgba(138,92,255,0.05) 1px, transparent 1px);
+  background: radial-gradient(circle, rgba(255,110,199,0.07) 1px, transparent 1px), radial-gradient(circle, rgba(138,92,255,0.05) 1px, transparent 1px);
   background-size: 22px 22px, 30px 30px;
   pointer-events: none;
   border-radius: inherit;
@@ -637,7 +635,9 @@ header {
   <header>
     <div class="header-eyebrow">ネーミングデータベースアーカイブ · v2.0</div>
     <h1 class="header-title">ＮＡＭＥＤＲＯＰ</h1>
-    <div class="header-sub">名前のアーカイブ — Name Archive System</div>
+    <div class="header-sub">名前のアーカイブ — Name Archive System
+      <span id="admin-lock-btn" style="letter-spacing:2px;color:var(--muted);cursor:pointer;user-select:none;">⚿ Admin access</span>
+    </div>
     <div class="header-stats">
       <div class="stat-pill">ENTRIES <span class="val" id="stat-total">—</span></div>
       <div class="stat-pill">FILTERED <span class="val" id="stat-filtered">—</span></div>
@@ -654,7 +654,7 @@ header {
 
   <div class="toolbar">
     <div class="toolbar-left">
-      <button class="btn btn-amber" id="filter-toggle">⊞ FILTERS</button>
+      <button class="btn btn-amber" id="filter-toggle">⚱ FILTERS</button>
       <div class="sort-widget">
         <span class="sort-label">SORT</span>
         <button class="sort-option active" data-sort="default">DEFAULT</button>
@@ -664,7 +664,6 @@ header {
         <button class="sort-option" data-sort="len-desc">LEN↓</button>
         <button class="sort-option" data-sort="newest">NEW</button>
       </div>
-      <span id="admin-lock-btn" title="Admin access" style="font-size:9px;letter-spacing:2px;color:var(--muted);cursor:pointer;text-transform:uppercase;user-select:none;">⚿ admin</span>
     </div>
     <div style="display:flex;gap:8px;align-items:center;">
       <div class="view-toggle">
@@ -691,9 +690,7 @@ header {
     </div>
   </div>
 
-  <div id="names-container">
-    <div class="loading-state"><span class="spinner">◈</span>LOADING DATABASE...</div>
-  </div>
+  <div id="names-container"><div class="loading-state"><span class="spinner">◈</span>LOADING DATABASE...</div></div>
 </div>
 
 <!-- ADD / EDIT MODAL -->
@@ -798,12 +795,10 @@ function setAdminState(val) {
   isAdmin = val;
   const btn = document.getElementById('admin-lock-btn');
   if (isAdmin) {
-    btn.textContent = '⚿ lock';
-    btn.title = 'Lock admin session';
+    btn.textContent = '⚿ Lock admin session';
     document.querySelectorAll('.admin-hidden, #add-btn, #ctx-edit, #ctx-delete').forEach(el => el.classList.remove('admin-hidden'));
   } else {
-    btn.textContent = '⚿ admin';
-    btn.title = 'Admin access';
+    btn.textContent = '⚿ Admin access';
     ['add-btn','ctx-edit','ctx-delete'].forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('admin-hidden'); });
   }
 }
