@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Liminal Loop</title>
+<title>ＮＡＭＥＤＲＯ🪭Ｐ</title>
 <link href="https://fonts.cdnfonts.com/css/dellmonte-sans" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Orbitron:wght@400;700;900&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
@@ -23,14 +23,8 @@
   --border2: rgba(57,213,255,0.10);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-@font-face {
-  font-family: 'Marfa Mono';
-  src: url('https://cdn.jsdelivr.net/gh/dduyg/LiminalLoop@main/fonts/labmono-regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
 body {
-  font-family: 'Marfa Mono', monospace;
+  font-family: 'Space Mono', monospace;
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
@@ -40,7 +34,9 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px), radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
+  background:
+    radial-gradient(circle, rgba(255,110,199,0.10) 1px, transparent 1px),
+    radial-gradient(circle, rgba(57,213,255,0.08) 1px, transparent 1px);
   background-size: 28px 28px, 36px 36px;
   pointer-events: none;
   z-index: 0;
@@ -114,7 +110,7 @@ header {
   width: 100%;
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-top: 2px solid var(--amber);
+  border-top: 2px solid var(--amber2);
   padding: 13px 44px 13px 18px;
   font-family: 'Space Mono', monospace;
   font-size: 13px;
@@ -133,7 +129,7 @@ header {
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--amber);
+  color: var(--amber2);
   font-size: 17px;
   pointer-events: none;
 }
@@ -562,7 +558,9 @@ header {
   max-width: 510px;
   max-height: 88vh;
   overflow-y: auto;
-  box-shadow: 0 24px 80px rgba(138,92,255,0.18), 0 0 0 1px rgba(255,110,199,0.08) inset;
+  box-shadow:
+    0 24px 80px rgba(138,92,255,0.18),
+    0 0 0 1px rgba(255,110,199,0.08) inset;
   transform: translateY(14px);
   transition: transform 0.22s;
   position: relative;
@@ -572,7 +570,9 @@ header {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle, rgba(255,110,199,0.07) 1px, transparent 1px), radial-gradient(circle, rgba(138,92,255,0.05) 1px, transparent 1px);
+  background:
+    radial-gradient(circle, rgba(255,110,199,0.07) 1px, transparent 1px),
+    radial-gradient(circle, rgba(138,92,255,0.05) 1px, transparent 1px);
   background-size: 22px 22px, 30px 30px;
   pointer-events: none;
   border-radius: inherit;
