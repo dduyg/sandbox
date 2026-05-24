@@ -671,7 +671,6 @@ header {
         <button class="view-btn active" id="view-grid" title="Grid">⊞</button>
         <button class="view-btn" id="view-list" title="List">☰</button>
       </div>
-      <!-- Only visible when admin is unlocked -->
       <button class="btn btn-amber admin-hidden" id="add-btn">+ NEW ENTRY</button>
     </div>
   </div>
@@ -693,10 +692,7 @@ header {
   </div>
 
   <div id="names-container">
-    <div class="loading-state">
-      <span class="spinner">◈</span>
-      LOADING ARCHIVE...
-    </div>
+    <div class="loading-state"><span class="spinner">◈</span>LOADING DATABASE...</div>
   </div>
 </div>
 
@@ -766,7 +762,7 @@ header {
     <div class="pw-icon">⚿</div>
     <div class="pw-title">ADMIN ACCESS</div>
     <div class="pw-sub">管理者認証 · Enter passphrase</div>
-    <input type="password" class="pw-input" id="pw-input" placeholder="...." autocomplete="current-password">
+    <input type="password" class="pw-input" id="pw-input" placeholder="◦◦◦◦◦◦◦◦◦◦◦" autocomplete="current-password">
     <div class="pw-error" id="pw-error"></div>
     <div class="pw-actions">
       <button class="btn btn-rust" id="pw-cancel">CANCEL</button>
