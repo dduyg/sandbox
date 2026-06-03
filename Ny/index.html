@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ＮＡＭＥＤＲＯＰ</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;1,400&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:      #f5efe6;
+    --bg2:     #ede3d6;
+    --bg3:     #e3d4c0;
+    --surface: #faf6f0;
+    --border:  #d4c4ae;
+    --border2: #c4b09a;
+    --ink:     #2a1f14;
+    --ink2:    #5a4535;
+    --muted:   #9a8472;
+    --accent:  #b85c2a;
+    --rust:    #8b3a1e;
+    --ochre:   #c49a3c;
+    --teal:    #2a6b6b;
+    --shadow:  rgba(42,31,20,0.08);
+    --shadow2: rgba(42,31,20,0.16);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Space Mono', monospace;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  .page {
+    max-width: 1340px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    padding: 52px 0 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1.5px solid var(--border2);
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .header-eyebrow {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 6vw, 74px);
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--ink);
+    line-height: 0.93;
+  }
+  .header-title .drop { color: var(--accent); }
+  .header-tagline {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-top: 11px;
+    text-transform: uppercase;
+  }
+  .header-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+  }
+  .stat {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+  }
+  .stat strong {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: var(--accent);
+    letter-spacing: 0;
+    margin-right: 4px;
+  }
+
+  /* ── SEARCH ROW ── */
+  .search-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .search-wrap {
+    flex: 1;
+    min-width: 200px;
+    position: relative;
+  }
+  .search-input {
+    width: 100%;
+    height: 42px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    padding: 0 42px 0 15px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.15s;
+    letter-spacing: 0.3px;
+    border-radius: 0;
+  }
+  .search-input::placeholder { color: var(--muted); }
+  .search-input:focus { border-color: var(--accent); }
+  .search-icon {
+    position: absolute;
+    right: 13px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 15px;
+    pointer-events: none;
+  }
+
+  /* ── BUTTONS ── */
+  .btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    height: 42px;
+    padding: 0 18px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    border-radius: 0;
+    transition: all 0.13s;
+  }
+  .btn-ghost {
+    background: transparent;
+    border: 1.5px solid var(--border2);
+    color: var(--ink2);
+  }
+  .btn-ghost:hover, .btn-ghost.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(184,92,42,0.06);
+  }
+  .btn-solid {
+    background: var(--accent);
+    border: 1.5px solid var(--accent);
+    color: #fff;
+  }
+  .btn-solid:hover { background: var(--rust); border-color: var(--rust); }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .toolbar-left { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .toolbar-right { display: flex; gap: 8px; align-items: center; }
+
+  /* ── CUSTOM SORT STRIP ── */
+  .sort-strip {
+    display: flex;
+    align-items: stretch;
+    border: 1.5px solid var(--border);
+    background: var(--bg2);
+    overflow: hidden;
+    height: 36px;
+  }
+  .sort-prefix {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    padding: 0 11px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .sort-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0 12px;
+    height: 100%;
+    cursor: pointer;
+    color: var(--muted);
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+    transition: all 0.13s;
+    white-space: nowrap;
+  }
+  .sort-btn:last-child { border-right: none; }
+  .sort-btn:hover { color: var(--ink); background: var(--bg3); }
+  .sort-btn.active {
+    color: var(--accent);
+    background: rgba(184,92,42,0.09);
+    font-weight: 700;
+  }
+
+  /* ── VIEW TOGGLE ── */
+  .view-toggle {
+    display: flex;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+    height: 36px;
+  }
+  .view-btn {
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 14px;
+    transition: all 0.13s;
+  }
+  .view-btn:last-child { border-right: none; }
+  .view-btn:hover { background: var(--bg2); color: var(--ink); }
+  .view-btn.active { background: rgba(184,92,42,0.08); color: var(--accent); }
+
+  /* ── FILTER PANEL ── */
+  .filter-panel {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    padding: 24px;
+    margin-bottom: 18px;
+    display: none;
+  }
+  .filter-panel.open { display: block; }
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 22px;
+    margin-bottom: 18px;
+  }
+  .filter-group-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 9px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 4px 9px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    color: var(--ink2);
+    background: transparent;
+    transition: all 0.12s;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--accent); }
+  .chip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .filter-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .active-tag {
+    font-size: 10px;
+    padding: 3px 10px;
+    background: rgba(184,92,42,0.1);
+    border: 1px solid rgba(184,92,42,0.3);
+    color: var(--accent);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    letter-spacing: 1px;
+    transition: background 0.12s;
+  }
+  .active-tag:hover { background: rgba(184,92,42,0.2); }
+
+  /* ── RESULT INFO ── */
+  .result-info {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .result-info em { font-style: normal; color: var(--accent); }
+
+  /* ── GRID ── */
+  #names-container.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1.5px solid var(--border);
+    margin-bottom: 40px;
+  }
+  /* ── LIST ── */
+  #names-container.list-view {
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  /* ── CARD (grid) ── */
+  .name-card {
+    background: var(--surface);
+    padding: 20px;
+    cursor: pointer;
+    transition: background 0.13s;
+    position: relative;
+    user-select: none;
+  }
+  .name-card:hover { background: var(--bg2); }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 13px;
+    padding-right: 48px; /* room for user-entry buttons */
+  }
+  .card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 9px;
+  }
+  .bdg {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+  .bdg-cat   { background: rgba(139,58,30,0.1);  color: var(--rust); }
+  .bdg-mood  { background: rgba(196,154,60,0.13); color: #7a5f1a; }
+  .bdg-style { background: rgba(42,107,107,0.1);  color: var(--teal); }
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 13px;
+  }
+  .tag {
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    padding: 2px 6px;
+    border: 1px solid var(--border);
+  }
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 11px;
+    border-top: 1px solid var(--border);
+  }
+  .cid {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+  .copy-hint {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .name-card:hover .copy-hint { opacity: 1; }
+  .copy-flash {
+    position: absolute;
+    inset: 0;
+    background: rgba(184,92,42,0.11);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s;
+  }
+  .name-card.flashing .copy-flash { opacity: 1; }
+
+  /* edit/del mini buttons (user entries only) */
+  .entry-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 3px;
+  }
+  .entry-actions button {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.12s;
+  }
+  .entry-actions button:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── LIST ITEM ── */
+  .list-item {
+    background: var(--surface);
+    padding: 13px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.12s;
+    user-select: none;
+    position: relative;
+  }
+  .list-item:last-child { border-bottom: none; }
+  .list-item:hover { background: var(--bg2); }
+  .list-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    flex: 1;
+  }
+  .list-id {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .list-copy-hint {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+  }
+  .list-item:hover .list-copy-hint { opacity: 1; }
+  .list-copy-flash {
+    position: absolute;
+    inset: 0;
+    background: rgba(184,92,42,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.12s;
+  }
+  .list-item.flashing .list-copy-flash { opacity: 1; }
+  .list-actions {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+  }
+  .list-actions button {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 2px 7px;
+    border: 1px solid var(--border2);
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.12s;
+  }
+  .list-actions button:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    padding: 70px 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  /* ── MODAL ── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(245,239,230,0.78);
+    backdrop-filter: blur(6px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s;
+  }
+  .overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--surface);
+    border: 1.5px solid var(--border2);
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px var(--shadow2);
+    transform: translateY(14px);
+    transition: transform 0.22s;
+  }
+  .overlay.open .modal { transform: translateY(0); }
+  .modal-head {
+    padding: 22px 26px 16px;
+    border-bottom: 1.5px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .modal-x {
+    background: none;
+    border: none;
+    font-size: 17px;
+    color: var(--muted);
+    cursor: pointer;
+    width: 30px; height: 30px;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.13s;
+  }
+  .modal-x:hover { color: var(--accent); }
+  .modal-body { padding: 22px 26px; }
+  .fg { margin-bottom: 16px; }
+  .fl {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .fi, .fta {
+    width: 100%;
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    padding: 9px 13px;
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.13s;
+    border-radius: 0;
+  }
+  .fi:focus, .fta:focus { border-color: var(--accent); }
+  .fi::placeholder, .fta::placeholder { color: var(--muted); }
+  .fta { resize: vertical; min-height: 60px; }
+  .fh {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+    line-height: 1.5;
+  }
+  .frow { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+  .len-preview {
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 2px;
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .modal-foot {
+    padding: 14px 26px 22px;
+    border-top: 1.5px solid var(--border);
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(56px);
+    background: var(--ink);
+    color: var(--bg);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 11px 22px;
+    z-index: 300;
+    opacity: 0;
+    transition: all 0.22s;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+  @media (max-width: 580px) {
+    .frow { grid-template-columns: 1fr; }
+    .sort-prefix { display: none; }
+    header { flex-direction: column; align-items: flex-start; }
+    .header-stats { align-items: flex-start; flex-direction: row; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div>
+      <div class="header-eyebrow">名前のアーカイブ · Name Archive System</div>
+      <h1 class="header-title">ＮＡＭＥ<span class="drop">ＤＲＯＰ</span></h1>
+      <div class="header-tagline">Project name database · vaporwave edition</div>
+    </div>
+    <div class="header-stats">
+      <div class="stat"><strong id="h-total">0</strong> entries</div>
+      <div class="stat"><strong id="h-shown">0</strong> shown</div>
+      <div class="stat"><strong id="h-tags">0</strong> tags</div>
+    </div>
+  </header>
+
+  <!-- SEARCH -->
+  <div class="search-row">
+    <div class="search-wrap">
+      <input class="search-input" id="q" placeholder="Search names, categories, moods, tags…">
+      <span class="search-icon">⌕</span>
+    </div>
+    <button class="btn btn-ghost" id="filter-toggle">⊞ Filters</button>
+    <button class="btn btn-solid" id="add-btn">+ New Entry</button>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <div class="sort-strip">
+        <span class="sort-prefix">Sort</span>
+        <button class="sort-btn active" data-s="default">Default</button>
+        <button class="sort-btn" data-s="az">A → Z</button>
+        <button class="sort-btn" data-s="za">Z → A</button>
+        <button class="sort-btn" data-s="short">Short →</button>
+        <button class="sort-btn" data-s="long">→ Long</button>
+        <button class="sort-btn" data-s="new">Newest</button>
+      </div>
+    </div>
+    <div class="toolbar-right">
+      <div class="view-toggle">
+        <button class="view-btn active" id="vg" title="Grid">⊞</button>
+        <button class="view-btn" id="vl" title="List">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER PANEL -->
+  <div class="filter-panel" id="filter-panel">
+    <div class="filter-grid">
+      <div class="filter-group">
+        <div class="filter-group-label">Category</div>
+        <div class="filter-chips" id="fc-cat"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-label">Mood</div>
+        <div class="filter-chips" id="fc-mood"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-label">Style</div>
+        <div class="filter-chips" id="fc-style"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-group-label">Length</div>
+        <div class="filter-chips" id="fc-len"></div>
+      </div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-group-label">Tags</div>
+      <div class="filter-chips" id="fc-tags"></div>
+    </div>
+    <div class="filter-footer">
+      <div id="active-tags" style="display:flex;flex-wrap:wrap;gap:6px;flex:1;"></div>
+      <button class="btn btn-ghost" style="height:32px;" id="clear-btn">✕ Clear</button>
+    </div>
+  </div>
+
+  <div class="result-info" id="result-info"></div>
+  <div id="names-container" class="grid-view"></div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-heading" id="m-heading">New Entry</span>
+      <button class="modal-x" id="m-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg">
+        <label class="fl">Title *</label>
+        <input class="fi" id="f-title" placeholder="e.g. Synthetic Entrance">
+      </div>
+      <div class="frow">
+        <div class="fg">
+          <label class="fl">Category *</label>
+          <input class="fi" id="f-cat" placeholder="Technical, Hybrid…">
+          <div class="fh">Free text — creates new categories</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Mood *</label>
+          <input class="fi" id="f-mood" placeholder="Dreamy, Eerie…">
+          <div class="fh">Any mood descriptor</div>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="fg">
+          <label class="fl">Style</label>
+          <input class="fi" id="f-style" placeholder="Glitch, Formal…">
+        </div>
+        <div class="fg">
+          <label class="fl">Length</label>
+          <input class="fi" id="f-len" placeholder="auto" readonly style="opacity:.4;cursor:default;">
+          <div class="len-preview" id="len-preview"></div>
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Tags <span style="font-size:9px;letter-spacing:0;color:var(--muted)">(comma-separated)</span></label>
+        <input class="fi" id="f-tags" placeholder="cyber, retro, nostalgia">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" id="m-cancel">Cancel</button>
+      <button class="btn btn-solid" id="m-save">Save Entry</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════
+// DATASET
+// ════════════════════════
+const FIXED = [
+  {id:1,  title:"Synthetic Entrance",      cat:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["cyber","tech","entry"],                   ts:1714089600000},
+  {id:2,  title:"Cherry Cola Skies",       cat:"Atmospheric",   mood:"Dreamy",      style:"Casual",       tags:["retro","sky","pastel","nostalgia"],        ts:1714176000000},
+  {id:3,  title:"Counting Constellations", cat:"Atmospheric",   mood:"Melancholic", style:"Creative",     tags:["space","night","poetic"],                 ts:1714262400000},
+  {id:4,  title:"C0d3r's Paradox",         cat:"Technical",     mood:"Analytical",  style:"Glitch",       tags:["code","cyber","glitch","leet"],            ts:1714348800000},
+  {id:5,  title:"Neon Meridian",           cat:"Atmospheric",   mood:"Energetic",   style:"Creative",     tags:["neon","retro","city","cyber"],             ts:1714435200000},
+  {id:6,  title:"Protocol Horizon",        cat:"Technical",     mood:"Mysterious",  style:"Professional", tags:["tech","network","future"],                ts:1714521600000},
+  {id:7,  title:"Glass Frequencies",       cat:"Creative",      mood:"Dreamy",      style:"Creative",     tags:["music","ethereal","analog"],              ts:1714608000000},
+  {id:8,  title:"Terminal Bloom",          cat:"Hybrid",        mood:"Nostalgic",   style:"Creative",     tags:["code","nature","contrast","retro"],        ts:1714694400000},
+  {id:9,  title:"Cascade Index",           cat:"Institutional", mood:"Analytical",  style:"Formal",       tags:["data","system","order"],                  ts:1714780800000},
+  {id:10, title:"Velvet Algorithm",        cat:"Technical",     mood:"Mysterious",  style:"Creative",     tags:["luxury","code","soft","cyber"],            ts:1714867200000},
+  {id:11, title:"Midnight Compile",        cat:"Technical",     mood:"Melancholic", style:"Casual",       tags:["code","night","dev","late-night"],         ts:1714953600000},
+  {id:12, title:"Pastel Override",         cat:"Creative",      mood:"Energetic",   style:"Glitch",       tags:["pastel","retro","cyber","override"],       ts:1715040000000},
+  {id:13, title:"Signal Lost",             cat:"Atmospheric",   mood:"Eerie",       style:"Creative",     tags:["analog","signal","nostalgia","broken"],    ts:1715126400000},
+  {id:14, title:"Datawave Reverie",        cat:"Hybrid",        mood:"Dreamy",      style:"Creative",     tags:["data","wave","dream","retro"],             ts:1715212800000},
+  {id:15, title:"The Archive Speaks",      cat:"Institutional", mood:"Mysterious",  style:"Formal",       tags:["archive","history","memory","system"],     ts:1715299200000},
+  {id:16, title:"Pink Noise Garden",       cat:"Atmospheric",   mood:"Dreamy",      style:"Creative",     tags:["pink","nature","sound","ambient"],         ts:1715385600000},
+  {id:17, title:"Recursion Sunset",        cat:"Technical",     mood:"Melancholic", style:"Creative",     tags:["code","sky","loop","poetic"],              ts:1715472000000},
+  {id:18, title:"Mall Cop Frequency",      cat:"Creative",      mood:"Nostalgic",   style:"Casual",       tags:["retro","90s","mall","irony"],              ts:1715558400000},
+  {id:19, title:"Liminal Loop",            cat:"Atmospheric",   mood:"Eerie",       style:"Creative",     tags:["liminal","loop","void","space"],           ts:1715644800000},
+  {id:20, title:"Quantum Drift",           cat:"Technical",     mood:"Mysterious",  style:"Professional", tags:["quantum","drift","physics","future"],      ts:1715731200000},
+  {id:21, title:"Analog Séance",           cat:"Atmospheric",   mood:"Eerie",       style:"Creative",     tags:["analog","occult","retro","signal"],        ts:1715817600000},
+  {id:22, title:"Soft Reboot",             cat:"Technical",     mood:"Hopeful",     style:"Casual",       tags:["code","reset","calm","system"],            ts:1715904000000},
+  {id:23, title:"Bureau of Lost Signals",  cat:"Institutional", mood:"Mysterious",  style:"Formal",       tags:["signal","archive","bureaucracy","analog"], ts:1715990400000},
+  {id:24, title:"Peach Static",            cat:"Atmospheric",   mood:"Nostalgic",   style:"Casual",       tags:["pastel","static","retro","warm"],          ts:1716076800000},
+  {id:25, title:"Hyper Pastoral",          cat:"Hybrid",        mood:"Dreamy",      style:"Creative",     tags:["nature","cyber","future","soft"],          ts:1716163200000},
+  {id:26, title:"Eigenvalue Dreams",       cat:"Technical",     mood:"Dreamy",      style:"Professional", tags:["math","code","abstract","dream"],          ts:1716249600000},
+  {id:27, title:"Dusk Protocol",           cat:"Technical",     mood:"Melancholic", style:"Professional", tags:["network","dusk","system","end"],           ts:1716336000000},
+  {id:28, title:"Sakura Overflow",         cat:"Creative",      mood:"Energetic",   style:"Glitch",       tags:["japan","nature","overflow","code"],        ts:1716422400000},
+  {id:29, title:"Forgotten Mall",          cat:"Atmospheric",   mood:"Melancholic", style:"Casual",       tags:["retro","nostalgia","mall","decay"],        ts:1716508800000},
+  {id:30, title:"Stochastic Garden",       cat:"Hybrid",        mood:"Analytical",  style:"Creative",     tags:["math","nature","random","data"],           ts:1716595200000},
+];
+
+let userDB = [];
+let nextId = FIXED.length + 1;
+let view = 'grid';
+let sort = 'default';
+let filters = {cat:[], mood:[], style:[], len:[], tags:[]};
+let editId = null;
+
+const all = () => [...FIXED, ...userDB];
+const uniq = arr => [...new Set(arr)].sort();
+const getLen = t => { const w=t.trim().split(/\s+/).length; return w<=2?'Short (1–2)':w===3?'Medium (3)':'Long (4+)'; };
+const isUser = id => userDB.some(e => e.id===id);
+const esc = s => s.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+
+// ── FILTER CHIPS ──
+function buildChips() {
+  const mk = (elId, fkey, vals) => {
+    const el = document.getElementById(elId);
+    el.innerHTML = '';
+    vals.forEach(v => {
+      const b = document.createElement('button');
+      b.className = 'chip' + (filters[fkey].includes(v) ? ' on' : '');
+      b.textContent = v;
+      b.onclick = () => toggle(fkey, v);
+      el.appendChild(b);
+    });
+  };
+  mk('fc-cat',  'cat',  uniq(all().map(e=>e.cat).filter(Boolean)));
+  mk('fc-mood', 'mood', uniq(all().map(e=>e.mood).filter(Boolean)));
+  mk('fc-style','style',uniq(all().map(e=>e.style).filter(Boolean)));
+  mk('fc-len',  'len',  ['Short (1–2)','Medium (3)','Long (4+)']);
+  const tagEl = document.getElementById('fc-tags');
+  tagEl.innerHTML = '';
+  uniq(all().flatMap(e=>e.tags||[])).forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (filters.tags.includes(t) ? ' on' : '');
+    b.textContent = '#'+t;
+    b.onclick = () => toggle('tags', t);
+    tagEl.appendChild(b);
+  });
+  // active tags bar
+  const at = document.getElementById('active-tags');
+  at.innerHTML = '';
+  Object.entries(filters).forEach(([k,vals]) => vals.forEach(v => {
+    const d = document.createElement('div');
+    d.className = 'active-tag';
+    d.innerHTML = `<span>${k}: ${v}</span> ✕`;
+    d.onclick = () => toggle(k, v);
+    at.appendChild(d);
+  }));
+}
+
+function toggle(key, val) {
+  const a = filters[key], i = a.indexOf(val);
+  i>=0 ? a.splice(i,1) : a.push(val);
+  buildChips();
+  render();
+}
+
+// ── FILTERED LIST ──
+function filtered() {
+  const q = document.getElementById('q').value.toLowerCase().trim();
+  let items = all().filter(e => {
+    if (q) {
+      const h = [e.title,e.cat,e.mood,e.style,...(e.tags||[])].join(' ').toLowerCase();
+      if (!h.includes(q)) return false;
+    }
+    if (filters.cat.length  && !filters.cat.includes(e.cat))   return false;
+    if (filters.mood.length && !filters.mood.includes(e.mood))  return false;
+    if (filters.style.length&& !filters.style.includes(e.style))return false;
+    if (filters.len.length  && !filters.len.includes(getLen(e.title))) return false;
+    if (filters.tags.length && !filters.tags.some(t=>(e.tags||[]).includes(t))) return false;
+    return true;
+  });
+  if (sort==='az')    items.sort((a,b)=>a.title.localeCompare(b.title));
+  else if (sort==='za')    items.sort((a,b)=>b.title.localeCompare(a.title));
+  else if (sort==='short') items.sort((a,b)=>a.title.length-b.title.length);
+  else if (sort==='long')  items.sort((a,b)=>b.title.length-a.title.length);
+  else if (sort==='new')   items.sort((a,b)=>b.ts-a.ts);
+  return items;
+}
+
+// ── RENDER ──
+function render() {
+  const items = filtered();
+  const total = all().length;
+  document.getElementById('h-total').textContent = total;
+  document.getElementById('h-shown').textContent = items.length;
+  document.getElementById('h-tags').textContent  = uniq(all().flatMap(e=>e.tags||[])).length;
+  document.getElementById('result-info').innerHTML =
+    `Showing <em>${items.length}</em> of <em>${total}</em> entries`;
+
+  const c = document.getElementById('names-container');
+  c.className = view==='grid' ? 'grid-view' : 'list-view';
+
+  if (!items.length) {
+    c.innerHTML = '<div class="empty">No entries match your filters</div>';
+    buildChips(); return;
+  }
+
+  if (view === 'grid') {
+    c.innerHTML = items.map(e => {
+      const tags = (e.tags||[]).map(t=>`<span class="tag">#${t}</span>`).join('');
+      const act = isUser(e.id) ? `<div class="entry-actions">
+        <button onclick="event.stopPropagation();openEdit(${e.id})">edit</button>
+        <button onclick="event.stopPropagation();del(${e.id})">del</button>
+      </div>` : '';
+      return `<div class="name-card" onclick="doCopy(this,'${esc(e.title)}')">
+        ${act}
+        <div class="card-title">${e.title}</div>
+        <div class="card-badges">
+          ${e.cat   ? `<span class="bdg bdg-cat">${e.cat}</span>` : ''}
+          ${e.mood  ? `<span class="bdg bdg-mood">${e.mood}</span>` : ''}
+          ${e.style ? `<span class="bdg bdg-style">${e.style}</span>` : ''}
+        </div>
+        ${tags ? `<div class="card-tags">${tags}</div>` : ''}
+        <div class="card-foot">
+          <span class="cid">ID·${String(e.id).padStart(4,'0')}</span>
+          <span class="copy-hint">click to copy</span>
+        </div>
+        <div class="copy-flash">Copied!</div>
+      </div>`;
+    }).join('');
+  } else {
+    c.innerHTML = items.map(e => {
+      const act = isUser(e.id) ? `<div class="list-actions" onclick="event.stopPropagation()">
+        <button onclick="openEdit(${e.id})">edit</button>
+        <button onclick="del(${e.id})">del</button>
+      </div>` : '';
+      return `<div class="list-item" onclick="doCopy(this,'${esc(e.title)}')">
+        <span class="list-title">${e.title}</span>
+        <span class="list-id">ID·${String(e.id).padStart(4,'0')}</span>
+        <span class="list-copy-hint">copy</span>
+        ${act}
+        <div class="list-copy-flash">Copied!</div>
+      </div>`;
+    }).join('');
+  }
+  buildChips();
+}
+
+// ── COPY ──
+function doCopy(el, title) {
+  navigator.clipboard.writeText(title).catch(()=>{});
+  el.classList.add('flashing');
+  setTimeout(()=>el.classList.remove('flashing'), 850);
+  toast('Copied: ' + title);
+}
+
+// ── MODAL ──
+function openAdd() {
+  editId = null;
+  document.getElementById('m-heading').textContent = 'New Entry';
+  ['f-title','f-cat','f-mood','f-style','f-tags'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-len').value='';
+  document.getElementById('len-preview').textContent='';
+  document.getElementById('overlay').classList.add('open');
+}
+
+function openEdit(id) {
+  editId = id;
+  const e = all().find(x=>x.id===id);
+  document.getElementById('m-heading').textContent = 'Edit Entry';
+  document.getElementById('f-title').value = e.title;
+  document.getElementById('f-cat').value   = e.cat   || '';
+  document.getElementById('f-mood').value  = e.mood  || '';
+  document.getElementById('f-style').value = e.style || '';
+  document.getElementById('f-tags').value  = (e.tags||[]).join(', ');
+  updLen();
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+  editId = null;
+}
+
+function updLen() {
+  const v = document.getElementById('f-title').value.trim();
+  const l = v ? getLen(v) : '';
+  document.getElementById('f-len').value = l;
+  document.getElementById('len-preview').textContent = l;
+}
+
+function saveEntry() {
+  const title = document.getElementById('f-title').value.trim();
+  const cat   = document.getElementById('f-cat').value.trim();
+  const mood  = document.getElementById('f-mood').value.trim();
+  const style = document.getElementById('f-style').value.trim();
+  const tags  = document.getElementById('f-tags').value.split(',').map(t=>t.trim().toLowerCase()).filter(Boolean);
+  if (!title) { toast('Title is required'); return; }
+  if (!cat)   { toast('Category is required'); return; }
+  if (!mood)  { toast('Mood is required'); return; }
+  if (editId) {
+    const e = userDB.find(x=>x.id===editId);
+    if (e) Object.assign(e, {title,cat,mood,style,tags});
+    toast('Entry updated');
+  } else {
+    userDB.push({id:nextId++, title, cat, mood, style, tags, ts:Date.now()});
+    toast('Added: '+title);
+  }
+  closeModal();
+  render();
+}
+
+function del(id) {
+  if (!confirm('Delete this entry?')) return;
+  userDB = userDB.filter(e=>e.id!==id);
+  render();
+  toast('Entry deleted');
+}
+
+// ── TOAST ──
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2100);
+}
+
+// ── EVENTS ──
+document.getElementById('q').addEventListener('input', render);
+document.getElementById('filter-toggle').addEventListener('click', ()=>document.getElementById('filter-panel').classList.toggle('open'));
+document.getElementById('clear-btn').addEventListener('click', ()=>{
+  filters={cat:[],mood:[],style:[],len:[],tags:[]};
+  buildChips(); render();
+});
+document.querySelectorAll('.sort-btn').forEach(b=>b.addEventListener('click', ()=>{
+  document.querySelectorAll('.sort-btn').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  sort = b.dataset.s;
+  render();
+}));
+document.getElementById('vg').addEventListener('click', ()=>{
+  view='grid';
+  document.getElementById('vg').classList.add('active');
+  document.getElementById('vl').classList.remove('active');
+  render();
+});
+document.getElementById('vl').addEventListener('click', ()=>{
+  view='list';
+  document.getElementById('vl').classList.add('active');
+  document.getElementById('vg').classList.remove('active');
+  render();
+});
+document.getElementById('add-btn').addEventListener('click', openAdd);
+document.getElementById('m-close').addEventListener('click', closeModal);
+document.getElementById('m-cancel').addEventListener('click', closeModal);
+document.getElementById('m-save').addEventListener('click', saveEntry);
+document.getElementById('f-title').addEventListener('input', updLen);
+document.getElementById('overlay').addEventListener('click', e=>{
+  if (e.target===document.getElementById('overlay')) closeModal();
+});
+
+// INIT
+buildChips();
+render();
+</script>
+</body>
+  </html>
