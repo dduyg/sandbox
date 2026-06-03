@@ -11,25 +11,25 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --bg:      #14151a;
-  --bg2:     rgba(255,255,255,0.06);
-  --bg3:     #1b1d24;
+  --bg:      #1c1e24;
+  --bg2:     rgba(255,255,255,0.10);
+  --bg3:     #252833;
   --amber:   #e7c547;
-  --amber2:  #a88bff;
+  --amber2:  #8f7bff;
   --rust:    #ff6b7a;
-  --sage:    #4fd6b0;
-  --slate:   #7aa0ff;
-  --text:    #e6e7ee;
-  --muted:   #9aa0b2;
-  --border:  rgba(167,140,255,0.18);
-  --border2: rgba(231,197,71,0.10);
-}
+  --sage:    #52d6b5;
+  --slate:   #7fb0ff;
+  --text:    #eef0f6;
+  --muted:   #b2b7c6;
+  --border:  rgba(143,123,255,0.20);
+  --border2: rgba(231,197,71,0.12);
+}  
 body {
   font-family: 'Space Mono', monospace;
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
-  background: radial-gradient(circle at top, #1b1d24 0%, #14151a 60%, #0f1014 100%);
+  background: var(--bg);
 }
 body::before {
   content: '';
