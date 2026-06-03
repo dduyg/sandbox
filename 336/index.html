@@ -25,18 +25,18 @@
   --border2: rgba(57,213,255,0.10);  
 }
 [data-theme="darker"] {
-  --bg: #0b0f1a;
-  --bg2: rgba(20, 25, 40, 0.65);
-  --bg3: #121a2b;
-  --amber: #00f5ff;
-  --amber2: #7c4dff;
-  --rust: #ff4d6d;
-  --sage: #00ffa3;
-  --slate: #4da3ff;
-  --text: #e8ecff;
-  --muted: #8a93b2;
-  --border: rgba(124,77,255,0.25);
-  --border2: rgba(0,245,255,0.12);
+  --bg: #1a0f2e;
+  --bg2: rgba(40, 20, 70, 0.55);
+  --bg3: #24143d;
+  --amber: #ff4fd8;
+  --amber2: #7c5cff;
+  --rust: #ff7a18;
+  --sage: #2de2e6;
+  --slate: #9b7bff;
+  --text: #f3eaff;
+  --muted: #b8a6d9;
+  --border: rgba(255,79,216,0.18);
+  --border2: rgba(45,226,230,0.12);
 }
 body {  
   font-family: 'Space Mono', monospace;  
@@ -804,12 +804,12 @@ themeBtn.onclick = () => {
     document.documentElement.removeAttribute('data-theme');
     themeBtn.textContent = '◑';
     localStorage.setItem('namedrop-theme', 'default');
-    showToast('DEFAULT THEME');
+    showToast('LIGHT MODE');
   } else {
     document.documentElement.setAttribute('data-theme', 'darker');
     themeBtn.textContent = '◐';
     localStorage.setItem('namedrop-theme', 'darker');
-    showToast('EARTH DARKER THEME');
+    showToast('DARK MODE');
   }
 };
 
