@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ＰＹＴＨＯＮ ＭＡＳＴＥＲＹ</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0a0f;
+    --bg2: #130f18;
+    --amber: #e8a23a;
+    --amber-dim: #9b6a1e;
+    --rust: #c45c2a;
+    --ochre: #c98b2f;
+    --cream: #f2e0c0;
+    --muted: #7a6a55;
+    --cyan: #4ecdc4;
+    --purple: #8b5cf6;
+    --grid: rgba(232, 162, 58, 0.06);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(196, 92, 42, 0.12) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 64px;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .title {
+    font-size: clamp(42px, 8vw, 76px);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--amber) 0%, var(--ochre) 40%, var(--rust) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    margin-top: 12px;
+  }
+
+  .meta-strip {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .meta-item span.val {
+    color: var(--amber);
+    font-weight: 600;
+  }
+
+  /* Timeline track */
+  .timeline-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.6s ease 0.2s both;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--amber-dim), transparent);
+  }
+
+  /* Phase cards */
+  .phases {
+    display: grid;
+    gap: 2px;
+    margin-bottom: 56px;
+  }
+
+  .phase {
+    background: var(--bg2);
+    border: 1px solid rgba(232, 162, 58, 0.12);
+    border-left: 3px solid var(--amber-dim);
+    padding: 0;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .phase:hover {
+    border-left-color: var(--amber);
+    border-color: rgba(232, 162, 58, 0.25);
+  }
+
+  .phase:nth-child(1) { animation-delay: 0.1s; border-left-color: var(--rust); }
+  .phase:nth-child(2) { animation-delay: 0.2s; }
+  .phase:nth-child(3) { animation-delay: 0.3s; border-left-color: var(--ochre); }
+  .phase:nth-child(4) { animation-delay: 0.4s; }
+  .phase:nth-child(5) { animation-delay: 0.5s; border-left-color: var(--cyan); }
+  .phase:nth-child(6) { animation-delay: 0.6s; border-left-color: var(--purple); }
+
+  .phase-header {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .phase-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--amber-dim);
+    letter-spacing: 0.1em;
+  }
+
+  .phase-num .week {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--amber);
+    display: block;
+    line-height: 1;
+  }
+
+  .phase-title-block h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 3px;
+  }
+
+  .phase-title-block p {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .phase-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .badge-foundation { background: rgba(196,92,42,0.15); color: var(--rust); border: 1px solid rgba(196,92,42,0.3); }
+  .badge-core { background: rgba(232,162,58,0.1); color: var(--amber); border: 1px solid rgba(232,162,58,0.25); }
+  .badge-advanced { background: rgba(201,139,47,0.1); color: var(--ochre); border: 1px solid rgba(201,139,47,0.3); }
+  .badge-ds { background: rgba(78,205,196,0.1); color: var(--cyan); border: 1px solid rgba(78,205,196,0.25); }
+  .badge-pro { background: rgba(139,92,246,0.1); color: var(--purple); border: 1px solid rgba(139,92,246,0.25); }
+
+  .phase-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid rgba(232,162,58,0.08);
+  }
+
+  .phase-body.open { display: block; }
+
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+    margin: 16px 0 20px;
+  }
+
+  .topic-chip {
+    background: rgba(232,162,58,0.05);
+    border: 1px solid rgba(232,162,58,0.1);
+    padding: 7px 12px;
+    font-size: 12px;
+    color: var(--cream);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .topic-chip::before {
+    content: '›';
+    color: var(--amber-dim);
+    font-size: 14px;
+  }
+
+  .resources-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--amber-dim);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .resources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .resource-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(232,162,58,0.07);
+    font-size: 12.5px;
+    border-radius: 2px;
+    transition: background 0.15s ease;
+  }
+
+  .resource-row:hover { background: rgba(232,162,58,0.05); }
+
+  .resource-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    min-width: 52px;
+  }
+
+  .resource-name {
+    color: var(--cream);
+    flex: 1;
+  }
+
+  .resource-link {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--amber-dim);
+    text-decoration: none;
+    padding: 2px 6px;
+    border: 1px solid rgba(232,162,58,0.2);
+    border-radius: 2px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .resource-link:hover { color: var(--amber); border-color: var(--amber); }
+
+  /* Study schema */
+  .schema-section {
+    margin-bottom: 56px;
+    animation: fadeUp 0.6s ease 0.4s both;
+  }
+
+  .daily-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .day-card {
+    background: var(--bg2);
+    border: 1px solid rgba(232,162,58,0.1);
+    padding: 16px;
+    border-radius: 2px;
+  }
+
+  .day-name {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--amber-dim);
+    letter-spacing: 0.2em;
+    margin-bottom: 10px;
+  }
+
+  .day-block {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .day-block .highlight { color: var(--cream); font-weight: 600; }
+
+  /* Tools section */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .tool-card {
+    background: var(--bg2);
+    border: 1px solid rgba(232,162,58,0.1);
+    padding: 18px;
+    border-radius: 2px;
+  }
+
+  .tool-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .tool-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .tool-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* Tips */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .tip-card {
+    background: var(--bg2);
+    border: 1px solid rgba(232,162,58,0.08);
+    border-left: 3px solid var(--rust);
+    padding: 16px 18px;
+  }
+
+  .tip-card:nth-child(2) { border-left-color: var(--amber); }
+  .tip-card:nth-child(3) { border-left-color: var(--cyan); }
+  .tip-card:nth-child(4) { border-left-color: var(--purple); }
+
+  .tip-title {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+
+  .tip-text {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(232,162,58,0.1);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.2em;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Toggle arrow */
+  .toggle-arrow {
+    color: var(--amber-dim);
+    font-size: 18px;
+    transition: transform 0.2s ease;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .phase.expanded .toggle-arrow { transform: rotate(90deg); }
+
+  /* Progress bar */
+  .timeline-bar {
+    display: flex;
+    margin-bottom: 48px;
+    gap: 3px;
+    animation: fadeUp 0.6s ease 0.15s both;
+  }
+
+  .tbar-segment {
+    height: 6px;
+    border-radius: 1px;
+    flex: 1;
+    transition: opacity 0.2s;
+  }
+
+  .tbar-segment:hover { opacity: 0.8; }
+
+  .t1 { background: var(--rust); }
+  .t2 { background: linear-gradient(to right, var(--rust), var(--amber)); }
+  .t3 { background: var(--amber); }
+  .t4 { background: var(--ochre); }
+  .t5 { background: var(--cyan); }
+  .t6 { background: var(--purple); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">// FREE · FAST · COMPLETE</div>
+    <div class="title">ＰＹＴＨＯＮ<br>ＭＡＳＴＥＲＹ</div>
+    <div class="subtitle">ＬＥＡＲＮＩＮＧ ＳＣＨＥＭＡ ＆ ＲＯＡＤＭＡＰ</div>
+    <div class="meta-strip">
+      <div class="meta-item">⏱ Total: <span class="val">8–12 weeks</span></div>
+      <div class="meta-item">📅 Daily: <span class="val">2–3 hrs</span></div>
+      <div class="meta-item">💰 Cost: <span class="val">$0</span></div>
+      <div class="meta-item">🎯 Level: <span class="val">Zero → Production</span></div>
+    </div>
+  </div>
+
+  <!-- Timeline bar -->
+  <div class="timeline-bar">
+    <div class="tbar-segment t1" title="Week 1–2: Foundations"></div>
+    <div class="tbar-segment t2" title="Week 2–3: Core Concepts"></div>
+    <div class="tbar-segment t3" title="Week 3–5: Intermediate"></div>
+    <div class="tbar-segment t4" title="Week 5–7: Advanced"></div>
+    <div class="tbar-segment t5" title="Week 7–10: Data Science Track"></div>
+    <div class="tbar-segment t6" title="Week 10–12: Production & Projects"></div>
+  </div>
+
+  <!-- Phases -->
+  <div class="timeline-header">
+    <div class="section-label">ＰＨＡＳＥＳ</div>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="phases">
+
+    <!-- Phase 1 -->
+    <div class="phase" onclick="toggle(this)">
+      <div class="phase-header">
+        <div class="phase-num"><span class="week">W1–2</span>~14 days</div>
+        <div class="phase-title-block">
+          <h3>Foundations</h3>
+          <p>syntax · types · control flow · functions</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="phase-badge badge-foundation">FOUNDATION</span>
+          <span class="toggle-arrow">›</span>
+        </div>
+      </div>
+      <div class="phase-body">
+        <div class="topics-grid">
+          <div class="topic-chip">Variables & Types</div>
+          <div class="topic-chip">Strings & f-strings</div>
+          <div class="topic-chip">Lists, Tuples, Dicts, Sets</div>
+          <div class="topic-chip">if / elif / else</div>
+          <div class="topic-chip">for & while loops</div>
+          <div class="topic-chip">Functions & scope</div>
+          <div class="topic-chip">*args / **kwargs</div>
+          <div class="topic-chip">List comprehensions</div>
+          <div class="topic-chip">File I/O basics</div>
+          <div class="topic-chip">Error handling (try/except)</div>
+          <div class="topic-chip">Modules & imports</div>
+          <div class="topic-chip">Built-in functions</div>
+        </div>
+        <div class="resources-label">FREE RESOURCES</div>
+        <div class="resources-list">
+          <div class="resource-row"><span class="resource-type">COURSE</span><span class="resource-name">Python for Everybody – Dr. Chuck (Coursera, free audit)</span><a class="resource-link" href="https://www.coursera.org/specializations/python" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">BOOK</span><span class="resource-name">Automate the Boring Stuff with Python – Al Sweigart</span><a class="resource-link" href="https://automatetheboringstuff.com" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">PRACTICE</span><span class="resource-name">Exercism.io – Python track (mentored exercises)</span><a class="resource-link" href="https://exercism.org/tracks/python" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">REPL</span><span class="resource-name">Python.org REPL + Google Colab (zero setup)</span><a class="resource-link" href="https://colab.research.google.com" target="_blank">VISIT</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase" onclick="toggle(this)">
+      <div class="phase-header">
+        <div class="phase-num"><span class="week">W2–3</span>~10 days</div>
+        <div class="phase-title-block">
+          <h3>Core Pythonic Concepts</h3>
+          <p>OOP · iterators · lambdas · decorators</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="phase-badge badge-core">CORE</span>
+          <span class="toggle-arrow">›</span>
+        </div>
+      </div>
+      <div class="phase-body">
+        <div class="topics-grid">
+          <div class="topic-chip">Classes & Objects</div>
+          <div class="topic-chip">Inheritance & MRO</div>
+          <div class="topic-chip">Dunder methods</div>
+          <div class="topic-chip">Generators & yield</div>
+          <div class="topic-chip">Iterators & itertools</div>
+          <div class="topic-chip">Lambda functions</div>
+          <div class="topic-chip">map / filter / reduce</div>
+          <div class="topic-chip">Decorators</div>
+          <div class="topic-chip">Context managers</div>
+          <div class="topic-chip">dataclasses</div>
+          <div class="topic-chip">Type hints (mypy)</div>
+          <div class="topic-chip">Walrus operator :=</div>
+        </div>
+        <div class="resources-label">FREE RESOURCES</div>
+        <div class="resources-list">
+          <div class="resource-row"><span class="resource-type">COURSE</span><span class="resource-name">CS50P – Harvard's Python course (100% free)</span><a class="resource-link" href="https://cs50.harvard.edu/python" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">VIDEO</span><span class="resource-name">Corey Schafer – OOP & intermediate Python (YouTube)</span><a class="resource-link" href="https://youtube.com/@coreyms" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">DOCS</span><span class="resource-name">Real Python – in-depth tutorials (free tier)</span><a class="resource-link" href="https://realpython.com" target="_blank">VISIT</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase" onclick="toggle(this)">
+      <div class="phase-header">
+        <div class="phase-num"><span class="week">W3–5</span>~14 days</div>
+        <div class="phase-title-block">
+          <h3>Intermediate Python</h3>
+          <p>stdlib deep-dive · testing · packaging · concurrency</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="phase-badge badge-advanced">INTERMEDIATE</span>
+          <span class="toggle-arrow">›</span>
+        </div>
+      </div>
+      <div class="phase-body">
+        <div class="topics-grid">
+          <div class="topic-chip">os, sys, pathlib</div>
+          <div class="topic-chip">collections module</div>
+          <div class="topic-chip">datetime & time</div>
+          <div class="topic-chip">re (regex)</div>
+          <div class="topic-chip">json, csv, pickle</div>
+          <div class="topic-chip">logging module</div>
+          <div class="topic-chip">unittest & pytest</div>
+          <div class="topic-chip">Virtual envs & pip</div>
+          <div class="topic-chip">threading & asyncio</div>
+          <div class="topic-chip">subprocess</div>
+          <div class="topic-chip">argparse / click</div>
+          <div class="topic-chip">packaging & pyproject.toml</div>
+        </div>
+        <div class="resources-label">FREE RESOURCES</div>
+        <div class="resources-list">
+          <div class="resource-row"><span class="resource-type">BOOK</span><span class="resource-name">Fluent Python 2e – first chapters free online (O'Reilly preview)</span><a class="resource-link" href="https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">DOCS</span><span class="resource-name">Official Python Docs – Library Reference (MUST READ)</span><a class="resource-link" href="https://docs.python.org/3/library/" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">PRACTICE</span><span class="resource-name">LeetCode – Easy/Medium in Python (algorithms)</span><a class="resource-link" href="https://leetcode.com" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">VIDEO</span><span class="resource-name">ArjanCodes – Python design patterns (YouTube)</span><a class="resource-link" href="https://youtube.com/@ArjanCodes" target="_blank">VISIT</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase" onclick="toggle(this)">
+      <div class="phase-header">
+        <div class="phase-num"><span class="week">W5–7</span>~14 days</div>
+        <div class="phase-title-block">
+          <h3>Advanced Python</h3>
+          <p>metaclasses · memory · performance · patterns</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="phase-badge badge-advanced">ADVANCED</span>
+          <span class="toggle-arrow">›</span>
+        </div>
+      </div>
+      <div class="phase-body">
+        <div class="topics-grid">
+          <div class="topic-chip">Metaclasses</div>
+          <div class="topic-chip">Descriptors & properties</div>
+          <div class="topic-chip">Abstract base classes</div>
+          <div class="topic-chip">Protocol typing</div>
+          <div class="topic-chip">Memory model & GC</div>
+          <div class="topic-chip">Slots & __dict__</div>
+          <div class="topic-chip">Profiling (cProfile, line_profiler)</div>
+          <div class="topic-chip">Cython / Numba basics</div>
+          <div class="topic-chip">multiprocessing</div>
+          <div class="topic-chip">Design patterns (SOLID)</div>
+          <div class="topic-chip">functools & operator</div>
+          <div class="topic-chip">Abstract syntax trees</div>
+        </div>
+        <div class="resources-label">FREE RESOURCES</div>
+        <div class="resources-list">
+          <div class="resource-row"><span class="resource-type">VIDEO</span><span class="resource-name">Raymond Hettinger – Beyond PEP 8 (PyCon talk)</span><a class="resource-link" href="https://www.youtube.com/watch?v=wf-BqAjZb8M" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">BOOK</span><span class="resource-name">Python Cookbook (3e) – David Beazley (partial free)</span><a class="resource-link" href="https://github.com/dabeaz/python-cookbook" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">VIDEO</span><span class="resource-name">mCoding – advanced Python deep dives (YouTube)</span><a class="resource-link" href="https://youtube.com/@mCoding" target="_blank">VISIT</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 5 -->
+    <div class="phase" onclick="toggle(this)">
+      <div class="phase-header">
+        <div class="phase-num"><span class="week">W7–10</span>~21 days</div>
+        <div class="phase-title-block">
+          <h3>Data Science & Engineering Track</h3>
+          <p>numpy · pandas · sql · ml · viz — your domain</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="phase-badge badge-ds">DATA TRACK</span>
+          <span class="toggle-arrow">›</span>
+        </div>
+      </div>
+      <div class="phase-body">
+        <div class="topics-grid">
+          <div class="topic-chip">NumPy arrays & broadcasting</div>
+          <div class="topic-chip">Pandas: reshape, merge, groupby</div>
+          <div class="topic-chip">SQLAlchemy & psycopg2</div>
+          <div class="topic-chip">Matplotlib & Seaborn</div>
+          <div class="topic-chip">Plotly & Altair</div>
+          <div class="topic-chip">Scikit-learn pipelines</div>
+          <div class="topic-chip">SHAP & explainability</div>
+          <div class="topic-chip">Airflow / Prefect basics</div>
+          <div class="topic-chip">FastAPI / Flask</div>
+          <div class="topic-chip">Docker + Python apps</div>
+          <div class="topic-chip">pydantic validation</div>
+          <div class="topic-chip">Polars (modern Pandas)</div>
+        </div>
+        <div class="resources-label">FREE RESOURCES</div>
+        <div class="resources-list">
+          <div class="resource-row"><span class="resource-type">COURSE</span><span class="resource-name">fast.ai Practical Deep Learning (free, world-class)</span><a class="resource-link" href="https://fast.ai" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">COURSE</span><span class="resource-name">Kaggle Learn – Pandas, ML, SQL (micro-courses, free)</span><a class="resource-link" href="https://kaggle.com/learn" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">DOCS</span><span class="resource-name">Pandas User Guide + NumPy Fundamentals</span><a class="resource-link" href="https://pandas.pydata.org/docs/user_guide/" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">BOOK</span><span class="resource-name">Python for Data Analysis 3e – Wes McKinney (free online)</span><a class="resource-link" href="https://wesmckinney.com/book/" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">PRACTICE</span><span class="resource-name">Kaggle Competitions – practice with real data</span><a class="resource-link" href="https://kaggle.com/competitions" target="_blank">VISIT</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 6 -->
+    <div class="phase" onclick="toggle(this)">
+      <div class="phase-header">
+        <div class="phase-num"><span class="week">W10–12</span>~14 days</div>
+        <div class="phase-title-block">
+          <h3>Production & Portfolio</h3>
+          <p>CI/CD · testing · real projects · open source</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="phase-badge badge-pro">PRODUCTION</span>
+          <span class="toggle-arrow">›</span>
+        </div>
+      </div>
+      <div class="phase-body">
+        <div class="topics-grid">
+          <div class="topic-chip">pytest + coverage</div>
+          <div class="topic-chip">GitHub Actions CI</div>
+          <div class="topic-chip">pre-commit hooks</div>
+          <div class="topic-chip">uv / ruff / black</div>
+          <div class="topic-chip">Semantic versioning</div>
+          <div class="topic-chip">README & docstrings</div>
+          <div class="topic-chip">PyPI publishing</div>
+          <div class="topic-chip">Build real project × 2</div>
+          <div class="topic-chip">Contribute to open source</div>
+          <div class="topic-chip">Code review practice</div>
+        </div>
+        <div class="resources-label">FREE RESOURCES</div>
+        <div class="resources-list">
+          <div class="resource-row"><span class="resource-type">DOCS</span><span class="resource-name">Python Packaging Guide – packaging.python.org</span><a class="resource-link" href="https://packaging.python.org" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">PLATFORM</span><span class="resource-name">GitHub – build public portfolio + contribute</span><a class="resource-link" href="https://github.com" target="_blank">VISIT</a></div>
+          <div class="resource-row"><span class="resource-type">VIDEO</span><span class="resource-name">Anthonywritescode – advanced Python dev workflows (YouTube)</span><a class="resource-link" href="https://youtube.com/@anthonywritescode" target="_blank">VISIT</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Daily Schema -->
+  <div class="schema-section">
+    <div class="timeline-header">
+      <div class="section-label">ＤＡＩＬＹ ＳＣＨＥＤＵＬＥ</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="daily-grid">
+      <div class="day-card">
+        <div class="day-name">MON / WED / FRI</div>
+        <div class="day-block">
+          <span class="highlight">30 min</span> — Read / watch new concept<br>
+          <span class="highlight">60 min</span> — Code along + notes<br>
+          <span class="highlight">30 min</span> — Exercises (Exercism / LeetCode)
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">TUE / THU</div>
+        <div class="day-block">
+          <span class="highlight">30 min</span> — Review previous day<br>
+          <span class="highlight">90 min</span> — Mini-project sprint<br>
+          <span class="highlight">No new theory</span> — consolidation day
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">SATURDAY</div>
+        <div class="day-block">
+          <span class="highlight">2–3 hrs</span> — Build something real<br>
+          Pick a small utility from work or hobby; apply the week's concepts.
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-name">SUNDAY</div>
+        <div class="day-block">
+          <span class="highlight">Optional</span> — light day<br>
+          Read PEPs · Watch conference talks · Review Anki cards (if using)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tools -->
+  <div class="schema-section">
+    <div class="timeline-header">
+      <div class="section-label">ＥＳＳＥＮＴＩＡＬ ＴＯＯＬＳ</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-icon">⚡</div>
+        <div class="tool-name">VS Code + Pylance</div>
+        <div class="tool-desc">Free IDE with best-in-class Python intellisense, debugger, and Jupyter support.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">📓</div>
+        <div class="tool-name">Google Colab</div>
+        <div class="tool-desc">Zero-setup notebooks with free GPU — perfect for data science phases.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🧪</div>
+        <div class="tool-name">uv (package manager)</div>
+        <div class="tool-desc">Modern, blazing-fast replacement for pip + venv. Single tool for everything.</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-icon">🤖</div>
+        <div class="tool-name">Claude / ChatGPT</div>
+        <div class="tool-desc">Use AI to explain concepts, debug, code review — but always understand before copying.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="schema-section">
+    <div class="timeline-header">
+      <div class="section-label">ＳＰＥＥＤ ＴＩＰＳ</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-title">Build Immediately</div>
+        <div class="tip-text">Every week, build something tiny with the new concept. A CLI tool, a data cleaner, a visualizer. You learn 10× faster when there's real output.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">Read Error Messages</div>
+        <div class="tip-text">Don't skip to Stack Overflow. Read the full traceback. After 2 weeks, you'll debug 80% of errors without googling.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">Use the REPL Daily</div>
+        <div class="tip-text">Open python3 in terminal and experiment. Test any function, any concept in 30 seconds. The REPL is the best teacher.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-title">Spaced Repetition</div>
+        <div class="tip-text">Use Anki for syntax patterns. 10 cards/day compounds massively. Free at anki.net. Pre-made Python decks exist.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    ＰＹＴＨＯＮ ＭＡＳＴＥＲＹ ＲＯＡＤＭＡＰ ／ FREE · FAST · COMPLETE ／ CLICK PHASES TO EXPAND
+  </div>
+
+</div>
+
+<script>
+  function toggle(el) {
+    const body = el.querySelector('.phase-body');
+    const isOpen = body.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.phase-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.phase').forEach(p => p.classList.remove('expanded'));
+    // Open clicked if it was closed
+    if (!isOpen) {
+      body.classList.add('open');
+      el.classList.add('expanded');
+    }
+  }
+
+  // Open first phase by default
+  document.querySelector('.phase').click();
+</script>
+</body>
+</html>
