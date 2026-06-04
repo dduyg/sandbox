@@ -445,7 +445,7 @@ header {
 /* ── MODAL ── */  
 .modal-overlay {  
   position: fixed; inset: 0;  
-  background: rgba(0,0,0,0.4);  
+  background: rgba(0,0,0,0.7);  
   backdrop-filter: blur(8px);  
   z-index: 100;  
   display: flex; align-items: center; justify-content: center;  
@@ -455,7 +455,7 @@ header {
 }  
 .modal-overlay.open { opacity: 1; pointer-events: all; }  
 .modal {  
-  background: var(--bg3);
+  background: rgba(0,0,0,0.5);
   border: 1px solid rgba(138,92,255,0.28);  
   border-top: 3px solid var(--amber);  
   padding: 30px;  
@@ -507,7 +507,7 @@ header {
 .form-input:focus {  
   border-color: rgba(138,92,255,0.45);  
   border-bottom-color: var(--amber);  
-  background: rgba(255,255,255,0.92);  
+  background: rgba(255,255,255,0.4);  
   box-shadow: 0 2px 16px rgba(255,110,199,0.08);  
 }  
 .form-input[readonly] { opacity: 0.45; cursor: default; background: rgba(246,241,255,0.5); }  
@@ -522,7 +522,7 @@ header {
 /* ── CONFIRM MODAL ── */  
 .confirm-overlay {  
   position: fixed; inset: 0;  
-  background: rgba(0,0,0,0.4);  
+  background: rgba(0,0,0,0.7);  
   backdrop-filter: blur(4px);  
   z-index: 150;  
   display: flex; align-items: center; justify-content: center;  
@@ -531,7 +531,7 @@ header {
 }  
 .confirm-overlay.open { opacity: 1; pointer-events: all; }  
 .confirm-box {  
-  background: linear-gradient(145deg, rgba(255,242,246,0.97), rgba(253,242,255,0.97));  
+  background: rgba(0,0,0,0.5);  
   border: 1px solid rgba(255,122,162,0.3);  
   border-top: 3px solid var(--rust);  
   padding: 28px; max-width: 360px; width: 100%;  
@@ -548,7 +548,7 @@ header {
 /* ── PASSWORD MODAL ── */  
 .pw-overlay {  
   position: fixed; inset: 0;  
-  background: rgba(0,0,0,0.4);  
+  background: rgba(0,0,0,0.7);  
   backdrop-filter: blur(12px);  
   z-index: 250;  
   display: flex; align-items: center; justify-content: center;  
@@ -557,7 +557,7 @@ header {
 }  
 .pw-overlay.open { opacity: 1; pointer-events: all; }  
 .pw-box {  
-  background: var(--bg2);  
+  background: rgba(0,0,0,0.5);  
   border: 1px solid var(--border);
   border-top: 3px solid var(--amber2);  
   padding: 32px;  
@@ -587,7 +587,7 @@ header {
 }  
 .pw-input {  
   width: 100%;  
-  background: rgba(255,255,255,0.8);  
+  background: rgba(255,255,255,0.5);  
   border: 1px solid rgba(138,92,255,0.2);  
   border-bottom: 2px solid var(--amber2);  
   padding: 11px 14px;  
