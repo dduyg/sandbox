@@ -445,7 +445,7 @@ header {
 /* ── MODAL ── */  
 .modal-overlay {  
   position: fixed; inset: 0;  
-  background: rgba(38,20,60,0.4);  
+  background: rgba(0,0,0,0.4);  
   backdrop-filter: blur(8px);  
   z-index: 100;  
   display: flex; align-items: center; justify-content: center;  
@@ -455,7 +455,7 @@ header {
 }  
 .modal-overlay.open { opacity: 1; pointer-events: all; }  
 .modal {  
-  background: linear-gradient(145deg, rgba(246,241,255,0.97) 0%, rgba(253,242,255,0.97) 50%, rgba(234,247,255,0.97) 100%);  
+  background: var(--bg3);
   border: 1px solid rgba(138,92,255,0.28);  
   border-top: 3px solid var(--amber);  
   padding: 30px;  
@@ -495,9 +495,9 @@ header {
 }  
 .form-input {  
   width: 100%;  
-  background: rgba(255,255,255,0.72);  
-  border: 1px solid rgba(138,92,255,0.2);  
-  border-bottom: 2px solid rgba(138,92,255,0.25);  
+  background: var(--bg2);  
+  border: 1px solid var(--border);  
+  border-bottom: 2px solid var(--amber);  
   padding: 10px 13px;  
   font-family: 'Space Mono', monospace;  
   font-size: 12px; color: var(--text); outline: none;  
@@ -522,7 +522,7 @@ header {
 /* ── CONFIRM MODAL ── */  
 .confirm-overlay {  
   position: fixed; inset: 0;  
-  background: rgba(0,0,0,0.6);  
+  background: rgba(0,0,0,0.4);  
   backdrop-filter: blur(4px);  
   z-index: 150;  
   display: flex; align-items: center; justify-content: center;  
@@ -548,7 +548,7 @@ header {
 /* ── PASSWORD MODAL ── */  
 .pw-overlay {  
   position: fixed; inset: 0;  
-  background: rgba(0,0,0,0.6);  
+  background: rgba(0,0,0,0.4);  
   backdrop-filter: blur(12px);  
   z-index: 250;  
   display: flex; align-items: center; justify-content: center;  
@@ -557,8 +557,8 @@ header {
 }  
 .pw-overlay.open { opacity: 1; pointer-events: all; }  
 .pw-box {  
-  background: linear-gradient(145deg, rgba(246,241,255,0.98) 0%, rgba(234,247,255,0.98) 100%);  
-  border: 1px solid rgba(138,92,255,0.3);  
+  background: var(--bg2);  
+  border: 1px solid var(--border);
   border-top: 3px solid var(--amber2);  
   padding: 32px;  
   width: 100%; max-width: 360px;  
