@@ -1,7 +1,0 @@
-
-body{font-family:Arial,sans-serif;background:#fafafa;padding:20px}
-header{display:flex;gap:10px;align-items:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
-.card{background:white;border:1px solid #eaeaea;padding:20px}
-.table .card{display:flex;justify-content:space-between}
-#resonance{margin-top:40px}
