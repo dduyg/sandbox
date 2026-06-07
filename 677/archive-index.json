@@ -1,0 +1,39 @@
+[
+  {
+    "id": "1",
+    "title": "A lion still has claws",
+    "content": "Quote fragment",
+    "tags": [
+      "power",
+      "identity",
+      "quote"
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Workaholic Architect",
+    "content": "Story idea",
+    "tags": [
+      "fiction",
+      "architecture"
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Visual Reference",
+    "content": "Image inspiration",
+    "tags": [
+      "image",
+      "reference"
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Code Snippet",
+    "content": "const x=1",
+    "tags": [
+      "code",
+      "javascript"
+    ]
+  }
+]
