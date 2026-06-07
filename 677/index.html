@@ -1,25 +1,30 @@
-<!DOCTYPE html><html><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Knowledge Garden</title>
 <link rel="stylesheet" href="css/styles.css">
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@7"></script>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-</head><body>
-<header class="topbar">
-<h1>SAINT CATALOG</h1>
-<input id="search" placeholder="Search fragments, tags, notes...">
-<div class="views">
+</head>
+<body>
+<header>
+<h1>CATALOG</h1>
+<input id="search" placeholder="Search fragments">
 <button id="gridBtn">Grid</button>
 <button id="tableBtn">Table</button>
-<button id="graphBtn">Graph</button>
-</div></header>
-<main>
+</header>
+
 <section id="results" class="grid"></section>
-<section id="graphView" hidden><svg id="graph"></svg></section>
-<section id="resonance"><h2>Resonance Field</h2><div id="resonanceNodes"></div></section>
-</main>
+
+<section id="resonance">
+<h2>Resonance Field</h2>
+<div id="resonanceNodes"></div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script src="js/archive.js"></script>
 <script src="js/search.js"></script>
 <script src="js/resonance.js"></script>
 <script src="js/graph.js"></script>
-</body></html>
+</body>
+</html>
