@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Liminal 1309-V03</title>
+  <title>Liminaions 1309-V03</title>
     <style>
 @import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Space+Mono&display=swap");
 
@@ -180,7 +180,7 @@ canvas {
 }
 
 .dg.ac {
-  z-index: 9999 !important;
+  display: none !important;
 }
     </style>
   </head>
@@ -220,7 +220,6 @@ canvas {
       import { OrbitControls } from "https://esm.sh/three@0.136.0/examples/jsm/controls/OrbitControls.js";
       import { MarchingCubes } from "https://esm.sh/three@0.136.0/examples/jsm/objects/MarchingCubes.js";
       import RAPIER from "https://esm.sh/@dimforge/rapier3d-compat@0.11.2";
-      import * as dat from "https://esm.sh/dat.gui";
       import { EffectComposer } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/EffectComposer.js";
       import { RenderPass } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/RenderPass.js";
       import { ShaderPass } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/ShaderPass.js";
@@ -252,11 +251,11 @@ canvas {
 
       // Parallax settings and colors
       const settings = {
-        parallaxStrength: 0.1, // Global parallax strength
-        metaballDepth: 0.1, // Depth multiplier for metaballs
-        textDepth: 0.1, // Depth multiplier for text
-        backgroundColor: "#000000", // Background color
-        textColor: "#0019ff" // Text color
+        parallaxStrength: 0.1, 
+        metaballDepth: 0.1, 
+        textDepth: 0.1, 
+        backgroundColor: "#000000", 
+        textColor: "#0019ff" 
       };
 
       // Set initial background color
@@ -355,9 +354,8 @@ canvas {
         const canvas = document.createElement("canvas");
         const ctx = canvas.getContext("2d");
 
-        // Define canvas size
         canvas.width = 2048;
-        canvas.height = 1024; // Adjust height to accommodate two lines
+        canvas.height = 1024; 
 
         ctx.font = `${fontSize}px Arial`;
         ctx.fillStyle = color;
@@ -366,22 +364,18 @@ canvas {
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = "high";
 
-        // Split the text into two lines
-        const lines = text.split(" "); // Adjust split logic if needed for specific phrases
-        const lineHeight = fontSize * 0.7; // Line height multiplier for spacing
+        const lines = text.split(" "); 
+        const lineHeight = fontSize * 0.7; 
 
-        // Draw the first line ("The") on the upper half
         ctx.fillText(lines[0], canvas.width / 2, canvas.height / 2 - lineHeight / 2);
-
-        // Draw the second line ("Descent") on the lower half
         ctx.fillText(lines[1], canvas.width / 2, canvas.height / 2 + lineHeight / 2);
 
         return new THREE.CanvasTexture(canvas);
       }
 
       // Create and add text plane with multiline text
-      let textTexture = create2DTextTexture("The Descent", 180, settings.textColor); // Use two words separated by space
-      const aspectRatio = 2048 / 1024; // Adjust aspect ratio based on new canvas size
+      let textTexture = create2DTextTexture("The Descent", 180, settings.textColor); 
+      const aspectRatio = 2048 / 1024; 
       const planeWidth = 20;
       const planeHeight = planeWidth / aspectRatio;
 
@@ -394,13 +388,6 @@ canvas {
       const textMesh = new THREE.Mesh(textGeometry, textMaterial);
       textMesh.position.set(0, 0, -8);
       scene.add(textMesh);
-
-      // Function to update text color
-      function updateTextColor() {
-        textTexture = create2DTextTexture("TheDescent", 180, settings.textColor);
-        textMaterial.map = textTexture;
-        textMaterial.needsUpdate = true;
-      }
 
       // Function to create dynamic rigid bodies with metaball updates
       function getBody({ debug = false, RAPIER, world }) {
@@ -451,38 +438,12 @@ canvas {
       let dynamicCollider = RAPIER.ColliderDesc.ball(0.5);
       world.createCollider(dynamicCollider, mouseRigid);
 
-      // dat.gui setup
-      const gui = new dat.GUI();
+      // Effects configurations (Default variables kept for shader fallback)
       const params = {
         grainSize: 1,
         grainIntensity: 0.15,
         blackAndWhite: true
       };
-
-      gui.add(params, "grainSize", 0.1, 5).onChange(updateEffects);
-      gui.add(params, "grainIntensity", 0, 1).onChange(updateEffects);
-      gui.add(params, "blackAndWhite").onChange(updateEffects);
-      gui
-        .add(metaMat.uniforms.refractionRatio, "value", 0, 1)
-        .name("Refraction Ratio");
-      gui
-        .add(metaMat.uniforms.distortionAmount, "value", 0, 0.5)
-        .name("Distortion Amount");
-      gui
-        .add(settings, "parallaxStrength", 0.01, 0.5, 0.01)
-        .name("Parallax Strength");
-      gui.add(settings, "metaballDepth", 0.1, 1.5, 0.05).name("Metaball Depth");
-      gui.add(settings, "textDepth", 0.5, 2.5, 0.05).name("Text Depth");
-      gui
-        .addColor(settings, "backgroundColor")
-        .name("Background Color")
-        .onChange(() => {
-          scene.background.set(settings.backgroundColor);
-        });
-      gui
-        .addColor(settings, "textColor")
-        .name("Text Color")
-        .onChange(updateTextColor);
 
       // Post-processing setup
       const composer = new EffectComposer(renderer);
@@ -537,37 +498,27 @@ canvas {
       const customPass = new ShaderPass(customShader);
       composer.addPass(customPass);
 
-      function updateEffects() {
-        customPass.uniforms.grainSize.value = params.grainSize;
-        customPass.uniforms.grainIntensity.value = params.grainIntensity;
-        customPass.uniforms.blackAndWhite.value = params.blackAndWhite;
-      }
-
-      // Updated Parallax Effect Function with Limited Rotation
+      // Parallax Effect Function with Limited Rotation
       function applyParallaxEffect(object, depth, baseStrength, depthMultiplier = 1) {
-        // Calculate normalized mouse positions
         const normalizedX = mouseX * depth;
         const normalizedY = mouseY * depth;
 
-        // Adjust position, including depth movement (translateZ)
         object.position.x += (normalizedX - object.position.x) * baseStrength;
         object.position.y += (normalizedY - object.position.y) * baseStrength;
 
-        // Fine-tune depth movement (translateZ) with depthMultiplier
-        object.position.z = -0.3 * (normalizedY + normalizedX) * depthMultiplier; // Controls closer/farther effect
+        object.position.z = -0.3 * (normalizedY + normalizedX) * depthMultiplier; 
 
-        // Calculate and limit rotation based on mouse position
-        const maxRotation = 0.1; // Maximum rotation in radians (~5.7 degrees)
+        const maxRotation = 0.1; 
         object.rotation.y = THREE.MathUtils.clamp(
           THREE.MathUtils.degToRad(normalizedX * 3),
           -maxRotation,
           maxRotation
-        ); // Horizontal rotation limited
+        ); 
         object.rotation.x = THREE.MathUtils.clamp(
           THREE.MathUtils.degToRad(normalizedY * 3),
           -maxRotation,
           maxRotation
-        ); // Vertical rotation limited
+        ); 
       }
 
       // Animation loop
@@ -576,10 +527,8 @@ canvas {
         controls.update();
         world.step();
 
-        // Update mouse rigid body translation
         mouseRigid.setTranslation({ x: mousePos.x * 4, y: mousePos.y * 4, z: 0 });
 
-        // Render background (scene without metaballs)
         metaballs.visible = false;
         renderer.setRenderTarget(backgroundRenderTarget);
         renderer.render(scene, camera);
@@ -587,28 +536,25 @@ canvas {
         metaMat.uniforms.tBackground.value = backgroundRenderTarget.texture;
         metaballs.visible = true;
 
-        // Update metaballs
         metaballs.reset();
         bodies.forEach((b) => {
           const { pos, color } = b.update();
           metaballs.addBall(pos.x, pos.y, pos.z, 0.5, 10, color.getHex());
         });
 
-        // Apply enhanced parallax effect to metaballs and text
         applyParallaxEffect(
           metaballs,
           settings.metaballDepth,
           settings.parallaxStrength * 0.5,
           0.3
-        ); // Adjust depth sensitivity for metaballs
+        ); 
         applyParallaxEffect(
           textMesh,
           settings.textDepth,
           settings.parallaxStrength,
           0.5
-        ); // Text moves more, with higher depth multiplier
+        ); 
 
-        // Render the composer with post-processing
         composer.render();
       }
 
