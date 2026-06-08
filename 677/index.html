@@ -250,23 +250,60 @@ body::before {
   right: 10px !important;
 }
 
+/* Responsive design */
 @media (max-width: 768px) {
-  .description, .nav-links, .division, .performance { left: 20px; }
-  .footer, .signal { right: 20px; }
-  .central-text { font-size: 1rem; white-space: normal; max-width: 90%; }
-  .description { width: calc(100vw - 40px); max-width: 300px; }
-  .dg.ac { transform: scale(0.8); transform-origin: top right; }
+  .description,
+  .nav-links,
+  .division,
+  .performance {
+    left: 20px;
+  }
+
+  .footer,
+  .signal {
+    right: 20px;
+  }
+
+  .central-text {
+    font-size: 1rem;
+    white-space: normal;
+    max-width: 90%;
+  }
+
+  .description {
+    width: calc(100vw - 40px);
+    max-width: 300px;
+  }
+
+  .dg.ac {
+    transform: scale(0.8);
+    transform-origin: top right;
+  }
 }
 
 @media (max-width: 480px) {
-  .central-text { font-size: 0.9rem; }
-  .description { font-size: 0.7rem; }
-  .dg.ac { transform: scale(0.7); }
+  .central-text {
+    font-size: 0.9rem;
+  }
+
+  .description {
+    font-size: 0.7rem;
+  }
+
+  .dg.ac {
+    transform: scale(0.7);
+  }
 }
 
+/* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  .nav-links a:hover::after { width: 0; }
-  .nav-links a:active::after { width: 100%; }
+  .nav-links a:hover::after {
+    width: 0;
+  }
+
+  .nav-links a:active::after {
+    width: 100%;
+  }
 }
   </style>
   </head>    
@@ -400,6 +437,7 @@ import { Pane } from "https://esm.sh/tweakpane@4.0.4";
         this.showFallback();
         return;
       }
+      this.initializeScene();
       this.waitForDependencies();
     },
 
@@ -417,7 +455,7 @@ import { Pane } from "https://esm.sh/tweakpane@4.0.4";
     },
 
     onDependenciesReady() {
-      this.webglSupported ? this.initializeScene() : this.showFallback();
+      this.finishLoading();
     },
 
     showError(m) {
@@ -430,14 +468,19 @@ import { Pane } from "https://esm.sh/tweakpane@4.0.4";
 
     showFallback() {
       document.getElementById("fallbackBg").classList.add("active");
-      this.animateTextElements();
+      this.finishLoading();
     },
 
-    finishInitialization() {
-      if (this.webglSupported) {
-        document.getElementById("canvas").classList.add("ready");
-      }
-      this.animateTextElements();
+    finishLoading() {
+      const wait = () => {
+        if ((this.isSceneReady && this.isTextureLoaded) || !this.webglSupported) {
+          if (this.webglSupported) document.getElementById("canvas").classList.add("ready");
+          this.animateTextElements();
+        } else {
+          setTimeout(wait, 50);
+        }
+      };
+      wait();
     },
 
     animateTextElements() {
@@ -447,19 +490,12 @@ import { Pane } from "https://esm.sh/tweakpane@4.0.4";
       }
 
       const ease = "power2.out";
-      const containers = [
-        ".description",
-        ".division",
-        ".signal",
-        ".central-text",
-        ".footer"
-      ];
+      const containers = [".description", ".division", ".signal", ".central-text", ".footer"];
 
       gsap.set(containers.concat(".nav-links"), { opacity: 0 });
 
       const splits = containers.map(
-        (sel) =>
-          SplitText.create(sel, { type: "lines", linesClass: "line" }).lines
+        (sel) => SplitText.create(sel, { type: "lines", linesClass: "line" }).lines
       );
       const [descLines, divLines, sigLines, centralLines, footerLines] = splits;
 
@@ -490,11 +526,6 @@ import { Pane } from "https://esm.sh/tweakpane@4.0.4";
     },
 
     initializeScene() {
-      if (!this.webglSupported) {
-        this.isSceneReady = this.isTextureLoaded = true;
-        return;
-      }
-
       const canvas = document.getElementById("canvas");
       this.renderer = new THREE.WebGLRenderer({
         canvas,
@@ -555,13 +586,9 @@ import { Pane } from "https://esm.sh/tweakpane@4.0.4";
           this.backgroundTexture = tex;
           this.createBackgroundMesh();
           this.isTextureLoaded = true;
-          this.finishInitialization();
         },
         undefined,
-        () => {
-          this.isTextureLoaded = true;
-          this.finishInitialization();
-        }
+        () => (this.isTextureLoaded = true)
       );
     },
 
@@ -703,9 +730,13 @@ void main(){
       p.addBinding(this.PARAMS.distortion, "preset", {
         label: "Presets",
         options: {
-          Minimal: "Minimal", Subtle: "Subtle", "Classic Glass": "Classic Glass",
-          Dramatic: "Dramatic", "Chromatic Focus": "Chromatic Focus",
-          "Liquid Wave": "Liquid Wave", Gigantic: "Gigantic"
+          Minimal: "Minimal",
+          Subtle: "Subtle",
+          "Classic Glass": "Classic Glass",
+          Dramatic: "Dramatic",
+          "Chromatic Focus": "Chromatic Focus",
+          "Liquid Wave": "Liquid Wave",
+          Gigantic: "Gigantic"
         }
       }).on("change", (ev) => this.loadPreset(ev.value));
 
@@ -751,7 +782,12 @@ void main(){
       f6.addBinding(this.PARAMS.distortion, "rimLightIntensity", { min: 0, max: 1, step: 0.01, label: "Rim Light Intensity" }).on("change", (ev) => (this.customPass.uniforms.uRimLightIntensity.value = ev.value));
       f6.addBinding(this.PARAMS.distortion, "rimLightWidth", { min: 0, max: 0.3, step: 0.01, label: "Rim Light Width" }).on("change", (ev) => (this.customPass.uniforms.uRimLightWidth.value = ev.value));
 
-      Object.assign(p.element.style, { position: "fixed", top: "10px", right: "10px", zIndex: "3000" });
+      Object.assign(p.element.style, {
+        position: "fixed",
+        top: "10px",
+        right: "10px",
+        zIndex: "3000"
+      });
       p.hidden = true;
       this.paneVisible = false;
       this.paneInitialized = true;
