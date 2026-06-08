@@ -1,390 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Liminal 1609-V01</title>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Space+Mono&display=swap");
-    * { box-sizing: border-box; }
-    :root {
-      --color-background: rgb(20, 24, 30);
-      --color-foreground: rgb(230, 230, 230);
-      --color-accent: rgb(100, 200, 255);
-      --font-primary: "Cormorant", serif;
-      --font-mono: "Space Mono", monospace;
-      --margin: 32px;
-      --gutter: 16px;
-    }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0; padding: 0;
-      font-family: var(--font-primary);
-      background: radial-gradient(circle at 10% 20%,rgb(0, 0, 0) 0%, rgb(10, 10, 20) 90%);
-      color: var(--color-foreground);
-      letter-spacing: -0.03em;
-      position: relative;
-      text-align: center;
-    }
+  <head>
+    <meta charset="UTF-8">
+    <title>[threejs/gsap] ❍ Interactive Glass Lens Effect with Sound FX</title>
+    <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+<link rel="stylesheet" href="./style.css">
 
-    canvas {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-    }
-
-    .layout {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 100%; height: 100vh;
-      position: relative;
-      padding: 6rem 2rem;
-      z-index: 100;
-      pointer-events: none;
-    }
-
-    .layout__header,
-    .layout__footer,
-    .layout__middle,
-    .layout__bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .layout__header-text,
-    .layout__footer-text {
-      font-family: var(--font-mono);
-    }
-
-    .layout__header-text {
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 30px;
-    }
-
-    .layout__middle-text {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-    }
-
-    .layout__middle-text--right {
-      text-align: right;
-      transform: rotate3d(0, 0, 1, 90deg) translate3d(100%, 10px, 0);
-      transform-origin: right;
-      white-space: nowrap;
-      font-family: var(--font-mono);
-      text-transform: uppercase;
-    }
-
-    .layout__footer-text {
-      font-size: 15rem;
-      line-height: 1em;
-      letter-spacing: -0.05em;
-      margin: 0;
-    }
-
-    .layout__label {
-      position: absolute;
-      font-size: 0.75rem;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .layout__label--top-left {
-      top: var(--margin);
-      left: var(--margin);
-      text-align: left;
-    }
-
-    .layout__label--top-right {
-      top: var(--margin);
-      right: var(--margin);
-      text-align: right;
-      font-family: var(--font-mono);
-    }
-
-    .layout__label--bottom-left {
-      bottom: var(--margin);
-      left: var(--margin);
-      text-align: left;
-    }
-
-    .layout__label--bottom-right {
-      bottom: var(--margin);
-      right: var(--margin);
-      text-align: right;
-      font-family: var(--font-mono);
-    }
-
-    .layout__text-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-      font-size: 3rem;
-      font-weight: 200;
-      z-index: 100;
-      max-width: 440px;
-      mix-blend-mode: screen;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .layout__text-wrapper h1 {
-      font-size: 5rem;
-      font-weight: 300;
-      line-height: 1.1;
-      margin: 0;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-
-    .layout__text-wrapper h1 span {
-      display: block;
-      font-size: 1.5rem;
-    }
-
-    .layout__text-wrapper h1::after {
-      content: "";
-      display: block;
-      width: 50%;
-      height: 1px;
-      background: var(--color-foreground);
-      margin: 1rem auto;
-      opacity: 0.2;
-    }
-
-    .layout__text-wrapper h2 {
-      font-size: 1rem;
-      letter-spacing: 0.2em;
-      margin-top: 1rem;
-      text-transform: uppercase;
-    }
-
-    .dg.ac {
-      z-index: 9999 !important;
-    }
-  </style>
-</head>
+  </head>
     
-<body>
-  <div id="container"></div>
+  <body>
+  <div class="error-message" id="errorMessage"></div>
+<div class="fallback-bg" id="fallbackBg"></div>
 
-  <div class="layout">
-    <div class="layout__middle">
-      <p class="layout__middle-text layout__middle-text--left">|</p>
-      <p class="layout__middle-text layout__middle-text--right">Scanning Coordinates:<br> Uncharted Zone ✶</p>
-    </div>
+<div class="audio-enable">
+  <p>ENTER EXPERIENCE<br />WITH AUDIO</p>
+  <button class="enable-button" id="enableBtn">START</button>
+</div>
 
-    <div class="layout__label layout__label--top-left">
-      <span class="layout__label-text">Vessel<br>Oblivion Horizon</span>
-    </div>
-    <div class="layout__label layout__label--top-right">
-      <span class="layout__label-text">Objective<br>Lost Signal Retrieval</span>
-    </div>
-    <div class="layout__label layout__label--bottom-left">
-      Core<br> Anomaly Drive<br> Status: Unknown
-    </div>
-    <div class="layout__label layout__label--bottom-right">
-      <span class="layout__label-text">Alert<br>Dimensional Rift<br> Imminent</span>
-    </div>
+<div class="preloader" id="preloader">
+  <span id="counter">[000]</span>
+</div>
 
-    <div class="layout__text-wrapper">
-      <h2 style="margin-top:200px;">BEYOND THE VEIL, ALL SIGNALS FADE</h2>
-    </div>
-  </div>
+<canvas id="canvas"></canvas>
 
-  <script type="module">
-    import * as THREE from "https://esm.sh/three@0.136.0";
-    import { OrbitControls } from "https://esm.sh/three@0.136.0/examples/jsm/controls/OrbitControls.js";
-    import { EffectComposer } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/EffectComposer.js";
-    import { RenderPass } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/RenderPass.js";
-    import { ShaderPass } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/ShaderPass.js";
+<p class="text-element description">THE ARCHIVE COLLECTS RECORDS OF ABANDONED WORLDS AND LOST TECHNOLOGIES, WAITING TO BE DISCOVERED.</p>
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    );
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+<nav class="text-element nav-links">
+  <a href="#">_DATA VAULTS</a>
+  <a href="#">_DEEP SPACE</a>
+  <a href="#">_FORBIDDEN ZONES</a>
+  <a href="#">_EXODUS LOGS</a>
+</nav>
 
-    // Custom background shader
-    const backgroundShader = {
-      uniforms: {
-        lightDirection: {
-          value: new THREE.Vector3(Math.sqrt(0.05), Math.sqrt(0.2), Math.sqrt(0.2))
-        }
-      },
-      vertexShader: `
-                    varying vec3 vWorldPosition;
-                    void main() {
-                        vec4 worldPosition = modelMatrix * vec4(position, 1.0);
-                        vWorldPosition = worldPosition.xyz;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `,
-      fragmentShader: `
-                    uniform vec3 lightDirection;
-                    varying vec3 vWorldPosition;
-                    
-                    vec3 background(vec3 d) {
-                        float light = dot(d, lightDirection);
-                        return vec3(max(light * 0.5 + 0.5, 0.0));
-                    }
-                    
-                    void main() {
-                        vec3 viewDirection = normalize(vWorldPosition - cameraPosition);
-                        vec3 color = background(viewDirection);
-                        gl_FragColor = vec4(color, 1.0);
-                    }
-                `
-    };
+<div class="text-element footer">
+  <p>Err: [404 - SIGNAL LOST]<br />
+    SYSTEM TIME: CYCLE 2187.42<br />
+    <span style="opacity: 0.7; font-size: 0.6rem;">PRESS 'H' TO TOGGLE REFRACTION CONTROLS</span>
+  </p>
+</div>
 
-    // Create background
-    const backgroundGeometry = new THREE.SphereGeometry(500, 60, 40);
-    backgroundGeometry.scale(-1, 1, 1); // Invert the geometry so it's visible from the inside
-    const backgroundMaterial = new THREE.ShaderMaterial(backgroundShader);
-    const backgroundMesh = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-    scene.add(backgroundMesh);
+<p class="text-element division">
+  PERFORMANCE ANALYSIS: <span id="fpsCounter"></span> FPS<br>
+  OPTICAL REFRACTION ENGINE: ONLINE<br>
+  ACCESS LEVEL: RESTRICTED.<br>
+  TRACE INITIATED: SOURCE UNKNOWN.
+</p>
 
-    // Create organic ground
-    const groundGeometry = new THREE.PlaneGeometry(20, 20, 200, 200);
-    const groundMaterial = new THREE.MeshStandardMaterial({
-      color: 0x999999,
-      roughness: 2.8
-    });
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    scene.add(ground);
+<p class="text-element signal">_Uplink Pending...</p>
 
-    // Modify ground vertices for organic shape
-    const positions = ground.geometry.attributes.position.array;
-    for (let i = 0; i < positions.length; i += 3) {
-      const x = positions[i];
-      const z = positions[i + 2];
-      positions[i + 1] = Math.sin(x * 0.5) * Math.cos(z * 0.5) * 0.5;
-    }
-    ground.geometry.attributes.position.needsUpdate = true;
+<div class="text-element central-text">
+  THE VAULT RETAINS ECHOES OF CIVILIZATIONS ERASED BY TIME<br>
+  DEAD SYSTEMS. BROKEN SIGNALS. MYTHS WRITTEN IN CODE.
+</div>
 
-    // Create floating sphere
-    const floatingSphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-    const floatingSphereMaterial = new THREE.MeshStandardMaterial({
-      color: 0xaaaaaa,
-      roughness: 2.3
-    });
-    const floatingSphere = new THREE.Mesh(
-      floatingSphereGeometry,
-      floatingSphereMaterial
-    );
-    floatingSphere.position.set(0, 3, 0);
-    scene.add(floatingSphere);
+<audio id="startClickSound" preload="auto">
+  <source src="https://assets.codepen.io/7558/preloader-2s-001.mp3" type="audio/mpeg">
+</audio>
 
-    // Create partially submerged sphere
-    const submergedSphereGeometry = new THREE.SphereGeometry(0.7, 32, 32);
-    const submergedSphereMaterial = new THREE.MeshStandardMaterial({
-      color: 0xa0a0a0,
-      roughness: 2.5
-    });
-    const submergedSphere = new THREE.Mesh(
-      submergedSphereGeometry,
-      submergedSphereMaterial
-    );
-    submergedSphere.position.set(0, 0.2, 0);
-    scene.add(submergedSphere);
+<audio id="preloaderSound" preload="auto">
+  <source src="https://assets.codepen.io/7558/preloader-3s-002.mp3" type="audio/mpeg">
+</audio>
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
+<audio id="hoverSound" preload="auto">
+  <source src="https://assets.codepen.io/7558/preloader-2s-001.mp3" type="audio/mpeg">
+</audio>
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.copy(backgroundShader.uniforms.lightDirection.value);
-    scene.add(directionalLight);
+<audio id="backgroundMusic" loop preload="auto">
+  <source src="https://assets.codepen.io/7558/cinematic-02.mp3" type="audio/mpeg">
+</audio>
+    <script src='https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js'></script><script type="module" src="./script.js"></script>
 
-    // Soft shadows
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    ground.receiveShadow = true;
-    floatingSphere.castShadow = true;
-    submergedSphere.castShadow = true;
-    directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 1024;
-    directionalLight.shadow.mapSize.height = 1024;
-    directionalLight.shadow.camera.near = 1;
-    directionalLight.shadow.camera.far = 20;
-    directionalLight.shadow.radius = 10;
-
-    camera.position.set(0, 5, 10);
-    camera.lookAt(0, 0, 0);
-
-    const controls = new OrbitControls(camera, renderer.domElement);
-
-    // Post-processing for film grain
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-
-    const filmGrainShader = {
-      uniforms: {
-        tDiffuse: { value: null },
-        amount: { value: 0.15 },
-        time: { value: 0 }
-      },
-      vertexShader: `
-                    varying vec2 vUv;
-                    void main() {
-                        vUv = uv;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `,
-      fragmentShader: `
-                    uniform sampler2D tDiffuse;
-                    uniform float amount;
-                    uniform float time;
-                    varying vec2 vUv;
-                    float random(vec2 co) {
-                        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-                    }
-                    void main() {
-                        vec4 color = texture2D(tDiffuse, vUv);
-                        vec2 uvRandom = vUv;
-                        uvRandom.y *= random(vec2(uvRandom.y, time));
-                        color.rgb += random(uvRandom) * amount - (amount / 2.0);
-                        gl_FragColor = color;
-                    }
-                `
-    };
-
-    const filmGrainPass = new ShaderPass(filmGrainShader);
-    composer.addPass(filmGrainPass);
-
-    function animate(time) {
-      requestAnimationFrame(animate);
-      filmGrainPass.uniforms["time"].value = time / 1000;
-      composer.render();
-    }
-
-    animate(0);
-
-    window.addEventListener("resize", () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      composer.setSize(window.innerWidth, window.innerHeight);
-    });
-  </script>
-</body>
+  </body>
+  
 </html>
