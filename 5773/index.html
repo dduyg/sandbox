@@ -13,6 +13,7 @@
       --color-foreground: rgb(230, 225, 215);
       --color-accent: rgb(200, 180, 160);
       --font-primary: "Manrope", sans-serif;
+      --font-secondary: "IBM Plex Mono", monospace;
       --margin: 32px;
       --gutter: 16px;
     }
@@ -43,10 +44,12 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: transparent url("http://assets.iceable.com/img/noise-transparent.png") repeat 0 0;
+      background: transparent
+        url("http://assets.iceable.com/img/noise-transparent.png") repeat 0 0;
       background-size: 300px 300px;
-      animation: noise-animation 0.3s steps(5) infinite;
-      opacity: 0.2; /* Adjusted for better visibility of 3D scene */
+      -webkit-animation: noise-animation 0.3s steps(5) infinite;
+              animation: noise-animation 0.3s steps(5) infinite;
+      opacity: 0.9;
       will-change: transform;
       z-index: 100;
       pointer-events: none;
@@ -70,10 +73,7 @@
       color: var(--color-foreground);
       text-decoration: none;
       font-size: 1.25rem;
-      opacity: 0.7;
-      transition: opacity 0.3s;
     }
-    a:hover { opacity: 1; }
 
     canvas {
       width: 100%;
@@ -87,18 +87,25 @@
     }
 
     .navbar {
-      width: 100%;
       padding: var(--gutter) var(--margin);
       display: flex;
       justify-content: space-between;
-      z-index: 90;
+      z-index: 101;
+      width: 100%;
       position: fixed;
-      top: 5%; left: 0;
+      top: 25%; left: 0;
       pointer-events: none;
     }
-    .navbar a { pointer-events: auto; }
+    .navbar a {
+      pointer-events: auto;
+    }
 
-    /* Custom Controller Design */
+    /* Hide default dat.gui completely */
+    .dg.ac {
+      display: none !important;
+    }
+
+    /* --- Custom Controls Design --- */
     .custom-gui-container {
       position: fixed;
       top: 24px;
@@ -107,110 +114,142 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
+      font-family: var(--font-primary);
     }
 
-    .menu-btn {
+    .gui-toggle-btn {
       width: 44px;
       height: 44px;
       background: rgba(20, 20, 20, 0.65);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
+      border: 1px solid rgba(230, 225, 215, 0.2);
+      border-radius: 8px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .menu-btn:hover {
-      background: rgba(40, 40, 40, 0.8);
-      transform: scale(1.05);
-    }
-    .menu-btn svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--color-foreground);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.3s, border-color 0.3s;
     }
 
-    .control-dropdown {
-      margin-top: 12px;
-      width: 260px;
+    .gui-toggle-btn:hover {
+      background: rgba(35, 35, 35, 0.8);
+      border-color: rgba(230, 225, 215, 0.4);
+    }
+
+    .gui-toggle-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--color-foreground);
+      transition: transform 0.3s;
+    }
+
+    .custom-gui-container.open .gui-toggle-btn svg {
+      transform: rotate(45deg);
+    }
+
+    .gui-dropdown {
+      max-height: 0;
+      overflow: hidden;
+      width: 280px;
       background: rgba(15, 15, 15, 0.85);
+      border: 0px solid rgba(230, 225, 215, 0.15);
+      border-radius: 8px;
+      margin-top: 12px;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 20px;
-      display: none; /* Controlled via JS */
-      flex-direction: column;
-      gap: 16px;
+      transition: max-height 0.4s ease, border-width 0.1s;
       box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
 
-    .control-dropdown.active {
-      display: flex;
+    .custom-gui-container.open .gui-dropdown {
+      max-height: 500px;
+      border-width: 1px;
+      overflow-y: auto;
     }
 
-    .control-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .gui-section {
+      padding: 16px;
+    }
+    
+    .gui-section:not(:last-child) {
+      border-bottom: 1px solid rgba(230, 225, 215, 0.1);
     }
 
-    .section-title {
+    .gui-section-title {
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       color: var(--color-accent);
-      opacity: 0.8;
+      margin-bottom: 14px;
       font-weight: 700;
-      margin-bottom: 4px;
     }
 
-    .control-group {
+    .gui-row {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      margin-bottom: 12px;
     }
 
-    .control-group label {
+    .gui-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .gui-label {
       font-size: 0.8rem;
-      opacity: 0.6;
+      color: rgba(230, 225, 215, 0.7);
+      margin-bottom: 6px;
+      text-transform: capitalize;
     }
 
-    /* Minimal Sliders without numbers */
-    .control-group input[type="range"] {
+    /* Minimalist Sliders */
+    .gui-slider {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 2px;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 1px;
+      height: 3px;
+      background: rgba(230, 225, 215, 0.15);
       outline: none;
+      border-radius: 2px;
       transition: background 0.3s;
     }
 
-    .control-group input[type="range"]:hover {
-      background: rgba(255, 255, 255, 0.3);
+    .gui-slider:hover {
+      background: rgba(230, 225, 215, 0.3);
     }
 
-    .control-group input[type="range"]::-webkit-slider-thumb {
+    .gui-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       background: var(--color-foreground);
       cursor: pointer;
-      transition: transform 0.1s;
+      transition: transform 0.1s, background 0.2s;
     }
 
-    .control-group input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.3);
+    .gui-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      background: var(--color-accent);
     }
 
-    /* Scroll Container for ScrollTrigger target */
+    .gui-slider::-moz-range-thumb {
+      width: 12px;
+      height: 12px;
+      border: none;
+      border-radius: 50%;
+      background: var(--color-foreground);
+      cursor: pointer;
+      transition: transform 0.1s, background 0.2s;
+    }
+
+    .gui-slider::-moz-range-thumb:hover {
+      transform: scale(1.2);
+      background: var(--color-accent);
+    }
+    
+    /* Scroll Trigger helper frame */
     #scroll-container {
       position: absolute;
       top: 0;
@@ -230,41 +269,66 @@
     <a href="#">Discover</a>
   </nav>
 
-  <div class="custom-gui-container">
-    <button class="menu-btn" id="menuToggle" aria-label="Toggle Controls">
+  <div class="custom-gui-container" id="customGui">
+    <button class="gui-toggle-btn" id="guiToggle" aria-label="Toggle Controls">
       <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
         <path d="M156.4 13.5c-.2.55-.5 5.85-.65 11.8l-.25 10.75-59.5.25-59.5.2-.2 59.5-.2 59.5-11.55.3c-6.55.15-11.55.7-11.55 1.25-.05.5-.05 10.85-.05 22.95s0 22.45.05 23c0 .6 4.5 1 11.5 1 8.55 0 11.5.3 11.5 1.25 0 .7.05 16.75.1 35.75l.05 34.5-11.6.3c-6.55.15-11.55.7-11.55 1.25-.05 1.25-.05 44.65 0 45.9 0 .55 5 1.1 11.55 1.25l11.55.3v71l-11.5.3-11.55.25-.25 23.1c-.15 12.65-.05 23.45.25 23.9.3.5 5.6 1 11.8 1.15l11.25.3-.05 58.2c0 32 .25 58.85.55 59.75.55 1.4 6.95 1.55 60 1.55h59.35l.25 11.5c.15 6.35.65 11.5 1.05 11.5H204v-23h72v22.8l3.25.45c2.8.45 35.95.35 42.5-.1 2.2-.15 2.25-.45 2.25-11.65V564h72v22.8l3.75.5c2.05.25 8.25.35 13.75.25s14.6-.3 20.25-.4L444 587v-23h120V444h11.4c6.65 0 11.55-.4 11.75-1 .2-.55.2-11.35.05-24l-.25-23H564v-72h11.5c7 0 11.5-.4 11.5-1 .05-.55.05-10.9.05-23s0-22.45-.05-23c0-.6-4.5-1-11.5-1H564v-72h11.5c7 0 11.5-.4 11.5-1 .05-.55.05-10.9.05-23s0-22.45-.05-23c0-.6-4.5-1-11.5-1H564V37.25l-3.25-.65c-1.8-.35-28.65-.6-59.75-.55l-56.5.1-.3-11.6-.25-11.55-10.25-.15c-5.6-.1-14.7-.3-20.2-.4s-11.65 0-13.7.25l-3.75.45-.25 11.45-.3 11.5h-71l-.3-11.45-.25-11.45-3.25-.45c-2.75-.45-36-.35-42.4.1-2.15.15-2.25.6-2.5 11.7l-.3 11.5-35.5.05-35.5.05-.3-11.55-.25-11.55-23.6-.25c-15.1-.2-23.75.05-23.95.7M154.75 85c1 0 1.25 7.75 1.25 35.5V156h-35.5c-23 0-35.5-.35-35.5-1-.05-1.3-.05-67.6 0-69.25 0-1.15 17.4-1.3 69.75-.75m120 0c.95 0 1.25 3.15 1.25 12.4v12.4l-5.25.75C253.7 112.85 231.7 120 213.9 129l-9.9 5v-24.35c0-13.35.2-24.5.4-24.75.35-.3 38.05-.25 70.35.1m121 24.55.3 24.55-5.8-3.15c-15.65-8.6-40.45-17.05-58.5-20l-7.75-1.2v-12.3c0-10.7.2-12.35 1.7-12.65.9-.15 17-.2 35.75-.1l34.05.25zm120 10.9.3 35.55H444v-35.45c0-32.35.15-35.45 1.7-35.75.9-.15 17-.2 35.75-.1l34.05.25zM327.5 159.1c112.95 22.6 155.15 161.35 73.7 242.3-90.55 90.05-244.5 26.2-244.5-101.4 0-90.35 82.65-158.55 170.8-140.9m-196.35 50.15c-8.2 14.45-17.25 40.95-20.2 59l-1.2 7.75h-12.3c-7.25 0-12.4-.4-12.6-1-.2-.55-.25-16.75-.05-36l.25-35h49.1zM516 240v36h-25.65l-1.7-9.75c-3.35-18.95-10.85-40.75-19.3-56L465.9 204H516zm-405.5 88.75c2.35 17.35 9.5 39.55 18.5 57.35l5 9.9h-24.5c-15.65 0-24.5-.35-24.5-1 0-.55-.05-16.3-.05-35s.05-34.45.05-35c0-.6 4.8-1 12.45-1h12.45zM516 360v36h-24.5c-15.1 0-24.5-.35-24.5-.95 0-.55 1.55-3.8 3.45-7.25 7.55-13.8 15.6-38.05 18.65-56.15l1.3-7.65H516zM156 480v36h-35.5c-23 0-35.5-.35-35.5-1 0-.55-.05-16.3-.05-35s.05-34.45.05-35c0-.65 12.5-1 35.5-1H156zm360 0v36h-72v-72h72zm-290-3.3c11.55 4.95 30.25 10.4 42.25 12.35l7.75 1.2V516h-72v-50.1l5.75 3.15c3.15 1.75 10.45 5.15 16.25 7.65M396 491v25h-72v-25.8l5.25-.75c17.1-2.3 40.95-10.15 57.75-18.9 4.7-2.45 8.6-4.5 8.75-4.5.15-.05.25 11.2.25 24.95"/>
       </svg>
     </button>
-    <div class="control-dropdown" id="dropdownMenu">
-      <div class="control-section">
-        <div class="section-title">Global</div>
-        <div class="control-group">
-          <label>Speed</label>
-          <input type="range" id="speedSlider" min="0" max="2" step="0.05" value="0.5">
+    <div class="gui-dropdown">
+      <div class="gui-section">
+        <div class="gui-section-title">Material</div>
+        <div class="gui-row">
+          <label class="gui-label">Metalness</label>
+          <input type="range" class="gui-slider" id="p-metalness" min="0" max="1" step="0.01" value="0.2">
+        </div>
+        <div class="gui-row">
+          <label class="gui-label">Roughness</label>
+          <input type="range" class="gui-slider" id="p-roughness" min="0" max="1" step="0.01" value="0.1">
+        </div>
+        <div class="gui-row">
+          <label class="gui-label">Transmission</label>
+          <input type="range" class="gui-slider" id="p-transmission" min="0" max="1" step="0.01" value="0.9">
+        </div>
+        <div class="gui-row">
+          <label class="gui-label">Thickness</label>
+          <input type="range" class="gui-slider" id="p-thickness" min="0" max="5" step="0.1" value="0.5">
+        </div>
+        <div class="gui-row">
+          <label class="gui-label">IOR</label>
+          <input type="range" class="gui-slider" id="p-ior" min="1" max="2.333" step="0.01" value="1.5">
+        </div>
+        <div class="gui-row">
+          <label class="gui-label">Rotation Speed</label>
+          <input type="range" class="gui-slider" id="p-rotationSpeed" min="0" max="2" step="0.05" value="0.5">
         </div>
       </div>
-      <div class="control-section">
-        <div class="section-title">Distortion</div>
-        <div class="control-group">
-          <label>Strength</label>
-          <input type="range" id="strengthSlider" min="0" max="1" step="0.01" value="0.1">
+      
+      <div class="gui-section">
+        <div class="gui-section-title">Distortion</div>
+        <div class="gui-row">
+          <label class="gui-label">Strength</label>
+          <input type="range" class="gui-slider" id="p-strength" min="0" max="1" step="0.01" value="0.1">
         </div>
-        <div class="control-group">
-          <label>Radius</label>
-          <input type="range" id="radiusSlider" min="0.1" max="0.5" step="0.01" value="0.2">
+        <div class="gui-row">
+          <label class="gui-label">Radius</label>
+          <input type="range" class="gui-slider" id="p-radius" min="0.1" max="0.5" step="0.01" value="0.2">
         </div>
-        <div class="control-group">
-          <label>Aberration</label>
-          <input type="range" id="aberrationSlider" min="0" max="0.1" step="0.005" value="0.02">
+        <div class="gui-row">
+          <label class="gui-label">Chromatic Aberration</label>
+          <input type="range" class="gui-slider" id="p-chromatic" min="0" max="0.1" step="0.001" value="0.02">
+        </div>
+        <div class="gui-row">
+          <label class="gui-label">Lens Blur</label>
+          <input type="range" class="gui-slider" id="p-lensBlur" min="0" max="0.1" step="0.005" value="0.1">
         </div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js'></script>
+  
   <script type="module">
     import * as THREE from "https://esm.sh/three@0.136.0";
     import { OrbitControls } from "https://esm.sh/three@0.136.0/examples/jsm/controls/OrbitControls.js";
@@ -280,6 +344,7 @@
     let cubeRenderTarget, cubeCamera;
     let backgroundTexture;
     let mouse = new THREE.Vector2();
+    let raycaster = new THREE.Raycaster();
     let shards = [];
 
     const PARAMS = {
@@ -317,7 +382,12 @@
     function init() {
       scene = new THREE.Scene();
 
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
       camera.position.set(0, 0, 5);
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -332,8 +402,8 @@
       createBackground();
       createShapes();
       setupPostProcessing();
+      setupCustomGUI();
       setupScrollTrigger();
-      setupUIHandlers();
 
       window.addEventListener("resize", onWindowResize, false);
       document.addEventListener("mousemove", onMouseMove, false);
@@ -357,7 +427,7 @@
     function createBackground() {
       const loader = new THREE.TextureLoader();
       loader.load(
-        "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=2340&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         (texture) => {
           backgroundTexture = texture;
           updateBackgroundSize();
@@ -368,7 +438,8 @@
     function updateBackgroundSize() {
       if (backgroundTexture) {
         const aspect = window.innerWidth / window.innerHeight;
-        const imageAspect = backgroundTexture.image.width / backgroundTexture.image.height;
+        const imageAspect =
+          backgroundTexture.image.width / backgroundTexture.image.height;
 
         let scale;
         if (aspect > imageAspect) {
@@ -379,6 +450,7 @@
 
         backgroundTexture.offset.set((1 - scale.x) / 2, (1 - scale.y) / 2);
         backgroundTexture.repeat.set(scale.x, scale.y);
+
         scene.background = backgroundTexture;
       }
     }
@@ -538,34 +610,65 @@
       composer.addPass(customPass);
     }
 
-    /* Custom UI Wireframe implementation replaces DAT.GUI */
-    function setupUIHandlers() {
-      const toggle = document.getElementById("menuToggle");
-      const dropdown = document.getElementById("dropdownMenu");
+    function updateMaterials() {
+      const newMaterial = createGlassMaterial();
+      newMaterial.envMap = cubeRenderTarget.texture;
+      newMaterial.envMap.mapping = THREE.CubeRefractionMapping;
 
-      toggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("active");
-      });
-
-      document.addEventListener("click", (e) => {
-        if (!dropdown.contains(e.target) && e.target !== toggle) {
-          dropdown.classList.remove("active");
+      [outerTorus, middleTorus, innerTorus, mouseSphere].forEach((obj) => {
+        if (obj) {
+          obj.material.dispose();
+          obj.material = newMaterial.clone();
         }
       });
+    }
 
-      // Bind Custom Sliders directly to runtime PARAMS updates
-      document.getElementById("speedSlider").addEventListener("input", (e) => {
+    /* Logic parsing input fields directly to uniform contexts & parameters */
+    function setupCustomGUI() {
+      const container = document.getElementById('customGui');
+      const toggle = document.getElementById('guiToggle');
+
+      toggle.addEventListener('click', () => {
+        container.classList.toggle('open');
+      });
+
+      // Bind material parameters
+      document.getElementById('p-metalness').addEventListener('input', (e) => {
+        PARAMS.material.metalness = parseFloat(e.target.value);
+        updateMaterials();
+      });
+      document.getElementById('p-roughness').addEventListener('input', (e) => {
+        PARAMS.material.roughness = parseFloat(e.target.value);
+        updateMaterials();
+      });
+      document.getElementById('p-transmission').addEventListener('input', (e) => {
+        PARAMS.material.transmission = parseFloat(e.target.value);
+        updateMaterials();
+      });
+      document.getElementById('p-thickness').addEventListener('input', (e) => {
+        PARAMS.material.thickness = parseFloat(e.target.value);
+        updateMaterials();
+      });
+      document.getElementById('p-ior').addEventListener('input', (e) => {
+        PARAMS.material.ior = parseFloat(e.target.value);
+        updateMaterials();
+      });
+      document.getElementById('p-rotationSpeed').addEventListener('input', (e) => {
         PARAMS.rotationSpeed = parseFloat(e.target.value);
       });
-      document.getElementById("strengthSlider").addEventListener("input", (e) => {
+
+      // Bind distortion parameters
+      document.getElementById('p-strength').addEventListener('input', (e) => {
         customPass.uniforms.uStrength.value = parseFloat(e.target.value);
       });
-      document.getElementById("radiusSlider").addEventListener("input", (e) => {
+      document.getElementById('p-radius').addEventListener('input', (e) => {
         customPass.uniforms.uRadius.value = parseFloat(e.target.value);
       });
-      document.getElementById("aberrationSlider").addEventListener("input", (e) => {
+      document.getElementById('p-chromatic').addEventListener('input', (e) => {
         customPass.uniforms.uChromaticAberration.value = parseFloat(e.target.value);
+      });
+      document.getElementById('p-lensBlur').addEventListener('input', (e) => {
+        customPass.uniforms.uLensBlur.value = parseFloat(e.target.value);
       });
     }
 
@@ -621,31 +724,45 @@
           }
         }
 
-        if(shardPositions.length === 0) continue;
-
-        shardGeometry.setAttribute("position", new THREE.Float32BufferAttribute(shardPositions, 3));
-        shardGeometry.setAttribute("normal", new THREE.Float32BufferAttribute(shardNormals, 3));
-        shardGeometry.setAttribute("uv", new THREE.Float32BufferAttribute(shardUvs, 2));
+        shardGeometry.setAttribute(
+          "position",
+          new THREE.Float32BufferAttribute(shardPositions, 3)
+        );
+        shardGeometry.setAttribute(
+          "normal",
+          new THREE.Float32BufferAttribute(shardNormals, 3)
+        );
+        shardGeometry.setAttribute(
+          "uv",
+          new THREE.Float32BufferAttribute(shardUvs, 2)
+        );
 
         const shard = new THREE.Mesh(shardGeometry, object.material.clone());
         shard.position.copy(object.position);
         shard.originalPosition = object.position.clone();
-        shard.targetPosition = object.position.clone().add(
-          new THREE.Vector3(
-            (Math.random() - 0.5) * PARAMS.shatter.force,
-            (Math.random() - 0.5) * PARAMS.shatter.force,
-            (Math.random() - 0.5) * PARAMS.shatter.force
-          )
-        );
+        shard.targetPosition = object.position
+          .clone()
+          .add(
+            new THREE.Vector3(
+              (Math.random() - 0.5) * PARAMS.shatter.force,
+              (Math.random() - 0.5) * PARAMS.shatter.force,
+              (Math.random() - 0.5) * PARAMS.shatter.force
+            )
+          );
         scene.add(shard);
         newShards.push(shard);
       }
+
       return newShards;
     }
 
     function updateShardPositions(progress) {
       shards.forEach((shard) => {
-        shard.position.lerpVectors(shard.originalPosition, shard.targetPosition, progress);
+        shard.position.lerpVectors(
+          shard.originalPosition,
+          shard.targetPosition,
+          progress
+        );
         shard.rotation.x = progress * Math.PI * 2 * Math.random();
         shard.rotation.y = progress * Math.PI * 2 * Math.random();
         shard.rotation.z = progress * Math.PI * 2 * Math.random();
@@ -707,11 +824,14 @@
         mouseSphere.position.copy(pos);
       }
 
-      if(renderer && scene && cubeCamera) {
+      if(cubeCamera && renderer && scene) {
         cubeCamera.update(renderer, scene);
       }
 
-      customPass.uniforms.uTime.value = time * 0.001;
+      if(customPass) {
+        customPass.uniforms.uTime.value = time * 0.001;
+      }
+      
       controls.update();
       composer.render();
     }
