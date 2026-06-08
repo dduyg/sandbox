@@ -7,7 +7,6 @@
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
     * { box-sizing: border-box; }
-
     :root {
       --color-background: rgb(85, 85, 85);
       --color-foreground: rgb(230, 225, 215);
@@ -26,11 +25,7 @@
       min-height: 400vh;
       margin: 0; padding: 0;
       font-family: var(--font-primary);
-      background: radial-gradient(
-        circle at 10% 20%,
-        rgb(45, 45, 45) 0%,
-        rgb(5, 5, 5) 90%
-      );
+      background: radial-gradient(circle at 10% 20%, rgb(45, 45, 45) 0%, rgb(5, 5, 5) 90%);
       color: var(--color-foreground);
       letter-spacing: -0.03em;
       position: relative;
@@ -40,10 +35,8 @@
     body::before {
       content: "";
       position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
       background: transparent url("https://assets.iceable.com/img/noise-transparent.png") repeat 0 0;
       background-size: 300px 300px;
       animation: noise-animation 0.3s steps(5) infinite;
@@ -74,12 +67,10 @@
     }
 
     canvas {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       display: block;
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       background: transparent;
       z-index: -1;
     }
@@ -91,7 +82,7 @@
       justify-content: space-between;
       z-index: 101;
       position: fixed;
-      top: 5%; left: 0;
+      top: 25%; left: 0;
       pointer-events: none;
     }
     
@@ -115,6 +106,7 @@
       right: 32px;
       z-index: 1001;
       cursor: pointer;
+      pointer-events: auto;
       width: 44px;
       height: 44px;
       display: flex;
