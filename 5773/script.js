@@ -3,514 +3,439 @@ import { OrbitControls } from "https://esm.sh/three@0.136.0/examples/jsm/control
 import { EffectComposer } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/ShaderPass.js";
+import { SMAAPass } from "https://esm.sh/three@0.136.0/examples/jsm/postprocessing/SMAAPass.js";
 import { GUI } from "https://esm.sh/dat.gui";
 
-gsap.registerPlugin(ScrollTrigger);
+// Scene setup
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("#080a0d");
 
-let scene, camera, renderer, controls;
-let composer, customPass;
-let outerTorus, middleTorus, innerTorus, mouseSphere;
-let cubeRenderTarget, cubeCamera;
-let backgroundTexture;
-let mouse = new THREE.Vector2();
-let raycaster = new THREE.Raycaster();
-let shards = [];
+const camera = new THREE.PerspectiveCamera(
+  35,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 
-const PARAMS = {
-  material: {
-    color: "#FFFFFF",
-    metalness: 0.2,
-    roughness: 0.1,
-    transmission: 0.9,
-    thickness: 0.5,
-    ior: 1.5,
-    clearcoat: 1,
-    clearcoatRoughness: 0.1
-  },
-  rotationSpeed: 0.5,
-  distortion: {
-    strength: 0.1,
-    radius: 0.2,
-    edgeWidth: 0.03,
-    edgeOpacity: 0.1,
-    chromaticAberration: 0.02,
-    reflectionIntensity: 0.2,
-    waveDistortion: 0.05,
-    waveSpeed: 0.8,
-    lensBlur: 0.1,
-    clearCenterSize: 0.5,
-    magnification: 1.5
-  },
-  shatter: {
-    pieces: 50,
-    force: 5,
-    duration: 2
-  }
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  powerPreference: "high-performance"
+});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+document.body.appendChild(renderer.domElement);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+// Sphere geometry and materials
+const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
+const spheres = [];
+let sphereDistance = 5; // Initial distance between spheres
+
+// Dune-inspired shader
+const vertexShader = `
+    uniform float time;
+    uniform float noiseIntensity;
+    uniform int noiseType;
+    varying vec2 vUv;
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+
+    // Simplex noise function
+    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+    vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+    float snoise(vec3 v) { 
+        const vec2 C = vec2(1.0/6.0, 1.0/3.0) ;
+        const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+
+        vec3 i  = floor(v + dot(v, C.yyy) );
+        vec3 x0 =   v - i + dot(i, C.xxx) ;
+        vec3 g = step(x0.yzx, x0.xyz);
+        vec3 l = 1.0 - g;
+        vec3 i1 = min( g.xyz, l.zxy );
+        vec3 i2 = max( g.xyz, l.zxy );
+
+        vec3 x1 = x0 - i1 + C.xxx;
+        vec3 x2 = x0 - i2 + C.yyy;
+        vec3 x3 = x0 - D.yyy;
+
+        i = mod289(i); 
+        vec4 p = permute( permute( permute( 
+                    i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+                + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+                + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+
+        float n_ = 0.142857142857;
+        vec3  ns = n_ * D.wyz - D.xzx;
+
+        vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+
+        vec4 x_ = floor(j * ns.z);
+        vec4 y_ = floor(j - 7.0 * x_ );
+
+        vec4 x = x_ *ns.x + ns.yyyy;
+        vec4 y = y_ *ns.x + ns.yyyy;
+        vec4 h = 1.0 - abs(x) - abs(y);
+
+        vec4 b0 = vec4( x.xy, y.xy );
+        vec4 b1 = vec4( x.zw, y.zw );
+
+        vec4 s0 = floor(b0)*2.0 + 1.0;
+        vec4 s1 = floor(b1)*2.0 + 1.0;
+        vec4 sh = -step(h, vec4(0.0));
+
+        vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+        vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+        vec3 p0 = vec3(a0.xy,h.x);
+        vec3 p1 = vec3(a0.zw,h.y);
+        vec3 p2 = vec3(a1.xy,h.z);
+        vec3 p3 = vec3(a1.zw,h.w);
+
+        vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+        p0 *= norm.x;
+        p1 *= norm.y;
+        p2 *= norm.z;
+        p3 *= norm.w;
+
+        vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+        m = m * m;
+        return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+    }
+
+    // Spice-like dune ripples
+    float dunePattern(vec3 pos, float time) {
+        float scale = 3.0;
+        float speed = 0.05;
+        
+        float n1 = snoise(vec3(pos.x * scale * 0.5, pos.y * scale * 0.5, pos.z * scale * 0.5 + time * speed));
+        float n2 = snoise(vec3(pos.x * scale, pos.y * scale, pos.z * scale + time * speed * 1.5));
+        
+        return n1 * 0.7 + n2 * 0.3;
+    }
+
+    void main() {
+        vUv = uv;
+        vNormal = normal;
+        vec3 pos = position;
+        
+        if (noiseType == 1) {
+            // Arrakis Sand Dunes
+            float noise = snoise(vec3(pos.x * 2.0, pos.y * 2.0, pos.z * 2.0 + time * 0.1)) * 0.5 + 0.5;
+            pos += normal * noise * noiseIntensity;
+        } else if (noiseType == 2) {
+            // Spice Melange Patterns
+            float noise = dunePattern(pos, time);
+            pos += normal * noise * noiseIntensity;
+        } else if (noiseType == 3) {
+            // Sandworm Patterns
+            float noise1 = snoise(vec3(pos.x * 4.0, pos.y * 4.0, pos.z * 4.0 + time * 0.15));
+            float noise2 = snoise(vec3(pos.x * 8.0, pos.y * 8.0, pos.z * 8.0 + time * 0.3));
+            float ridges = 1.0 - abs(noise1 * 0.8 + noise2 * 0.2);
+            ridges = pow(ridges, 2.0);
+            pos += normal * ridges * noiseIntensity * 0.8;
+        }
+        
+        vPosition = pos;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+    }
+`;
+
+const fragmentShader = `
+    uniform sampler2D matcapTexture;
+    uniform float brightness;
+    uniform float contrast;
+    uniform float saturation;
+    uniform vec3 baseColor;
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+
+    vec3 adjustContrast(vec3 color, float value) {
+        return 0.5 + (1.0 + value) * (color - 0.5);
+    }
+
+    vec3 adjustSaturation(vec3 color, float value) {
+        const vec3 luminosityFactor = vec3(0.2126, 0.7152, 0.0722);
+        vec3 grayscale = vec3(dot(color, luminosityFactor));
+        return mix(grayscale, color, 1.0 + value);
+    }
+
+    void main() {
+        vec3 normal = normalize(vNormal);
+        vec3 viewDir = normalize(cameraPosition - vPosition);
+        vec3 x = normalize(vec3(viewDir.z, 0.0, -viewDir.x));
+        vec3 y = cross(viewDir, x);
+        vec2 uv = vec2(dot(x, normal), dot(y, normal)) * 0.495 + 0.5;
+        
+        vec3 matcapColor = texture2D(matcapTexture, uv).rgb;
+        
+        // Apply base color
+        vec3 finalColor = matcapColor * baseColor;
+        
+        finalColor = adjustContrast(finalColor, contrast);
+        finalColor = adjustSaturation(finalColor, saturation);
+        finalColor *= brightness;
+        
+        gl_FragColor = vec4(finalColor, 1.0);
+    }
+`;
+
+// Dune-themed textures
+const loader = new THREE.TextureLoader();
+const matcapTexture = loader.load(
+  "https://raw.githubusercontent.com/nidorx/matcaps/master/1024/C7C7D7_4C4E5A_818393_6C6C74.png"
+);
+
+// Dune color palette
+const duneColors = [
+  new THREE.Vector3(0.758, 0.604, 0.42), // Spice/sand color
+  new THREE.Vector3(0.706, 0.373, 0.024), // Darker spice color
+  new THREE.Vector3(0.553, 0.349, 0.169) // Sandworm color
+];
+
+const createMaterial = (noiseIntensity, noiseType, brightness, color) => {
+  return new THREE.ShaderMaterial({
+    uniforms: {
+      time: { value: 0 },
+      noiseIntensity: { value: noiseIntensity },
+      noiseType: { value: noiseType },
+      matcapTexture: { value: matcapTexture },
+      brightness: { value: brightness },
+      contrast: { value: 0.2 },
+      saturation: { value: 0.4 },
+      baseColor: { value: color }
+    },
+    vertexShader,
+    fragmentShader
+  });
 };
 
-function init() {
-  scene = new THREE.Scene();
+const materials = [
+  createMaterial(0.4, 1, 1.0, duneColors[0]), // Arrakis Planet
+  createMaterial(0.8, 2, 1.2, duneColors[1]), // Spice Sphere
+  createMaterial(1.15, 3, 1.4, duneColors[2]) // Sandworm Sphere
+];
 
-  camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  camera.position.set(0, 0, 5);
-
-  renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.05;
-
-  setupLights();
-  createBackground();
-  createShapes();
-  setupPostProcessing();
-  setupGUI();
-  setupScrollTrigger();
-
-  window.addEventListener("resize", onWindowResize, false);
-  document.addEventListener("mousemove", onMouseMove, false);
-
-  animate();
+function updateSpherePositions() {
+  spheres.forEach((sphere, index) => {
+    sphere.position.x = (index - 1) * sphereDistance;
+  });
 }
 
-function setupLights() {
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-  scene.add(ambientLight);
-
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-  directionalLight.position.set(5, 5, 5);
-  scene.add(directionalLight);
-
-  const pointLight = new THREE.PointLight(0xffffff, 1, 100);
-  pointLight.position.set(0, 0, 10);
-  scene.add(pointLight);
+for (let i = 0; i < 3; i++) {
+  const sphere = new THREE.Mesh(sphereGeometry, materials[i]);
+  scene.add(sphere);
+  spheres.push(sphere);
 }
 
-function createBackground() {
-  const loader = new THREE.TextureLoader();
-  loader.load(
-    "https://images.unsplash.com/photo-1504805572947-34fad45aed93?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    (texture) => {
-      backgroundTexture = texture;
-      updateBackgroundSize();
+updateSpherePositions();
+
+camera.position.z = 10;
+camera.position.x = 0;
+camera.position.y = 1;
+
+// Add ambient light
+const ambientLight = new THREE.AmbientLight(0xcccccc, 0.4);
+scene.add(ambientLight);
+
+// Add directional light (like Arrakis' harsh sun)
+const directionalLight = new THREE.DirectionalLight(0xffffaa, 0.8);
+directionalLight.position.set(1, 1, 1);
+scene.add(directionalLight);
+
+// Post-processing setup
+const composer = new EffectComposer(renderer);
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+
+const smaaPass = new SMAAPass(
+  window.innerWidth * renderer.getPixelRatio(),
+  window.innerHeight * renderer.getPixelRatio()
+);
+composer.addPass(smaaPass);
+
+// Add a dust/grain effect similar to Arrakis sandstorms
+const grainShader = {
+  uniforms: {
+    tDiffuse: { value: null },
+    grainIntensity: { value: 0.01 },
+    grainStrength: { value: 15 },
+    time: { value: 0 }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
-  );
-}
+  `,
+  fragmentShader: `
+    uniform sampler2D tDiffuse;
+    uniform float grainIntensity;
+    uniform float grainStrength;
+    uniform float time;
+    varying vec2 vUv;
 
-function updateBackgroundSize() {
-  if (backgroundTexture) {
-    const aspect = window.innerWidth / window.innerHeight;
-    const imageAspect =
-      backgroundTexture.image.width / backgroundTexture.image.height;
-
-    let scale;
-    if (aspect > imageAspect) {
-      scale = new THREE.Vector2(1, imageAspect / aspect);
-    } else {
-      scale = new THREE.Vector2(aspect / imageAspect, 1);
-    }
-
-    backgroundTexture.offset.set((1 - scale.x) / 2, (1 - scale.y) / 2);
-    backgroundTexture.repeat.set(scale.x, scale.y);
-
-    scene.background = backgroundTexture;
-  }
-}
-
-function createGlassMaterial() {
-  return new THREE.MeshPhysicalMaterial({
-    color: new THREE.Color(PARAMS.material.color),
-    metalness: PARAMS.material.metalness,
-    roughness: PARAMS.material.roughness,
-    transmission: PARAMS.material.transmission,
-    thickness: PARAMS.material.thickness,
-    ior: PARAMS.material.ior,
-    clearcoat: PARAMS.material.clearcoat,
-    clearcoatRoughness: PARAMS.material.clearcoatRoughness,
-    side: THREE.DoubleSide,
-    transparent: true,
-    envMapIntensity: 1,
-    refractionRatio: 0.98
-  });
-}
-
-function createShapes() {
-  cubeRenderTarget = new THREE.WebGLCubeRenderTarget(256, {
-    format: THREE.RGBAFormat,
-    generateMipmaps: true,
-    minFilter: THREE.LinearMipmapLinearFilter
-  });
-  cubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget);
-
-  const glassMaterial = createGlassMaterial();
-  glassMaterial.envMap = cubeRenderTarget.texture;
-  glassMaterial.envMap.mapping = THREE.CubeRefractionMapping;
-
-  const outerTorusGeometry = new THREE.TorusGeometry(1.2, 0.3, 64, 64);
-  const middleTorusGeometry = new THREE.TorusGeometry(0.9, 0.25, 64, 64);
-  const innerTorusGeometry = new THREE.TorusGeometry(0.6, 0.2, 64, 64);
-  const sphereGeometry = new THREE.SphereGeometry(0.3, 32, 32);
-
-  outerTorus = new THREE.Mesh(outerTorusGeometry, glassMaterial.clone());
-  middleTorus = new THREE.Mesh(middleTorusGeometry, glassMaterial.clone());
-  innerTorus = new THREE.Mesh(innerTorusGeometry, glassMaterial.clone());
-  mouseSphere = new THREE.Mesh(sphereGeometry, glassMaterial.clone());
-
-  outerTorus.position.set(-1.5, 0, 0);
-  middleTorus.position.set(0, 0, 0);
-  innerTorus.position.set(1.5, 0, 0);
-
-  scene.add(outerTorus);
-  scene.add(middleTorus);
-  scene.add(innerTorus);
-  scene.add(mouseSphere);
-}
-
-function setupPostProcessing() {
-  composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, camera));
-
-  const vertexShader = `
-                varying vec2 vUv;
-                void main() {
-                    vUv = uv;
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-            `;
-
-  const fragmentShader = `
-                uniform sampler2D tDiffuse;
-                uniform vec2 uMouse;
-                uniform float uRadius;
-                uniform float uStrength;
-                uniform float uEdgeWidth;
-                uniform float uEdgeOpacity;
-                uniform float uChromaticAberration;
-                uniform float uReflectionIntensity;
-                uniform float uWaveDistortion;
-                uniform float uWaveSpeed;
-                uniform float uLensBlur;
-                uniform float uClearCenterSize;
-                uniform float uAspect;
-                uniform float uTime;
-                varying vec2 vUv;
-
-                vec4 blur(sampler2D image, vec2 uv, vec2 resolution, vec2 direction) {
-                    vec4 color = vec4(0.0);
-                    vec2 off1 = vec2(1.3333333333333333) * direction;
-                    color += texture2D(image, uv) * 0.29411764705882354;
-                    color += texture2D(image, uv + (off1 / resolution)) * 0.35294117647058826;
-                    color += texture2D(image, uv - (off1 / resolution)) * 0.35294117647058826;
-                    return color;
-                }
-
-                void main() {
-                    vec2 center = uMouse;
-                    vec2 adjustedUv = vUv;
-                    adjustedUv.x *= uAspect;
-                    center.x *= uAspect;
-                    float dist = distance(adjustedUv, center);
-                    
-                    if (dist < uRadius) {
-                        float normalizedDist = dist / uRadius;
-                        vec2 direction = normalize(adjustedUv - center);
-                        
-                        float clearArea = uClearCenterSize * uRadius;
-                        float distortionFactor = smoothstep(clearArea, uRadius, dist);
-                        
-                        vec2 distortedUv = adjustedUv - direction * uStrength * distortionFactor * distortionFactor;
-                        
-                        float wave = sin(normalizedDist * 10.0 - uTime * uWaveSpeed) * uWaveDistortion * distortionFactor;
-                        distortedUv += direction * wave;
-                        
-                        distortedUv.x /= uAspect;
-
-                        float aberrationStrength = uChromaticAberration * distortionFactor;
-                        vec2 redUv = distortedUv + direction * aberrationStrength / vec2(uAspect, 1.0);
-                        vec2 blueUv = distortedUv - direction * aberrationStrength / vec2(uAspect, 1.0);
-
-                        vec4 colorR = texture2D(tDiffuse, redUv);
-                        vec4 colorG = texture2D(tDiffuse, distortedUv);
-                        vec4 colorB = texture2D(tDiffuse, blueUv);
-
-                        vec4 reflection = texture2D(tDiffuse, vUv + direction * 0.1 * distortionFactor);
-                        
-                        gl_FragColor = vec4(colorR.r, colorG.g, colorB.b, 1.0);
-                        gl_FragColor = mix(gl_FragColor, reflection, uReflectionIntensity * distortionFactor);
-
-                        float blurAmount = uLensBlur * distortionFactor;
-                        gl_FragColor = mix(gl_FragColor, blur(tDiffuse, distortedUv, vec2(1.0 / uAspect, 1.0), vec2(blurAmount)), distortionFactor);
-
-                        float edgeHighlight = smoothstep(uRadius - uEdgeWidth, uRadius, dist);
-                        gl_FragColor = mix(gl_FragColor, vec4(1.0, 1.0, 1.0, 1.0), edgeHighlight * uEdgeOpacity);
-                    } else {
-                        gl_FragColor = texture2D(tDiffuse, vUv);
-                    }
-                }
-            `;
-
-  customPass = new ShaderPass({
-    uniforms: {
-      tDiffuse: { value: null },
-      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
-      uRadius: { value: PARAMS.distortion.radius },
-      uStrength: { value: PARAMS.distortion.strength },
-      uEdgeWidth: { value: PARAMS.distortion.edgeWidth },
-      uEdgeOpacity: { value: PARAMS.distortion.edgeOpacity },
-      uChromaticAberration: { value: PARAMS.distortion.chromaticAberration },
-      uReflectionIntensity: { value: PARAMS.distortion.reflectionIntensity },
-      uWaveDistortion: { value: PARAMS.distortion.waveDistortion },
-      uWaveSpeed: { value: PARAMS.distortion.waveSpeed },
-      uLensBlur: { value: PARAMS.distortion.lensBlur },
-      uClearCenterSize: { value: PARAMS.distortion.clearCenterSize },
-      uAspect: { value: window.innerWidth / window.innerHeight },
-      uTime: { value: 0 }
-    },
-    vertexShader: vertexShader,
-    fragmentShader: fragmentShader
-  });
-  composer.addPass(customPass);
-}
-
-function setupGUI() {
-  const gui = new GUI();
-  const matFolder = gui.addFolder("Material");
-  matFolder.addColor(PARAMS.material, "color").onChange(updateMaterials);
-  matFolder.add(PARAMS.material, "metalness", 0, 1).onChange(updateMaterials);
-  matFolder.add(PARAMS.material, "roughness", 0, 1).onChange(updateMaterials);
-  matFolder
-    .add(PARAMS.material, "transmission", 0, 1)
-    .onChange(updateMaterials);
-  matFolder.add(PARAMS.material, "thickness", 0, 5).onChange(updateMaterials);
-  matFolder.add(PARAMS.material, "ior", 1, 2.333).onChange(updateMaterials);
-  matFolder.add(PARAMS.material, "clearcoat", 0, 1).onChange(updateMaterials);
-  matFolder
-    .add(PARAMS.material, "clearcoatRoughness", 0, 1)
-    .onChange(updateMaterials);
-  gui.add(PARAMS, "rotationSpeed", 0, 2);
-
-  const distFolder = gui.addFolder("Distortion");
-  distFolder
-    .add(PARAMS.distortion, "strength", 0, 1)
-    .onChange((value) => (customPass.uniforms.uStrength.value = value));
-  distFolder
-    .add(PARAMS.distortion, "radius", 0.1, 0.5)
-    .onChange((value) => (customPass.uniforms.uRadius.value = value));
-  distFolder
-    .add(PARAMS.distortion, "edgeWidth", 0, 0.05)
-    .onChange((value) => (customPass.uniforms.uEdgeWidth.value = value));
-  distFolder
-    .add(PARAMS.distortion, "edgeOpacity", 0, 1)
-    .onChange((value) => (customPass.uniforms.uEdgeOpacity.value = value));
-  distFolder
-    .add(PARAMS.distortion, "chromaticAberration", 0, 0.1)
-    .onChange(
-      (value) => (customPass.uniforms.uChromaticAberration.value = value)
-    );
-  distFolder
-    .add(PARAMS.distortion, "reflectionIntensity", 0, 1)
-    .onChange(
-      (value) => (customPass.uniforms.uReflectionIntensity.value = value)
-    );
-  distFolder
-    .add(PARAMS.distortion, "waveDistortion", 0, 0.1)
-    .onChange((value) => (customPass.uniforms.uWaveDistortion.value = value));
-  distFolder
-    .add(PARAMS.distortion, "waveSpeed", 0, 5)
-    .onChange((value) => (customPass.uniforms.uWaveSpeed.value = value));
-  distFolder
-    .add(PARAMS.distortion, "lensBlur", 0, 0.1)
-    .onChange((value) => (customPass.uniforms.uLensBlur.value = value));
-  distFolder
-    .add(PARAMS.distortion, "clearCenterSize", 0, 1)
-    .onChange((value) => (customPass.uniforms.uClearCenterSize.value = value));
-  distFolder
-    .add(PARAMS.distortion, "magnification", 0, 3)
-    .onChange(updateMaterials);
-
-  const shatterFolder = gui.addFolder("Shatter");
-  shatterFolder.add(PARAMS.shatter, "pieces", 10, 100, 1);
-  shatterFolder.add(PARAMS.shatter, "force", 1, 10);
-  shatterFolder.add(PARAMS.shatter, "duration", 1, 5);
-}
-
-function updateMaterials() {
-  const newMaterial = createGlassMaterial();
-  newMaterial.envMap = cubeRenderTarget.texture;
-  newMaterial.envMap.mapping = THREE.CubeRefractionMapping;
-
-  [outerTorus, middleTorus, innerTorus, mouseSphere].forEach((obj) => {
-    if (obj) {
-      obj.material.dispose();
-      obj.material = newMaterial.clone();
-    }
-  });
-}
-
-function setupScrollTrigger() {
-  ScrollTrigger.create({
-    trigger: "#scroll-container",
-    start: "top top",
-    end: "bottom bottom",
-    scrub: true,
-    onUpdate: (self) => {
-      const progress = self.progress;
-      if (progress > 0 && !shards.length) {
-        shatterObjects();
-      } else if (progress === 0 && shards.length) {
-        restoreObjects();
-      }
-      updateShardPositions(progress);
-    }
-  });
-}
-
-function shatterObjects() {
-  [outerTorus, middleTorus, innerTorus, mouseSphere].forEach((object) => {
-    if (object && object.parent) {
-      const newShards = createShards(object);
-      shards.push(...newShards);
-      scene.remove(object);
-    }
-  });
-}
-
-function createShards(object) {
-  const { pieces } = PARAMS.shatter;
-  const geometry = object.geometry;
-  const positions = geometry.attributes.position.array;
-  const newShards = [];
-
-  for (let i = 0; i < pieces; i++) {
-    const shardGeometry = new THREE.BufferGeometry();
-    const shardPositions = [];
-    const shardNormals = [];
-    const shardUvs = [];
-
-    for (let j = 0; j < positions.length; j += 9) {
-      if (Math.random() < 0.1) {
-        for (let k = 0; k < 9; k++) {
-          shardPositions.push(positions[j + k]);
-        }
-        for (let k = 0; k < 3; k++) {
-          shardNormals.push(0, 1, 0);
-          shardUvs.push(0, 0);
-        }
-      }
+    float random(vec2 p) {
+        vec2 K1 = vec2(
+            23.14069263277926,
+            2.665144142690225
+        );
+        return fract(cos(dot(p, K1)) * 12345.6789);
     }
 
-    shardGeometry.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(shardPositions, 3)
-    );
-    shardGeometry.setAttribute(
-      "normal",
-      new THREE.Float32BufferAttribute(shardNormals, 3)
-    );
-    shardGeometry.setAttribute(
-      "uv",
-      new THREE.Float32BufferAttribute(shardUvs, 2)
-    );
-
-    const shard = new THREE.Mesh(shardGeometry, object.material.clone());
-    shard.position.copy(object.position);
-    shard.originalPosition = object.position.clone();
-    shard.targetPosition = object.position
-      .clone()
-      .add(
-        new THREE.Vector3(
-          (Math.random() - 0.5) * PARAMS.shatter.force,
-          (Math.random() - 0.5) * PARAMS.shatter.force,
-          (Math.random() - 0.5) * PARAMS.shatter.force
-        )
-      );
-    scene.add(shard);
-    newShards.push(shard);
-  }
-
-  return newShards;
-}
-
-function updateShardPositions(progress) {
-  shards.forEach((shard) => {
-    shard.position.lerpVectors(
-      shard.originalPosition,
-      shard.targetPosition,
-      progress
-    );
-    shard.rotation.x = progress * Math.PI * 2 * Math.random();
-    shard.rotation.y = progress * Math.PI * 2 * Math.random();
-    shard.rotation.z = progress * Math.PI * 2 * Math.random();
-    shard.scale.setScalar(1 - progress * 0.5);
-  });
-}
-
-function restoreObjects() {
-  shards.forEach((shard) => {
-    scene.remove(shard);
-    shard.geometry.dispose();
-    shard.material.dispose();
-  });
-  shards = [];
-
-  [outerTorus, middleTorus, innerTorus, mouseSphere].forEach((object) => {
-    if (object && !object.parent) {
-      scene.add(object);
+    void main() {
+        vec4 color = texture2D(tDiffuse, vUv);
+        vec2 uvRandom = vUv;
+        uvRandom.y *= random(vec2(uvRandom.y, time));
+        color.rgb += random(uvRandom) * grainIntensity * grainStrength;
+        gl_FragColor = color;
     }
+  `
+};
+
+const grainPass = new ShaderPass(grainShader);
+composer.addPass(grainPass);
+
+// Add a subtle orange/amber tint for Dune's spice-influenced atmosphere
+const tintShader = {
+  uniforms: {
+    tDiffuse: { value: null },
+    tintColor: { value: new THREE.Color("#c19a6b") },
+    tintIntensity: { value: 0.1 }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform sampler2D tDiffuse;
+    uniform vec3 tintColor;
+    uniform float tintIntensity;
+    varying vec2 vUv;
+
+    void main() {
+        vec4 color = texture2D(tDiffuse, vUv);
+        color.rgb = mix(color.rgb, tintColor, tintIntensity);
+        gl_FragColor = color;
+    }
+  `
+};
+
+const tintPass = new ShaderPass(tintShader);
+composer.addPass(tintPass);
+
+// GUI setup
+const gui = new GUI();
+
+// Render settings
+const renderFolder = gui.addFolder("Render Settings");
+renderFolder
+  .add({ pixelRatio: renderer.getPixelRatio() }, "pixelRatio", 0.5, 2, 0.1)
+  .onChange((value) => {
+    renderer.setPixelRatio(value);
+    composer.setSize(window.innerWidth, window.innerHeight);
+    smaaPass.setSize(window.innerWidth * value, window.innerHeight * value);
   });
-}
+renderFolder.open();
 
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  composer.setSize(window.innerWidth, window.innerHeight);
-  customPass.uniforms.uAspect.value = window.innerWidth / window.innerHeight;
-  updateBackgroundSize();
-}
+// Grain effect controls (Arrakis sandstorm effect)
+const grainFolder = gui.addFolder("Sandstorm Effect");
+grainFolder
+  .add(grainPass.uniforms.grainIntensity, "value", 0, 0.05)
+  .name("Dust Intensity");
+grainFolder
+  .add(grainPass.uniforms.grainStrength, "value", 0, 50)
+  .name("Dust Strength");
+grainFolder.open();
 
-function onMouseMove(event) {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-  customPass.uniforms.uMouse.value.set(
-    event.clientX / window.innerWidth,
-    1 - event.clientY / window.innerHeight
-  );
-}
+// Tint controls (Spice atmosphere effect)
+const tintFolder = gui.addFolder("Spice Atmosphere");
+tintFolder
+  .add(tintPass.uniforms.tintIntensity, "value", 0, 0.3)
+  .name("Spice Intensity");
+tintFolder.open();
 
+// Sphere position controls
+const positionFolder = gui.addFolder("Planet Positions");
+positionFolder
+  .add({ distance: sphereDistance }, "distance", 1, 10)
+  .name("Distance")
+  .onChange((value) => {
+    sphereDistance = value;
+    updateSpherePositions();
+  });
+
+// Name the spheres according to Dune lore
+const sphereNames = ["Arrakis", "Spice Essence", "Sandworm"];
+
+spheres.forEach((sphere, index) => {
+  const sphereFolder = positionFolder.addFolder(sphereNames[index]);
+  sphereFolder.add(sphere.position, "x", -10, 10).name("X").listen();
+  sphereFolder.add(sphere.position, "y", -10, 10).name("Y");
+  sphereFolder.add(sphere.position, "z", -10, 10).name("Z");
+});
+
+positionFolder.open();
+
+// Individual sphere controls
+spheres.forEach((sphere, index) => {
+  const folder = gui.addFolder(sphereNames[index]);
+  folder
+    .add(sphere.material.uniforms.noiseIntensity, "value", 0, 2)
+    .name("Pattern Intensity");
+  folder
+    .add(sphere.material.uniforms.noiseType, "value", 1, 3, 1)
+    .name("Pattern Type");
+  folder
+    .add(sphere.material.uniforms.brightness, "value", 0.5, 2)
+    .name("Brightness");
+  folder
+    .add(sphere.material.uniforms.contrast, "value", -1, 1)
+    .name("Contrast");
+  folder
+    .add(sphere.material.uniforms.saturation, "value", -1, 1)
+    .name("Saturation");
+  folder.open();
+});
+
+// Animation loop
 function animate(time) {
   requestAnimationFrame(animate);
 
-  if (outerTorus.parent) {
-    outerTorus.rotation.x += PARAMS.rotationSpeed * 0.01;
-    outerTorus.rotation.y += PARAMS.rotationSpeed * 0.01;
-    middleTorus.rotation.y -= PARAMS.rotationSpeed * 0.015;
-    middleTorus.rotation.z += PARAMS.rotationSpeed * 0.015;
-    innerTorus.rotation.x -= PARAMS.rotationSpeed * 0.02;
-    innerTorus.rotation.z -= PARAMS.rotationSpeed * 0.02;
-  }
+  time *= 0.001; // convert to seconds
 
-  if (mouseSphere.parent) {
-    const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-    vector.unproject(camera);
-    const dir = vector.sub(camera.position).normalize();
-    const distance = -camera.position.z / dir.z;
-    const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-    mouseSphere.position.copy(pos);
-  }
+  spheres.forEach((sphere) => {
+    sphere.material.uniforms.time.value = time;
 
-  cubeCamera.update(renderer, scene);
+    // Add subtle rotation to each sphere
+    sphere.rotation.y = time * 0.1 * (spheres.indexOf(sphere) + 1);
+  });
 
-  customPass.uniforms.uTime.value = time * 0.001;
+  grainPass.uniforms.time.value = time;
+
   controls.update();
   composer.render();
 }
 
-init();
+animate(0);
+
+// Window resize handler
+window.addEventListener("resize", () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
+  smaaPass.setSize(
+    window.innerWidth * renderer.getPixelRatio(),
+    window.innerHeight * renderer.getPixelRatio()
+  );
+});
