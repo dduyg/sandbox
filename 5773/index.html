@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Liminal 1203-V01</title>
+  <title>Liminal🏮Loop</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300&family=Space+Mono&display=swap");
     * { box-sizing: border-box; }
@@ -23,8 +23,7 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       font-family: var(--font-primary);
       background: radial-gradient(circle at 10% 20%, #0a0f14 0%, #1a1a0e 90%);
       color: var(--color-foreground);
@@ -589,7 +588,6 @@
     dirLight.position.set(1, 1, 1);
     scene.add(dirLight);
 
-    // ── Post-processing ──
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
 
@@ -648,7 +646,6 @@
     const tintPass = new ShaderPass(tintShader);
     composer.addPass(tintPass);
 
-    // ── Animate ──
     function animate(time) {
       requestAnimationFrame(animate);
       time *= 0.001;
@@ -670,7 +667,6 @@
       smaaPass.setSize(window.innerWidth * renderer.getPixelRatio(), window.innerHeight * renderer.getPixelRatio());
     });
 
-    // ── Menu wiring ──
     const menuBtn = document.getElementById("menu-btn");
     const menuPanel = document.getElementById("menu-panel");
 
@@ -685,7 +681,6 @@
       }
     });
 
-    // Post-processing sliders
     document.getElementById("grainIntensity").addEventListener("input", (e) => {
       grainPass.uniforms.grainIntensity.value = parseFloat(e.target.value);
     });
@@ -700,7 +695,6 @@
       updateSpherePositions();
     });
 
-    // Per-sphere sliders
     [0, 1, 2].forEach((i) => {
       const prefix = `s${i}`;
       document.getElementById(`${prefix}noise`).addEventListener("input", (e) => {
