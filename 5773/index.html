@@ -47,32 +47,38 @@
       justify-content: space-between;
       width: 100%;
       height: 100vh;
-      position: fixed;
-      top: 0; left: 0;
-      padding: var(--margin);
+      position: relative;
+      padding: 6rem 2rem;
       z-index: 100;
       pointer-events: none;
     }
 
-    .layout__header, .layout__footer,
-    .layout__middle, .layout__bottom {
+    .layout__header,
+    .layout__footer,
+    .layout__middle,
+    .layout__bottom {
       display: flex;
       justify-content: space-between;
       align-items: center;
       width: 100%;
     }
-    .layout__header-text, .layout__footer-text {
+
+    .layout__header-text,
+    .layout__footer-text {
       font-family: var(--font-mono);
     }
+
     .layout__header-text {
       font-size: 2rem;
       font-weight: 700;
       line-height: 30px;
     }
+
     .layout__middle-text {
       font-size: 0.75rem;
       text-transform: uppercase;
     }
+
     .layout__middle-text--right {
       text-align: right;
       transform: rotate3d(0, 0, 1, 90deg) translate3d(100%, 10px, 0);
@@ -82,6 +88,7 @@
       text-transform: uppercase;
       color: var(--color-accent);
     }
+
     .layout__footer-text {
       font-size: 15rem;
       line-height: 1em;
@@ -101,7 +108,6 @@
       left: var(--margin);
       text-align: left;
     }
-
     .layout__label--top-right {
       top: var(--margin);
       right: var(--margin);
@@ -109,15 +115,13 @@
       font-family: var(--font-mono);
       color: var(--color-accent);
     }
-
     .layout__label--bottom-left {
-      bottom: var(--margin);
+      bottom: 5vh;
       left: var(--margin);
       text-align: left;
     }
-
     .layout__label--bottom-right {
-      bottom: var(--margin);
+      bottom: 5vh;
       right: var(--margin);
       text-align: right;
       font-family: var(--font-mono);
@@ -135,11 +139,9 @@
       max-width: 440px;
       mix-blend-mode: screen;
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%, -50%);
     }
-
     .layout__text-wrapper h1 {
       font-size: 5rem;
       font-weight: 300;
@@ -149,7 +151,6 @@
       text-transform: uppercase;
       color: var(--color-accent);
     }
-
     .layout__text-wrapper h1 span {
       display: block;
       font-size: 1.5rem;
@@ -157,17 +158,14 @@
       color: var(--color-foreground);
       opacity: 0.8;
     }
-
     .layout__text-wrapper h1::after {
       content: "";
       display: block;
-      width: 50%;
-      height: 1px;
+      width: 50%; height: 1px;
       background: var(--color-accent);
       margin: 1rem auto;
       opacity: 0.5;
     }
-
     .layout__text-wrapper h2 {
       font-size: 1rem;
       letter-spacing: 0.2em;
@@ -184,10 +182,8 @@
       z-index: 9999;
       pointer-events: all;
     }
-
     #menu-btn {
-      width: 36px;
-      height: 36px;
+      width: 36px; height: 36px;
       background: none;
       border: none;
       cursor: pointer;
@@ -200,7 +196,6 @@
       transition: opacity 0.2s;
       margin-left: auto;
     }
-
     #menu-btn:hover { opacity: 1; }
     #menu-btn svg { width: 22px; height: 22px; fill: currentColor; }
 
@@ -218,13 +213,9 @@
       text-transform: uppercase;
       color: var(--color-foreground);
     }
-
     #menu-panel.open { display: block; }
 
-    .ctrl-section {
-      margin-bottom: 18px;
-    }
-
+    .ctrl-section { margin-bottom: 18px; }
     .ctrl-section:last-child { margin-bottom: 0; }
 
     .ctrl-section-title {
@@ -243,9 +234,7 @@
       margin-bottom: 9px;
       gap: 10px;
     }
-
     .ctrl-row:last-child { margin-bottom: 0; }
-
     .ctrl-label {
       flex-shrink: 0;
       width: 80px;
@@ -257,11 +246,9 @@
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
-      flex: 1;
-      height: 2px;
+      flex: 1; height: 2px;
       background: rgba(193, 154, 107, 0.2);
-      outline: none;
-      border: none;
+      outline: none; border: none;
       cursor: pointer;
       position: relative;
     }
@@ -308,7 +295,7 @@
       <span class="layout__label-text">Mission<br>Spice Reconnaissance</span>
     </div>
     <div class="layout__label layout__label--bottom-left">
-      Fremen Contact<br>Sietch Tabr<br>Status: Awaiting
+      Arrakis pattern<br>Sietch Tabr<br>Status: Awaiting
     </div>
     <div class="layout__label layout__label--bottom-right">
       <span class="layout__label-text">Alert<br>Sandworm Activity<br>Detected</span>
@@ -443,12 +430,10 @@
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // ── Geometry ──
     const sphereGeometry = new THREE.SphereGeometry(1, 64, 64);
     const spheres = [];
     let sphereDistance = 5;
 
-    // ── Shaders ──
     const vertexShader = `
       uniform float time;
       uniform float noiseIntensity;
