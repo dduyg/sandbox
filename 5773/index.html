@@ -186,7 +186,7 @@
     /* ── Custom Menu ── */
     #menu-root {
       position: fixed;
-      top: var(--margin);
+      top: 65px;
       right: var(--margin);
       z-index: 9999;
       pointer-events: all;
@@ -272,11 +272,9 @@
       cursor: pointer;
       position: relative;
     }
-
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 10px;
-      height: 10px;
+      width: 10px; height: 10px;
       border-radius: 50%;
       background: var(--color-accent);
       border: none;
@@ -284,11 +282,9 @@
       box-shadow: 0 0 6px rgba(193, 154, 107, 0.5);
       transition: box-shadow 0.15s;
     }
-
     input[type="range"]::-webkit-slider-thumb:hover {
       box-shadow: 0 0 10px rgba(193, 154, 107, 0.9);
     }
-
     input[type="range"]::-moz-range-thumb {
       width: 10px;
       height: 10px;
@@ -297,11 +293,9 @@
       border: none;
       cursor: pointer;
     }
-
     input[type="range"]::-webkit-slider-runnable-track {
       height: 2px;
     }
-
     input[type="range"]::-moz-range-track {
       height: 2px;
       background: rgba(193, 154, 107, 0.2);
@@ -309,8 +303,6 @@
   </style>
 </head>
 <body>
-
-  <!-- Layout overlay -->
   <div class="layout">
     <div class="layout__middle">
       <p class="layout__middle-text layout__middle-text--left">|</p>
