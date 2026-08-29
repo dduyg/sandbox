@@ -1,303 +1,67 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="canonical" href="https://under-voyager.mikapikazo.info/">
-<title>Mika Pikazo Exhibition UNDER VOYAGER</title>
-<meta name="description" content="Mika Pikazoが主催する個展「UNDER VOYAGER」、2024年5月10日より6月1日まで開催。">
-<meta property="og:locale" content="ja_JP">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Mika Pikazo Exhibition UNDER VOYAGER">
-<meta property="og:title" content="Mika Pikazo Exhibition UNDER VOYAGER">
-<meta property="og:description" content="Mika Pikazoが主催する個展「UNDER VOYAGER」、2024年5月10日より6月1日まで開催。">
-<meta property="og:url" content="https://under-voyager.mikapikazo.info/">
-<meta property="og:image" content="https://under-voyager.mikapikazo.info/assets/image/share-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="google" content="nositelinkssearchbox">
-<meta name="google" content="notranslate">
-<meta name="format-detection" content="telephone=no">
-<link rel="stylesheet" href="/assets/css/style.css?v=7">
-<link rel="icon" href="/assets/image/favicon.png">
-<link rel="apple-touch-icon" href="/assets/image/favicon.png">
-
-<!--
-  NOTE: the original Typekit "wf-loading" bootstrap script (the one that
-  built a script tag, set a scriptTimeout, and toggled classes on
-  tk.onload / tk.onreadystatechange) has been removed per request —
-  no more pre-load font script gating the page render.
--->
-
-<style>
-  /* --- Text-based logo replacements (SVG <text>, no vector-path artwork) --- */
-  .logo-text-svg{ display:block; width:100%; height:auto; }
-  .logo-text-svg text{
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    fill: #fff;
-    text-anchor: middle;
-    dominant-baseline: middle;
-  }
-  .siteHeader_logo .logo-text-svg text{ font-size: 46px; }
-  #Loading .logo .logo-text-svg text{ font-size: 46px; }
-
-  /* --- New static background image (kept behind the canvas, which can
-     still draw on top of it if main.js expects it to exist) --- */
-  #Background{
-    background-image: url('https://raw.githubusercontent.com/dduyg/LiminalLoop/refs/heads/shelf/0-6/backscapes/letsBurn.png');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
-  }
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://example.com/exhibition/">
+  <title>ART EXHIBITION 2026 - CREATIVE VOYAGE</title>
+  <meta name="description" content="A showcase of modern digital art, running from March 1 to March 25, 2026.">
+  
+  <!-- Open Graph / Social Media Meta -->
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ART EXHIBITION 2026">
+  <meta property="og:title" content="ART EXHIBITION 2026 - CREATIVE VOYAGE">
+  <meta property="og:description" content="A showcase of modern digital art, running from March 1 to March 25, 2026.">
+  <meta property="og:url" content="https://example.com/exhibition/">
+  <meta property="og:image" content="https://example.com/assets/images/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <!-- Stylesheets & Favicon -->
+  <link rel="stylesheet" href="/assets/css/main.css?v=1">
+  <link rel="icon" href="/assets/images/favicon.ico">
 </head>
 <body>
 
-<div id="Loading">
-  <div class="bg"></div>
-  <div class="inner">
+  <!-- Loading Animation Overlay -->
+  <div id="loading" class="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Background Canvas for Graphics/Animations -->
+  <div id="bg-canvas">
+    <canvas id="interactive-bg"></canvas>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
     <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 579.12 79.49" class="logo-text-svg">
-        <text x="289.56" y="45">adipiscing</text>
-      </svg>
-    </div>
-    <div class="bar"></div>
-  </div>
-</div>
-
-<div id="Background"><canvas></canvas></div>
-
-<div class="grid off" id="Grid">
-  <div class="grid_column"></div>
-  <div class="grid_column"></div>
-  <div class="grid_column"></div>
-  <div class="grid_column"></div>
-</div>
-
-<header class="siteHeader" id="SiteHeader">
-  <div class="siteHeader_logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 579.12 79.49" class="logo-text-svg">
-      <text x="289.56" y="45">UNDER VOYAGER</text>
-    </svg>
-  </div>
-  <div class="siteHeader_description">
-    <div class="t1">MIKA PIKAZO</div>
-    <div class="t2">SOLO EXHIBITION</div>
-    <div class="t3">UNDER VOYAGER</div>
-    <div class="t4">at tagboat</div>
-  </div>
-</header>
-
-<div class="count" id="Count" x-data>
-  <div class="count_text" x-text="$store.ui.distanceText"></div>
-</div>
-
-<div class="dates" id="Dates">
-  <div class="dates_t"><div class="l">(Start)</div><div class="d">05.10</div></div>
-  <div class="dates_t"><div class="l">(End)</div><div class="d">06.01</div></div>
-</div>
-
-<div class="popup" id="Popup" x-data style="display: none;">
-  <div class="popup_bg" @click.ouside="$store.ui.closePopup()"></div>
-  <div class="popup_inner">
-    <div class="popup_content" x-show="$store.ui.popupIndex === 0">
-      <h3>サイン会開催のお知らせ</h3>
-      <p>＜サイン会参加方法＞<br>
-会期中、グッズを税抜き3,000円（税込み3,300円）以上お買い上げの方に、希望者へのみ先着でサイン会参加整理券をお渡しします。<br>
-サイン会参加整理券に記載の日時に個展会場へお越しください。<br>
-会場入口にてサイン会参加整理券とご本人様確認ができる、公的な身分証明書をスタッフにご提示ください。<br>
-<br>
-＜注意事項＞<br>
-サイン会は各日先着（サイン会整理券事前配布制）・定員制にて実施します。<br>
-整理券のお渡しはおひとり様1点までとさせていただきます。紛失された場合、再発行は出来ません。整理券の画像や複製も無効です。サイン会整理券の参加日程はお選びいただけません。なくなり次第配布終了となります。<br>
-サインはこちらで用意したミニ色紙、もしくはご購入いただいたグッズへのみ行います。<br>
-<br>
-※カプセルトイ商品は税込み3,300円に含みません。<br>
-<br>
-商品の転売や第三者への譲渡はご遠慮ください。スタッフが悪質だと判断した場合販売を中止します。<br>
-整理券の転売や第三者への譲渡は固くお断りしております。<br>
-身分証明書において、有効期限切れやコピーは無効です。<br>
-サイン会エリアでの写真撮影は禁止です。<br>
-Mika Pikazo氏へのお手紙や差し入れは、スタッフにお渡しください。生モノや危険物は避けていただきますようお願いいたします。<br>
-整理券に記載されている時間より前にお集まりいただく行為は、近隣の迷惑になるためご遠慮ください。<br>
-サイン会の内容は都合により、変更／中止となる場合がございます。<br>
-ご本人様都合で来場できなくなった場合の返金や郵送対応はいたしかねます。あらかじめご了承ください。</p>
-    </div>
-  </div>
-  <div class="popup_close" @click="$store.ui.closePopup()"><div class="inner"></div></div>
-</div>
-
-<main id="PageWrapper" data-scroll="area">
-<div id="Content" data-scroll="target">
-
-<section class="section prologue">
-  <div class="section_border"></div>
-  <div class="section_content prologue_content">
-    <h2 class="section_h prologue_h">Prologue</h2>
-    <p class="section_t prologue_t">宇宙探査機「UNDER VOYAGER」に<br>
-乗っていた人間少女”ライカ”（LAIKA）は<br>
-探査機の故障トラブルにより、<br>
-宇宙のどこかに墜落してしまった。<br>
-意識不明のライカが目を覚ますと、<br>
-そこには見たことのない世界が広がっていた…<br>
-探査機はもう壊れて動かない、<br>
-この星で生きていかなければいけない<br>
-身体負傷、混濁した記憶の中、<br>
-ライカの生きる希望を探す旅が始まった。</p>
-  </div>
-</section>
-
-<section class="section concept">
-  <div class="section_border"></div>
-  <div class="section_content concept_content">
-    <h2 class="section_h concept_h">Concept</h2>
-    <p class="section_t concept_t">本展は、ギャラリー全体が少女の精神や行動を示唆する物語、インスタレーションとなっております。<br>
-<br>
-「宇宙」と「精神」が交差するこのギャラリーでは、実在と虚構の混濁、存在を認識できないものが心の中にあることを作品に込めています。<br>
-<br>
-人間がときに自分というモノに向き合い、支離滅裂の感情を抱えながら思考を巡っていく中で、どんなものに出会い、希望を抱くのかを試行錯誤した展示会となっています。<br>
-<br>
-1977年に打ち上げられた実在する探査機「ボイジャー」は、2024年現在も飛行を続け、地球に通信を届けています。<br>
-<br>
-ボイジャーからインスピレーションを得たこの展示会には、自分の好きなものがたくさん詰め込まれています。<br>
-<br>
-今回初めてアートギャラリーで展示をさせていただくにあたり、いままで自身の展示会にはなかった新要素を発表したいと思っています。<br>
-<br>
-是非会場で体験していただけたら嬉しいです。<br>
-よろしくお願いします。</p>
-  </div>
-</section>
-
-<section class="section profile">
-  <div class="section_border"></div>
-  <div class="section_content profile_content">
-    <h2 class="section_h profile_h">Mika Pikazo</h2>
-    <p class="section_t profile_t">1993年東京都生まれ。高校卒業後、南米の映像技術や広告デザイン、音楽に興味を持ち、約2年半ブラジルへ移住。その後帰国しイラストレーターとして活動を開始。<br>
-<br>
-展示会歴<br>
-2019年初の商業画集出版、展示会『MikaPikaZo』を開催。2022年末には約3年ぶりとなる展示会『REVENGE POP』、2023年夏には原宿にて展示会『ILY GIRL』を開催。会期中、東急プラザ表参道原宿のエントランスのデザインを飾った。のべ約6.5万人の来場者を記録。
-<br>
-仕事歴<br>
-日清どん兵衛×Mika Pikazo コラボCM キャラクターデザイン・メインビジュアル<br>
-任天堂『ファイアーエムブレム』キャラクターデザイン<br>
-Vtuber『輝夜月』『ピンキーポップヘップバーン』キャラクターデザイン<br>
-東京国立博物館創立150年記念『国宝 東京国立博物館のすべて』コラボイラスト<br>
-Fate/Grand Order『清少納言』 キャラクターデザイン<br>
-Ado 1stアルバム『狂言』野外広告ビジュアル<br>
-『anan』表紙イラスト、『初音ミク マジカルミライ 2018』など。</p>
-    <div class="twitterLink">
-      <a href="https://twitter.com/MikaPikaZo" target="_blank">
-        <div class="twitterLink_logo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-          </svg>
-        </div>
-        <div class="twitterLink_text">@MikaPikaZo</div>
+      <a href="/">
+        <svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="200" height="50" fill="#111111"/>
+          <text x="20" y="32" fill="#FFFFFF" font-family="sans-serif" font-size="20" font-weight="bold">CREATIVE</text>
+        </svg>
       </a>
     </div>
-  </div>
-</section>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#access">Access</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<section class="section access">
-  <div class="section_border"></div>
-  <div class="section_content access_content">
-    <h2 class="section_h access_h">Access &amp; Open Hours</h2>
-    <p class="section_t access_t">tagboat art gallery<br>
-2024 05.10（Fri）-06.01（Sat）<br>
-11:00-19:00（入場無料）<br>
-※日曜休廊<br>
-<br>
-東京都中央区日本橋富沢町7-1 1F<br>
-東京メトロ日比谷線「人形町駅」A4出口 徒歩3分<br>
-東京メトロ日比谷線「小伝馬町駅」徒歩7分<br>
-東京メトロ半蔵門線「水天宮前駅」徒歩7分<br>
-都営新宿線「浜町駅」徒歩8分<br>
-<a class="link" href="http://tagboat.co.jp/" target="_blank">↗ tagboat<br></a>
-<a class="link" href="https://maps.app.goo.gl/pWJYBrXPt5eV91V59" target="_blank">↗ Google Map</a></p>
-  </div>
-</section>
+  <!-- Hero / Main Section -->
+  <main class="main-content">
+    <section class="hero">
+      <h1 class="title">CREATIVE VOYAGE</h1>
+      <p class="date">2026.03.01 — 03.25</p>
+    </section>
+  </main>
 
-<section class="section contact">
-  <div class="section_content contact_content">
-    <h2 class="section_h contact_h">Contact</h2>
-    <p class="section_t contact_t">tagboat<br>
-customer.tagboat@tagboat.com<br>
-<br>
-Twitterにて最新情報をお知らせします。<br>
-Mika Pikazo個展「UNDER VOYAGER」<br>
-インフォメーションアカウント</p>
-    <div class="twitterLink">
-      <a href="https://twitter.com/MikaPikazo_info" target="_blank">
-        <div class="twitterLink_logo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-          </svg>
-        </div>
-        <div class="twitterLink_text">@MikaPikazo_info</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<section class="section event">
-  <div class="section_border"></div>
-  <div class="section_content event_content">
-    <h2 class="section_h event_h">EVENT</h2>
-    <p class="section_t">サイン会開催のお知らせ<br>
-日程<br>
-5月18日（土）17:00-19:00<br>
-5月25日（土）17:00-19:00<br>
-人数: 各日120名<br></p>
-    <button class="section_b" type="button" x-data @click.stop="$store.ui.openPopup(0)">詳しい情報はこちらをご確認ください。</button>
-  </div>
-</section>
-
-<section class="section credit">
-  <div class="section_border"></div>
-  <div class="section_content credit_content">
-    <h2 class="section_h">Credit</h2>
-    <ol class="credit_list">
-      <li class="credit_item first"><div class="role">アーティスト</div><div class="name">Mika Pikazo</div></li>
-      <li class="credit_item"><div class="role">グラフィックデザイン</div><div class="name">GraphersRock</div></li>
-      <li class="credit_item"><div class="role">プロップ制作・装置設計</div><div class="name">Richard Falcema</div></li>
-      <li class="credit_item"><div class="role">キーアニメーション・映像制作</div><div class="name">白砂 貴広</div></li>
-      <li class="credit_item"><div class="role">キャプションデザイン</div><div class="name">ヒトマスモドル</div></li>
-      <li class="credit_item"><div class="role">撮影</div><div class="name">Ryo Asakura(Seventhgraphics)</div></li>
-      <li class="credit_item"><div class="role">Webデザイン</div><div class="name">Keita Yamada</div></li>
-      <li class="credit_item"><div class="role">プロジェクトディレクター</div><div class="name">おるだん</div></li>
-      <li class="credit_item"><div class="role">作品制作協力</div><div class="name">岡村芳樹 / 玉城きら（アシスタント）</div></li>
-      <li class="credit_item"><div class="role">施工デザイン</div><div class="name">IRMA RECORDS</div></li>
-      <li class="credit_item"><div class="role">照明デザイン</div><div class="name">namiko watanabe</div></li>
-      <li class="credit_item"><div class="role">印刷</div><div class="name">大日本印刷株式会社<br>株式会社ショウエイ</div></li>
-      <li class="credit_item"><div class="role">グッズ制作</div><div class="name">中央町戦術工芸</div></li>
-      <li class="credit_item"><div class="role">音楽制作</div><div class="name">Naoki"naotyu-"Chiba</div></li>
-      <li class="credit_item"><div class="role">tagboat</div><div class="name">徳光健治 / 眞岸花菜 / 植松苑子</div></li>
-      <li class="credit_item"><div class="role">Special Thanks</div><div class="name">未来空想新聞2041政策委員会（朝日新聞社・パナソニック株式会社）</div></li>
-    </ol>
-  </div>
-  <div class="section_border"></div>
-</section>
-
-<footer class="siteFooter" id="SiteFooter" x-data>
-  <div class="siteFooter_count">
-    <div class="t">T+</div>
-    <div class="n1" x-text="$store.ui.hours"></div>
-    <div class="sep1">:</div>
-    <div class="n2" x-text="$store.ui.minutes"></div>
-    <div class="sep2">:</div>
-    <div class="n3" x-text="$store.ui.seconds"></div>
-  </div>
-  <p class="siteFooter_cr">&copy; Mika Pikazo</p>
-</footer>
-
-</div>
-</main>
-
-<script src="/assets/js/vendor.js?v=7"></script>
-<script src="/assets/js/main.js?v=7"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>
