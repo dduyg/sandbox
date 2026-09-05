@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Handwritten Doodle Overlay Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14100f;
+    --panel: #1e1815;
+    --accent: #d9a441;
+    --text: #eee2d0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 16px;
+    min-height: 100vh;
+  }
+  h1 { font-size: 1.3rem; font-weight: 600; margin-bottom: 4px; }
+  p.sub { color: #9c8f7d; margin-top: 0; margin-bottom: 24px; font-size: 0.9rem; }
+  .panel {
+    background: var(--panel);
+    border-radius: 16px;
+    padding: 20px;
+    width: 100%;
+    max-width: 520px;
+  }
+  input[type=file] { color: var(--text); margin-bottom: 12px; }
+  #canvasWrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    margin-bottom: 16px;
+  }
+  canvas { width: 100%; height: 100%; display: block; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  button {
+    background: var(--accent);
+    color: #1a1410;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 1;
+  }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  button.secondary { background: #3a322b; color: var(--text); }
+  #status { font-size: 0.85rem; color: #9c8f7d; min-height: 1.2em; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<h1>Handwritten Doodle Overlay</h1>
+<p class="sub">Upload a portrait — doodles are placed using detected face landmarks, not guesswork.</p>
+
+<div class="panel">
+  <input type="file" id="fileInput" accept="image/*">
+  <div id="canvasWrap">
+    <canvas id="canvas" width="1024" height="1024"></canvas>
+  </div>
+  <div class="row">
+    <button id="regenBtn" disabled>🎲 New doodle layout</button>
+    <button id="downloadBtn" class="secondary" disabled>⬇ Download</button>
+  </div>
+  <div id="status">Waiting for an image…</div>
+</div>
+
+<!-- MediaPipe Tasks Vision (face landmark detection, no self-hosted model) -->
+<script type="module">
+import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
+// rough.js for the sketchy, single-stroke hand-drawn look
+import "https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js";
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const statusEl = document.getElementById('status');
+const fileInput = document.getElementById('fileInput');
+const regenBtn = document.getElementById('regenBtn');
+const downloadBtn = document.getElementById('downloadBtn');
+
+let faceLandmarker = null;
+let currentImage = null;
+let currentLandmarks = null;
+
+// ---- Caption bank: short, diary-style, affirming lines ----
+// Swap this for an LLM call later if you want infinite variety instead of a fixed set.
+const CAPTIONS = [
+  "soft heart,\nstrong spirit",
+  "you're doing\nbetter than\nyou think",
+  "just taking it\none day at\na time",
+  "small steps\nstill count",
+  "breathe.\nyou've got this",
+  "be gentle\nwith yourself\ntoday",
+  "growing at\nyour own pace",
+];
+
+statusEl.textContent = "Loading face model…";
+const fileset = await FilesetResolver.forVisionTasks(
+  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm"
+);
+faceLandmarker = await FaceLandmarker.createFromOptions(fileset, {
+  baseOptions: {
+    modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+    delegate: "GPU"
+  },
+  runningMode: "IMAGE",
+  numFaces: 1
+});
+statusEl.textContent = "Model ready. Upload a photo.";
+
+fileInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  statusEl.textContent = "Detecting face…";
+
+  const img = new Image();
+  img.onload = () => {
+    // Fit image into square canvas
+    const size = Math.min(img.width, img.height);
+    const sx = (img.width - size) / 2;
+    const sy = (img.height - size) / 2;
+
+    canvas.width = 1024;
+    canvas.height = 1024;
+    ctx.drawImage(img, sx, sy, size, size, 0, 0, 1024, 1024);
+    currentImage = { sx, sy, size, img };
+
+    const result = faceLandmarker.detect(canvas);
+    if (!result.faceLandmarks.length) {
+      statusEl.textContent = "No face detected — try a clearer front-facing photo.";
+      return;
+    }
+    currentLandmarks = result.faceLandmarks[0]; // normalized 0..1 coords
+    regenBtn.disabled = false;
+    downloadBtn.disabled = false;
+    drawDoodleLayer();
+    statusEl.textContent = "Face detected. Doodles anchored to landmarks.";
+  };
+  img.src = URL.createObjectURL(file);
+});
+
+regenBtn.addEventListener('click', drawDoodleLayer);
+downloadBtn.addEventListener('click', () => {
+  const link = document.createElement('a');
+  link.download = 'doodle-overlay.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+
+// MediaPipe's face oval / eye landmark indices (subset used for anchoring)
+const FACE_OVAL = [10,338,297,332,284,251,389,356,454,323,361,288,397,365,379,378,400,377,152,148,176,149,150,136,172,58,132,93,234,127,162,21,54,103,67,109];
+const LEFT_EYE_OUTER = 33;
+const RIGHT_EYE_OUTER = 263;
+
+function lm(i) {
+  const p = currentLandmarks[i];
+  return { x: p.x * 1024, y: p.y * 1024 };
+}
+
+function drawDoodleLayer() {
+  // Redraw base photo first
+  ctx.clearRect(0, 0, 1024, 1024);
+  const { sx, sy, size, img } = currentImage;
+  ctx.drawImage(img, sx, sy, size, size, 0, 0, 1024, 1024);
+
+  const rc = rough.canvas(canvas);
+  const strokeOpts = { stroke: 'white', strokeWidth: 2.2, roughness: 2.4, bowing: 3 };
+
+  // 1. Hair/face contour line, offset outward from the detected oval
+  const ovalPts = FACE_OVAL.map(i => {
+    const p = lm(i);
+    const cx = 512, cy = 512;
+    const dx = p.x - cx, dy = p.y - cy;
+    const dist = Math.hypot(dx, dy);
+    const scale = (dist + 18) / dist; // push line slightly outside the face
+    return [cx + dx * scale, cy + dy * scale];
+  });
+  rc.curve(ovalPts, strokeOpts);
+
+  // 2. Dotted arrow pointing at an eye (only one, to leave empty space elsewhere)
+  const eye = lm(RIGHT_EYE_OUTER);
+  const arrowStart = { x: eye.x + 160, y: eye.y - 10 };
+  rc.line(arrowStart.x, arrowStart.y, eye.x + 30, eye.y, {
+    stroke: 'white', strokeWidth: 2, roughness: 2, strokeLineDash: [4, 6]
+  });
+  drawArrowhead(eye.x + 30, eye.y, arrowStart.x, arrowStart.y);
+
+  // 3. Sparkles, top corners (sparse — leave empty space per composition rule)
+  drawSparkle(90, 60, 14);
+  drawSparkle(140, 100, 8);
+  drawSparkle(920, 90, 12);
+
+  // 4. Small heart, lower-left, away from face
+  drawHeart(80, 700, 22);
+
+  // 5. Speech-bubble caption, placed in whichever corner has the most empty space
+  const caption = CAPTIONS[Math.floor(Math.random() * CAPTIONS.length)];
+  drawSpeechBubble(rc, 90, 830, 300, 150, caption);
+
+  // 6. Secondary short caption near top-left, handwritten style
+  drawHandText("Soft heart,\nStrong spirit ♡", 60, 130, 30);
+}
+
+function drawArrowhead(x, y, fromX, fromY) {
+  const angle = Math.atan2(y - fromY, x - fromX);
+  const len = 14;
+  ctx.save();
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - len * Math.cos(angle - 0.4), y - len * Math.sin(angle - 0.4));
+  ctx.moveTo(x, y);
+  ctx.lineTo(x - len * Math.cos(angle + 0.4), y - len * Math.sin(angle + 0.4));
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawSparkle(x, y, r) {
+  ctx.save();
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(x, y - r); ctx.lineTo(x, y + r);
+  ctx.moveTo(x - r, y); ctx.lineTo(x + r, y);
+  ctx.moveTo(x - r*0.6, y - r*0.6); ctx.lineTo(x + r*0.6, y + r*0.6);
+  ctx.moveTo(x - r*0.6, y + r*0.6); ctx.lineTo(x + r*0.6, y - r*0.6);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawHeart(x, y, s) {
+  ctx.save();
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = 1.8;
+  ctx.beginPath();
+  ctx.moveTo(x, y + s * 0.3);
+  ctx.bezierCurveTo(x - s, y - s * 0.6, x - s * 1.6, y + s * 0.6, x, y + s * 1.4);
+  ctx.bezierCurveTo(x + s * 1.6, y + s * 0.6, x + s, y - s * 0.6, x, y + s * 0.3);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawSpeechBubble(rc, x, y, w, h, text) {
+  rc.ellipse(x + w/2, y + h/2, w, h, {
+    stroke: 'white', strokeWidth: 1.8, roughness: 1.8, strokeLineDash: [3, 5], fill: 'transparent'
+  });
+  drawHandText(text, x + 30, y + 45, 24);
+}
+
+function drawHandText(text, x, y, fontSize) {
+  ctx.save();
+  ctx.fillStyle = 'white';
+  ctx.font = `${fontSize}px "Caveat", cursive`;
+  const lines = text.split('\n');
+  lines.forEach((line, i) => ctx.fillText(line, x, y + i * (fontSize + 6)));
+  ctx.restore();
+}
+</script>
+</body>
+</html>
