@@ -1,4 +1,4 @@
-# How to Choose the Right GitHub License (Without Needing a Law Degree)
+# How to Choose the Right GitHub License
 
 Choosing the right open-source license for your GitHub repository usually comes down to one simple question: **How much freedom do you actually want to give people using your code?**
 
@@ -130,11 +130,3 @@ While GitHub manages your public code, you need a fulfillment strategy for your 
 ## Important Caveat: Licensing Is Not Legal Advice
 
 This guide is a practical overview, not legal advice. License obligations can depend on how software is combined, modified, distributed, or offered as a service. If your project becomes commercially important, consult a qualified lawyer or licensing specialist.
-
-## Optimized Medium Title Ideas (for SEO & Click-Throughs)
-
-To maximize search traffic and Medium engagement, choose one of these titles based on your primary target audience:
-
-- **High-Intent SEO Title:** *How to Choose the Right Open-Source License for Your GitHub Project (MIT vs Apache vs GPL)*
-- **Developer/Beginner Friendly:** *The Ultimate Guide to GitHub Licenses: MIT, Apache 2.0, and GPL Explained*
-- **Commercial/Monetization Focus:** *How to Pick a GitHub License (And Use Dual-Licensing to Monetize Your Code)*
