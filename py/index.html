@@ -3,491 +3,420 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ＰＹＴＨＯＮ ＭＡＳＴＥＲＹ</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+<title>Python ＭＡＳＴＥＲＹ</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d0a0f;
-    --bg2: #130f18;
-    --amber: #e8a23a;
-    --amber-dim: #9b6a1e;
-    --rust: #c45c2a;
-    --ochre: #c98b2f;
-    --cream: #f2e0c0;
-    --muted: #7a6a55;
-    --cyan: #4ecdc4;
-    --purple: #8b5cf6;
-    --grid: rgba(232, 162, 58, 0.06);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--bg);
-    color: var(--cream);
-    font-family: 'Outfit', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
+    --glass: rgba(18, 0, 42, 0.55);
+    --glass-soft: rgba(18, 0, 42, 0.35);
+    --border: rgba(255, 255, 255, 0.2);
+    --gold: #FFD700;
+    --secondary: #ffffffcc;
+    --muted: #ffffff88;
   }
 
-  /* Grid background */
-  body::before {
-    content: '';
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0; padding: 0;
+    min-height: 100vh;
+    font-family: "JetBrains Mono", monospace;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(90deg, #8EC5FF 0%, #B7C6DB 25%, #C8C4B8 50%, #D6C26F 75%, #D9C300 100%);
+    background-attachment: fixed;
+  }
+
+  /* Subtle scanline effect, same as reference */
+  body::after {
+    content: "";
     position: fixed;
     inset: 0;
-    background-image:
-      linear-gradient(var(--grid) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 40px 40px;
+    background: repeating-linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 1px, transparent 1px, transparent 3px);
     pointer-events: none;
-    z-index: 0;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: -200px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 900px;
-    height: 400px;
-    background: radial-gradient(ellipse, rgba(196, 92, 42, 0.12) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
+    mix-blend-mode: overlay;
   }
 
   .container {
-    position: relative;
-    z-index: 1;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 48px 24px 80px;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1.5rem 3rem;
   }
 
   /* Header */
-  .header {
+  header {
     text-align: center;
-    margin-bottom: 64px;
-    animation: fadeDown 0.8s ease both;
+    padding: 3rem 1rem 1.5rem;
   }
 
   .eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.35em;
-    color: var(--amber-dim);
-    text-transform: uppercase;
-    margin-bottom: 16px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--secondary);
+    opacity: 0.85;
+    margin-bottom: 0.8rem;
   }
 
-  .title {
-    font-size: clamp(42px, 8vw, 76px);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--amber) 0%, var(--ochre) 40%, var(--rust) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
+  h1 {
+    font-family: "Orbitron", sans-serif;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 7vw, 3.4rem);
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.02em;
   }
 
   .subtitle {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    margin-top: 12px;
+    color: var(--secondary);
+    font-size: 0.95rem;
+    opacity: 0.9;
+    letter-spacing: 0.05em;
   }
 
   .meta-strip {
     display: flex;
     justify-content: center;
-    gap: 32px;
-    margin-top: 28px;
+    gap: 1.8rem;
+    margin-top: 1.6rem;
     flex-wrap: wrap;
   }
 
   .meta-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: var(--muted);
+    font-size: 0.78rem;
+    color: var(--secondary);
   }
 
-  .meta-item span.val {
-    color: var(--amber);
+  .meta-item .val {
+    color: var(--gold);
     font-weight: 600;
   }
 
-  /* Timeline track */
-  .timeline-header {
+  /* Panel (reused for timeline bar) */
+  .panel {
+    width: 100%;
+    margin: 0 auto 2.5rem;
+    padding: 1rem 1.2rem;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    display: flex;
+    gap: 4px;
+  }
+
+  .tbar-segment {
+    height: 8px;
+    border-radius: 4px;
+    flex: 1;
+  }
+
+  .t1 { background: #8EC5FF; }
+  .t2 { background: linear-gradient(to right, #8EC5FF, #C8C4B8); }
+  .t3 { background: #D6C26F; }
+  .t4 { background: #D9C300; }
+  .t5 { background: #FFA07A; }
+  .t6 { background: var(--gold); }
+
+  /* Section label */
+  .section-heading {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 32px;
-    animation: fadeUp 0.6s ease 0.2s both;
+    margin: 0 0 1.4rem;
   }
 
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.3em;
-    color: var(--amber-dim);
-    text-transform: uppercase;
+  .section-heading h2 {
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: 0;
+    white-space: nowrap;
   }
 
   .section-line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(to right, var(--amber-dim), transparent);
+    background: rgba(255, 255, 255, 0.3);
   }
 
   /* Phase cards */
   .phases {
-    display: grid;
-    gap: 2px;
-    margin-bottom: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-bottom: 3rem;
   }
 
   .phase {
-    background: var(--bg2);
-    border: 1px solid rgba(232, 162, 58, 0.12);
-    border-left: 3px solid var(--amber-dim);
-    padding: 0;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 14px;
     overflow: hidden;
-    transition: border-color 0.2s ease;
-    animation: fadeUp 0.5s ease both;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
-
-  .phase:hover {
-    border-left-color: var(--amber);
-    border-color: rgba(232, 162, 58, 0.25);
-  }
-
-  .phase:nth-child(1) { animation-delay: 0.1s; border-left-color: var(--rust); }
-  .phase:nth-child(2) { animation-delay: 0.2s; }
-  .phase:nth-child(3) { animation-delay: 0.3s; border-left-color: var(--ochre); }
-  .phase:nth-child(4) { animation-delay: 0.4s; }
-  .phase:nth-child(5) { animation-delay: 0.5s; border-left-color: var(--cyan); }
-  .phase:nth-child(6) { animation-delay: 0.6s; border-left-color: var(--purple); }
 
   .phase-header {
     display: grid;
-    grid-template-columns: 72px 1fr auto;
+    grid-template-columns: 76px 1fr auto;
     align-items: center;
-    gap: 20px;
-    padding: 20px 24px;
+    gap: 1.2rem;
+    padding: 1.1rem 1.4rem;
     cursor: pointer;
     user-select: none;
   }
 
   .phase-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--amber-dim);
-    letter-spacing: 0.1em;
+    font-size: 0.7rem;
+    color: var(--secondary);
+    opacity: 0.8;
   }
 
   .phase-num .week {
-    font-size: 20px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.15rem;
     font-weight: 700;
-    color: var(--amber);
+    color: var(--gold);
     display: block;
-    line-height: 1;
+    line-height: 1.1;
   }
 
   .phase-title-block h3 {
-    font-size: 16px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 1rem;
     font-weight: 700;
-    color: var(--cream);
-    margin-bottom: 3px;
+    margin: 0 0 0.25rem;
   }
 
   .phase-title-block p {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--secondary);
+    opacity: 0.85;
+    margin: 0;
   }
 
   .phase-badge {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    padding: 4px 10px;
-    border-radius: 2px;
+    font-size: 0.62rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
     white-space: nowrap;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    background: rgba(255, 215, 0, 0.08);
+    letter-spacing: 0.05em;
   }
 
-  .badge-foundation { background: rgba(196,92,42,0.15); color: var(--rust); border: 1px solid rgba(196,92,42,0.3); }
-  .badge-core { background: rgba(232,162,58,0.1); color: var(--amber); border: 1px solid rgba(232,162,58,0.25); }
-  .badge-advanced { background: rgba(201,139,47,0.1); color: var(--ochre); border: 1px solid rgba(201,139,47,0.3); }
-  .badge-ds { background: rgba(78,205,196,0.1); color: var(--cyan); border: 1px solid rgba(78,205,196,0.25); }
-  .badge-pro { background: rgba(139,92,246,0.1); color: var(--purple); border: 1px solid rgba(139,92,246,0.25); }
+  .toggle-arrow {
+    color: var(--secondary);
+    font-size: 1.1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .phase.expanded .toggle-arrow { transform: rotate(90deg); }
 
   .phase-body {
     display: none;
-    padding: 0 24px 24px;
-    border-top: 1px solid rgba(232,162,58,0.08);
+    padding: 0 1.4rem 1.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
-  .phase-body.open { display: block; }
+  .phase-body.open { display: block; padding-top: 1.2rem; }
 
   .topics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 8px;
-    margin: 16px 0 20px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 0.5rem;
+    margin: 0 0 1.3rem;
   }
 
   .topic-chip {
-    background: rgba(232,162,58,0.05);
-    border: 1px solid rgba(232,162,58,0.1);
-    padding: 7px 12px;
-    font-size: 12px;
-    color: var(--cream);
-    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.7rem;
+    font-size: 0.72rem;
+    color: #ffffff;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
   .topic-chip::before {
-    content: '›';
-    color: var(--amber-dim);
-    font-size: 14px;
+    content: '◇';
+    color: var(--gold);
+    font-size: 0.7rem;
   }
 
   .resources-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--amber-dim);
-    text-transform: uppercase;
-    margin-bottom: 10px;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--secondary);
+    opacity: 0.75;
+    margin-bottom: 0.6rem;
   }
 
   .resources-list {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 0.4rem;
   }
 
   .resource-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    background: rgba(0,0,0,0.25);
-    border: 1px solid rgba(232,162,58,0.07);
-    font-size: 12.5px;
-    border-radius: 2px;
-    transition: background 0.15s ease;
+    gap: 0.8rem;
+    padding: 0.55rem 0.8rem;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.72rem;
+    border-radius: 8px;
   }
 
-  .resource-row:hover { background: rgba(232,162,58,0.05); }
-
   .resource-type {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 0.1em;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
     color: var(--muted);
     min-width: 52px;
   }
 
   .resource-name {
-    color: var(--cream);
+    color: #ffffff;
     flex: 1;
   }
 
   .resource-link {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px;
-    color: var(--amber-dim);
+    font-size: 0.6rem;
+    color: var(--gold);
     text-decoration: none;
-    padding: 2px 6px;
-    border: 1px solid rgba(232,162,58,0.2);
-    border-radius: 2px;
-    transition: color 0.15s, border-color 0.15s;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--gold);
+    border-radius: 6px;
   }
 
-  .resource-link:hover { color: var(--amber); border-color: var(--amber); }
-
-  /* Study schema */
-  .schema-section {
-    margin-bottom: 56px;
-    animation: fadeUp 0.6s ease 0.4s both;
-  }
+  /* Daily schema */
+  .schema-section { margin-bottom: 3rem; }
 
   .daily-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.9rem;
   }
 
   .day-card {
-    background: var(--bg2);
-    border: 1px solid rgba(232,162,58,0.1);
-    padding: 16px;
-    border-radius: 2px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.1rem;
   }
 
   .day-name {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--amber-dim);
-    letter-spacing: 0.2em;
-    margin-bottom: 10px;
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.68rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
   }
 
   .day-block {
-    font-size: 12px;
-    color: var(--muted);
+    font-size: 0.72rem;
+    color: var(--secondary);
     line-height: 1.7;
   }
 
-  .day-block .highlight { color: var(--cream); font-weight: 600; }
+  .day-block .highlight { color: #ffffff; font-weight: 600; }
 
-  /* Tools section */
+  /* Tools */
   .tools-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.9rem;
   }
 
   .tool-card {
-    background: var(--bg2);
-    border: 1px solid rgba(232,162,58,0.1);
-    padding: 18px;
-    border-radius: 2px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.2rem;
+    transition: transform 0.25s ease;
   }
 
-  .tool-icon {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
+  .tool-card:hover { transform: translateY(-4px); }
+
+  .tool-icon { font-size: 1.4rem; margin-bottom: 0.6rem; }
 
   .tool-name {
+    font-family: "Orbitron", sans-serif;
     font-weight: 700;
-    font-size: 14px;
-    color: var(--cream);
-    margin-bottom: 4px;
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
   }
 
   .tool-desc {
-    font-size: 12px;
-    color: var(--muted);
+    font-size: 0.72rem;
+    color: var(--secondary);
     line-height: 1.5;
   }
 
   /* Tips */
   .tips-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.9rem;
   }
 
   .tip-card {
-    background: var(--bg2);
-    border: 1px solid rgba(232,162,58,0.08);
-    border-left: 3px solid var(--rust);
-    padding: 16px 18px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
   }
 
-  .tip-card:nth-child(2) { border-left-color: var(--amber); }
-  .tip-card:nth-child(3) { border-left-color: var(--cyan); }
-  .tip-card:nth-child(4) { border-left-color: var(--purple); }
-
   .tip-title {
+    font-family: "Orbitron", sans-serif;
     font-weight: 700;
-    font-size: 13px;
-    color: var(--cream);
-    margin-bottom: 6px;
+    font-size: 0.78rem;
+    margin-bottom: 0.4rem;
   }
 
   .tip-text {
-    font-size: 12px;
-    color: var(--muted);
+    font-size: 0.72rem;
+    color: var(--secondary);
     line-height: 1.6;
   }
 
-  /* Footer */
-  .footer {
+  footer {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    font-size: 0.68rem;
+    opacity: 0.8;
     text-align: center;
-    margin-top: 64px;
-    padding-top: 32px;
-    border-top: 1px solid rgba(232,162,58,0.1);
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.2em;
   }
 
-  /* Animations */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+  footer span { margin: 0 0.3rem; }
+
+  @media (max-width: 520px) {
+    .phase-header { grid-template-columns: 60px 1fr auto; }
   }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Toggle arrow */
-  .toggle-arrow {
-    color: var(--amber-dim);
-    font-size: 18px;
-    transition: transform 0.2s ease;
-    font-family: 'Space Mono', monospace;
-  }
-
-  .phase.expanded .toggle-arrow { transform: rotate(90deg); }
-
-  /* Progress bar */
-  .timeline-bar {
-    display: flex;
-    margin-bottom: 48px;
-    gap: 3px;
-    animation: fadeUp 0.6s ease 0.15s both;
-  }
-
-  .tbar-segment {
-    height: 6px;
-    border-radius: 1px;
-    flex: 1;
-    transition: opacity 0.2s;
-  }
-
-  .tbar-segment:hover { opacity: 0.8; }
-
-  .t1 { background: var(--rust); }
-  .t2 { background: linear-gradient(to right, var(--rust), var(--amber)); }
-  .t3 { background: var(--amber); }
-  .t4 { background: var(--ochre); }
-  .t5 { background: var(--cyan); }
-  .t6 { background: var(--purple); }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="eyebrow">// FREE · FAST · COMPLETE</div>
-    <div class="title">ＰＹＴＨＯＮ<br>ＭＡＳＴＥＲＹ</div>
-    <div class="subtitle">ＬＥＡＲＮＩＮＧ ＳＣＨＥＭＡ ＆ ＲＯＡＤＭＡＰ</div>
+  <header>
+    <div class="eyebrow">free · fast · complete</div>
+    <h1>Python Mastery</h1>
+    <div class="subtitle">Learning Schema &amp; Roadmap</div>
     <div class="meta-strip">
       <div class="meta-item">⏱ Total: <span class="val">8–12 weeks</span></div>
       <div class="meta-item">📅 Daily: <span class="val">2–3 hrs</span></div>
       <div class="meta-item">💰 Cost: <span class="val">$0</span></div>
       <div class="meta-item">🎯 Level: <span class="val">Zero → Production</span></div>
     </div>
-  </div>
+  </header>
 
-  <!-- Timeline bar -->
-  <div class="timeline-bar">
+  <div class="panel">
     <div class="tbar-segment t1" title="Week 1–2: Foundations"></div>
     <div class="tbar-segment t2" title="Week 2–3: Core Concepts"></div>
     <div class="tbar-segment t3" title="Week 3–5: Intermediate"></div>
@@ -496,15 +425,13 @@
     <div class="tbar-segment t6" title="Week 10–12: Production & Projects"></div>
   </div>
 
-  <!-- Phases -->
-  <div class="timeline-header">
-    <div class="section-label">ＰＨＡＳＥＳ</div>
+  <div class="section-heading">
+    <h2>Phases</h2>
     <div class="section-line"></div>
   </div>
 
   <div class="phases">
 
-    <!-- Phase 1 -->
     <div class="phase" onclick="toggle(this)">
       <div class="phase-header">
         <div class="phase-num"><span class="week">W1–2</span>~14 days</div>
@@ -513,7 +440,7 @@
           <p>syntax · types · control flow · functions</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="phase-badge badge-foundation">FOUNDATION</span>
+          <span class="phase-badge">FOUNDATION</span>
           <span class="toggle-arrow">›</span>
         </div>
       </div>
@@ -542,7 +469,6 @@
       </div>
     </div>
 
-    <!-- Phase 2 -->
     <div class="phase" onclick="toggle(this)">
       <div class="phase-header">
         <div class="phase-num"><span class="week">W2–3</span>~10 days</div>
@@ -551,7 +477,7 @@
           <p>OOP · iterators · lambdas · decorators</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="phase-badge badge-core">CORE</span>
+          <span class="phase-badge">CORE</span>
           <span class="toggle-arrow">›</span>
         </div>
       </div>
@@ -579,7 +505,6 @@
       </div>
     </div>
 
-    <!-- Phase 3 -->
     <div class="phase" onclick="toggle(this)">
       <div class="phase-header">
         <div class="phase-num"><span class="week">W3–5</span>~14 days</div>
@@ -588,7 +513,7 @@
           <p>stdlib deep-dive · testing · packaging · concurrency</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="phase-badge badge-advanced">INTERMEDIATE</span>
+          <span class="phase-badge">INTERMEDIATE</span>
           <span class="toggle-arrow">›</span>
         </div>
       </div>
@@ -617,7 +542,6 @@
       </div>
     </div>
 
-    <!-- Phase 4 -->
     <div class="phase" onclick="toggle(this)">
       <div class="phase-header">
         <div class="phase-num"><span class="week">W5–7</span>~14 days</div>
@@ -626,7 +550,7 @@
           <p>metaclasses · memory · performance · patterns</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="phase-badge badge-advanced">ADVANCED</span>
+          <span class="phase-badge">ADVANCED</span>
           <span class="toggle-arrow">›</span>
         </div>
       </div>
@@ -654,7 +578,6 @@
       </div>
     </div>
 
-    <!-- Phase 5 -->
     <div class="phase" onclick="toggle(this)">
       <div class="phase-header">
         <div class="phase-num"><span class="week">W7–10</span>~21 days</div>
@@ -663,7 +586,7 @@
           <p>numpy · pandas · sql · ml · viz — your domain</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="phase-badge badge-ds">DATA TRACK</span>
+          <span class="phase-badge">DATA TRACK</span>
           <span class="toggle-arrow">›</span>
         </div>
       </div>
@@ -693,7 +616,6 @@
       </div>
     </div>
 
-    <!-- Phase 6 -->
     <div class="phase" onclick="toggle(this)">
       <div class="phase-header">
         <div class="phase-num"><span class="week">W10–12</span>~14 days</div>
@@ -702,7 +624,7 @@
           <p>CI/CD · testing · real projects · open source</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center">
-          <span class="phase-badge badge-pro">PRODUCTION</span>
+          <span class="phase-badge">PRODUCTION</span>
           <span class="toggle-arrow">›</span>
         </div>
       </div>
@@ -730,10 +652,9 @@
 
   </div>
 
-  <!-- Daily Schema -->
   <div class="schema-section">
-    <div class="timeline-header">
-      <div class="section-label">ＤＡＩＬＹ ＳＣＨＥＤＵＬＥ</div>
+    <div class="section-heading">
+      <h2>Daily Schedule</h2>
       <div class="section-line"></div>
     </div>
     <div class="daily-grid">
@@ -770,10 +691,9 @@
     </div>
   </div>
 
-  <!-- Tools -->
   <div class="schema-section">
-    <div class="timeline-header">
-      <div class="section-label">ＥＳＳＥＮＴＩＡＬ ＴＯＯＬＳ</div>
+    <div class="section-heading">
+      <h2>Essential Tools</h2>
       <div class="section-line"></div>
     </div>
     <div class="tools-grid">
@@ -800,10 +720,9 @@
     </div>
   </div>
 
-  <!-- Tips -->
   <div class="schema-section">
-    <div class="timeline-header">
-      <div class="section-label">ＳＰＥＥＤ ＴＩＰＳ</div>
+    <div class="section-heading">
+      <h2>Speed Tips</h2>
       <div class="section-line"></div>
     </div>
     <div class="tips-grid">
@@ -826,9 +745,13 @@
     </div>
   </div>
 
-  <div class="footer">
-    ＰＹＴＨＯＮ ＭＡＳＴＥＲＹ ＲＯＡＤＭＡＰ ／ FREE · FAST · COMPLETE ／ CLICK PHASES TO EXPAND
-  </div>
+  <footer>
+    <span>Python Mastery Roadmap</span>
+    <span>•</span>
+    <span>Free · Fast · Complete</span>
+    <span>•</span>
+    <span>Click phases to expand</span>
+  </footer>
 
 </div>
 
@@ -836,17 +759,13 @@
   function toggle(el) {
     const body = el.querySelector('.phase-body');
     const isOpen = body.classList.contains('open');
-    // Close all
     document.querySelectorAll('.phase-body').forEach(b => b.classList.remove('open'));
     document.querySelectorAll('.phase').forEach(p => p.classList.remove('expanded'));
-    // Open clicked if it was closed
     if (!isOpen) {
       body.classList.add('open');
       el.classList.add('expanded');
     }
   }
-
-  // Open first phase by default
   document.querySelector('.phase').click();
 </script>
 </body>
