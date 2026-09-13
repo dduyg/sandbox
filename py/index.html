@@ -14,7 +14,6 @@
     --secondary: #ffffffcc;
     --muted: #ffffff88;
   }
-
   * { box-sizing: border-box; }
 
   body {
@@ -29,7 +28,7 @@
     background-attachment: fixed;
   }
 
-  /* Subtle scanline effect, same as reference */
+  /* Subtle scanline effect */
   body::after {
     content: "";
     position: fixed;
@@ -68,13 +67,6 @@
     letter-spacing: 0.02em;
   }
 
-  .subtitle {
-    color: var(--secondary);
-    font-size: 0.95rem;
-    opacity: 0.9;
-    letter-spacing: 0.05em;
-  }
-
   .meta-strip {
     display: flex;
     justify-content: center;
@@ -93,7 +85,7 @@
     font-weight: 600;
   }
 
-  /* Panel (reused for timeline bar) */
+  /* Panel */
   .panel {
     width: 100%;
     margin: 0 auto 2.5rem;
@@ -405,13 +397,11 @@
 <div class="container">
 
   <header>
-    <div class="eyebrow">free · fast · complete</div>
+    <div class="eyebrow">Learning Schema &amp; Roadmap</div>
     <h1>Python Mastery</h1>
-    <div class="subtitle">Learning Schema &amp; Roadmap</div>
     <div class="meta-strip">
       <div class="meta-item">⏱ Total: <span class="val">8–12 weeks</span></div>
       <div class="meta-item">📅 Daily: <span class="val">2–3 hrs</span></div>
-      <div class="meta-item">💰 Cost: <span class="val">$0</span></div>
       <div class="meta-item">🎯 Level: <span class="val">Zero → Production</span></div>
     </div>
   </header>
