@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Patterns & Icons — HyperCard-inspired asset library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 24px 16px 80px;
+    background: radial-gradient(#000 0.5px, transparent 1px) 0 0/6px 6px, #ccc;
+    font-family: 'IBM Plex Mono', monospace;
+    color: #000;
+  }
+
+  .window {
+    max-width: 960px;
+    margin: 24px auto;
+    background: #fff;
+    border: 2px solid #000;
+    box-shadow: 6px 6px 0 #000;
+  }
+
+  .title-bar {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    background: repeating-linear-gradient(#000 0 2px, #fff 2px 4px);
+    border-bottom: 2px solid #000;
+  }
+
+  .close-box { width: 13px; height: 13px; background: #fff; border: 2px solid #000; flex-shrink: 0; }
+  .title-text { background: #fff; padding: 2px 12px; font-family: 'Silkscreen', monospace; font-size: 13px; margin: 0 auto; }
+  .spacer { width: 13px; flex-shrink: 0; }
+
+  .content { padding: 26px 30px 40px; }
+
+  .intro { max-width: 640px; font-size: 13px; line-height: 1.7; }
+
+  h2 {
+    font-family: 'Silkscreen', monospace;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 38px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #000;
+  }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 16px;
+    border: 2px solid #000;
+    background: repeating-linear-gradient(45deg, #000 0 1px, transparent 1px 6px), repeating-linear-gradient(-45deg, #000 0 1px, transparent 1px 6px), #fff;
+  }
+
+  .btn {
+    font-family: 'Silkscreen', monospace;
+    font-size: 11.5px;
+    padding: 10px 14px;
+    border: 2px solid #000;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #000;
+  }
+  .btn:hover { background: #000; color: #fff; }
+  .btn:active { box-shadow: none; transform: translate(3px, 3px); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 14px; }
+
+  .tile {
+    border: 2px solid #000;
+    background: #fff;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .tile:hover { box-shadow: 3px 3px 0 #000; transform: translate(-1px, -1px); }
+  .tile:active { box-shadow: none; transform: translate(1px, 1px); }
+
+  .swatch { width: 64px; height: 64px; border: 1px solid #000; }
+  .icon-holder { width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; }
+  .icon-holder svg { width: 48px; height: 48px; }
+
+  .label { font-size: 10.5px; text-align: center; line-height: 1.3; min-height: 26px; display: flex; align-items: center; }
+
+  footer { margin-top: 40px; padding-top: 16px; border-top: 2px solid #000; font-size: 11.5px; font-style: italic; }
+</style>
+</head>
+<body>
+
+  <div class="window">
+    <div class="title-bar">
+      <div class="close-box"></div>
+      <div class="title-text">Patterns &amp; Icons.stack</div>
+      <div class="spacer"></div>
+    </div>
+
+    <div class="content">
+      <p class="intro">
+        A library of 1-bit dither patterns and bitmap-style icons, drawn in the
+        spirit of HyperCard's black-and-white toolset. Click any tile to copy
+        its CSS or SVG, or grab everything at once below.
+      </p>
+
+      <div class="toolbar">
+        <button class="btn" id="downloadIconPng">⤓ Icon sprite sheet (PNG)</button>
+        <button class="btn" id="downloadIconSvg">⤓ Icon sprite (SVG symbols)</button>
+        <button class="btn" id="downloadPatternsCss">⤓ All patterns (CSS)</button>
+      </div>
+
+      <h2>Patterns</h2>
+      <div class="grid" id="patternGrid"></div>
+
+      <h2>Icons</h2>
+      <div class="grid" id="iconGrid"></div>
+
+      <footer>Click any swatch or icon to copy its code to the clipboard.</footer>
+    </div>
+  </div>
+
+<script>
+  function slug(name) { return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""); }
+
+  // ---------- PATTERNS (generated) ----------
+  const PATTERNS = [];
+  PATTERNS.push({ name: "Solid Black", css: "background:#000;" });
+  PATTERNS.push({ name: "Solid White", css: "background:#fff;" });
+
+  const stripeWidths = [1, 2, 4, 8];
+  const stripeDirs = [
+    { label: "Horizontal", css: w => `background: repeating-linear-gradient(to bottom, #000 0 ${w}px, #fff ${w}px ${w*2}px);` },
+    { label: "Vertical", css: w => `background: repeating-linear-gradient(to right, #000 0 ${w}px, #fff ${w}px ${w*2}px);` },
+    { label: "Diagonal ↗", css: w => `background: repeating-linear-gradient(45deg, #000 0 ${w}px, #fff ${w}px ${w*2}px);` },
+    { label: "Diagonal ↘", css: w => `background: repeating-linear-gradient(-45deg, #000 0 ${w}px, #fff ${w}px ${w*2}px);` }
+  ];
+  stripeDirs.forEach(dir => stripeWidths.forEach(w => {
+    PATTERNS.push({ name: `${dir.label} Stripes ${w}px`, css: dir.css(w) });
+  }));
+
+  [4, 8, 16, 32].forEach(size => {
+    PATTERNS.push({ name: `Checker ${size}px`, css: `background: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%) 0 0/${size}px ${size}px;` });
+  });
+
+  [3, 4, 6, 8, 12, 16].forEach(spacing => {
+    PATTERNS.push({ name: `Dots ${spacing}px`, css: `background: radial-gradient(#000 1px, transparent 1.2px) 0 0/${spacing}px ${spacing}px, #fff;` });
+    PATTERNS.push({ name: `Dots Inverse ${spacing}px`, css: `background: radial-gradient(#fff 1px, transparent 1.2px) 0 0/${spacing}px ${spacing}px, #000;` });
+  });
+
+  [4, 6, 8].forEach(s => {
+    PATTERNS.push({ name: `Crosshatch ${s}px`, css: `background: repeating-linear-gradient(45deg, #000 0 1px, transparent 1px ${s}px), repeating-linear-gradient(-45deg, #000 0 1px, transparent 1px ${s}px), #fff;` });
+  });
+
+  [4, 8, 12].forEach(s => {
+    PATTERNS.push({ name: `Grid Lines ${s}px`, css: `background: repeating-linear-gradient(#000 0 1px, transparent 1px ${s}px), repeating-linear-gradient(90deg, #000 0 1px, transparent 1px ${s}px), #fff;` });
+  });
+
+  [2, 4, 6].forEach(t => {
+    PATTERNS.push({ name: `Lattice ${t}px`, css: `background: repeating-linear-gradient(0deg, #000 0 ${t}px, transparent ${t}px ${t*2}px), repeating-linear-gradient(90deg, #000 0 ${t}px, transparent ${t}px ${t*2}px), #fff;` });
+  });
+
+  PATTERNS.push({ name: "Brick 8px", css: "background: linear-gradient(#000 1px, transparent 1px) 0 0/16px 8px, linear-gradient(90deg,#000 1px, transparent 1px) 0 0/16px 8px, linear-gradient(90deg,#000 1px, transparent 1px) 8px 4px/16px 8px, #fff;" });
+  PATTERNS.push({ name: "Brick 16px", css: "background: linear-gradient(#000 1px, transparent 1px) 0 0/32px 16px, linear-gradient(90deg,#000 1px, transparent 1px) 0 0/32px 16px, linear-gradient(90deg,#000 1px, transparent 1px) 16px 8px/32px 16px, #fff;" });
+
+  [[0.4, "12%"], [0.7, "25%"], [1.0, "37%"], [1.3, "50%"], [1.6, "62%"], [1.9, "75%"]].forEach(([r, label]) => {
+    PATTERNS.push({ name: `Gray Dither ${label}`, css: `background: radial-gradient(#000 ${r}px, transparent ${r+0.3}px) 0 0/6px 6px, #fff;` });
+  });
+
+  // ---------- ICONS ----------
+  const ICONS = [
+    { name: "Dice", body: `
+      <rect x="8" y="8" width="16" height="16" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="12" cy="12" r="1.5" fill="#000"/><circle cx="20" cy="12" r="1.5" fill="#000"/>
+      <circle cx="12" cy="20" r="1.5" fill="#000"/><circle cx="20" cy="20" r="1.5" fill="#000"/>
+      <circle cx="16" cy="16" r="1.5" fill="#000"/>` },
+    { name: "Question Diamond", body: `
+      <polygon points="16,3 29,16 16,29 3,16" fill="#000"/>
+      <text x="16" y="21" font-family="'Silkscreen', monospace" font-weight="700" font-size="13" fill="#fff" text-anchor="middle">?</text>` },
+    { name: "Question Circle", body: `
+      <circle cx="16" cy="16" r="12" fill="#fff" stroke="#000" stroke-width="2"/>
+      <text x="16" y="21" font-family="'Silkscreen', monospace" font-weight="700" font-size="13" fill="#000" text-anchor="middle">?</text>` },
+    { name: "Question Sparkle", body: `
+      <polygon points="16,2 20,12 30,16 20,20 16,30 12,20 2,16 12,12" fill="#000"/>
+      <circle cx="16" cy="16" r="5" fill="#fff" stroke="#000" stroke-width="1"/>
+      <text x="16" y="19" font-family="'Silkscreen', monospace" font-weight="700" font-size="7" fill="#000" text-anchor="middle">?</text>` },
+    { name: "Envelope", body: `
+      <rect x="4" y="9" width="24" height="15" fill="#fff" stroke="#000" stroke-width="2"/>
+      <polyline points="4,9 16,19 28,9" stroke="#000" stroke-width="2" fill="none" stroke-linejoin="miter"/>` },
+    { name: "Flag", body: `
+      <line x1="8" y1="4" x2="8" y2="28" stroke="#000" stroke-width="2" stroke-linecap="square"/>
+      <polygon points="8,5 24,9 8,15" fill="#000"/>` },
+    { name: "Music Note", body: `
+      <circle cx="10" cy="24" r="4" fill="#000"/><circle cx="22" cy="21" r="4" fill="#000"/>
+      <line x1="14" y1="24" x2="14" y2="6" stroke="#000" stroke-width="2"/>
+      <line x1="26" y1="21" x2="26" y2="5" stroke="#000" stroke-width="2"/>
+      <line x1="14" y1="6" x2="26" y2="5" stroke="#000" stroke-width="3"/>` },
+    { name: "Point Right", body: `
+      <rect x="8" y="14" width="10" height="10" fill="#000"/>
+      <rect x="16" y="17" width="12" height="4" fill="#000"/>
+      <polygon points="8,14 8,10 12,12 12,14" fill="#000"/>` },
+    { name: "Point Left", body: `
+      <rect x="14" y="14" width="10" height="10" fill="#000"/>
+      <rect x="4" y="17" width="12" height="4" fill="#000"/>
+      <polygon points="24,14 24,10 20,12 20,14" fill="#000"/>` },
+    { name: "Point Up", body: `
+      <rect x="11" y="14" width="10" height="10" fill="#000"/>
+      <rect x="13" y="2" width="4" height="14" fill="#000"/>
+      <polygon points="11,14 7,14 9,18 11,18" fill="#000"/>` },
+    { name: "Point Down", body: `
+      <rect x="11" y="8" width="10" height="10" fill="#000"/>
+      <rect x="13" y="16" width="4" height="14" fill="#000"/>
+      <polygon points="11,18 7,18 9,14 11,14" fill="#000"/>` },
+    { name: "Triangle Right", body: `
+      <polygon points="10,6 26,16 10,26" fill="#000"/>` },
+    { name: "Triangle Left", body: `
+      <polygon points="22,6 6,16 22,26" fill="#000"/>` },
+    { name: "Triangle Up", body: `
+      <polygon points="16,6 26,24 6,24" fill="#000"/>` },
+    { name: "Triangle Down", body: `
+      <polygon points="16,26 26,8 6,8" fill="#000"/>` },
+    { name: "Triangle Outline Right", body: `
+      <polygon points="10,6 26,16 10,26" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>` },
+    { name: "Triangle Outline Left", body: `
+      <polygon points="22,6 6,16 22,26" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>` },
+    { name: "Arrow Right", body: `
+      <line x1="6" y1="16" x2="22" y2="16" stroke="#000" stroke-width="3" stroke-linecap="square"/>
+      <polygon points="20,10 28,16 20,22" fill="#000"/>` },
+    { name: "Arrow Left", body: `
+      <line x1="26" y1="16" x2="10" y2="16" stroke="#000" stroke-width="3" stroke-linecap="square"/>
+      <polygon points="12,10 4,16 12,22" fill="#000"/>` },
+    { name: "Arrow Up", body: `
+      <line x1="16" y1="26" x2="16" y2="10" stroke="#000" stroke-width="3" stroke-linecap="square"/>
+      <polygon points="10,12 16,4 22,12" fill="#000"/>` },
+    { name: "Arrow Down", body: `
+      <line x1="16" y1="6" x2="16" y2="22" stroke="#000" stroke-width="3" stroke-linecap="square"/>
+      <polygon points="10,20 16,28 22,20" fill="#000"/>` },
+    { name: "Return Arrow", body: `
+      <path d="M26,8 v6 a2,2 0 0 1 -2,2 h-10" stroke="#000" stroke-width="3" fill="none" stroke-linecap="square"/>
+      <polygon points="14,10 6,16 14,22" fill="#000"/>` },
+    { name: "Phone Classic", body: `
+      <circle cx="10" cy="10" r="6" fill="#000"/>
+      <circle cx="22" cy="22" r="6" fill="#000"/>
+      <polygon points="7,13 13,7 25,19 19,25" fill="#000"/>` },
+    { name: "Phone Modern", body: `
+      <rect x="10" y="6" width="12" height="20" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="13" y="9" width="6" height="2" fill="#000"/>
+      <rect x="13" y="21" width="6" height="2" fill="#000"/>
+      <circle cx="13" cy="15" r="1" fill="#000"/><circle cx="16" cy="15" r="1" fill="#000"/><circle cx="19" cy="15" r="1" fill="#000"/>` },
+    { name: "House", body: `
+      <polygon points="16,4 28,15 24,15 24,27 8,27 8,15 4,15" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>
+      <rect x="13" y="18" width="6" height="9" fill="#000"/>` },
+    { name: "House Chimney", body: `
+      <polygon points="14,8 24,17 21,17 21,27 7,27 7,17 4,17" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>
+      <rect x="19" y="2" width="4" height="9" fill="#000"/>
+      <rect x="9" y="20" width="5" height="7" fill="#000"/>` },
+    { name: "Building", body: `
+      <rect x="6" y="6" width="20" height="22" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="9" y="9" width="3" height="3" fill="#000"/><rect x="14.5" y="9" width="3" height="3" fill="#000"/><rect x="20" y="9" width="3" height="3" fill="#000"/>
+      <rect x="9" y="15" width="3" height="3" fill="#000"/><rect x="14.5" y="15" width="3" height="3" fill="#000"/><rect x="20" y="15" width="3" height="3" fill="#000"/>
+      <rect x="9" y="21" width="3" height="3" fill="#000"/><rect x="14.5" y="21" width="3" height="3" fill="#000"/><rect x="20" y="21" width="3" height="3" fill="#000"/>` },
+    { name: "Walking", body: `
+      <circle cx="16" cy="6" r="3" fill="#000"/>
+      <line x1="16" y1="9" x2="16" y2="20" stroke="#000" stroke-width="2"/>
+      <line x1="10" y1="13" x2="22" y2="11" stroke="#000" stroke-width="2"/>
+      <line x1="16" y1="20" x2="10" y2="28" stroke="#000" stroke-width="2"/>
+      <line x1="16" y1="20" x2="22" y2="26" stroke="#000" stroke-width="2"/>` },
+    { name: "Running", body: `
+      <circle cx="14" cy="6" r="3" fill="#000"/>
+      <line x1="14" y1="9" x2="18" y2="19" stroke="#000" stroke-width="2"/>
+      <line x1="8" y1="12" x2="20" y2="8" stroke="#000" stroke-width="2"/>
+      <line x1="18" y1="19" x2="26" y2="24" stroke="#000" stroke-width="2"/>
+      <line x1="18" y1="19" x2="12" y2="28" stroke="#000" stroke-width="2"/>` },
+    { name: "Dancing", body: `
+      <circle cx="16" cy="6" r="3" fill="#000"/>
+      <line x1="16" y1="9" x2="16" y2="18" stroke="#000" stroke-width="2"/>
+      <line x1="16" y1="11" x2="8" y2="4" stroke="#000" stroke-width="2"/>
+      <line x1="16" y1="11" x2="24" y2="4" stroke="#000" stroke-width="2"/>
+      <line x1="16" y1="18" x2="8" y2="28" stroke="#000" stroke-width="2"/>
+      <line x1="16" y1="18" x2="24" y2="28" stroke="#000" stroke-width="2"/>` },
+    { name: "Bar Chart", body: `
+      <line x1="6" y1="26" x2="28" y2="26" stroke="#000" stroke-width="2"/>
+      <line x1="6" y1="26" x2="6" y2="6" stroke="#000" stroke-width="2"/>
+      <rect x="9" y="18" width="4" height="8" fill="#000"/>
+      <rect x="15" y="12" width="4" height="14" fill="#000"/>
+      <rect x="21" y="8" width="4" height="18" fill="#000"/>` },
+    { name: "Lightbulb", body: `
+      <circle cx="16" cy="13" r="9" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="12" y="21" width="8" height="4" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="13" y="26" width="6" height="3" fill="#000"/>
+      <line x1="6" y1="6" x2="9" y2="9" stroke="#000" stroke-width="1"/>
+      <line x1="26" y1="6" x2="23" y2="9" stroke="#000" stroke-width="1"/>` },
+    { name: "Scissors", body: `
+      <circle cx="10" cy="24" r="4" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="22" cy="24" r="4" fill="#fff" stroke="#000" stroke-width="2"/>
+      <line x1="10" y1="20" x2="27" y2="6" stroke="#000" stroke-width="2" stroke-linecap="square"/>
+      <line x1="22" y1="20" x2="6" y2="6" stroke="#000" stroke-width="2" stroke-linecap="square"/>
+      <circle cx="16" cy="15" r="1.5" fill="#000"/>` },
+    { name: "Keyboard", body: `
+      <rect x="3" y="11" width="26" height="14" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="6" y="14" width="4" height="2" fill="#000"/><rect x="11" y="14" width="4" height="2" fill="#000"/><rect x="16" y="14" width="4" height="2" fill="#000"/><rect x="21" y="14" width="4" height="2" fill="#000"/>
+      <rect x="6" y="18" width="4" height="2" fill="#000"/><rect x="11" y="18" width="4" height="2" fill="#000"/><rect x="16" y="18" width="4" height="2" fill="#000"/><rect x="21" y="18" width="4" height="2" fill="#000"/>
+      <rect x="9" y="21.5" width="14" height="2" fill="#000"/>` },
+    { name: "Calendar", body: `
+      <rect x="5" y="7" width="22" height="20" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="5" y="7" width="22" height="6" fill="#000"/>
+      <rect x="10" y="3" width="2" height="6" fill="#000"/><rect x="20" y="3" width="2" height="6" fill="#000"/>
+      <rect x="9" y="16" width="2" height="2" fill="#000"/><rect x="14" y="16" width="2" height="2" fill="#000"/><rect x="19" y="16" width="2" height="2" fill="#000"/><rect x="24" y="16" width="2" height="2" fill="#000"/>
+      <rect x="9" y="21" width="2" height="2" fill="#000"/><rect x="14" y="21" width="2" height="2" fill="#000"/><rect x="19" y="21" width="2" height="2" fill="#000"/><rect x="24" y="21" width="2" height="2" fill="#000"/>` },
+    { name: "Clock", body: `
+      <rect x="14" y="3" width="4" height="3" fill="#000"/><rect x="14" y="26" width="4" height="3" fill="#000"/>
+      <circle cx="16" cy="16" r="10" fill="#fff" stroke="#000" stroke-width="2"/>
+      <line x1="16" y1="16" x2="16" y2="10" stroke="#000" stroke-width="2" stroke-linecap="square"/>
+      <line x1="16" y1="16" x2="20" y2="16" stroke="#000" stroke-width="2" stroke-linecap="square"/>
+      <circle cx="16" cy="16" r="1.5" fill="#000"/>` },
+    { name: "Book Open", body: `
+      <polygon points="4,8 16,6 16,26 4,28" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>
+      <polygon points="28,8 16,6 16,26 28,28" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>
+      <line x1="7" y1="12" x2="13" y2="11" stroke="#000" stroke-width="1"/>
+      <line x1="7" y1="16" x2="13" y2="15" stroke="#000" stroke-width="1"/>
+      <line x1="19" y1="11" x2="25" y2="12" stroke="#000" stroke-width="1"/>
+      <line x1="19" y1="15" x2="25" y2="16" stroke="#000" stroke-width="1"/>` },
+    { name: "Books Stack", body: `
+      <rect x="5" y="20" width="22" height="5" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="6" y="14" width="20" height="5" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="7" y="8" width="18" height="5" fill="#fff" stroke="#000" stroke-width="2"/>` },
+    { name: "Checklist", body: `
+      <rect x="6" y="4" width="20" height="24" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="9" y="9" width="3" height="3" fill="#fff" stroke="#000" stroke-width="1"/>
+      <path d="M9,10 L10.5,11.5 L12,8.5" stroke="#000" stroke-width="1" fill="none"/>
+      <line x1="15" y1="10.5" x2="24" y2="10.5" stroke="#000" stroke-width="2"/>
+      <rect x="9" y="16" width="3" height="3" fill="#fff" stroke="#000" stroke-width="1"/>
+      <line x1="15" y1="17.5" x2="24" y2="17.5" stroke="#000" stroke-width="2"/>
+      <rect x="9" y="23" width="3" height="3" fill="#fff" stroke="#000" stroke-width="1"/>
+      <line x1="15" y1="24.5" x2="24" y2="24.5" stroke="#000" stroke-width="2"/>` },
+    { name: "Magnifier", body: `
+      <circle cx="13" cy="13" r="8" fill="#fff" stroke="#000" stroke-width="2"/>
+      <line x1="19" y1="19" x2="27" y2="27" stroke="#000" stroke-width="3" stroke-linecap="square"/>` },
+    { name: "Eye", body: `
+      <path d="M4,16 Q16,4 28,16 Q16,28 4,16 Z" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="16" cy="16" r="5" fill="#000"/>
+      <circle cx="14" cy="14" r="1.5" fill="#fff"/>` },
+    { name: "Sparkle", body: `
+      <polygon points="16,2 19,13 30,16 19,19 16,30 13,19 2,16 13,13" fill="#000"/>` },
+    { name: "Speech Bubble", body: `
+      <path d="M5,6 h22 a2,2 0 0 1 2,2 v12 a2,2 0 0 1 -2,2 h-14 l-6,6 v-6 h-2 a2,2 0 0 1 -2,-2 v-12 a2,2 0 0 1 2,-2 z" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>` },
+    { name: "Thought Bubble", body: `
+      <ellipse cx="16" cy="13" rx="12" ry="8" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="9" cy="24" r="2" fill="#fff" stroke="#000" stroke-width="1.5"/>
+      <circle cx="6" cy="28" r="1.3" fill="#fff" stroke="#000" stroke-width="1"/>` },
+    { name: "Monitor", body: `
+      <rect x="4" y="5" width="24" height="16" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="13" y="21" width="6" height="4" fill="#000"/>
+      <rect x="9" y="25" width="14" height="2" fill="#000"/>
+      <rect x="24" y="16" width="2" height="2" fill="#000"/>` },
+    { name: "Printer", body: `
+      <rect x="10" y="4" width="12" height="10" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="6" y="11" width="20" height="10" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="10" y="21" width="12" height="6" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="21" y="14" width="2" height="2" fill="#000"/>` },
+    { name: "Floppy Disk", body: `
+      <rect x="6" y="5" width="20" height="22" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="10" y="5" width="12" height="7" fill="#000"/>
+      <rect x="9" y="16" width="14" height="8" fill="#fff" stroke="#000" stroke-width="2"/>` },
+    { name: "Floppy Export", body: `
+      <rect x="4" y="4" width="14" height="14" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="7" y="4" width="8" height="4" fill="#000"/>
+      <line x1="16" y1="16" x2="26" y2="26" stroke="#000" stroke-width="2"/>
+      <polygon points="26,19 26,26 19,26" fill="#000"/>` },
+    { name: "Disk CD", body: `
+      <circle cx="16" cy="16" r="12" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="16" cy="16" r="4" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="16" cy="16" r="1.5" fill="#000"/>
+      <path d="M8,8 A12,12 0 0 1 20,5" stroke="#000" stroke-width="1" fill="none"/>` },
+    { name: "TV", body: `
+      <rect x="5" y="8" width="22" height="16" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="8" y="11" width="14" height="10" fill="#fff" stroke="#000" stroke-width="1"/>
+      <line x1="11" y1="8" x2="7" y2="2" stroke="#000" stroke-width="1.5"/>
+      <line x1="21" y1="8" x2="25" y2="2" stroke="#000" stroke-width="1.5"/>
+      <circle cx="24.5" cy="16" r="1.5" fill="#000"/>` },
+    { name: "Camera", body: `
+      <rect x="5" y="10" width="22" height="15" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="11" y="6" width="6" height="5" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="16" cy="18" r="6" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="16" cy="18" r="3" fill="#000"/>
+      <rect x="21" y="13" width="3" height="2" fill="#000"/>` },
+    { name: "Mailbox", body: `
+      <rect x="6" y="14" width="14" height="8" fill="#fff" stroke="#000" stroke-width="2"/>
+      <path d="M6,14 a7,7 0 0 1 14,0" fill="#fff" stroke="#000" stroke-width="2"/>
+      <polygon points="20,12 26,15 20,15" fill="#000"/>
+      <rect x="11" y="22" width="4" height="8" fill="#000"/>` },
+    { name: "Pushpin", body: `
+      <circle cx="16" cy="9" r="6" fill="#000"/>
+      <line x1="16" y1="15" x2="16" y2="27" stroke="#000" stroke-width="2" stroke-linecap="square"/>
+      <circle cx="13" cy="7" r="1.5" fill="#fff"/>` },
+    { name: "Paperclip", body: `
+      <path d="M11,8 v14 a5,5 0 0 0 10,0 v-16 a3,3 0 0 0 -6,0 v14" stroke="#000" stroke-width="2" fill="none" stroke-linecap="square"/>` },
+    { name: "Folder", body: `
+      <polygon points="6,6 15,6 17,9 6,9" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>
+      <rect x="4" y="9" width="24" height="17" fill="#fff" stroke="#000" stroke-width="2"/>` },
+    { name: "File Cabinet", body: `
+      <rect x="8" y="3" width="16" height="26" fill="#fff" stroke="#000" stroke-width="2"/>
+      <line x1="8" y1="13" x2="24" y2="13" stroke="#000" stroke-width="2"/>
+      <line x1="8" y1="23" x2="24" y2="23" stroke="#000" stroke-width="2"/>
+      <rect x="14" y="7" width="4" height="1.5" fill="#000"/>
+      <rect x="14" y="17" width="4" height="1.5" fill="#000"/>
+      <rect x="14" y="26" width="4" height="1.5" fill="#000"/>` },
+    { name: "Documents", body: `
+      <rect x="9" y="5" width="16" height="22" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="6" y="9" width="16" height="22" fill="#fff" stroke="#000" stroke-width="2"/>
+      <rect x="9" y="15" width="10" height="2" fill="#000"/>
+      <rect x="9" y="19" width="10" height="2" fill="#000"/>
+      <rect x="9" y="23" width="7" height="2" fill="#000"/>` },
+    { name: "Pencil", body: `
+      <polygon points="5,27 9,27 27,9 23,5" fill="#fff" stroke="#000" stroke-width="2" stroke-linejoin="miter"/>
+      <polygon points="5,27 9,27 7,23" fill="#000"/>
+      <polygon points="23,5 27,9 29,7 25,3" fill="#000"/>` },
+    { name: "Lock", body: `
+      <path d="M11,14 a5,5 0 0 1 10,0 v4" stroke="#000" stroke-width="2" fill="none"/>
+      <rect x="8" y="14" width="16" height="12" fill="#fff" stroke="#000" stroke-width="2"/>
+      <circle cx="16" cy="19" r="2" fill="#000"/>
+      <rect x="15" y="20" width="2" height="4" fill="#000"/>` },
+    { name: "Star", body: `
+      <polygon points="16,4 19,13 29,13 21,19 24,28 16,22 8,28 11,19 3,13 13,13" fill="#000" stroke="#000" stroke-width="1" stroke-linejoin="miter"/>` }
+  ];
+
+  function copyText(text, labelEl, originalName) {
+    navigator.clipboard.writeText(text).then(() => {
+      labelEl.textContent = "Copied!";
+      setTimeout(() => { labelEl.textContent = originalName; }, 1000);
+    }).catch(() => {
+      labelEl.textContent = "Copy failed";
+      setTimeout(() => { labelEl.textContent = originalName; }, 1000);
+    });
+  }
+
+  function iconMarkup(icon) {
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">${icon.body}</svg>`;
+  }
+
+  function renderPatterns() {
+    const grid = document.getElementById("patternGrid");
+    PATTERNS.forEach(p => {
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      const swatch = document.createElement("div");
+      swatch.className = "swatch";
+      swatch.style.cssText = p.css;
+      const label = document.createElement("div");
+      label.className = "label";
+      label.textContent = p.name;
+      tile.appendChild(swatch);
+      tile.appendChild(label);
+      tile.addEventListener("click", () => copyText(p.css, label, p.name));
+      grid.appendChild(tile);
+    });
+  }
+
+  function renderIcons() {
+    const grid = document.getElementById("iconGrid");
+    ICONS.forEach(icon => {
+      const tile = document.createElement("div");
+      tile.className = "tile";
+      const svgMarkup = iconMarkup(icon);
+      const holder = document.createElement("div");
+      holder.className = "icon-holder";
+      holder.innerHTML = svgMarkup;
+      const label = document.createElement("div");
+      label.className = "label";
+      label.textContent = icon.name;
+      tile.appendChild(holder);
+      tile.appendChild(label);
+      tile.addEventListener("click", () => copyText(svgMarkup, label, icon.name));
+      grid.appendChild(tile);
+    });
+  }
+
+  function downloadTextFile(content, filename, type) {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename; a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function downloadPatternsCss() {
+    const css = PATTERNS.map(p => `.pattern-${slug(p.name)} {\n  ${p.css}\n}`).join("\n\n");
+    downloadTextFile(css, "hypercard-patterns.css", "text/css");
+  }
+
+  function downloadIconSvgSprite() {
+    const symbols = ICONS.map(icon => `<symbol id="icon-${slug(icon.name)}" viewBox="0 0 32 32">${icon.body}</symbol>`).join("\n");
+    const sprite = `<svg xmlns="http://www.w3.org/2000/svg" style="display:none">\n${symbols}\n</svg>`;
+    downloadTextFile(sprite, "hypercard-icon-sprite.svg", "image/svg+xml");
+  }
+
+  function loadImage(svgMarkup) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svgMarkup);
+    });
+  }
+
+  async function downloadIconPngSheet() {
+    const cols = 6;
+    const cellSize = 96;
+    const iconSize = 64;
+    const rows = Math.ceil(ICONS.length / cols);
+    const canvas = document.createElement("canvas");
+    canvas.width = cols * cellSize;
+    canvas.height = rows * cellSize;
+    const ctx = canvas.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = "#000";
+    ctx.lineWidth = 2;
+
+    for (let i = 0; i < ICONS.length; i++) {
+      const icon = ICONS[i];
+      const img = await loadImage(iconMarkup(icon));
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const cellX = col * cellSize;
+      const cellY = row * cellSize;
+      ctx.strokeRect(cellX + 4, cellY + 4, cellSize - 8, cellSize - 8);
+      ctx.drawImage(img, cellX + (cellSize - iconSize) / 2, cellY + (cellSize - iconSize) / 2, iconSize, iconSize);
+    }
+
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = "hypercard-icon-spritesheet.png"; a.click();
+      URL.revokeObjectURL(url);
+    }, "image/png");
+  }
+
+  document.getElementById("downloadIconPng").addEventListener("click", downloadIconPngSheet);
+  document.getElementById("downloadIconSvg").addEventListener("click", downloadIconSvgSprite);
+  document.getElementById("downloadPatternsCss").addEventListener("click", downloadPatternsCss);
+
+  renderPatterns();
+  renderIcons();
+</script>
+
+</body>
+</html>
