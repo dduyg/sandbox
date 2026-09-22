@@ -24,9 +24,6 @@
 
 
 > [!WARNING]
-> system.log: { status: "abandoned server" }
-
-> [!NOTE]
 > Made by Duygu who appreciate smooth animations
 
 > [!IMPORTANT]
