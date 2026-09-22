@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiminalLoop</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5efe6;
+  --surface:#faf6f0;
+  --border:#d4c4ae;
+  --ink:#2a1f14;
+  --muted:#9a8472;
+  --accent:#b85c2a;
+  --rust:#8b3a1e;
+  --ochre:#c49a3c;
+  --teal:#2a6b6b;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:var(--bg);
+  font-family:'Space Mono',monospace;
+  padding:30px;
+}
+
+#names-container{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:1px;
+  background:var(--border);
+  border:1.5px solid var(--border);
+}
+
+.name-card{
+  background:var(--surface);
+  padding:20px;
+  cursor:pointer;
+  transition:.15s;
+  position:relative;
+}
+
+.name-card:hover{
+  background:#ede3d6;
+}
+
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  margin-bottom:12px;
+  color:var(--ink);
+}
+
+.card-badges{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-bottom:10px;
+}
+
+.badge{
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  padding:3px 8px;
+}
+
+.badge-cat{
+  background:rgba(139,58,30,.1);
+  color:var(--rust);
+}
+
+.badge-mood{
+  background:rgba(196,154,60,.13);
+  color:#7a5f1a;
+}
+
+.badge-style{
+  background:rgba(42,107,107,.1);
+  color:var(--teal);
+}
+
+.card-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  margin-bottom:12px;
+}
+
+.tag{
+  font-size:9px;
+  padding:2px 6px;
+  border:1px solid var(--border);
+  color:var(--muted);
+}
+
+.card-foot{
+  border-top:1px solid var(--border);
+  padding-top:10px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.card-id{
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:2px;
+}
+
+.copy{
+  font-size:9px;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+
+<div id="names-container"></div>
+
+<script>
+const DATA = [
+{
+id:1,
+title:"Synthetic Entrance",
+cat:"Technical",
+mood:"Mysterious",
+style:"Creative",
+tags:["cyber","tech","entry"]
+},
+{
+id:2,
+title:"Cherry Cola Skies",
+cat:"Atmospheric",
+mood:"Dreamy",
+style:"Casual",
+tags:["retro","sky","pastel","nostalgia"]
+},
+{
+id:3,
+title:"Counting Constellations",
+cat:"Atmospheric",
+mood:"Melancholic",
+style:"Creative",
+tags:["space","night","poetic"]
+},
+{
+id:4,
+title:"C0d3r's Paradox",
+cat:"Technical",
+mood:"Analytical",
+style:"Glitch",
+tags:["code","cyber","glitch","leet"]
+},
+{
+id:5,
+title:"Neon Meridian",
+cat:"Atmospheric",
+mood:"Energetic",
+style:"Creative",
+tags:["neon","retro","city","cyber"]
+},
+{
+id:6,
+title:"Protocol Horizon",
+cat:"Technical",
+mood:"Mysterious",
+style:"Professional",
+tags:["tech","network","future"]
+}
+];
+
+const container = document.getElementById("names-container");
+
+container.innerHTML = DATA.map(item => `
+<div class="name-card" onclick="copyName('${item.title}')">
+  <div class="card-title">${item.title}</div>
+
+  <div class="card-badges">
+    <span class="badge badge-cat">${item.cat}</span>
+    <span class="badge badge-mood">${item.mood}</span>
+    <span class="badge badge-style">${item.style}</span>
+  </div>
+
+  <div class="card-tags">
+    ${item.tags.map(tag => `
+      <span class="tag">#${tag}</span>
+    `).join("")}
+  </div>
+
+  <div class="card-foot">
+    <span class="card-id">ID·${String(item.id).padStart(4,'0')}</span>
+    <span class="copy">click to copy</span>
+  </div>
+</div>
+`).join("");
+
+function copyName(name){
+  navigator.clipboard.writeText(name);
+}
+</script>
+</body>
+</html>

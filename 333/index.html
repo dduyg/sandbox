@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moving Text Mask</title>
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,800,900" rel="stylesheet">
+<style>
+body{
+    background:linear-gradient(#ebece7, white);
+}
+.title {
+    text-align:center;
+    font-size:120px;
+    font-weight:900;
+    line-height:100px;
+    letter-spacing:-6px;
+    color:transparent;
+    background-image:url("https://images.pexels.com/photos/1252890/pexels-photo-1252890.jpeg");
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position:40% 50%;
+    -webkit-background-clip:text;
+    background-clip:text;
+    transition:background-position 0.1s;
+}
+
+/* Mobile Responsive */
+@media (max-width:768px){
+    .title{
+        font-size:50px;
+        line-height:60px;
+        letter-spacing:-2px;
+    }
+
+}
+</style>
+</head>
+<body>
+<div class="title">dduyg</div>
+
+<script>
+document.addEventListener("mousemove", function(e){
+
+    let mouseX = e.clientX;
+    let mouseY = e.clientY;
+
+    let traX = ((4 * mouseX) / window.innerWidth) + 40;
+    let traY = ((4 * mouseY) / window.innerHeight) + 50;
+
+    document.querySelector(".title").style.backgroundPosition =
+        traX + "% " + traY + "%";
+});
+</script>
+</body>
+</html>
