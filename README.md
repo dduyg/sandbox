@@ -26,16 +26,6 @@
 > [!WARNING]
 > Made by Duygu who appreciate smooth animations
 
-> [!IMPORTANT]
-> - [pattern-obsessed]
-> - [ensemble-everything
-> - [hyperparameter-tortured]
-> - [latent-space-wandering]
-> - [architecturally adventurous]
-> - [efficiency-obsessed]
-
----
-
 ```mermaid
 mindmap
   root((Skills))
